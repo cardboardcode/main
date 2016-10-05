@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import main.logic.Logic;
+import main.ui.MainWindow;
 
 
 
@@ -15,10 +17,7 @@ public class Main extends Application {
     private Stage primaryStage;
     private VBox rootLayout;
 
-    /**
-     * Returns the data as an observable list of Persons. 
-     * @return
-     */ 
+ 
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -46,6 +45,10 @@ public class Main extends Application {
             primaryStage.setScene(scene);
 
             primaryStage.show();
+            
+            MainWindow mainWindow = loader.getController();
+            mainWindow.setLogic(new Logic());
+
         } catch (IOException e) {
             e.printStackTrace();
         }
