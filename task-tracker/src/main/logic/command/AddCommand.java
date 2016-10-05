@@ -20,8 +20,7 @@ public class AddCommand extends Command {
         toAdd = task;
     }
     
-    //@Override
-    //If Override is allowed, error occurs.
+    @Override
     public String execute(ArrayList<Task> list) {
         list.add(toAdd);
         return String.format(MESSAGE_SUCCESS,toAdd) ;
