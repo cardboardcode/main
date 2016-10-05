@@ -1,10 +1,26 @@
 package main.logic;
 
-public class Logic {
+import java.util.ArrayList;
+import main.data.Task;
+import main.logic.parser.Parser;
 
-	public String process(String userCommandText) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+public class Logic {
+    
+    ArrayList<Task> tasksList;
+    Parser parser;
+    
+    public Logic() {
+        tasksList = new ArrayList<Task>();
+        parser = new Parser(tasksList);
+    }
+    
+    /**
+     * processes the input
+     * 
+     * @return text to be displayed
+     */
+    public String process(String input) {
+        return parser.parse(input);
+    }
 
 }
