@@ -43,10 +43,10 @@ public class Main extends Application {
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
-
             primaryStage.show();
             
             MainWindow mainWindow = loader.getController();
+            mainWindow.init();
             mainWindow.setLogic(new Logic());
 
         } catch (IOException e) {

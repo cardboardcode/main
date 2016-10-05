@@ -7,7 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import main.logic.*;
+import main.logic.Logic;
 
 /**
  * Based codes mostly on Addressbook-Level3. Error present starting 2250 at night on 5th Oct
@@ -25,7 +25,10 @@ public class MainWindow {
     @FXML
     private TextField commandInput;
     
-    public MainWindow(){
+    public MainWindow(){}
+    
+    public void init() {
+        commandInput.requestFocus();
     }
     
     @FXML
@@ -57,6 +60,10 @@ public class MainWindow {
      */
     private void display(String messages) {
         outputConsole.setText(messages);
+    }
+    
+    public void setLogic(Logic logic) {
+        this.logic = logic;
     }
     
 	
