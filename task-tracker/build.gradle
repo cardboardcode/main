@@ -1,8 +1,10 @@
-//@author A0144132W
+//@author A0144132W 
+// adapted from addressbook level 4 
 
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
 apply plugin: 'eclipse'
+
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -12,6 +14,12 @@ repositories {
     // Use 'jcenter' for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
+}
+	
+// This part is similar to global variables
+// Access them by using double-quoted strings (GStrings) and referencing by $ e.g. "Variable contains $Variable"
+project.ext {
+    guavaVersion = '19.0'
 }
 
 // In this section you declare the dependencies for your production and test code
@@ -24,5 +32,9 @@ dependencies {
     // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
     // 'test.useTestNG()' to your build script.
     testCompile 'junit:junit:4.12'
+    
+    // compile "com.google.guava:guava:$guavaVersion"
+   compile group: 'commons-cli', name: 'commons-cli', version: '1.31'
+   // compile 'org.apache.commons:commons-lasaxg3:3.4'    
 }
 
