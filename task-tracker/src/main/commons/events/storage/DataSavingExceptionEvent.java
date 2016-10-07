@@ -1,6 +1,6 @@
 package main.commons.events.storage;
 
-import seedu.address.commons.events.BaseEvent;
+import main.commons.events.BaseEvent;
 
 /**
  * Indicates an exception during a file saving

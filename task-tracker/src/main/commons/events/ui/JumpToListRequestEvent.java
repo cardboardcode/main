@@ -1,6 +1,6 @@
 package main.commons.events.ui;
 
-import seedu.address.commons.events.BaseEvent;
+import main.commons.events.BaseEvent;
 
 /**
  * Indicates a request to jump to the list of persons

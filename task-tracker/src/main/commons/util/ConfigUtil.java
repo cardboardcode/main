@@ -1,8 +1,8 @@
 package main.commons.util;
 
-import seedu.address.commons.core.Config;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.exceptions.DataConversionException;
+import main.commons.core.Config;
+import main.commons.core.LogsCenter;
+import main.commons.exceptions.DataConversionException;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,7 +1,7 @@
 package main.commons.events.ui;
 
-import seedu.address.commons.events.BaseEvent;
-import seedu.address.logic.commands.Command;
+import main.commons.events.BaseEvent;
+import main.logic.commands.Command;
 
 /**
  * Indicates an attempt to execute an incorrect command
