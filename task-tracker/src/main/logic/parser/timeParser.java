@@ -24,15 +24,21 @@ public class timeParser {
         input = input.substring(0,group.getPosition() - 1);
 
         List<Date> dates = group.getDates();
-        dates = dates.subList(0, 1);
+        
+        // max number of dates is 2
+        if (dates.size() > 2) {
+            dates = dates.subList(0, 1);
+        }
         
         if (group.isTimeInferred()) {
-            for (int i = 0; i < dates.size(); i++)
+            for (int i = 0; i < dates.size(); i++) {
                 dates.set(i, setDefaultTime(dates.get(i)));
+            }
         }
         else {
-            for (int i = 0; i < dates.size(); i++) 
+            for (int i = 0; i < dates.size(); i++) { 
                 dates.set(i, correctTime(dates.get(i),matchedText);
+            }
         }
 
         
@@ -58,13 +64,16 @@ public class timeParser {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         int hour = cal.get(Calendar.HOUR_OF_DAY);
-        int postfix = extracted.indexOf(hour);
+        int index = extracted.indexOf(hour);
         
-        if (extracted.charAt(postfix+1) == ' ') {
-            if (hour < 7)
+        // check if next character is empty
+        if ((extracted.length() == index + 1) | extracted.charAt(index + 1) == ' ') {
+            if (hour < 7) {
                 hour += 12;
-            else if (hour > 22)
+            }
+            else if (hour > 22) {
                 hour -= 12;
+            }
             cal.set(Calendar.HOUR_OF_DAY, hour);
         }
         
