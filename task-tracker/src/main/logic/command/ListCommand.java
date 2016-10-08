@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import main.data.Task;
 
+/**
+ * Lists all persons in the address book to the user.
+ */
+
 public class ListCommand extends Command {
     
     public static final String COMMAND_WORD = "list";
@@ -11,16 +15,18 @@ public class ListCommand extends Command {
             
     public ListCommand() {}
     
-    @Override
-    public String execute(ArrayList<Task> list) {
-        return format(list);
-    }
-
-    public String format(ArrayList<Task> list) {
-        String str = "";
+    public String format() {
+        
+    	ArrayList<Task> list = model.getGeneralList();
+    	String str = "";
         for (Task task : list) {
-            str += task + "\n";
+            str += task.getMessage() + "\n";
         }
         return str;
     }
+
+	@Override
+	public CommandResult execute() {
+		return new CommandResult(format());
+	}
 }

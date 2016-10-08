@@ -1,8 +1,11 @@
 package main.logic.command;
 
-import java.util.ArrayList;
+import main.logic.command.CommandResult;
 
-import main.data.Task;
+/**
+ * Format full help instructions for every command for display.
+ * @author bey
+ */
 
 public class HelpCommand extends Command {
     
@@ -11,17 +14,20 @@ public class HelpCommand extends Command {
 
     public HelpCommand() {}
     
-    @Override
-    public String execute(ArrayList<Task> list) {
-        return getCommandsList();
-    }
-    
     private String getCommandsList() {
         String str = "";
         str += AddCommand.MESSAGE_USAGE + "\n";
-        str += ListCommand.MESSAGE_USAGE + "\n";
+        str += EditCommand.MESSAGE_USAGE + "\n";
+        str += ExitCommand.MESSAGE_USAGE + "\n";
+        str += ListCommand.MESSAGE_USAGE;
         str += HelpCommand.MESSAGE_USAGE;
-        
+        str += DeleteCommand.MESSAGE_USAGE;
+      
         return str;
     }
+
+	@Override
+	public CommandResult execute() {
+		return new CommandResult(getCommandsList());
+	}
 }

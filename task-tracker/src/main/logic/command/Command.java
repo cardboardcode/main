@@ -5,6 +5,9 @@ import static seedu.addressbook.ui.Gui.DISPLAYED_INDEX_OFFSET;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.commons.core.EventsCenter;
+import main.commons.core.Messages;
+import main.commons.events.ui.IncorrectCommandAttemptedEvent;
 import main.data.Task;
 
 /**
@@ -13,7 +16,19 @@ import main.data.Task;
  */
 public abstract class Command {
 	protected Model model;
-
+	private int targetIndex = -1;
+//	/**
+//     * @param targetIndex last visible listing index of the target task
+//     */
+	public Command(int targetIndex) {
+        this.setTargetIndex(targetIndex);
+    }
+	
+	public Command() {}
+	
+	public void setTargetIndex(int targetIndex) {
+        this.targetIndex = targetIndex;
+    }
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of persons.
      *
@@ -21,7 +36,7 @@ public abstract class Command {
      * @return summary message for persons displayed
      */
     public static String getMessageForPersonListShownSummary(int displaySize) {
-        return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, displaySize);
+        return String.format(Messages.MESSAGE_TASK_LISTED_OVERVIEW, displaySize);
     }
 
     /**

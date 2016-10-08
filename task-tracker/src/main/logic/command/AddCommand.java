@@ -2,7 +2,13 @@ package main.logic.command;
 
 import java.util.ArrayList;
 import main.data.Task;
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.model.person.UniquePersonList;
 
+/**
+ * Adds a task to the task-tracker storage.
+ * @author bey
+ */
 public class AddCommand extends Command {
     
     public static final String COMMAND_WORD = "add";
@@ -19,12 +25,25 @@ public class AddCommand extends Command {
     public AddCommand(Task task) {
         toAdd = task;
     }
+
+    /**
+     * //Remember to add validator in Model component
+		//Possible to add Traynotification here.
+     */
+	@Override
+	public CommandResult execute() {
+		
+            model.addTask(toAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        
+	}
     
-    @Override
-    public String execute(ArrayList<Task> list) {
-        list.add(toAdd);
-        return String.format(MESSAGE_SUCCESS,toAdd) ;
-    }
+	public CommandResult execute(Task toAdd) {
+		
+        model.addTask(this.toAdd);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+    
+}
    
 
 }
