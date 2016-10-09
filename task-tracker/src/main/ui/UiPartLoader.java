@@ -9,6 +9,7 @@ import main.Main;
 
 /**
  * A utility class to load UiParts from FXML files.
+ * @author bey
  */
 public class UiPartLoader {
     private final static String FXML_FILE_FOLDER = "/view/";

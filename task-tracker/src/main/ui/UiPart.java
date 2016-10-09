@@ -11,8 +11,9 @@ import main.commons.events.BaseEvent;
 import main.commons.util.AppUtil;
 
 /**
- * Base class for UI parts.
+ * Base class for UI parts. 2 abstract functions: getNode(), getFxmlPath().
  * A 'UI part' represents a distinct part of the UI. e.g. Windows, dialogs, panels, status bars, etc.
+ *@author bey
  */
 public abstract class UiPart {
 
