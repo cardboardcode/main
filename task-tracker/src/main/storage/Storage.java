@@ -3,8 +3,8 @@ package main.storage;
 import main.commons.events.model.TaskTrackerChangedEvent;
 import main.commons.events.storage.DataSavingExceptionEvent;
 import main.commons.exceptions.DataConversionException;
-import main.model.ReadOnlyAddressBook;
-import main.model.UserPrefs;
+import main.model.model.ReadOnlyTaskTracker;
+import main.model.model.UserPrefs;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
