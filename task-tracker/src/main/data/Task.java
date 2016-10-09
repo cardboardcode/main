@@ -1,12 +1,27 @@
 package main.data;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class Task {
     private String message;
+    Date deadline;
+    Date starttime;
+    Date endtime;
     
     public Task(String message) {
         this.message = message;
+    }
+    
+    public Task(String message, Date deadline) {
+        this.message = message;
+        this.deadline = deadline;
+    }
+    
+    public Task(String message, Date starttime, Date endtime) {
+        this.message = message;
+        this.starttime = starttime;
+        this.endtime = endtime;
     }
     
     public String getMessage(){
