@@ -21,6 +21,7 @@ repositories {
 // This part is similar to global variables
 // Access them by using double-quoted strings (GStrings) and referencing by $ e.g. "Variable contains $Variable"
 project.ext {
+    controlsFxVersion = '8.40.11'
     guavaVersion = '19.0'
 }
 
