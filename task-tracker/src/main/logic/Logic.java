@@ -25,7 +25,7 @@ public class Logic {
      * @return text to be displayed
      */
     public String process(String input) {
-        return parser.parse(input).execute(tasksList);
+        return parser.parse(input).execute().feedbackToUser;
 //        timeParser.extractTime_test(input);
 //        Pair<String,List<Date>> parsed= timeParser.extractTime(input);
 //        System.out.println(parsed.getValue());
