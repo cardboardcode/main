@@ -1,6 +1,5 @@
 package main.logic.parser;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -10,10 +9,12 @@ import main.commons.core.Messages;
 import main.data.Task;
 import main.logic.command.AddCommand;
 import main.logic.command.Command;
+import main.logic.command.DeleteCommand;
+import main.logic.command.EditCommand;
+import main.logic.command.ExitCommand;
 import main.logic.command.HelpCommand;
+import main.logic.command.IncorrectCommand;
 import main.logic.command.ListCommand;
-import org.apache.commons.cli.*;
-
 import javafx.util.Pair;
 
 public class MainParser {
@@ -27,7 +28,7 @@ public class MainParser {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(input.trim());
         
         if (!matcher.matches()) {
-            return new HelpCommand("wrong_format");
+            return new IncorrectCommand(Messages.MESSAGE_INVALID_COMMAND_FORMAT);
         }
         String commandWord = matcher.group("commandWord");
         String task = matcher.group("task");
@@ -38,13 +39,15 @@ public class MainParser {
             case EditCommand.COMMAND_WORD:
                 return prepareEdit(task);
             case DeleteCommand.COMMAND_WORD:
-                return prepareDelete(task);
+                return new DeleteCommand(Integer.valueOf(task));
             case ListCommand.COMMAND_WORD:
                 return new ListCommand();
             case HelpCommand.COMMAND_WORD:
                 return new HelpCommand();
+            case ExitCommand.COMMAND_WORD:
+                return new ExitCommand();
             default: 
-                return new HelpCommand("unknown_command");
+                return new IncorrectCommand(Messages.MESSAGE_UNKNOWN_COMMAND);
         }
            
     }
@@ -62,28 +65,27 @@ public class MainParser {
         String description = info.getKey();
         
         if (dates.isEmpty()) {
-            return new AddCommand(description);
+            return new AddCommand(new Task(description));
         }
         else if (dates.size() == 1) { 
-            return new AddCommand(description,dates.get(0));
+            return new AddCommand(new Task(description,dates.get(0)));
         }
         // compare dates if there are 2 dates
         else {
             if (dates.get(0).before(dates.get(1)))
-                return new AddCommand(description,dates.get(0),dates.get(1));
+                return new AddCommand(new Task(description,dates.get(0),dates.get(1)));
             else 
-                return new AddCommand(description,dates.get(1),dates.get(0));
+                return new AddCommand(new Task(description,dates.get(1),dates.get(0)));
         }
                       
     }
     
     //dummy
+    // not ready
     public Command prepareEdit(String task) {
-        return new Command();
+//        return new EditCommand(1);
+        return new IncorrectCommand(Messages.MESSAGE_UNKNOWN_COMMAND);
     }
 
-    //dummy
-    public Command prepareDelete(String task) {
-        return new Command();
-    }
+    
 }
