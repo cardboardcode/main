@@ -1,4 +1,4 @@
-package main.logic.parser;
+package main.logic;
 
 import javafx.collections.ObservableList;
 import main.commons.core.ComponentManager;
