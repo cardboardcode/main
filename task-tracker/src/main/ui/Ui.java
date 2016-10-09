@@ -6,7 +6,7 @@ import javafx.stage.Stage;
  * API of UI component
  * @author bey
  */
-public interface UI {
+public interface Ui {
 
     /** Starts the UI (and the App).  */
     void start(Stage primaryStage);
