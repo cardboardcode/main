@@ -31,7 +31,6 @@ public interface ReadOnlyTask {
         final StringBuilder builder = new StringBuilder();
         builder.append(getTaskID())
         		.append(getMessage())
-                .append(" Phone: ")
                 .append(getTime());
                 
                 

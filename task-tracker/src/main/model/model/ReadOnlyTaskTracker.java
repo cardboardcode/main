@@ -19,7 +19,7 @@ public interface ReadOnlyTaskTracker {
     /**
      * Returns an unmodifiable view of persons list
      */
-    List<ReadOnlyTask> getPersonList();
+    List<ReadOnlyTask> getTaskList();
 
     
 }
