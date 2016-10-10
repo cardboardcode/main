@@ -66,5 +66,9 @@ public class TaskTracker implements ReadOnlyTaskTracker{
         return null;
     }
     
+    public Task getTask(int index) {
+        return getUniqueTaskList().getInternalList().get(index);
+    }
+    
 
 }

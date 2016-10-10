@@ -64,6 +64,11 @@ public class ModelManager extends ComponentManager implements Model {
         
     }
     
+    @Override 
+    public Task getTaskfromIndex(int index) throws TaskNotFoundException {
+        return taskTracker.getTask(index);       
+    }
+    
     /** Raises an event to indicate the model has changed */
     private void indicateTaskTrackerChanged() {
         raise(new TaskTrackerChangedEvent(taskTracker));
