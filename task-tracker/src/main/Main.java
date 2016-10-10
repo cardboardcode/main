@@ -17,12 +17,13 @@ import main.commons.util.ConfigUtil;
 import main.commons.util.StringUtil;
 import main.logic.Logic;
 import main.storage.Storage;
+import main.storage.StorageManager;
 import main.ui.MainWindow;
 import main.ui.Ui;
 import main.ui.UiManager;
 import main.logic.LogicManager;
 
-//import com.google.common.eventbus.Subscribe;
+import com.google.common.eventbus.Subscribe;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -32,6 +33,14 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
+
+import main.model.TaskTracker;
+import main.model.model.Model;
+import main.model.model.ModelManager;
+import main.model.model.ReadOnlyTaskTracker;
+import main.model.model.UserPrefs;
+import main.model.task.ReadOnlyTask;
+
 
 /**
  * The main entry point to the application.
@@ -77,23 +86,23 @@ public class Main extends Application {
     }
 
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
-        Optional<ReadOnlyTask> taskTrackerOptional;
-        ReadOnlyTask initialData;
+        Optional<ReadOnlyTaskTracker> taskTrackerOptional;
+        ReadOnlyTaskTracker initialData;
         try {
         	taskTrackerOptional = storage.readTaskTracker();
             if(!taskTrackerOptional.isPresent()){
                 logger.info("Data file not found. Will be starting with an empty AddressBook");
             }
-            initialData = taskTrackerOptional.orElse(new Model());
+            initialData = taskTrackerOptional.orElse(new TaskTracker());
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
-            initialData = new Model();
+            initialData = new TaskTracker();
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. . Will be starting with an empty AddressBook");
-            initialData = new Model();
+            initialData = new TaskTracker();
         }
 
-        return new ModelManager(initialData, userPrefs);
+        return new ModelManager((TaskTracker) initialData, userPrefs);
     }
 
     private void initLogging(Config config) {
