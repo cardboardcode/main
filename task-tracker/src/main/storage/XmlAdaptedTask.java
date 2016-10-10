@@ -6,6 +6,10 @@ import main.model.task.*;
 //import main.model.tag.UniqueTagList;
 
 import javax.xml.bind.annotation.XmlElement;
+
+import com.joestelmach.natty.generated.DateParser.date_return;
+
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,11 +21,11 @@ public class XmlAdaptedTask {
     @XmlElement(required = true)
     private String message_;
     @XmlElement(required = true)
-    private int taskID;
-    //@XmlElement(required = true)
-    //private String email;
-    //@XmlElement(required = true)
-    //private String address;
+    private Date deadline_;
+    @XmlElement(required = true)
+    private Date startTime_;
+    @XmlElement(required = true)
+    private Date endTime_;
 
     //@XmlElement
     //private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -39,7 +43,9 @@ public class XmlAdaptedTask {
      */
     public XmlAdaptedTask(ReadOnlyTask source) {
         message_ = source.getMessage().toString();
-        taskID = source.getTaskID();
+        deadline_ = (Date) source.getDeadline();
+        startTime_ = (Date) source.getStartTime();
+        endTime_ = (Date) source.getEndTime();
         //phone = source.getPhone().value;
         //email = source.getEmail().value;
         //address = source.getAddress().value;
@@ -64,8 +70,12 @@ public class XmlAdaptedTask {
 //        final Email email = new Email(this.email);
 //        final Address address = new Address(this.address);
 //        final UniqueTagList tags = new UniqueTagList(personTags);
-          final Message message = new Message(message_);
+          //final Message message = new Message(message_);
+        final String message = message_;
+        final Date deadline = deadline_;
+        final Date startTime = startTime_;
+        final Date endTime = endTime_;
           
-          return new Task(taskID, message);
+          return new Task(message, startTime, endTime, deadline);
     }
 }
