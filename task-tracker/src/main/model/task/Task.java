@@ -23,8 +23,9 @@ public class Task implements ReadOnlyTask {
         this.isFloating = false;
     }
     
-    public Task(String message, Date startTime, Date endTime) {
+    public Task(String message, Date startTime, Date endTime, Date deadline) {
         this.message = message;
+        this.deadline = deadline;
         this.startTime = startTime;
         this.endTime = endTime;
         this.isFloating = false;
