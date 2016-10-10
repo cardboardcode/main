@@ -84,20 +84,5 @@ public class timeParser {
         return cal.getTime();
     }
     
-    public static void extractTime_test(String input) {
-        List<DateGroup> groups = new Parser().parse(input);
-        for(DateGroup group:groups) {
-            List<Date> dates = group.getDates();
-            int line = group.getLine();
-            int column = group.getPosition();
-            String matchingValue = group.getText();
-            boolean isRecurreing = group.isRecurring();
-            Date recursUntil = group.getRecursUntil();
-            boolean infertime = group.isTimeInferred();
-            System.out.println(dates + " " + line + " " + column + " " + matchingValue + " " + isRecurreing + " " + recursUntil + " " + infertime);
-        }
-    }
-    
-
 }
 
