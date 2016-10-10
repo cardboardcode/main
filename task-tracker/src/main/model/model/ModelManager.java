@@ -33,6 +33,10 @@ public class ModelManager extends ComponentManager implements Model {
         this.userPref = userPref;
         filteredTasks = new FilteredList<>(taskTracker.getTasks());
     }
+    
+    public ModelManager() {
+        this(new TaskTracker(), new UserPrefs());
+}
 
     @Override
     public void resetData(ReadOnlyTaskTracker newData) {
