@@ -1,7 +1,5 @@
 package main.logic.command;
 
-import static seedu.addressbook.ui.Gui.DISPLAYED_INDEX_OFFSET;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +7,7 @@ import main.commons.core.EventsCenter;
 import main.commons.core.Messages;
 import main.commons.events.ui.IncorrectCommandAttemptedEvent;
 import main.data.Task;
+import main.model.model.Model;
 
 /**
  * Represents a command with hidden internal logic and the ability to be executed.

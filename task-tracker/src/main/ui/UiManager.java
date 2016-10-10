@@ -9,8 +9,9 @@ import javafx.stage.Stage;
 import main.Main;
 import main.commons.core.ComponentManager;
 import main.commons.core.Config;
+import main.commons.core.LogsCenter;
 import main.logic.Logic;
-
+import main.model.model.UserPrefs;
 import java.util.logging.Logger;
 
 /**
