@@ -11,6 +11,7 @@ public class Task implements ReadOnlyTask {
     Date startTime;
     Date endTime;
     private boolean isFloating;
+    private boolean isEvent = false;
     
     public Task(String message) {
         this.message = message;
@@ -29,6 +30,19 @@ public class Task implements ReadOnlyTask {
         this.startTime = startTime;
         this.endTime = endTime;
         this.isFloating = false;
+        this.isEvent = true;
+    }
+    
+    public Task(ReadOnlyTask src) {
+        this(src.getMessage());
+        if (!src.getIsFloating()) {
+            if (!src.getIsEvent()) 
+                this.deadline = src.getDeadline();
+            else {
+                this.startTime = src.getStartTime();
+                this.endTime = src.getEndTime();
+            }
+        }
     }
     //getters
     @Override
@@ -74,6 +88,12 @@ public class Task implements ReadOnlyTask {
     public boolean getIsFloating(){
     	return this.isFloating;
     }
+    
+    @Override
+    public boolean getIsEvent(){
+        return this.isEvent;
+    }
+    
     //setters
     public void setMessage(String message){
     	this.message = message;
@@ -96,21 +116,20 @@ public class Task implements ReadOnlyTask {
      
     @Override
     public boolean equals(Object other) {
-    	if(this.isFloating && this.message.equals(((Task) other).message)){
-    			return other == this 
-                    || (other instanceof Task);
+        if (this == other) return true;
+        else if (other instanceof Task) {
+        	if(this.isFloating) return (this.message.equals(((Task) other).message));
+        	else if(this.isEvent) {
+        	    return (this.message.equals(((Task) other).message)
+        	 	&& this.startTime.equals(((Task) other).startTime)
+        		&& this.endTime.equals(((Task) other).endTime));
+        	}
+        	else {
+                return (this.message.equals(((Task) other).message)
+                && this.deadline.equals(((Task) other).deadline));
+        	}
         }
-    	if(!this.isFloating && this.message.equals(((Task) other).message)
-    		&& this.startTime.equals(((Task) other).startTime)
-    		&& this.endTime.equals(((Task) other).endTime)){
-    			return other == this 
-                    || (other instanceof Task);       
-    	}
-    	if(!this.isFloating && this.message.equals(((Task) other).message)
-    		&& this.deadline.equals(((Task) other).deadline)){
-    			return other == this 
-    				|| (other instanceof Task); 
-    	}
+        else return false;
     }
        
     @Override

@@ -1,5 +1,7 @@
 package main.logic.command;
 
+import main.model.task.UniqueTaskList.TaskNotFoundException;
+
 /**
  * Deletes a person identified using it's last displayed index from the address book.
  * Prints success message and the corresponding deleted index.
@@ -28,7 +30,7 @@ public class DeleteCommand extends Command {
     @Override
     public CommandResult execute() {
         try {
-            model.removeTask(taskIndex);
+            model.deleteTask(model.getTaskfromIndex(taskIndex));
             return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, taskIndex));
 
         } catch (IndexOutOfBoundsException ie) {

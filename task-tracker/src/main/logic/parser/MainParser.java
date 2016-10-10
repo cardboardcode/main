@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import main.commons.core.Messages;
-import main.data.Task;
+import main.model.task.Task;
 import main.logic.command.AddCommand;
 import main.logic.command.Command;
 import main.logic.command.DeleteCommand;

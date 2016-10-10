@@ -1,5 +1,9 @@
 package main.logic.command;
 
+import java.util.Date;
+
+import main.commons.exceptions.IllegalValueException;
+import main.model.task.Task;
 
 /**
  * Edits an existing task in task-tracker
@@ -20,26 +24,45 @@ public static final String COMMAND_WORD = "edit";
 	private Task toEdit;
 	private final int editNum;
 	private String message;
-	private int time;
-	private int date;
+	private Date date1;
+	private Date date2;
+	private boolean isFloating = true;
+	private boolean isEvent = false;
+	private boolean hasDeadline = false;
 	
-	public EditCommand(int targetVisibleIndex, String message, int time, int date) throws IllegalValueException{
+	public EditCommand(int targetVisibleIndex, String message) throws IllegalValueException{
 		super(targetVisibleIndex);
 		editNum = targetVisibleIndex;
-		
 		this.message = message;
-		this.time = time;
-		this.date = date;
 	}
+	
+	public EditCommand(int targetVisibleIndex, String message, Date deadline) throws IllegalValueException{
+	    this(targetVisibleIndex,message);    
+	    this.date1 = deadline;
+	    isFloating = false;
+	    hasDeadline = true;
+	}
+	
+    public EditCommand(int targetVisibleIndex, String message, Date start, Date end) throws IllegalValueException{
+        this(targetVisibleIndex,message);    
+        this.date1 = start;
+        this.date1 = end;
+        isFloating = false;
+        isEvent = true;
+    }	
 	
 	@Override
 	public CommandResult execute() {
 		try {
-			toEdit = new Task(
-					new Message(),
-					new Date(email),
-					new Time(address)
-					);
+		    if (hasDeadline) {
+		        toEdit = new Task(message, date1);
+		    }
+		    else if (isEvent) {
+		        toEdit = new Task(message, date1, date2);
+		    }
+		    else {
+		        toEdit = new Task(message);
+		    }
 			DeleteCommand deleted = new DeleteCommand(editNum);
 			deleted.execute();
 
@@ -48,12 +71,8 @@ public static final String COMMAND_WORD = "edit";
 			return new CommandResult(String.format(MESSAGE_SUCCESS, toEdit));
 		}catch (IndexOutOfBoundsException ie) {
 			return new CommandResult("The task index provided is invalid");
-		}catch (TaskNotFoundException e) {
-			return new CommandResult("Task does not exist in task-tracker");
-		}catch (IllegalValueException e) {
-			return new CommandResult(e.getMessage());
 		}
 	}
-	}
+	
 	
 }

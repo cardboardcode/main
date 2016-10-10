@@ -36,8 +36,8 @@ public class timeParser {
             }
         }
         else {
-            for (int i = 0; i < dates.size(); i++) { 
-                dates.set(i, correctTime(dates.get(i),matchedText);
+            for (int i = 0; i < dates.size(); i++) {
+                dates.set(i, correctTime(dates.get(i),matchedText));
             }
         }
 

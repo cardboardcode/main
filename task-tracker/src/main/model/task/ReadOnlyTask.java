@@ -13,6 +13,7 @@ public interface ReadOnlyTask {
     Date getEndTime();
     Date getDeadline();
     boolean getIsFloating();
+    boolean getIsEvent();
     
 
     /**
