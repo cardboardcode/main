@@ -18,7 +18,7 @@ import main.model.task.UniqueTaskList.DuplicateTaskException;
 public class TaskTracker implements ReadOnlyTaskTracker{
     private static final Logger logger = LogsCenter.getLogger(TaskTracker.class);
 
-    private UniqueTaskList tasks;
+    private UniqueTaskList tasks = new UniqueTaskList();
     
     public TaskTracker() {}
     
@@ -79,15 +79,16 @@ public class TaskTracker implements ReadOnlyTaskTracker{
     
     @Override
     public String toString() {
-//        return tasks.getInternalList().size() + " tasks";
+        return tasks.getInternalList().size() + " tasks";
+      
         // TODO: refine later
-        String str = "";
-        Iterator<Task> iterate = tasks.iterator();
-        while (iterate.hasNext()) {
-            Task element = iterate.next();
-            str += element + " ";
-        }
-        return str;
+//        String str = "";
+//        Iterator<Task> iterate = tasks.iterator();
+//        while (iterate.hasNext()) {
+//            Task element = iterate.next();
+//            str += element + " ";
+//        }
+//        return str;
         
     }   
     
