@@ -4,7 +4,6 @@ import java.util.Date;
 
 import main.commons.exceptions.IllegalValueException;
 import main.model.task.Task;
-import main.model.task.UniqueTaskList.TaskNotFoundException;
 
 /**
  * Edits an existing task in task-tracker
@@ -72,10 +71,6 @@ public static final String COMMAND_WORD = "edit";
 			return new CommandResult(String.format(MESSAGE_SUCCESS, toEdit));
 		}catch (IndexOutOfBoundsException ie) {
 			return new CommandResult("The task index provided is invalid");
-		}catch (TaskNotFoundException e) {
-			return new CommandResult("Task does not exist in task-tracker");
-		}catch (IllegalValueException e) {
-			return new CommandResult(e.getMessage());
 		}
 	}
 	

@@ -1,12 +1,8 @@
 package main.logic.command;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import main.commons.core.EventsCenter;
 import main.commons.core.Messages;
 import main.commons.events.ui.IncorrectCommandAttemptedEvent;
-import main.data.Task;
 import main.model.model.Model;
 
 /**
