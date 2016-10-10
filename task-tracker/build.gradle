@@ -41,7 +41,7 @@ dependencies {
     
     compile "com.google.guava:guava:$guavaVersion"
     compile 'com.joestelmach:natty:0.12'
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.4'
     
    // compile 'org.apache.commons:commons-lasaxg3:3.4'    
 }
