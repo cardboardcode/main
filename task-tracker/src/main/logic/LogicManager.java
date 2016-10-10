@@ -6,9 +6,12 @@ import main.logic.command.Command;
 import main.logic.command.CommandResult;
 import main.logic.parser.MainParser;
 import main.model.model.Model;
+import main.model.task.ReadOnlyTask;
 import main.storage.Storage;
 
 import java.util.logging.Logger;
+
+import javafx.collections.ObservableList;
 
 /**
  * The main LogicManager of the app.
@@ -33,8 +36,8 @@ public class LogicManager extends ComponentManager implements Logic {
 
     }
 
-//    @Override
-//    public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-//        return model.getFilteredPersonList();
-//    }
+    @Override
+    public ObservableList<ReadOnlyTask> getFilteredTaskList() {
+        return model.getFilteredTaskList();
+    }
 }
