@@ -1,100 +1,126 @@
 package main.model.task;
 
-import main.commons.util.CollectionUtil;
-
-
-
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Objects;
 
-/**
- * Represents a Person in the address book.
- * Guarantees: details are present and not null, field values are validated.
- */
 public class Task implements ReadOnlyTask {
-	private int taskID;
-    private Message message;
-    private Time time;
+    private String message;
+    Date deadline;
+    Date startTime;
+    Date endTime;
     private boolean isFloating;
     
-    //constructor for floating task
-    public Task(int taskID, Message message){
-    	this.taskID = taskID;
-    	this.message = message;
-    	this.isFloating = true; 
-    }
-    /**
-     * Every field must be present and not null.
-     */
-    public Task(int taskID, Message message, Time time, boolean isFloating) {
-        assert !CollectionUtil.isAnyNull(taskID, message, time, isFloating);
-        this.taskID = taskID;
+    public Task(String message) {
         this.message = message;
-        this.time = time;       
-        this.isFloating = isFloating;
-        
+        this.isFloating = true; 
     }
-
-    /**
-     * Copy constructor.
-     */
-    public Task(ReadOnlyTask source) {
-        this(source.getTaskID(), source.getMessage(), source.getTime(), source.getIsFloating());
+    
+    public Task(String message, Date deadline) {
+        this.message = message;
+        this.deadline = deadline;
+        this.isFloating = false;
+    }
+    
+    public Task(String message, Date startTime, Date endTime) {
+        this.message = message;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.isFloating = false;
+    }
+    //getters
+    @Override
+    public String getMessage(){
+        return this.message;
     }
     @Override
-    public int getTaskID(){
-    	return taskID;
+    public Date getStartTime(){
+    	return this.startTime;
     }
     
-    public void setTaskID(int taskID){
-    	this.taskID = taskID;
-    }
+    public String getStartTimeString() {
+		String dateString = "";
+		DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm");
+		dateString = df.format(this.startTime);
+		return dateString; 
+	}
+    
     @Override
-    public Message getMessage() {
-        return message;
+    public Date getEndTime(){
+    	return this.endTime;
     }
     
-    public void setMessage(Message message){
-    	this.message = message ;
-    }
-
+    public String getEndTimeString() {
+		String dateString = "";
+		DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm");
+		dateString = df.format(this.endTime);
+		return dateString;
+	}
+    
     @Override
-    public Time getTime() {
-        return time;
+    public Date getDeadline(){
+    	return this.deadline;
     }
     
-    public void setTime(Time time){
-    	this.time = time;
-    }
-
+    public String getDeadlineString() {
+		String dateString = "";
+		DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm");
+		dateString = df.format(this.deadline);
+		return dateString;	
+	}
     @Override
-    public boolean getIsFloating() {
-        return getIsFloating();
+    public boolean getIsFloating(){
+    	return this.isFloating;
     }
-   
-    public void setIsFloating(){
-    	isFloating = true;
+    //setters
+    public void setMessage(String message){
+    	this.message = message;
     }
+    public void setStartTime(Date startTime){
+    	this.startTime = startTime;
+    } 
     
-    public void setIsNotFloating(){
-    	isFloating = false;
+    public void setEndTime(Date endTime){
+    	this.endTime = endTime;
     }
+       
+    public void setDeadline(Date deadline){
+    	this.deadline = deadline;
+    }  
     
+    public void setIsFloating(boolean isFloating){
+    	this.isFloating = isFloating;
+    }
+     
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof ReadOnlyTask // instanceof handles nulls
-                && this.isSameStateAs((ReadOnlyTask) other));
+    	if(this.isFloating && this.message.equals(((Task) other).message)){
+    			return other == this 
+                    || (other instanceof Task);
+        }
+    	if(!this.isFloating && this.message.equals(((Task) other).message)
+    		&& this.startTime.equals(((Task) other).startTime)
+    		&& this.endTime.equals(((Task) other).endTime)){
+    			return other == this 
+                    || (other instanceof Task);       
+    	}
+    	if(!this.isFloating && this.message.equals(((Task) other).message)
+    		&& this.deadline.equals(((Task) other).deadline)){
+    			return other == this 
+    				|| (other instanceof Task); 
+    	}
     }
-
+       
     @Override
     public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(taskID, message, time, isFloating);
+        return Objects.hash(message);
     }
-
+    
     @Override
     public String toString() {
-        return getAsText();
+        return getMessage();
     }
+
 
 }

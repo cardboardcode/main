@@ -1,15 +1,17 @@
 package main.model.task;
 
-
+import java.util.Date;
 
 /**
  * A read-only immutable interface for a Person in the addressbook.
  * Implementations should guarantee: details are present and not null, field values are validated.
  */
 public interface ReadOnlyTask {
-	int getTaskID();
-    Message getMessage();
-    Time getTime();
+	
+    String getMessage();
+    Date getStartTime();
+    Date getEndTime();
+    Date getDeadline();
     boolean getIsFloating();
     
 
@@ -20,34 +22,28 @@ public interface ReadOnlyTask {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
                 && other.getMessage().equals(this.getMessage()) // state checks here onwards
-                && other.getTime().equals(this.getTime()));
+                && other.getStartTime().equals(this.getStartTime())
+                && other.getEndTime().equals(this.getEndTime())
+                && other.getDeadline().equals(this.getDeadline())
+                && other.getIsFloating() == this.getIsFloating());
+                
                 //&& other.getIsFloating().equals(this.getIsFloating()));
     }
 
     /**
-     * Formats the person as text, showing all contact details.
+     * Formats the Task as text, showing all details.
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getTaskID())
-        		.append(getMessage())
-                .append(getTime());
+        builder.append(getMessage())
+                .append(getStartTime())
+                .append(getEndTime())
+                .append(getDeadline())
+                .append(getIsFloating());
                 
                 
         return builder.toString();
     }
 
-    /**
-     * Returns a string representation of this Person's tags
-     */
-    default String tagsString() {
-        final StringBuffer buffer = new StringBuffer();
-        final String separator = ", ";
-        if (buffer.length() == 0) {
-            return "";
-        } else {
-            return buffer.substring(0, buffer.length() - separator.length());
-        }
-    }
-
+  
 }
