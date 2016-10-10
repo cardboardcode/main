@@ -1,6 +1,8 @@
 package main.model;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import main.commons.core.UnmodifiableObservableList;
@@ -27,11 +29,17 @@ public class TaskTracker implements ReadOnlyTaskTracker{
     public TaskTracker(UniqueTaskList tasks) {
         resetData(tasks.getInternalList());
     }
-
     
-    private void resetData(ObservableList<Task> internalList) {
-        // TODO Auto-generated method stub
-        
+    public void resetData(Collection<? extends ReadOnlyTask> newTasks) {
+        setTasks(newTasks.stream().map(Task::new).collect(Collectors.toList()));        
+    }
+    
+    public void resetData(ReadOnlyTaskTracker newData) {
+        resetData(newData.getTaskList());
+    }
+    
+    public void setTasks(List<Task> tasks) {
+        this.tasks.getInternalList().setAll(tasks);
     }
 
     public UnmodifiableObservableList<ReadOnlyTask> getInternalList() {
