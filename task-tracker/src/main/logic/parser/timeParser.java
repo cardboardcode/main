@@ -16,6 +16,7 @@ public class timeParser {
     public timeParser() {}
     
     public static Pair<String,List<Date>> extractTime(String input) {
+        assert input != null;
         List<DateGroup> groups = new Parser().parse(input);
         DateGroup group = groups.get(0);
         
@@ -47,6 +48,7 @@ public class timeParser {
     }
     
     private static Date setDefaultTime(Date date) {
+        assert date != null;
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.set(Calendar.HOUR_OF_DAY, 8);
@@ -61,6 +63,8 @@ public class timeParser {
      * 
      */
     private static Date correctTime(Date date, String extracted) {
+        assert date!= null;
+        assert extracted != null;
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         int hour = cal.get(Calendar.HOUR_OF_DAY);
