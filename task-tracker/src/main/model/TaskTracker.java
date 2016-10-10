@@ -1,17 +1,23 @@
 package main.model;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
-import main.commons.core.UnmodifiableObservableList;
+import main.commons.core.LogsCenter;
 import main.model.model.ReadOnlyTaskTracker;
 import main.model.task.ReadOnlyTask;
 import main.model.task.Task;
 import main.model.task.UniqueTaskList;
+import main.model.task.UniqueTaskList.DuplicateTaskException;
 
 public class TaskTracker implements ReadOnlyTaskTracker{
+    private static final Logger logger = LogsCenter.getLogger(TaskTracker.class);
+
     private UniqueTaskList tasks;
     
     public TaskTracker() {}
@@ -42,41 +48,47 @@ public class TaskTracker implements ReadOnlyTaskTracker{
         this.tasks.getInternalList().setAll(tasks);
     }
 
-    public UnmodifiableObservableList<ReadOnlyTask> getInternalList() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     @Override
     public UniqueTaskList getUniqueTaskList() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.tasks;
     }
 
     @Override
     public List<ReadOnlyTask> getTaskList() {
-        // TODO Auto-generated method stub
-        return null;
+        return Collections.unmodifiableList(tasks.getInternalList());
     }
 
-    public void removeTask(ReadOnlyTask target) {
-        // TODO Auto-generated method stub
-        
+    public void removeTask(ReadOnlyTask target) throws UniqueTaskList.TaskNotFoundException {
+        if (!tasks.remove(target)) {
+            throw new UniqueTaskList.TaskNotFoundException();
+        }
     }
 
-    public void addTask(Task task) {
-        // TODO Auto-generated method stub
-        
+    public void addTask(Task task) throws DuplicateTaskException {
+        tasks.add(task);        
     }
 
     public ObservableList<Task> getTasks() {
-        // TODO Auto-generated method stub
-        return null;
+        return tasks.getInternalList();
     }
     
     public Task getTask(int index) {
         return getUniqueTaskList().getInternalList().get(index);
     }
     
-
+    @Override
+    public String toString() {
+//        return tasks.getInternalList().size() + " tasks";
+        // TODO: refine later
+        String str = "";
+        Iterator<Task> iterate = tasks.iterator();
+        while (iterate.hasNext()) {
+            Task element = iterate.next();
+            str += element + " ";
+        }
+        return str;
+        
+    }   
+    
 }
