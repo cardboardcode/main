@@ -1,7 +1,7 @@
 package main.commons.events.ui;
 
 import main.commons.events.BaseEvent;
-import main.model.person.ReadOnlyPerson;
+import main.model.task.ReadOnlyTask;
 
 /**
  * Represents a selection change in the Person List Panel
