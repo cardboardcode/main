@@ -1,6 +1,8 @@
 package main.commons.core;
 
+import javafx.collections.ObservableList;
 import main.commons.events.BaseEvent;
+import main.model.task.ReadOnlyTask;
 
 /**
  * Base class for *Manager classes
@@ -24,5 +26,8 @@ public abstract class ComponentManager {
 
     protected void raise(BaseEvent event){
         eventsCenter.post(event);
+    }
+    public ObservableList<ReadOnlyTask> getFilteredTaskList(){
+        return null;
     }
 }
