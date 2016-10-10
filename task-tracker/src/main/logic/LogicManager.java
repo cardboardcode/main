@@ -1,6 +1,5 @@
 package main.logic;
 
-import javafx.collections.ObservableList;
 import main.commons.core.ComponentManager;
 import main.commons.core.LogsCenter;
 import main.logic.command.Command;
