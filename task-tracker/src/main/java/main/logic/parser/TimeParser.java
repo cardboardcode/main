@@ -1,5 +1,6 @@
 package main.logic.parser;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -9,15 +10,19 @@ import com.joestelmach.natty.*;
 import javafx.util.Pair;
 
 
-public class timeParser {
+public class TimeParser {
     
     Parser parser = new Parser();
     
-    public timeParser() {}
+    public TimeParser() {}
     
     public static Pair<String,List<Date>> extractTime(String input) {
-        assert input != null;
         List<DateGroup> groups = new Parser().parse(input);
+        
+        if (groups.size() == 0) {
+            return new Pair<String,List<Date>>(input,new ArrayList<Date>());
+        }
+        
         DateGroup group = groups.get(0);
         
         String matchedText = group.getText();
