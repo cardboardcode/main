@@ -47,10 +47,9 @@ public class TaskCard extends UiPart{
 
     @FXML
     public void initialize() {
-        message.setText(task.getAsText());
+        message.setText(task.getMessage());
         id.setText(displayedIndex + ". ");
-
-
+        date.setText(task.getAsText());
     }
 
     public HBox getLayout() {
