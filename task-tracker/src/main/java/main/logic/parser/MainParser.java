@@ -1,8 +1,10 @@
 package main.logic.parser;
 
+import main.commons.core.LogsCenter;
 import main.commons.core.Messages;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,6 +22,8 @@ import javafx.util.Pair;
 public class MainParser {
     
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<task>.*)");
+    private static final Logger logger = LogsCenter.getLogger(MainParser.class);
+
        
     public MainParser() {}
     
@@ -62,7 +66,7 @@ public class MainParser {
      */    
     public Command prepareAdd(String task) {
 
-        Pair<String,List<Date>> info = timeParser.extractTime(task);
+        Pair<String,List<Date>> info = TimeParser.extractTime(task);
         List<Date> dates = info.getValue();
         String description = info.getKey();
         

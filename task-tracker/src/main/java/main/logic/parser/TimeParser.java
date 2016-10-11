@@ -10,11 +10,11 @@ import com.joestelmach.natty.*;
 import javafx.util.Pair;
 
 
-public class timeParser {
+public class TimeParser {
     
     Parser parser = new Parser();
     
-    public timeParser() {}
+    public TimeParser() {}
     
     public static Pair<String,List<Date>> extractTime(String input) {
         List<DateGroup> groups = new Parser().parse(input);
