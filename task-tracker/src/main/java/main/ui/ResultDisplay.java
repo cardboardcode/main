@@ -11,6 +11,8 @@ import main.commons.util.FxViewUtil;
 
 /**
  * A ui for the status bar that is displayed at the header of the application.
+ * "person" keyword check done
+ * @author bey
  */
 public class ResultDisplay extends UiPart {
     public static final String RESULT_DISPLAY_ID = "resultDisplay";

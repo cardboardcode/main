@@ -12,8 +12,16 @@ import java.main.commons.core.LogsCenter;
 import java.util.Date;
 import java.util.logging.Logger;
 
+import org.controlsfx.control.StatusBar;
+
+import com.google.common.eventbus.Subscribe;
+
 /**
  * A ui for the status bar that is displayed at the footer of the application.
+ * "person" key check done
+ * @param AnchorPane saveLocStatusBarPane
+ * @param AnchorPane syncStatusBarPane
+ * @author bey
  */
 public class StatusBarFooter extends UiPart {
     private static final Logger logger = LogsCenter.getLogger(StatusBarFooter.class);
