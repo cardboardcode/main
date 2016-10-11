@@ -9,21 +9,25 @@ import javafx.stage.Stage;
 import main.Main;
 import main.logic.Logic;
 import main.model.UserPrefs;
-
 import main.commons.core.ComponentManager;
 import main.commons.core.Config;
 import main.commons.core.LogsCenter;
+import main.commons.events.storage.DataSavingExceptionEvent;
+import main.commons.events.ui.JumpToListRequestEvent;
+import main.commons.events.ui.ShowHelpRequestEvent;
+import main.commons.events.ui.TaskPanelSelectionChangedEvent;
 import main.commons.util.StringUtil;
-
 import java.util.logging.Logger;
 
 /**
  * The manager of the UI component.
+ * "person" keyword check done
+ * "addressbook" keyword check done
  * @author bey
  */
 public class UiManager extends ComponentManager implements Ui {
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
-    private static final String ICON_APPLICATION = "/images/address_book_32.png";
+    private static final String ICON_APPLICATION = "/images/pp.jpg";
 
     private Logic logic;
     private Config config;
@@ -60,7 +64,7 @@ public class UiManager extends ComponentManager implements Ui {
     public void stop() {
         prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
         mainWindow.hide();
-        mainWindow.releaseResources();
+//        mainWindow.releaseResources();
     }
 
     private void showFileOperationAlertAndWait(String description, String details, Throwable cause) {
@@ -69,7 +73,7 @@ public class UiManager extends ComponentManager implements Ui {
     }
 
     private Image getImage(String imagePath) {
-        return new Image(MainApp.class.getResourceAsStream(imagePath));
+        return new Image(Main.class.getResourceAsStream(imagePath));
     }
 
     void showAlertDialogAndWait(Alert.AlertType type, String title, String headerText, String contentText) {
@@ -112,13 +116,13 @@ public class UiManager extends ComponentManager implements Ui {
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mainWindow.getPersonListPanel().scrollTo(event.targetIndex);
+        mainWindow.getTaskListPanel().scrollTo(event.targetIndex);
     }
 
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event){
+    private void handleTaskPanelSelectionChangedEvent(TaskPanelSelectionChangedEvent event){
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mainWindow.loadPersonPage(event.getNewSelection());
+//        mainWindow.loadTaskPage(event.getNewSelection());
     }
 
 }

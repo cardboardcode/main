@@ -7,11 +7,14 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import main.commons.util.FxViewUtil;
 
-import java.main.commons.core.LogsCenter;
+import main.commons.core.LogsCenter;
 import java.util.logging.Logger;
 
 /**
  * Controller for a help page
+ * "person" keyword check done
+ * "addressbook" keyword check done
+ * @author bey
  */
 public class HelpWindow extends UiPart {
 

@@ -9,6 +9,8 @@ import main.Main;
 
 /**
  * A utility class to load UiParts from FXML files.
+ * "person" keyword check done
+ * "addressbook" keyword check done
  * @author bey
  */
 public class UiPartLoader {
@@ -20,7 +22,6 @@ public class UiPartLoader {
 
     /**
      * Returns the ui class for a specific UI Part.
-     *
      * @param primaryStage The primary stage for the view.
      * @param placeholder The placeholder where the loaded Ui Part is added.
      * @param sampleUiPart The sample of the expected UiPart class.

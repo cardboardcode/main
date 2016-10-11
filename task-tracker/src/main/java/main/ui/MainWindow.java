@@ -1,6 +1,6 @@
 package main.ui;
 
-import java.main.commons.core.Config;
+import main.commons.core.Config;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,17 +15,28 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import main.commons.core.Config;
+import main.commons.core.GuiSettings;
+import main.commons.events.ui.ExitAppRequestEvent;
 import main.logic.Logic;
+import main.model.UserPrefs;
 
 /**
- * Based codes mostly on Addressbook-Level4.
+ * Instantiates all the individual components for the Gui and interacts with UiManager
+ * - CommandBox, HelpWindow, StatusBarFooter, TaskCard, TaskListPanel
+ * "person" keyword check done
+ * "addressbook" keyword check done
+ * @param AnchorPane commandBoxPlaceholder
+ * @param MenuItem helpMenuItem
+ * @param AnchorPane taskListPanelPlaceholder
+ * @param AnchorPane resultDisplayPlaceholder
+ * @param AnchorPane statusbarPlaceholder
  * @author bey
- *
  */
 
 public class MainWindow extends UiPart{
 	
-	private static final String ICON = "/resources/images/pp.jpg";
+	private static final String ICON = "/images/pp.jpg";
     private static final String FXML = "MainWindow.fxml";
     public static final int MIN_HEIGHT = 600;
     public static final int MIN_WIDTH = 450;
@@ -53,7 +64,7 @@ public class MainWindow extends UiPart{
     private MenuItem helpMenuItem;
 
     @FXML
-    private AnchorPane personListPanelPlaceholder;
+    private AnchorPane taskListPanelPlaceholder;
 
     @FXML
     private AnchorPane resultDisplayPlaceholder;
@@ -108,7 +119,7 @@ public class MainWindow extends UiPart{
     }
 
     void fillInnerParts() {
-        personListPanel = TaskListPanel.load(primaryStage, getPersonListPlaceholder(), logic.getFilteredTaskList());
+        taskListPanel = TaskListPanel.load(primaryStage, getTaskListPlaceholder(), logic.getFilteredTaskList());
         resultDisplay = ResultDisplay.load(primaryStage, getResultDisplayPlaceholder());
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getTaskTrackerFilePath());
         commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultDisplay, logic);
@@ -126,8 +137,8 @@ public class MainWindow extends UiPart{
         return resultDisplayPlaceholder;
     }
 
-    public AnchorPane getPersonListPlaceholder() {
-        return personListPanelPlaceholder;
+    public AnchorPane getTaskListPlaceholder() {
+        return taskListPanelPlaceholder;
     }
 
     public void hide() {

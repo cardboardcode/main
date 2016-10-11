@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.ui.TaskCard">
     <children>
         <GridPane HBox.hgrow="ALWAYS">
             <columnConstraints>
@@ -31,11 +31,11 @@
                             <children>
                                 <HBox>
                                     <Label fx:id="id" styleClass="cell_big_label" />
-                                    <Label fx:id="date" styleClass="cell_big_label" text="\$date" />
                                 </HBox>
-                                <Label fx:id="time" styleClass="cell_small_label" text="\$time" />
                             </children>
                         </HBox>
+                          <Label fx:id="id" styleClass="cell_small_label" text="\$id" />
+                           <Label fx:id="date" prefHeight="17.0" prefWidth="32.0" styleClass="cell_big_label" text="\$date" />
                         <Label fx:id="message" styleClass="cell_small_label" text="\$message" />
                     </children>
                 </VBox>

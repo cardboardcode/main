@@ -1,7 +1,7 @@
 package main.ui;
 
 
-//import com.google.common.eventbus.Subscribe;
+import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
@@ -10,11 +10,21 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import main.commons.events.ui.IncorrectCommandAttemptedEvent;
 import main.commons.util.FxViewUtil;
+import main.logic.Logic;
 import main.logic.command.CommandResult;
 
-import java.main.commons.core.LogsCenter;
+import main.commons.core.LogsCenter;
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+/**
+ * Contains the main input component which would interact with Logic most.
+ * "person" key check done
+ * "addressbook" keyword check done
+ * @param FXML TextField commandTextField
+ * @param FXML CommandResult mostRecentResult
+ * @author bey
+ */
 public class CommandBox extends UiPart {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private static final String FXML = "CommandBox.fxml";

@@ -5,8 +5,19 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import main.model.person.ReadOnlyPerson;
+import main.model.task.ReadOnlyTask;
 
+/**
+ * Display individual panels within TaskListPanel with the details of eacch specific task
+ * "person" keyword check done
+ * "addressbook" keyword check done
+ * @param HBox cardPane
+ * @param Label id
+ * @param Label message
+ * @param Label date
+ * @author bey
+ *
+ */
 public class TaskCard extends UiPart{
 
     private static final String FXML = "TaskListCard.fxml";
@@ -18,11 +29,7 @@ public class TaskCard extends UiPart{
     @FXML
     private Label message;
     @FXML
-    private Label time;
-    @FXML
     private Label date;
-//    @FXML
-//    private Label tags;
 
     private ReadOnlyTask task;
     private int displayedIndex;
@@ -40,11 +47,9 @@ public class TaskCard extends UiPart{
 
     @FXML
     public void initialize() {
-        message.setText(task.getMessage().fullName);
+        message.setText(task.getMessage());
         id.setText(displayedIndex + ". ");
-        date.setText(task.getDate().value);
-        time.setText(task.getTime().value);
-//        tags.setText(person.tagsString());
+        date.setText(task.getAsText());
     }
 
     public HBox getLayout() {

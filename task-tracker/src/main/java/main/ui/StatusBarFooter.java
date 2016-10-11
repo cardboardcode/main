@@ -8,12 +8,21 @@ import javafx.stage.Stage;
 import main.commons.events.model.TaskTrackerChangedEvent;
 import main.commons.util.FxViewUtil;
 
-import java.main.commons.core.LogsCenter;
+import main.commons.core.LogsCenter;
 import java.util.Date;
 import java.util.logging.Logger;
 
+import org.controlsfx.control.StatusBar;
+
+import com.google.common.eventbus.Subscribe;
+
 /**
  * A ui for the status bar that is displayed at the footer of the application.
+ * "person" keyword check done
+ * "addressbook" keyword check done
+ * @param AnchorPane saveLocStatusBarPane
+ * @param AnchorPane syncStatusBarPane
+ * @author bey
  */
 public class StatusBarFooter extends UiPart {
     private static final Logger logger = LogsCenter.getLogger(StatusBarFooter.class);
@@ -88,7 +97,7 @@ public class StatusBarFooter extends UiPart {
     }
 
     @Subscribe
-    public void handleAddressBookChangedEvent(TaskTrackerChangedEvent abce) {
+    public void handleTaskTrackerChangedEvent(TaskTrackerChangedEvent abce) {
         String lastUpdated = (new Date()).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus("Last Updated: " + lastUpdated);
