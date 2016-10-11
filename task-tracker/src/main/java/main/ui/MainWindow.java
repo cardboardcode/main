@@ -25,6 +25,7 @@ import main.model.UserPrefs;
  * Instantiates all the individual components for the Gui and interacts with UiManager
  * - CommandBox, HelpWindow, StatusBarFooter, TaskCard, TaskListPanel
  * "person" keyword check done
+ * "addressbook" keyword check done
  * @param AnchorPane commandBoxPlaceholder
  * @param MenuItem helpMenuItem
  * @param AnchorPane taskListPanelPlaceholder

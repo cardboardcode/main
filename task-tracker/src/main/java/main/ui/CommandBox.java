@@ -1,12 +1,6 @@
 package main.ui;
 
-/**
- * Contains the main input component which would interact with Logic most.
- * "person" key check done
- * @param FXML TextField commandTextField
- * @param FXML CommandResult mostRecentResult
- * @author bey
- */
+
 import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -23,7 +17,14 @@ import java.main.commons.core.LogsCenter;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
-
+/**
+ * Contains the main input component which would interact with Logic most.
+ * "person" key check done
+ * "addressbook" keyword check done
+ * @param FXML TextField commandTextField
+ * @param FXML CommandResult mostRecentResult
+ * @author bey
+ */
 public class CommandBox extends UiPart {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private static final String FXML = "CommandBox.fxml";

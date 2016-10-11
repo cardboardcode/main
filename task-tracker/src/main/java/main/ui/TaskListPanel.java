@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 /**
  * Panel containing the list of tasks.
  * "person" keyword check done
+ * "addressbook" keyword check done
  * @param ListView<ReadOnlyTask> taskListView
  * @author bey
  */

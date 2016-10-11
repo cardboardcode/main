@@ -18,7 +18,8 @@ import com.google.common.eventbus.Subscribe;
 
 /**
  * A ui for the status bar that is displayed at the footer of the application.
- * "person" key check done
+ * "person" keyword check done
+ * "addressbook" keyword check done
  * @param AnchorPane saveLocStatusBarPane
  * @param AnchorPane syncStatusBarPane
  * @author bey
@@ -96,7 +97,7 @@ public class StatusBarFooter extends UiPart {
     }
 
     @Subscribe
-    public void handleAddressBookChangedEvent(TaskTrackerChangedEvent abce) {
+    public void handleTaskTrackerChangedEvent(TaskTrackerChangedEvent abce) {
         String lastUpdated = (new Date()).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus("Last Updated: " + lastUpdated);

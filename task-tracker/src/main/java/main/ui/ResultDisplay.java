@@ -12,6 +12,7 @@ import main.commons.util.FxViewUtil;
 /**
  * A ui for the status bar that is displayed at the header of the application.
  * "person" keyword check done
+ * "addressbook" keyword check done
  * @author bey
  */
 public class ResultDisplay extends UiPart {

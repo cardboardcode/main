@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 /**
  * The manager of the UI component.
  * "person" keyword check done
+ * "addressbook" keyword check done
  * @author bey
  */
 public class UiManager extends ComponentManager implements Ui {

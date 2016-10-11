@@ -10,6 +10,7 @@ import main.model.task.ReadOnlyTask;
 /**
  * Display individual panels within TaskListPanel with the details of eacch specific task
  * "person" keyword check done
+ * "addressbook" keyword check done
  * @param HBox cardPane
  * @param Label id
  * @param Label message

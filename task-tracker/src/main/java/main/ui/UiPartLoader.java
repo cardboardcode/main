@@ -10,6 +10,7 @@ import main.Main;
 /**
  * A utility class to load UiParts from FXML files.
  * "person" keyword check done
+ * "addressbook" keyword check done
  * @author bey
  */
 public class UiPartLoader {

@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 /**
  * Controller for a help page
  * "person" keyword check done
+ * "addressbook" keyword check done
  * @author bey
  */
 public class HelpWindow extends UiPart {
