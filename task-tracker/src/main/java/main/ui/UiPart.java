@@ -1,7 +1,7 @@
 package main.ui;
 
 
-import java.main.commons.core.EventsCenter;
+import main.commons.core.EventsCenter;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;

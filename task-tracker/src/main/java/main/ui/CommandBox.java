@@ -13,7 +13,7 @@ import main.commons.util.FxViewUtil;
 import main.logic.Logic;
 import main.logic.command.CommandResult;
 
-import java.main.commons.core.LogsCenter;
+import main.commons.core.LogsCenter;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;

@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import main.commons.events.model.TaskTrackerChangedEvent;
 import main.commons.util.FxViewUtil;
 
-import java.main.commons.core.LogsCenter;
+import main.commons.core.LogsCenter;
 import java.util.Date;
 import java.util.logging.Logger;
 
