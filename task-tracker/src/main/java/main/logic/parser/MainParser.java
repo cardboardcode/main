@@ -33,6 +33,8 @@ public class MainParser {
         String commandWord = matcher.group("commandWord");
         String task = matcher.group("task");
         
+        logger.info("command detected: " + commandWord);
+        
         switch (ReferenceList.commandsDictionary.get(commandWord)) {
             case AddCommand.COMMAND_WORD:
                 return prepareAdd(task);
