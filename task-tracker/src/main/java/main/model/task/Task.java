@@ -124,19 +124,6 @@ public class Task implements ReadOnlyTask {
     public void setIsFloating(boolean isFloating){
     	this.isFloating = isFloating;
     }
-    
-    /*
-     * replace task while keeping task index constant
-     * 
-     */
-    public void replaceTask(Task task) {
-        this.message = task.message;
-        this.deadline = task.deadline;
-        this.startTime = task.startTime;
-        this.endTime = task.endTime;
-        this.isEvent = task.isEvent;
-        this.isFloating = task.isFloating;                
-    }
      
     @Override
     public boolean equals(Object other) {
@@ -169,11 +156,11 @@ public class Task implements ReadOnlyTask {
     		return  getMessage(); 
     	}
     	else if(this.isEvent){
-    		return  getMessage()+ "from " + getStartTimeString() + " to "
+    		return  getMessage()+ " from " + getStartTimeString() + " to "
     					+ getEndTimeString();
     	}
     	else{
-    		return  getMessage() + "due by " + getDeadlineString();
+    		return  getMessage() + " due by " + getDeadlineString();
     	}
     }
 

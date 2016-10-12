@@ -62,6 +62,13 @@ public class UniqueTaskList implements Iterable<Task> {
         internalList.add(toAdd);
     }
 
+    public void replace(int index, Task newtask) throws DuplicateTaskException{
+        if (contains(newtask)) {
+            throw new DuplicateTaskException();
+        }
+        internalList.set(index,newtask);
+    }
+    
     /**
      * Removes the equivalent person from the list.
      *
@@ -97,4 +104,5 @@ public class UniqueTaskList implements Iterable<Task> {
     public int hashCode() {
         return internalList.hashCode();
     }
+
 }
