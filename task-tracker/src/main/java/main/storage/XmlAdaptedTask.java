@@ -44,7 +44,7 @@ public class XmlAdaptedTask {
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
     public XmlAdaptedTask(ReadOnlyTask source) {
-        message = source.getMessage().toString();
+        message = source.getMessage();
         deadline = source.getDeadline();
         startTime = source.getStartTime();
         endTime = source.getEndTime();
