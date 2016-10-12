@@ -150,14 +150,14 @@ public class Task implements ReadOnlyTask {
     @Override
     public String toString() {
     	if(this.isFloating){
-    		return "[" + getMessage() + "]"; 
+    		return  getMessage(); 
     	}
     	else if(this.isEvent){
-    		return "[" + getMessage()+ "\n" + getStartTimeString() + "\n"
-    					+ getEndTimeString() + "]" ;
+    		return  getMessage()+ "From " + getStartTimeString() + " To "
+    					+ getEndTimeString();
     	}
     	else{
-    		return "[" + getMessage() + "\n" + getDeadlineString() + "]";
+    		return  getMessage() + "Due by " + getDeadlineString();
     	}
     }
 
