@@ -117,7 +117,9 @@ public class Task implements ReadOnlyTask {
     public boolean equals(Object other) {
         if (this == other) return true;
         else if (other instanceof Task) {
-        	if(this.isFloating) return (this.message.equals(((Task) other).message));
+        	if(this.isFloating){ 
+        		return (this.message.equals(((Task) other).message));
+        	}
         	else if(this.isEvent) {
         	    return (this.message.equals(((Task) other).message)
         	 	&& this.startTime.equals(((Task) other).startTime)
@@ -138,7 +140,16 @@ public class Task implements ReadOnlyTask {
     
     @Override
     public String toString() {
-        return getMessage();
+    	if(this.isFloating){
+    		return "[" + getMessage() + "]"; 
+    	}
+    	else if(this.isEvent){
+    		return "[" + getMessage()+ "\n" + getStartTimeString() + "\n"
+    					+ getEndTimeString() + "]" ;
+    	}
+    	else{
+    		return "[" + getMessage() + "\n" + getDeadlineString() + "]";
+    	}
     }
 
 
