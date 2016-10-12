@@ -1,0 +1,9 @@
+tasktracker/bin/
+tasktracker/target/
+tasktracker/.gradle/
+tasktracker/build/
+tasktracker/preferences.json
+tasktracker/config.json
+tasktracker/data/
+tasktracker/tasktracker.log.*
+
