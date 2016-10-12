@@ -26,9 +26,9 @@ public interface ReadOnlyTask {
                 && other.getStartTime().equals(this.getStartTime())
                 && other.getEndTime().equals(this.getEndTime())
                 && other.getDeadline().equals(this.getDeadline())
-                && other.getIsFloating() == this.getIsFloating());
+                && other.getIsFloating() == this.getIsFloating()
+                && other.getIsEvent() == this.getIsEvent());
                 
-                //&& other.getIsFloating().equals(this.getIsFloating()));
     }
 
     /**
@@ -40,7 +40,8 @@ public interface ReadOnlyTask {
                 .append(getStartTime())
                 .append(getEndTime())
                 .append(getDeadline())
-                .append(getIsFloating());
+                .append(getIsFloating())
+        		.append(getIsEvent());
                 
                 
         return builder.toString();

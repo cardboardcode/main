@@ -14,17 +14,26 @@ public class Task implements ReadOnlyTask {
     private boolean isEvent = false;
     
     public Task(String message) {
+    	if(message == null){
+    		throw new IllegalArgumentException("Please fill in the required fields");
+    	}
         this.message = message;
         this.isFloating = true; 
     }
     
     public Task(String message, Date deadline) {
+    	if(message == null){
+    		throw new IllegalArgumentException("Please fill in the required fields");
+    	}
         this.message = message;
         this.deadline = deadline;
         this.isFloating = false;
     }
     
     public Task(String message, Date startTime, Date endTime) {
+    	if(message == null){
+    		throw new IllegalArgumentException("Please fill in the required fields");
+    	}
         this.message = message;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -117,7 +126,9 @@ public class Task implements ReadOnlyTask {
     public boolean equals(Object other) {
         if (this == other) return true;
         else if (other instanceof Task) {
-        	if(this.isFloating) return (this.message.equals(((Task) other).message));
+        	if(this.isFloating){ 
+        		return (this.message.equals(((Task) other).message));
+        	}
         	else if(this.isEvent) {
         	    return (this.message.equals(((Task) other).message)
         	 	&& this.startTime.equals(((Task) other).startTime)
@@ -138,7 +149,16 @@ public class Task implements ReadOnlyTask {
     
     @Override
     public String toString() {
-        return getMessage();
+    	if(this.isFloating){
+    		return  getMessage(); 
+    	}
+    	else if(this.isEvent){
+    		return  getMessage()+ "From " + getStartTimeString() + " To "
+    					+ getEndTimeString();
+    	}
+    	else{
+    		return  getMessage() + "Due by " + getDeadlineString();
+    	}
     }
 
 
