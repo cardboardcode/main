@@ -2,6 +2,6 @@
 
 [![Build Status](https://travis-ci.org/CS2103AUG2016-T09-C3/main2.svg?branch=master)](https://travis-ci.org/CS2103AUG2016-T09-C3/main2)
 
-[About Us](https://github.com/CS2103AUG2016-T09-C3/main2/blob/master/docs/AboutUs.md)
-[User Guide](https://github.com/CS2103AUG2016-T09-C3/main2/blob/master/docs/UserGuide.md)
-[Developer Guide](https://github.com/CS2103AUG2016-T09-C3/main2/blob/master/docs/DeveloperGuide.md)
+* [About Us](https://github.com/CS2103AUG2016-T09-C3/main2/blob/master/docs/AboutUs.md)
+* [User Guide](https://github.com/CS2103AUG2016-T09-C3/main2/blob/master/docs/UserGuide.md)
+* [Developer Guide](https://github.com/CS2103AUG2016-T09-C3/main2/blob/master/docs/DeveloperGuide.md)
