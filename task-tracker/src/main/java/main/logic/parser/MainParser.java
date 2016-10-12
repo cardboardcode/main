@@ -58,7 +58,7 @@ public class MainParser {
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
             case "finish":
-                return new DeleteCommand(Integer.valueOf(task.trim()));
+                return prepareDelete(task);
                 
             default: 
                 return new IncorrectCommand(Messages.MESSAGE_UNKNOWN_COMMAND);
