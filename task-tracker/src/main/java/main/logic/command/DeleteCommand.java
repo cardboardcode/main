@@ -3,7 +3,7 @@ package main.logic.command;
 import main.model.task.UniqueTaskList.TaskNotFoundException;
 
 /**
- * Deletes a person identified using it's last displayed index from the address book.
+ * Deletes a task identified using it's last displayed index from the address book.
  * Prints success message and the corresponding deleted index.
  * @author bey
  */

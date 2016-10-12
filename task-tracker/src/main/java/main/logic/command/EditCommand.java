@@ -4,6 +4,7 @@ import java.util.Date;
 
 import main.commons.exceptions.IllegalValueException;
 import main.model.task.Task;
+import main.model.task.UniqueTaskList.TaskNotFoundException;
 
 /**
  * Edits an existing task in task-tracker
@@ -23,51 +24,38 @@ public static final String COMMAND_WORD = "edit";
 	
 	private Task toEdit;
 	private final int editNum;
-	private String message;
-	private Date date1;
-	private Date date2;
+	private Task newTask;
 	private boolean isFloating = true;
 	private boolean isEvent = false;
 	private boolean hasDeadline = false;
 	
-	public EditCommand(int targetVisibleIndex, String message) throws IllegalValueException{
+	public EditCommand(int targetVisibleIndex, Task newTask) throws IllegalValueException{
 		super(targetVisibleIndex);
 		editNum = targetVisibleIndex;
-		this.message = message;
-	}
-	
-	public EditCommand(int targetVisibleIndex, String message, Date deadline) throws IllegalValueException{
-	    this(targetVisibleIndex,message);    
-	    this.date1 = deadline;
-	    isFloating = false;
-	    hasDeadline = true;
-	}
-	
-    public EditCommand(int targetVisibleIndex, String message, Date start, Date end) throws IllegalValueException{
-        this(targetVisibleIndex,message);    
-        this.date1 = start;
-        this.date1 = end;
-        isFloating = false;
-        isEvent = true;
-    }	
+		this.newTask = newTask;
+	}	
 	
 	@Override
 	public CommandResult execute() {
 		try {
 		    if (hasDeadline) {
-		        toEdit = new Task(message, date1);
+		        toEdit = newTask;
 		    }
 		    else if (isEvent) {
-		        toEdit = new Task(message, date1, date2);
+		        toEdit = newTask;
 		    }
 		    else {
-		        toEdit = new Task(message);
+		        toEdit = newTask;
 		    }
-			DeleteCommand deleted = new DeleteCommand(editNum);
-			deleted.execute();
+		    try{
+		    toEdit = model.getTaskfromIndex(editNum);
+		    }
+		    catch (TaskNotFoundException e){
+		        return new CommandResult("Task does not exist in task-tracker");
+		    }
+			toEdit.replaceTask(newTask);
 
-			AddCommand added = new AddCommand(toEdit);
-			added.execute();
+			
 			return new CommandResult(String.format(MESSAGE_SUCCESS, toEdit));
 		}catch (IndexOutOfBoundsException ie) {
 			return new CommandResult("The task index provided is invalid");
