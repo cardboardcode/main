@@ -59,7 +59,7 @@
 ## Design
 
 The **_Architecture Diagram_** given below explains the high-level design of the App, showing which components interact with which other components.
-<img src="images/Architecture.jpg"><br><br>
+![Architecture](images/Architecture.JPG)
 Given below is a quick overview of each component.
 <br>
 ####Main
@@ -85,12 +85,12 @@ Each of the four components
 
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the
 command `delete 3`.
-<img src="images/Sequence1.jpg"><br>
+![Sequence Diagram](images/Sequence1.JPG)
 >Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed,instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates
 being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time. <br>
-<img src="images/Sequence2.jpg"><br>
+![Sequence Diagram](images/Sequence2.JPG)
 > Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having
   to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct 
   coupling between components.
@@ -98,7 +98,7 @@ being saved to the hard disk and the status bar of the UI being updated to refle
 The sections below give more details of each component.
 
 ####Logic
-<img src="images/Logic.jpg"><br>
+![Logic](images/Logic.JPG)<br>
 **API** : [`Logic.java`]()
 
 1. `Logic` uses the `Parser` class to parse the user command.
@@ -108,7 +108,7 @@ The sections below give more details of each component.
 
 
 ####UI
-<img src="images/UI.jpg"><br>
+![UI](images/UI.JPG)<br>
 
 **API** : [`Ui.java`]()
 
@@ -127,7 +127,7 @@ The `UI` component,
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
 ####Model
-<img src="images/Model.jpg"><br>
+![Model](images/Model.JPG)<br>
 
 **API** : [`Model.java`]()
 
@@ -140,7 +140,7 @@ The `Model`,
 
 #### Storage component
 
-<img src="images/Storage.jpg" width="800"><br>
+![Storage](images/Storage.JPG)<br>
 
 **API** : [`Storage.java`](../src/main/java/seedu/address/storage/Storage.java)
 
