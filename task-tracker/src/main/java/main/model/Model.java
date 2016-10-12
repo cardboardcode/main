@@ -3,7 +3,7 @@ package main.model;
 import main.model.task.Task;
 import main.model.task.ReadOnlyTask;
 import main.model.task.UniqueTaskList;
-
+import main.model.task.UniqueTaskList.TaskNotFoundException;
 import main.commons.core.UnmodifiableObservableList;
 //daryl
 import java.util.Set;
@@ -24,8 +24,11 @@ public interface Model {
     /** Adds the given person */
     void addTask(Task task) throws UniqueTaskList.DuplicateTaskException;
     
+    /** Replaces the task information at the specific index */
+    void editTask(int index, Task newTask) throws TaskNotFoundException, UniqueTaskList.DuplicateTaskException;
+    
     /** Returns the task at the corresponding index **/
-    Task getTaskfromIndex(int index) throws  UniqueTaskList.TaskNotFoundException;
+    Task getTaskfromIndex(int index) throws  UniqueTaskList.TaskNotFoundException, IndexOutOfBoundsException;
 
     /** Returns the filtered person list as an {@code UnmodifiableObservableList<ReadOnlyPerson>} */
     UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList();
@@ -35,5 +38,6 @@ public interface Model {
 
     /** Updates the filter of the filtered person list to filter by the given keywords*/
     void updateFilteredTaskList(Set<String> keywords);
+
 
 }

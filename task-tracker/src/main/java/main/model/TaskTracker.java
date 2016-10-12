@@ -69,6 +69,10 @@ public class TaskTracker implements ReadOnlyTaskTracker{
         tasks.add(task);        
     }
 
+    public void editTask(int index, Task newtask) throws DuplicateTaskException {
+        tasks.replace(index, newtask);
+    }   
+    
     public ObservableList<Task> getTasks() {
         return tasks.getInternalList();
     }
@@ -90,6 +94,6 @@ public class TaskTracker implements ReadOnlyTaskTracker{
 //        }
 //        return str;
         
-    }   
-    
+    }
+   
 }

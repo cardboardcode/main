@@ -1,0 +1,254 @@
+Oct 12, 2016 8:59:29 PM main.Main init
+INFO: =============================[ Initializing Task-Tracker ]===========================
+Oct 12, 2016 8:59:29 PM main.Main initConfig
+INFO: Using config file : config.json
+Oct 12, 2016 8:59:29 PM main.commons.util.ConfigUtil readConfig
+INFO: Config file config.json not found
+Oct 12, 2016 8:59:33 PM main.Main initPrefs
+INFO: Using prefs file : preferences.json
+Oct 12, 2016 8:59:33 PM main.storage.JsonUserPrefsStorage readUserPrefs
+INFO: Prefs file preferences.json not found
+Oct 12, 2016 8:59:33 PM main.commons.core.LogsCenter init
+INFO: currentLogLevel: INFO
+Oct 12, 2016 8:59:33 PM main.storage.XmlTaskTrackerStorage readTaskTracker
+INFO: TaskTracker file data\tasktracker.xml not found
+Oct 12, 2016 8:59:33 PM main.Main initModelManager
+INFO: Data file not found. Will be starting with an empty AddressBook
+Oct 12, 2016 8:59:33 PM main.Main initModelManager
+INFO: 0
+Oct 12, 2016 8:59:34 PM main.Main start
+INFO: Starting Task-Tracker V1.0.0ea
+Oct 12, 2016 8:59:34 PM main.ui.UiManager start
+INFO: Starting UI...
+Oct 12, 2016 8:59:51 PM main.logic.LogicManager execute
+INFO: ----------------[USER COMMAND][help]
+Oct 12, 2016 8:59:51 PM main.ui.CommandBox handleCommandInputChanged
+INFO: Result: add: Adds a task to the to do list. Parameters: TASK 
+Example: add CS2103 Meeting
+edit:/nEdits a task in the Task-Tracker.Parameters: [task] [date] [time]
+	Example: edit 2 tk/wash dishes t/0900 d/081016
+System Shut Down
+listhelpdelete:
+Deletes the person identified by the index number used in the last person listing.
+	Parameters: INDEX
+	Example: delete 1
+Oct 12, 2016 9:00:17 PM main.logic.LogicManager execute
+INFO: ----------------[USER COMMAND][add wash dishes]
+Oct 12, 2016 9:00:20 PM main.commons.core.EventsCenter post
+INFO: ------[Event Posted] main.commons.events.model.TaskTrackerChangedEvent: number of tasks 1
+Oct 12, 2016 9:00:20 PM main.storage.StorageManager handleTaskTrackerChangedEvent
+INFO: ---[Event handled][number of tasks 1]Local data changed, saving to file
+Oct 12, 2016 9:00:22 PM main.ui.StatusBarFooter handleTaskTrackerChangedEvent
+INFO: ---[Event handled][number of tasks 1]Setting last updated status to Wed Oct 12 21:00:22 SGT 2016
+Oct 12, 2016 9:00:22 PM main.ui.CommandBox handleCommandInputChanged
+INFO: Result: New task added: wash dishes
+Oct 12, 2016 9:00:47 PM main.logic.LogicManager execute
+INFO: ----------------[USER COMMAND][add eat dishes 1030 1045]
+Oct 12, 2016 9:00:49 PM main.commons.core.EventsCenter post
+INFO: ------[Event Posted] main.commons.events.model.TaskTrackerChangedEvent: number of tasks 2
+Oct 12, 2016 9:00:49 PM main.storage.StorageManager handleTaskTrackerChangedEvent
+INFO: ---[Event handled][number of tasks 2]Local data changed, saving to file
+Oct 12, 2016 9:00:49 PM main.ui.StatusBarFooter handleTaskTrackerChangedEvent
+INFO: ---[Event handled][number of tasks 2]Setting last updated status to Wed Oct 12 21:00:49 SGT 2016
+Oct 12, 2016 9:00:49 PM main.ui.CommandBox handleCommandInputChanged
+INFO: Result: New task added: eat dishes 1030 1045
+Oct 12, 2016 9:04:41 PM main.logic.LogicManager execute
+INFO: ----------------[USER COMMAND][add poo dishes 1045 1100]
+Oct 12, 2016 9:04:41 PM main.commons.core.EventsCenter post
+INFO: ------[Event Posted] main.commons.events.model.TaskTrackerChangedEvent: number of tasks 3
+Oct 12, 2016 9:04:41 PM main.storage.StorageManager handleTaskTrackerChangedEvent
+INFO: ---[Event handled][number of tasks 3]Local data changed, saving to file
+Oct 12, 2016 9:04:41 PM main.ui.StatusBarFooter handleTaskTrackerChangedEvent
+INFO: ---[Event handled][number of tasks 3]Setting last updated status to Wed Oct 12 21:04:41 SGT 2016
+Oct 12, 2016 9:04:41 PM main.ui.CommandBox handleCommandInputChanged
+INFO: Result: New task added: poo dishesdue by 12/10/16 10:45
+Oct 12, 2016 9:05:19 PM main.logic.LogicManager execute
+INFO: ----------------[USER COMMAND][add octodad play today]
+Oct 12, 2016 9:05:19 PM main.commons.core.EventsCenter post
+INFO: ------[Event Posted] main.commons.events.model.TaskTrackerChangedEvent: number of tasks 4
+Oct 12, 2016 9:05:19 PM main.storage.StorageManager handleTaskTrackerChangedEvent
+INFO: ---[Event handled][number of tasks 4]Local data changed, saving to file
+Oct 12, 2016 9:05:19 PM main.ui.StatusBarFooter handleTaskTrackerChangedEvent
+INFO: ---[Event handled][number of tasks 4]Setting last updated status to Wed Oct 12 21:05:19 SGT 2016
+Oct 12, 2016 9:05:19 PM main.ui.CommandBox handleCommandInputChanged
+INFO: Result: New task added: octodad playdue by 12/10/16 08:05
+Oct 12, 2016 9:05:39 PM main.logic.LogicManager execute
+INFO: ----------------[USER COMMAND][list]
+Oct 12, 2016 9:05:39 PM main.ui.CommandBox handleCommandInputChanged
+INFO: Result: Listed all tasks
+Oct 12, 2016 9:06:12 PM main.logic.LogicManager execute
+INFO: ----------------[USER COMMAND][edit 1 wash nothing]
+Oct 12, 2016 9:06:12 PM main.ui.CommandBox handleCommandInputChanged
+INFO: Result: Task edited: wash nothing
+Oct 12, 2016 9:14:11 PM main.Main stop
+INFO: ============================ [ Stopping Task-Tracker ] =============================
+Oct 12, 2016 9:16:41 PM main.Main init
+INFO: =============================[ Initializing Task-Tracker ]===========================
+Oct 12, 2016 9:16:42 PM main.Main initConfig
+INFO: Using config file : config.json
+Oct 12, 2016 9:16:43 PM main.Main initPrefs
+INFO: Using prefs file : preferences.json
+Oct 12, 2016 9:16:43 PM main.commons.core.LogsCenter init
+INFO: currentLogLevel: INFO
+Oct 12, 2016 9:16:44 PM main.Main initModelManager
+INFO: 4
+Oct 12, 2016 9:16:44 PM main.Main start
+INFO: Starting Task-Tracker V1.0.0ea
+Oct 12, 2016 9:16:44 PM main.ui.UiManager start
+INFO: Starting UI...
+Oct 12, 2016 9:17:26 PM main.Main stop
+INFO: ============================ [ Stopping Task-Tracker ] =============================
+Oct 12, 2016 9:20:23 PM main.Main init
+INFO: =============================[ Initializing Task-Tracker ]===========================
+Oct 12, 2016 9:20:24 PM main.Main initConfig
+INFO: Using config file : config.json
+Oct 12, 2016 9:20:26 PM main.Main initPrefs
+INFO: Using prefs file : preferences.json
+Oct 12, 2016 9:20:26 PM main.commons.core.LogsCenter init
+INFO: currentLogLevel: INFO
+Oct 12, 2016 9:20:26 PM main.Main initModelManager
+INFO: 4
+Oct 12, 2016 9:20:26 PM main.Main start
+INFO: Starting Task-Tracker V1.0.0ea
+Oct 12, 2016 9:20:26 PM main.ui.UiManager start
+INFO: Starting UI...
+Oct 12, 2016 9:21:00 PM main.Main stop
+INFO: ============================ [ Stopping Task-Tracker ] =============================
+Oct 12, 2016 9:23:03 PM main.Main init
+INFO: =============================[ Initializing Task-Tracker ]===========================
+Oct 12, 2016 9:23:03 PM main.Main initConfig
+INFO: Using config file : config.json
+Oct 12, 2016 9:23:05 PM main.Main initPrefs
+INFO: Using prefs file : preferences.json
+Oct 12, 2016 9:23:05 PM main.commons.core.LogsCenter init
+INFO: currentLogLevel: INFO
+Oct 12, 2016 9:23:05 PM main.Main initModelManager
+INFO: 4
+Oct 12, 2016 9:23:05 PM main.Main start
+INFO: Starting Task-Tracker V1.0.0ea
+Oct 12, 2016 9:23:05 PM main.ui.UiManager start
+INFO: Starting UI...
+Oct 12, 2016 9:23:35 PM main.logic.LogicManager execute
+INFO: ----------------[USER COMMAND][delete 1]
+Oct 12, 2016 9:23:35 PM main.commons.core.EventsCenter post
+INFO: ------[Event Posted] main.commons.events.model.TaskTrackerChangedEvent: number of tasks 3
+Oct 12, 2016 9:23:35 PM main.storage.StorageManager handleTaskTrackerChangedEvent
+INFO: ---[Event handled][number of tasks 3]Local data changed, saving to file
+Oct 12, 2016 9:23:35 PM main.ui.StatusBarFooter handleTaskTrackerChangedEvent
+INFO: ---[Event handled][number of tasks 3]Setting last updated status to Wed Oct 12 21:23:35 SGT 2016
+Oct 12, 2016 9:23:35 PM main.ui.CommandBox handleCommandInputChanged
+INFO: Result: Deleted Person: 0
+Oct 12, 2016 9:27:22 PM main.Main stop
+INFO: ============================ [ Stopping Task-Tracker ] =============================
+Oct 12, 2016 9:33:22 PM main.Main init
+INFO: =============================[ Initializing Task-Tracker ]===========================
+Oct 12, 2016 9:33:22 PM main.Main initConfig
+INFO: Using config file : config.json
+Oct 12, 2016 9:33:24 PM main.Main initPrefs
+INFO: Using prefs file : preferences.json
+Oct 12, 2016 9:33:24 PM main.commons.core.LogsCenter init
+INFO: currentLogLevel: INFO
+Oct 12, 2016 9:33:25 PM main.Main initModelManager
+INFO: 3
+Oct 12, 2016 9:33:25 PM main.Main start
+INFO: Starting Task-Tracker V1.0.0ea
+Oct 12, 2016 9:33:25 PM main.ui.UiManager start
+INFO: Starting UI...
+Oct 12, 2016 9:37:02 PM main.Main stop
+INFO: ============================ [ Stopping Task-Tracker ] =============================
+Oct 12, 2016 9:37:22 PM main.Main init
+INFO: =============================[ Initializing Task-Tracker ]===========================
+Oct 12, 2016 9:37:23 PM main.Main initConfig
+INFO: Using config file : config.json
+Oct 12, 2016 9:37:24 PM main.Main initPrefs
+INFO: Using prefs file : preferences.json
+Oct 12, 2016 9:37:24 PM main.commons.core.LogsCenter init
+INFO: currentLogLevel: INFO
+Oct 12, 2016 9:37:24 PM main.Main initModelManager
+INFO: 3
+Oct 12, 2016 9:37:24 PM main.Main start
+INFO: Starting Task-Tracker V1.0.0ea
+Oct 12, 2016 9:37:24 PM main.ui.UiManager start
+INFO: Starting UI...
+Oct 12, 2016 9:37:58 PM main.Main stop
+INFO: ============================ [ Stopping Task-Tracker ] =============================
+Oct 12, 2016 9:38:08 PM main.Main init
+INFO: =============================[ Initializing Task-Tracker ]===========================
+Oct 12, 2016 9:38:08 PM main.Main initConfig
+INFO: Using config file : config.json
+Oct 12, 2016 9:38:09 PM main.Main initPrefs
+INFO: Using prefs file : preferences.json
+Oct 12, 2016 9:38:09 PM main.commons.core.LogsCenter init
+INFO: currentLogLevel: INFO
+Oct 12, 2016 9:38:10 PM main.Main initModelManager
+INFO: 3
+Oct 12, 2016 9:38:10 PM main.Main start
+INFO: Starting Task-Tracker V1.0.0ea
+Oct 12, 2016 9:38:10 PM main.ui.UiManager start
+INFO: Starting UI...
+Oct 12, 2016 9:39:31 PM main.Main stop
+INFO: ============================ [ Stopping Task-Tracker ] =============================
+Oct 12, 2016 9:39:41 PM main.Main init
+INFO: =============================[ Initializing Task-Tracker ]===========================
+Oct 12, 2016 9:39:41 PM main.Main initConfig
+INFO: Using config file : config.json
+Oct 12, 2016 9:39:43 PM main.Main initPrefs
+INFO: Using prefs file : preferences.json
+Oct 12, 2016 9:39:43 PM main.commons.core.LogsCenter init
+INFO: currentLogLevel: INFO
+Oct 12, 2016 9:39:43 PM main.Main initModelManager
+INFO: 3
+Oct 12, 2016 9:39:43 PM main.Main start
+INFO: Starting Task-Tracker V1.0.0ea
+Oct 12, 2016 9:39:43 PM main.ui.UiManager start
+INFO: Starting UI...
+Oct 12, 2016 9:40:39 PM main.Main stop
+INFO: ============================ [ Stopping Task-Tracker ] =============================
+Oct 12, 2016 9:40:48 PM main.Main init
+INFO: =============================[ Initializing Task-Tracker ]===========================
+Oct 12, 2016 9:40:48 PM main.Main initConfig
+INFO: Using config file : config.json
+Oct 12, 2016 9:40:49 PM main.Main initPrefs
+INFO: Using prefs file : preferences.json
+Oct 12, 2016 9:40:50 PM main.commons.core.LogsCenter init
+INFO: currentLogLevel: INFO
+Oct 12, 2016 9:40:50 PM main.Main initModelManager
+INFO: 3
+Oct 12, 2016 9:40:50 PM main.Main start
+INFO: Starting Task-Tracker V1.0.0ea
+Oct 12, 2016 9:40:50 PM main.ui.UiManager start
+INFO: Starting UI...
+Oct 12, 2016 9:43:48 PM main.Main stop
+INFO: ============================ [ Stopping Task-Tracker ] =============================
+Oct 12, 2016 9:43:58 PM main.Main init
+INFO: =============================[ Initializing Task-Tracker ]===========================
+Oct 12, 2016 9:43:58 PM main.Main initConfig
+INFO: Using config file : config.json
+Oct 12, 2016 9:43:59 PM main.Main initPrefs
+INFO: Using prefs file : preferences.json
+Oct 12, 2016 9:44:00 PM main.commons.core.LogsCenter init
+INFO: currentLogLevel: INFO
+Oct 12, 2016 9:44:00 PM main.Main initModelManager
+INFO: 3
+Oct 12, 2016 9:44:00 PM main.Main start
+INFO: Starting Task-Tracker V1.0.0ea
+Oct 12, 2016 9:44:00 PM main.ui.UiManager start
+INFO: Starting UI...
+Oct 12, 2016 9:44:08 PM main.Main stop
+INFO: ============================ [ Stopping Task-Tracker ] =============================
+Oct 12, 2016 9:50:48 PM main.Main init
+INFO: =============================[ Initializing Task-Tracker ]===========================
+Oct 12, 2016 9:50:48 PM main.Main initConfig
+INFO: Using config file : config.json
+Oct 12, 2016 9:50:49 PM main.Main initPrefs
+INFO: Using prefs file : preferences.json
+Oct 12, 2016 9:50:49 PM main.commons.core.LogsCenter init
+INFO: currentLogLevel: INFO
+Oct 12, 2016 9:50:50 PM main.Main initModelManager
+INFO: 3
+Oct 12, 2016 9:50:50 PM main.Main start
+INFO: Starting Task-Tracker V1.0.0ea
+Oct 12, 2016 9:50:50 PM main.ui.UiManager start
+INFO: Starting UI...
+Oct 12, 2016 9:51:37 PM main.Main stop
+INFO: ============================ [ Stopping Task-Tracker ] =============================

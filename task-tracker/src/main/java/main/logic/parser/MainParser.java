@@ -61,7 +61,6 @@ public class MainParser {
                 return new ExitCommand();
             case "finish":
                 return prepareDelete(task);
-                
             default: 
                 return new IncorrectCommand(Messages.MESSAGE_UNKNOWN_COMMAND);
         }
@@ -80,6 +79,9 @@ public class MainParser {
         Pair<String,List<Date>> info = TimeParser.extractTime(task.trim());
         List<Date> dates = info.getValue();
         String description = info.getKey();
+        if (description.trim().equals("")) {
+            return new IncorrectCommand(Messages.MESSAGE_EMPTY_DESCRIPTION);
+        }
         
         if (dates.isEmpty()) {
             return new AddCommand(new Task(description));
@@ -104,6 +106,7 @@ public class MainParser {
             return new IncorrectCommand(EditCommand.MESSAGE_USAGE);
         }
         
+        // TODO let index start from 1
         int index = Integer.valueOf(edit_matcher.group("index"));
         String task = edit_matcher.group("task");
       
@@ -112,12 +115,19 @@ public class MainParser {
         List<Date> dates = info.getValue();
         String description = info.getKey();
         
+
         try{
+
+        if (description.trim() == "") {
+            return new IncorrectCommand(Messages.MESSAGE_EMPTY_DESCRIPTION);
+        }
+        
+
         if (dates.isEmpty()) {
-            return new EditCommand(index,new Task(description));
+            return new EditCommand(index, new Task(description));
         }
         else if (dates.size() == 1) { 
-            return new EditCommand(index,new Task(description,dates.get(0)));
+            return new EditCommand(index, new Task(description,dates.get(0)));
         }
         // compare dates if there are 2 dates
         else {
@@ -125,11 +135,14 @@ public class MainParser {
                 return new EditCommand(index, new Task(description,dates.get(0),dates.get(1)));
             else 
                 return new EditCommand(index, new Task(description,dates.get(1),dates.get(0)));
+
         }
         }
         catch (IllegalValueException e){
         	return new IncorrectCommand(EditCommand.MESSAGE_USAGE);
+
         }
+     
     }
     
     public Command prepareDelete(String input) {
@@ -138,12 +151,11 @@ public class MainParser {
         
         try {
             index = Integer.valueOf(input.trim());
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return new IncorrectCommand(DeleteCommand.MESSAGE_USAGE);
         }
 
-        return new DeleteCommand(index-1);
+        return new DeleteCommand(index);
     }
     
 }
