@@ -58,7 +58,7 @@
 
 ## Design
 
-The **_Architecture Diagram_** given below explains the high-level design of the App, showing which components interact with which other components.
+The **_Architecture Diagram_** given below explains the high-level design of the App, showing which components interact with which other components.<br>
 ![Architecture](images/Architecture.JPG)<br>
 Given below is a quick overview of each component.
 <br>
@@ -204,5 +204,5 @@ A project often depends on third-party libraries. For example, Address Book depe
 [Jackson library](http://wiki.fasterxml.com/JacksonHome) for XML parsing. Managing these _dependencies_
 can be automated using Gradle. For example, Gradle can download the dependencies automatically, which
 is better than these alternatives.<br>
-a. Include those libraries in the repo (this bloats the repo size)<br>
-b. Require developers to download those libraries manually (this creates extra work for developers)<br>
+    >   * Include those libraries in the repo (this bloats the repo size)<br>
+    >   * Require developers to download those libraries manually (this creates extra work for developers)<br>
