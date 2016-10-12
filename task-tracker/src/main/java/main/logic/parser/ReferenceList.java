@@ -29,6 +29,8 @@ public class ReferenceList {
             .put("close","exit")
             .put("find","find")
             .put("search","find")
+            .put("list", "list")
+            .put("show", "list")
             .build(); 
 
     public ReferenceList() {}
