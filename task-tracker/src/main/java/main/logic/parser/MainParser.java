@@ -115,14 +115,9 @@ public class MainParser {
         List<Date> dates = info.getValue();
         String description = info.getKey();
         
-
-        try{
-
         if (description.trim() == "") {
             return new IncorrectCommand(Messages.MESSAGE_EMPTY_DESCRIPTION);
         }
-        
-
         if (dates.isEmpty()) {
             return new EditCommand(index, new Task(description));
         }
@@ -137,12 +132,6 @@ public class MainParser {
                 return new EditCommand(index, new Task(description,dates.get(1),dates.get(0)));
 
         }
-        }
-        catch (IllegalValueException e){
-        	return new IncorrectCommand(EditCommand.MESSAGE_USAGE);
-
-        }
-     
     }
     
     public Command prepareDelete(String input) {
