@@ -2,14 +2,12 @@ package main.storage;
 
 import main.commons.exceptions.IllegalValueException;
 import main.model.task.*;
-//import main.model.tag.Tag;
-//import main.model.tag.UniqueTagList;
 
 import javax.xml.bind.annotation.XmlElement;
 
 import com.joestelmach.natty.generated.DateParser.date_return;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,14 +17,18 @@ import java.util.List;
 public class XmlAdaptedTask {
 
     @XmlElement(required = true)
-    private String message_;
+    private String message;
+    @XmlElement(required = false)
+    private Date deadline;
+    @XmlElement(required = false)
+    private Date startTime;
+    @XmlElement(required = false)
+    private Date endTime;
     @XmlElement(required = true)
-    private Date deadline_;
+    private boolean isFloating;    
     @XmlElement(required = true)
-    private Date startTime_;
-    @XmlElement(required = true)
-    private Date endTime_;
-
+    private boolean isEvent;
+    
     //@XmlElement
     //private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
@@ -42,17 +44,12 @@ public class XmlAdaptedTask {
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
     public XmlAdaptedTask(ReadOnlyTask source) {
-        message_ = source.getMessage().toString();
-        deadline_ = (Date) source.getDeadline();
-        startTime_ = (Date) source.getStartTime();
-        endTime_ = (Date) source.getEndTime();
-        //phone = source.getPhone().value;
-        //email = source.getEmail().value;
-        //address = source.getAddress().value;
-        //tagged = new ArrayList<>();
-        //for (Tag tag : source.getTags()) {
-          //  tagged.add(new XmlAdaptedTag(tag));
-        //}
+        message = source.getMessage().toString();
+        deadline = source.getDeadline();
+        startTime = source.getStartTime();
+        endTime = source.getEndTime();
+        isFloating = source.getIsFloating();
+        isEvent = source.getIsEvent();
     }
 
     /**
@@ -61,21 +58,9 @@ public class XmlAdaptedTask {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Task toModelType() throws IllegalValueException {
-        //final List<Tag> personTags = new ArrayList<>();
-        //for (XmlAdaptedTag tag : tagged) {
-          //  personTags.add(tag.toModelType());
-        //}
-//        final Name name = new Name(this.name);
-//        final Phone phone = new Phone(this.phone);
-//        final Email email = new Email(this.email);
-//        final Address address = new Address(this.address);
-//        final UniqueTagList tags = new UniqueTagList(personTags);
-          //final Message message = new Message(message_);
-        final String message = message_;
-        final Date deadline = deadline_;
-        final Date startTime = startTime_;
-        final Date endTime = endTime_;
-          
-          return new Task(message, startTime, endTime, deadline);
+            
+        if (isFloating) return new Task(message);
+        else if (isEvent) return new Task(message, startTime, endTime);
+        else return new Task(message, deadline);
     }
 }

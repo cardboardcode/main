@@ -103,7 +103,7 @@ public class Main extends Application {
             initialData = new TaskTracker();
         }
 
-        return new ModelManager((TaskTracker) initialData, userPrefs);
+        return new ModelManager(new TaskTracker(initialData), userPrefs);
     }
 
     private void initLogging(Config config) {
