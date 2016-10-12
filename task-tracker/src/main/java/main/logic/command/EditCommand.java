@@ -15,10 +15,10 @@ import main.model.task.UniqueTaskList.TaskNotFoundException;
 public class EditCommand extends Command {
 public static final String COMMAND_WORD = "edit";
 	
-	public static final String MESSAGE_USAGE = COMMAND_WORD + ":/n" + "Edits a task in the Task-Tracker."
-												+ "Parameters: [task] [date] [time]\n\t"
-												+ "Example: " + COMMAND_WORD
-												+ " 2 tk/wash dishes t/0900 d/081016";
+	public static final String MESSAGE_USAGE = COMMAND_WORD + ": " + "Edits a task in the Task-Tracker.\n"
+												+ "Parameters: [task] [date] [time]\n"
+												+ "Eg: " + COMMAND_WORD
+												+ "2 wash dishes 0900 081016";
 	
 	public static final String MESSAGE_SUCCESS = "Task changed to %1$s";
 	public static final String MESSAGE_NO_SUCH_TASK = "This task does not exist in the Task-Tracker";
