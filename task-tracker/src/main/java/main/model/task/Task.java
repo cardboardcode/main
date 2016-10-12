@@ -15,9 +15,12 @@ public class Task implements ReadOnlyTask {
     
     public Task(String message) {
     	if(message == null){
-    		throw new IllegalArgumentException("Please fill in the required fields");
+//    		throw new IllegalArgumentException("Please fill in the required fields");
+    	    this.message = "";
     	}
-        this.message = message;
+    	else {
+    	    this.message = message;
+    	}
         this.isFloating = true; 
     }
     
@@ -153,11 +156,11 @@ public class Task implements ReadOnlyTask {
     		return  getMessage(); 
     	}
     	else if(this.isEvent){
-    		return  getMessage()+ "From " + getStartTimeString() + " To "
+    		return  getMessage()+ "from " + getStartTimeString() + " to "
     					+ getEndTimeString();
     	}
     	else{
-    		return  getMessage() + "Due by " + getDeadlineString();
+    		return  getMessage() + "due by " + getDeadlineString();
     	}
     }
 
