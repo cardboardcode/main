@@ -22,6 +22,7 @@ import javafx.util.Pair;
 public class MainParser {
     
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<task>.*)");
+    private static final Pattern EDIT_FORMAT = Pattern.compile("(?<index>\\d)(?<task>.*)");
     private static final Logger logger = LogsCenter.getLogger(MainParser.class);
 
        
@@ -49,13 +50,16 @@ public class MainParser {
             case EditCommand.COMMAND_WORD:
                 return prepareEdit(task);
             case DeleteCommand.COMMAND_WORD:
-                return new DeleteCommand(Integer.valueOf(task));
+                return prepareDelete(task);
             case ListCommand.COMMAND_WORD:
                 return new ListCommand();
             case HelpCommand.COMMAND_WORD:
                 return new HelpCommand();
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
+            case "finish":
+                return prepareDelete(task);
+                
             default: 
                 return new IncorrectCommand(Messages.MESSAGE_UNKNOWN_COMMAND);
         }
@@ -65,12 +69,13 @@ public class MainParser {
     /*
      * checks whether task has a deadline, is an event, or is floating,
      * and uses the appropriate constructors accordingly.
-     * 
+     *         String commandWord = matcher.group("commandWord");
+        String task = matcher.group("task");
      * @return an AddCommand Object
      */    
     public Command prepareAdd(String task) {
 
-        Pair<String,List<Date>> info = TimeParser.extractTime(task);
+        Pair<String,List<Date>> info = TimeParser.extractTime(task.trim());
         List<Date> dates = info.getValue();
         String description = info.getKey();
         
@@ -90,12 +95,48 @@ public class MainParser {
                       
     }
     
-    //dummy
-    // not ready
-    public Command prepareEdit(String task) {
-//        return new EditCommand(1);
-        return new IncorrectCommand(Messages.MESSAGE_UNKNOWN_COMMAND);
-    }
+    public Command prepareEdit(String input) {
+        final Matcher edit_matcher = EDIT_FORMAT.matcher(input.trim());
+        
+        if (!edit_matcher.matches()) {
+            return new IncorrectCommand(EditCommand.MESSAGE_USAGE);
+        }
+        
+        int index = Integer.valueOf(edit_matcher.group("index"));
+        String task = edit_matcher.group("task");
+      
+        Pair<String,List<Date>> info = TimeParser.extractTime(task.trim());
 
+        List<Date> dates = info.getValue();
+        String description = info.getKey();
+        
+        if (dates.isEmpty()) {
+            return new EditCommand(index,new Task(description));
+        }
+        else if (dates.size() == 1) { 
+            return new EditCommand(index,new Task(description,dates.get(0)));
+        }
+        // compare dates if there are 2 dates
+        else {
+            if (dates.get(0).before(dates.get(1)))
+                return new EditCommand(new Task(description,dates.get(0),dates.get(1)));
+            else 
+                return new EditCommand(new Task(description,dates.get(1),dates.get(0)));
+        }
+    }
+    
+    public Command prepareDelete(String input) {
+        
+        int index;
+        
+        try {
+            index = Integer.valueOf(input.trim());
+        }
+        catch (NumberFormatException e) {
+            return new IncorrectCommand(DeleteCommand.MESSAGE_USAGE);
+        }
+
+        return new DeleteCommand(index-1);
+    }
     
 }
