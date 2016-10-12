@@ -217,7 +217,7 @@ public class Main extends Application {
 //        this.primaryStage.setTitle("Task-Tracker d[T - T]b");
 //        
 //        //Set application icon
-//        this.primaryStage.getIcons().add(new Image("file:resources/images/pp.jpg"));
+//        this.primaryStage.getIcons().add(new Image("file:resources/images/pp.png"));
 //        initRootLayout();
 //    }
 //

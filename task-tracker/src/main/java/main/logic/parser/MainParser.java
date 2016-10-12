@@ -2,6 +2,8 @@ package main.logic.parser;
 
 import main.commons.core.LogsCenter;
 import main.commons.core.Messages;
+import main.commons.exceptions.IllegalValueException;
+
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -116,7 +118,6 @@ public class MainParser {
         if (description.trim() == "") {
             return new IncorrectCommand(Messages.MESSAGE_EMPTY_DESCRIPTION);
         }
-        
         if (dates.isEmpty()) {
             return new EditCommand(index, new Task(description));
         }
@@ -129,8 +130,8 @@ public class MainParser {
                 return new EditCommand(index, new Task(description,dates.get(0),dates.get(1)));
             else 
                 return new EditCommand(index, new Task(description,dates.get(1),dates.get(0)));
+
         }
-     
     }
     
     public Command prepareDelete(String input) {

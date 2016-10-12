@@ -11,9 +11,9 @@ public class AddCommand extends Command {
     
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the to do list. "
-            + "Parameters: TASK \n"
-            + "Example: " + COMMAND_WORD + " CS2103 Meeting";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the to do list.\n"
+            + "Parameters: [message] [MM/DD//YY] [time] \n"
+            + "Eg: " + COMMAND_WORD + " CS2103 Week 8 Tutorial 10132016 0920";
 
     public static final String MESSAGE_SUCCESS = "New task added: %1$s";
     public static final String MESSAGE_DUPLICATE_TASK = "This task is already in the to do list";

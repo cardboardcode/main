@@ -17,7 +17,7 @@ public class ExitCommand extends Command{
 
 	    public static final String MESSAGE_EXIT_ACKNOWLEDGEMENT = "Exiting Tracker-Tracker as requested ...";
 
-		public static final String MESSAGE_USAGE = "System Shut Down";
+		public static final String MESSAGE_USAGE = COMMAND_WORD + ": exits Task-Tracker";
  
 		public ExitCommand() {
 			super();
