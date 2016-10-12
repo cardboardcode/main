@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class HelpWindow extends UiPart {
 
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
-    private static final String ICON = "/resources/images/pp.jpg";
+    private static final String ICON = "/resources/images/pp.png";
     private static final String FXML = "HelpWindow.fxml";
     private static final String TITLE = "Help";
     private static final String USERGUIDE_URL =
