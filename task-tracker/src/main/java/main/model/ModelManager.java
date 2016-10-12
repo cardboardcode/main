@@ -60,9 +60,24 @@ public class ModelManager extends ComponentManager implements Model {
         
     }
     
+    @Override
+    public void editTask(int index, Task newtask) throws TaskNotFoundException, DuplicateTaskException {
+        taskTracker.editTask(index, newtask);
+        updateFilteredListToShowAll();
+        indicateTaskTrackerChanged();  
+    }
+    
     @Override 
     public Task getTaskfromIndex(int index) throws TaskNotFoundException {
-        return taskTracker.getTask(index);       
+        Task task;
+        
+        try {
+            task = taskTracker.getTask(index);
+        } catch (IndexOutOfBoundsException e) {
+            throw new TaskNotFoundException();
+        }
+        
+        return task;
     }
     
     /** Raises an event to indicate the model has changed */
