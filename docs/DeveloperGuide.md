@@ -59,7 +59,7 @@
 ## Design
 
 The **_Architecture Diagram_** given below explains the high-level design of the App, showing which components interact with which other components.
-![Architecture](images/Architecture.JPG)
+![Architecture](images/Architecture.JPG)<br>
 Given below is a quick overview of each component.
 <br>
 ####Main
