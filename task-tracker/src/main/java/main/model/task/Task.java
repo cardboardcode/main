@@ -14,17 +14,26 @@ public class Task implements ReadOnlyTask {
     private boolean isEvent = false;
     
     public Task(String message) {
+    	if(message == null){
+    		throw new IllegalArgumentException("Please fill in the required fields");
+    	}
         this.message = message;
         this.isFloating = true; 
     }
     
     public Task(String message, Date deadline) {
+    	if(message == null){
+    		throw new IllegalArgumentException("Please fill in the required fields");
+    	}
         this.message = message;
         this.deadline = deadline;
         this.isFloating = false;
     }
     
     public Task(String message, Date startTime, Date endTime) {
+    	if(message == null){
+    		throw new IllegalArgumentException("Please fill in the required fields");
+    	}
         this.message = message;
         this.startTime = startTime;
         this.endTime = endTime;
