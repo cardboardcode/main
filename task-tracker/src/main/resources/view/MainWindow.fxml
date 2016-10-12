@@ -10,10 +10,6 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox maxHeight="Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.ui.MainWindow">
-   <stylesheets>
-      <URL value="@DarkTheme.css" />
-      <URL value="@Extensions.css" />
-   </stylesheets>
    <children>
       <MenuBar VBox.vgrow="NEVER">
          <menus>
@@ -28,6 +24,10 @@
                </items>
             </Menu>
          </menus>
+         <stylesheets>
+            <URL value="@DarkTheme.css" />
+            <URL value="@Extensions.css" />
+         </stylesheets>
       </MenuBar>
       <AnchorPane fx:id="commandBoxPlaceholder" styleClass="anchor-pane-with-border" VBox.vgrow="NEVER">
          <padding>
@@ -56,6 +56,14 @@
             </AnchorPane>
          </items>
       </SplitPane>
-      <AnchorPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+      <AnchorPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER">
+         <stylesheets>
+            <URL value="@DarkTheme.css" />
+            <URL value="@Extensions.css" />
+         </stylesheets></AnchorPane>
    </children>
+   <stylesheets>
+      <URL value="@DarkTheme.css" />
+      <URL value="@Extensions.css" />
+   </stylesheets>
 </VBox>

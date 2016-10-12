@@ -11,6 +11,10 @@
         <URL value="@Extensions.css" />
     </stylesheets>
     <children>
-        <ListView fx:id="taskListView" VBox.vgrow="ALWAYS" />
+        <ListView fx:id="taskListView" VBox.vgrow="ALWAYS">
+         <stylesheets>
+            <URL value="@DarkTheme.css" />
+            <URL value="@Extensions.css" />
+         </stylesheets></ListView>
     </children>
 </VBox>
