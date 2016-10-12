@@ -2,6 +2,8 @@ package main.logic.parser;
 
 import main.commons.core.LogsCenter;
 import main.commons.core.Messages;
+import main.commons.exceptions.IllegalValueException;
+
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -110,6 +112,7 @@ public class MainParser {
         List<Date> dates = info.getValue();
         String description = info.getKey();
         
+        try{
         if (dates.isEmpty()) {
             return new EditCommand(index,new Task(description));
         }
@@ -119,9 +122,13 @@ public class MainParser {
         // compare dates if there are 2 dates
         else {
             if (dates.get(0).before(dates.get(1)))
-                return new EditCommand(new Task(description,dates.get(0),dates.get(1)));
+                return new EditCommand(index, new Task(description,dates.get(0),dates.get(1)));
             else 
-                return new EditCommand(new Task(description,dates.get(1),dates.get(0)));
+                return new EditCommand(index, new Task(description,dates.get(1),dates.get(0)));
+        }
+        }
+        catch (IllegalValueException e){
+        	return new IncorrectCommand(EditCommand.MESSAGE_USAGE);
         }
     }
     
