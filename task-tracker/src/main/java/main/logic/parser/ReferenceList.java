@@ -31,6 +31,8 @@ public class ReferenceList {
             .put("search","find")
             .put("list", "list")
             .put("show", "list")
+            .put("help", "help")
+            .put("T.T", "help")
             .build(); 
 
     public ReferenceList() {}

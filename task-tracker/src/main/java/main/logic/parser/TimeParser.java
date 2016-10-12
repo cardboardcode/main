@@ -48,7 +48,7 @@ public class TimeParser {
         }
 
         
-        return new Pair<String,List<Date>>(input,dates);
+        return new Pair<String,List<Date>>(input.trim(),dates);
                 
     }
     
