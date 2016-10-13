@@ -206,3 +206,128 @@ can be automated using Gradle. For example, Gradle can download the dependencies
 is better than these alternatives.<br>
     >   * Include those libraries in the repo (this bloats the repo size)<br>
     >   * Require developers to download those libraries manually (this creates extra work for developers)<br>
+    
+    
+## Appendix A : User Stories
+
+Priorities: High (must have) - `* * *`, Medium (nice to have)  - `* *`,  Low (unlikely to have) - `*`
+
+
+Priority | As a ... | I want to ... | So that I 
+-------- | :-------- | :--------- | :-----------
+`* * *` | new user | have a user guide | can use the App easily.
+`* * *` | user | access any part of the task manager by typing the correct command line in the GUI | do not need to rely on my mouse.
+`* * *` | user | be able to delete tasks | remove tasks which are no longer needed.
+`* * *` | user | access deleted tasks from the temporary trash bin | do not need to rewrite the same task later.
+`* * *` | user | add tasks by simply typing it in the GUI | can store my tasks swiftly without hassle.
+`* * *` | user | perform multiple undos on my actions | can revert back any changes.
+`* * *` | user | check what tasks are scheduled for a specified date | can check what I have to do in advance. 
+`* * *` | user | be reminded of upcoming tasks | do not miss deadlines.
+`* * *` | user | set floating tasks which require no particular on days | can manage low priority tasks.
+`* * *` | user | be able to see the tasks which I already have completed | can keep track of my progress. 
+`* * *` | user | have quick loading of my task manager | will not be frustrated due to the loading.
+`* * *` | user | be able to access my files offline | need not be burdened by unstable wifi connections.
+`* * *` | user | be notified if there is a clash in my schedule upon inputting a new task | can keep my schedule balanced. 
+`* *` | user | use the autocomplete function in the command line | can input commands more efficiently.
+`* *` | user | highlight different tasks different colours based on the priorities I wish to give them | am more aware of the importance of each tasks.
+`* *` | user | organize the tasks by dates | know which tasks are more urgent.
+`* *` | user | set priority levels on different tasks | know which tasks need my attention more urgently.
+`* *` | user | transfer data between different computers | can keep my work in sync.
+`* *` | user | be able to search for specific tasks by name | do not need to go through all the tasks to find the one I need.
+`* *` | user | get suggestions on available time slots when I am making plans | can schedule my events more easily.
+`* *` | user | have similar commands to be displayed if I input a command incorrectly | can recognize what command I actually wanted to type.
+`*` | user | change the colour of my text in the GUI | can have a more personal touch on the interface I am using.
+`*` | user | refer to an in-built bot for instructions on how to use the task manager | won’t be lost. 
+`*` | user | always see the current time and date on the screen | can manage the tasks I need to do today effectively.
+`*` | user | be able to create aliases | can customize and enter frequently used commands easily.
+`*` | user | be able to create multiple user profiles for the software | have many people using the app on the same PC.
+
+## Appendix B : Use Cases
+
+(For all use cases below, the **System** is the `TaskTracker` and the **Actor** is the `user`, unless specified otherwise)
+
+#### Use case: Delete Task
+
+**MSS**
+
+1. Navigate to the date you want by typing the date in Date format
+2. Select task that you wish to delete in the designated date
+3. Input "DELETE" to delete the task you want to delete which will then be sent to trash bin
+Use case ends
+
+**Extensions**
+
+2a. The list is empty
+> Use case ends
+
+3a. The given index is invalid
+
+> 3a1. TaskTracker shows an error message 
+  Use case resumes at step 2
+
+#### Use case: Access Trash Bin
+
+**MSS**
+
+1. Input "TRASHBIN" into the command line interface
+2. You will then be directed to the trash bin window
+Use case ends
+ 
+#### Use case: Add Task
+
+**MSS**
+
+1. Navigate to the date you want to add a task by typing the date in DDMMYY format
+2. You can choose the timeslot of the day via keyboard navigation
+3. You can type in the required details for the task
+4. Input "ADD" into command line interface to add the task to the list
+5. The task will be added to the designated date and timeslot
+Use case ends
+
+**Extensions**
+
+2a. The input parameters are invalid
+> 2a1. TaskTracker shows an error message to prompt user to insert correct inputs
+  Use case resumes at step 2
+
+#### Use case: Undo Task
+
+**MSS**
+
+1. You will be able to undo tasks by pressing Ctrl+Z (at the same time)
+2. Alternatively, you can also input "UNDO" to perform undo operations
+Use case ends
+ 
+**Extensions**
+
+2a. No changes made in the app since the opening the app
+> Use case ends
+
+
+#### Use case: Check Schedule
+
+**MSS**
+
+1. Navigate to the date you want to check by typing the date in DDMMYY format
+2. Inputs "CHECK"
+3. A list to show all scheduled tasks of the day
+Use case ends
+
+**Extensions**
+
+2a. The list is empty
+> Use case ends
+
+#### Use case: Completed Task List
+
+**MSS**
+
+1. Navigate to the date you want by typing the date in DDMMYY format
+2. Input "COMPLETED"
+3. A list is generated to show all completed task of the day
+Use case ends
+
+**Extensions**
+
+2a. The list is empty
+> Use case ends
