@@ -4,8 +4,8 @@ package main.commons.util;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import seedu.address.testutil.SerializableTestClass;
-import seedu.address.testutil.TestUtil;
+import main.testutil.SerializableTestClass;
+import main.testutil.TestUtil;
 
 import java.io.File;
 import java.io.IOException;
