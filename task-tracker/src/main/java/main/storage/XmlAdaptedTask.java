@@ -62,7 +62,8 @@ public class XmlAdaptedTask {
      */
     public Task toModelType() throws IllegalValueException {
         
-        if (isFloating) return new Task(message);
+        if (isFloating)return new Task(message);
+        
         else if (isEvent) return new Task(message, startTime, endTime);
         else return new Task(message, deadline);
     }
