@@ -5,19 +5,17 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Objects;
 
-public abstract class Task implements ReadOnlyTask {
+public class Task implements ReadOnlyTask {
     private String message;
     Date deadline;
     Date startTime;
     Date endTime;
     private boolean isFloating;
     private boolean isEvent = false;
-    private boolean isRecurring = false;
-
-    public Task(){}
     
     public Task(String message) {
     	if(message == null){
+//    		throw new IllegalArgumentException("Please fill in the required fields");
     	    this.message = "";
     	}
     	else {
@@ -106,9 +104,6 @@ public abstract class Task implements ReadOnlyTask {
     public boolean getIsEvent(){
         return this.isEvent;
     }
-    public boolean getIsRecurring(){
-        return this.isRecurring;
-    }
     
     //setters
     public void setMessage(String message){
@@ -128,10 +123,6 @@ public abstract class Task implements ReadOnlyTask {
     
     public void setIsFloating(boolean isFloating){
     	this.isFloating = isFloating;
-    }
-    
-    public void setIsRecurring(boolean isRecurring){
-    	this.isRecurring = true;
     }
      
     @Override
