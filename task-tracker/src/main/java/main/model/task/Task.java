@@ -104,9 +104,6 @@ public class Task implements ReadOnlyTask {
     public boolean getIsEvent(){
         return this.isEvent;
     }
-    public boolean getIsRecurring(){
-        return this.isRecurring;
-    }
     
     //setters
     public void setMessage(String message){
