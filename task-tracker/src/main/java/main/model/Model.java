@@ -5,6 +5,8 @@ import main.model.task.ReadOnlyTask;
 import main.model.task.UniqueTaskList;
 import main.model.task.UniqueTaskList.TaskNotFoundException;
 import main.commons.core.UnmodifiableObservableList;
+
+import java.util.Date;
 //daryl
 import java.util.Set;
 
@@ -36,8 +38,15 @@ public interface Model {
     /** Updates the filter of the filtered person list to show all persons */
     void updateFilteredListToShowAll();
 
-    /** Updates the filter of the filtered person list to filter by the given keywords*/
-    void updateFilteredTaskList(Set<String> keywords);
+    /** Updates the filter of the filtered task list to filter by the given date*/
+    void updateFilteredTaskList(Date date);
+
+    /** Updates the filter of the filtered task list to filter by the given priority*/
+    void updateFilteredTaskList(String priority);
+
+    /** Updates the filter of the filtered task list to filter by the given priority and date*/
+    void updateFilteredTaskList(String priority, Date date);
+    
 
 
 }
