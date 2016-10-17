@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.tuple.Triple;
 
+import com.google.common.collect.ImmutableList;
 import com.joestelmach.natty.*;
 
 import main.commons.core.LogsCenter;
@@ -23,11 +24,18 @@ public class TimeParser {
     
     public TimeParser() {}
     
-    public static Triple<String, List<Date>, Boolean> extractTime(String raw_input) {
+    /*
+     * extracts the relevant time information
+     * 
+     * @returns a triple of consisting of the task description, list of dates detected (max 2),
+     * and list of boolean representing isTimeInferred and isRecurring.
+     *  
+     */
+    public static Triple<String, List<Date>, List<Boolean>> extractTime(String raw_input) {
         List<DateGroup> groups = new Parser().parse(raw_input);
         
         if (groups.size() == 0) {
-            return Triple.of(raw_input,new ArrayList<Date>(),true);
+            return Triple.of(raw_input,new ArrayList<Date>(),ImmutableList.of(true,false));
         }
         
         DateGroup group = groups.get(0);
@@ -47,8 +55,7 @@ public class TimeParser {
             }
         }
         
-        return Triple.of(processed.trim(),dates,isInferred);
-                
+        return Triple.of(processed.trim(),dates,ImmutableList.of(isInferred,group.isRecurring()));
     }
     
     private static String validateDates(String input, List<Date> dates, Map<String, List<ParseLocation>> parse_locations, int pos) {
