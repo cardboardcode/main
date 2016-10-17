@@ -1,6 +1,10 @@
 package main.ui;
 
 
+import java.text.DateFormat;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -29,7 +33,9 @@ public class TaskCard extends UiPart{
     @FXML
     private Label message;
     @FXML
-    private Label date;
+    private Label deadline;
+    @FXML
+    private Label endtime;
 
     private ReadOnlyTask task;
     private int displayedIndex;
@@ -49,7 +55,17 @@ public class TaskCard extends UiPart{
     public void initialize() {
         message.setText(task.getMessage());
         id.setText(displayedIndex + ". ");
-        date.setText(task.getAsText());
+        deadline.setMinWidth(300);
+        endtime.setMinWidth(70);
+        if (task.getDeadline()!=null)
+        	deadline.setText(""+ task.getDeadline());
+        else
+        	deadline.setText("[NO DEADLINE SET]");
+        if (task.getEndTime()!=null)
+        	endtime.setText(""+ task.getEndTime());
+        else
+        	endtime.setText("[NO END TIME SET]");
+        
     }
 
     public HBox getLayout() {
