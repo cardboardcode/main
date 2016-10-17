@@ -67,6 +67,7 @@ public class UniqueTaskList implements Iterable<Task> {
             throw new DuplicateTaskException();
         }
         internalList.set(index,newtask);
+
     }
     
     /**

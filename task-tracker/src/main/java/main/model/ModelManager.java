@@ -6,10 +6,10 @@ import main.commons.core.ComponentManager;
 import main.commons.core.LogsCenter;
 import main.commons.core.UnmodifiableObservableList;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-import java.util.function.Predicate;
 import java.util.logging.Logger;
 import javafx.collections.transformation.FilteredList;
 import main.commons.events.model.TaskTrackerChangedEvent;
@@ -34,7 +34,7 @@ public class ModelManager extends ComponentManager implements Model {
         
         this.taskTracker = new TaskTracker(taskTracker);
         this.userPref = userPref;
-        filteredTasks = new FilteredList<>(taskTracker.getTasks());
+        filteredTasks = new FilteredList<>(this.taskTracker.getTasks());
     }
     
     public ModelManager() {
@@ -57,14 +57,14 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
+    public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
         taskTracker.removeTask(target);
         indicateTaskTrackerChanged();
         
     }
     
     @Override
-    public void editTask(int index, Task newtask) throws TaskNotFoundException, DuplicateTaskException {
+    public synchronized void editTask(int index, Task newtask) throws TaskNotFoundException, DuplicateTaskException {
         taskTracker.editTask(index, newtask);
         updateFilteredListToShowAll();
         indicateTaskTrackerChanged();  
@@ -89,7 +89,7 @@ public class ModelManager extends ComponentManager implements Model {
 }
 
     @Override
-    public void addTask(Task task) throws DuplicateTaskException {
+    public synchronized void addTask(Task task) throws DuplicateTaskException {
         taskTracker.addTask(task);
         updateFilteredListToShowAll();
         indicateTaskTrackerChanged();
@@ -99,8 +99,8 @@ public class ModelManager extends ComponentManager implements Model {
     
     @Override
     public UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList() {
-//        return new UnmodifiableObservableList<>(filteredTasks);
-        return new UnmodifiableObservableList<>(taskTracker.getTasks());
+        return new UnmodifiableObservableList<>(filteredTasks);
+//        return new UnmodifiableObservableList<>(taskTracker.getTasks());
     }
 
     @Override
@@ -108,8 +108,24 @@ public class ModelManager extends ComponentManager implements Model {
         filteredTasks.setPredicate(null);        
     }
 
-    public void updateFilteredTaskList(Date date)) {
+    @Override
+    public void updateFilteredTaskList(Date date) {
         updateFilteredTaskList(new PredicateExpression(new DateQualifier(date)));        
+    }
+    
+    
+    //TODO
+    @Override
+    public void updateFilteredTaskList(String priority) {
+        updateFilteredListToShowAll();
+//        updateFilteredTaskList(new PredicateExpression(new DateQualifier(date)));        
+    }
+    
+    //TODO
+    @Override
+    public void updateFilteredTaskList(String priority, Date date) {
+        updateFilteredListToShowAll();
+//        updateFilteredTaskList(new PredicateExpression(new DateQualifier(date)));        
     }
 
     public void updateFilteredTaskList(Expression expression) {
@@ -147,7 +163,7 @@ public class ModelManager extends ComponentManager implements Model {
         boolean run(ReadOnlyTask task);
         String toString();
     }
-//
+
     private class DateQualifier implements Qualifier {
         private Date date;
 
@@ -161,13 +177,28 @@ public class ModelManager extends ComponentManager implements Model {
 //                    .filter(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword))
 //                    .findAny()
 //                    .isPresent();
-            return (date.equals(task.getDeadline()) || date.equals(task.getEndTime()) || date.equals(task.getStartTime()));
+            return ((compareDate(date, task.getDeadline())) || (compareDate(date, task.getEndTime())) || (compareDate(date, task.getStartTime())));
+        }
+        
+        private boolean compareDate(Date date1, Date date2) {
+            if (date1 == null || date2 == null) return false;
+            Calendar cal1 = Calendar.getInstance();
+            cal1.setTime(date1);
+            
+            Calendar cal2 = Calendar.getInstance();
+            cal2.setTime(date2);
+            
+            if ((cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)) && (cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH)) && (cal1.get(Calendar.DATE) == cal2.get(Calendar.DATE))) {
+                return true;
+            }
+            
+            return false;
+                
         }
 
         @Override
         public String toString() {
-            return "name=" + String.join(", ", nameKeyWords);
+            return ((new SimpleDateFormat("dd MMM")).format(this.date));
         }
-}
-
+    }
 }
