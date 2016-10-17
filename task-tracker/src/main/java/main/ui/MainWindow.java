@@ -48,6 +48,7 @@ public class MainWindow extends UiPart{
     private ResultDisplay resultDisplay;
     private StatusBarFooter statusBarFooter;
     private CommandBox commandBox;
+    private TTBot TTbot;
     private Config config;
     private UserPrefs userPrefs;
 
@@ -114,18 +115,19 @@ public class MainWindow extends UiPart{
         scene = new Scene(rootLayout);
         primaryStage.setScene(scene);
 
-        setAccelerators();
+//        setAccelerators();
     }
 
-    private void setAccelerators() {
-        helpMenuItem.setAccelerator(KeyCombination.valueOf("F1"));
-    }
+//    private void setAccelerators() {
+//        helpMenuItem.setAccelerator(KeyCombination.valueOf("F1"));
+//    }
 
     void fillInnerParts() {
         taskListPanel = TaskListPanel.load(primaryStage, getTaskListPlaceholder(), logic.getFilteredTaskList());
         resultDisplay = ResultDisplay.load(primaryStage, getResultDisplayPlaceholder());
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getTaskTrackerFilePath());
         commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultDisplay, logic);
+        TTbot = TTBot.load(primaryStage, getTTBotPlaceholder()); 
     }
 
     private AnchorPane getCommandBoxPlaceholder() {
@@ -142,6 +144,10 @@ public class MainWindow extends UiPart{
 
     public AnchorPane getTaskListPlaceholder() {
         return taskListPanelPlaceholder;
+    }
+    
+    public AnchorPane getTTBotPlaceholder(){
+    	return TTbotPlaceholder;
     }
 
     public void hide() {
