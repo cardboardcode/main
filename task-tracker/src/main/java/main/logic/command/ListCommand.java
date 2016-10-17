@@ -1,5 +1,6 @@
 package main.logic.command;
 
+import java.util.Date;
 import java.util.List;
 
 import main.commons.core.UnmodifiableObservableList;
@@ -14,24 +15,32 @@ public class ListCommand extends Command {
     public static final String COMMAND_WORD = "list";
     public static final String MESSAGE_USAGE = COMMAND_WORD;
     public static final String MESSAGE_SUCCESS = "Listed all tasks";
+    
+    String priority;
+    Date date;
             
     public ListCommand() {}
     
-    public String format() {
-        
-    	UnmodifiableObservableList<ReadOnlyTask> list = model.getFilteredTaskList();
-    	String str = "";
-        for (ReadOnlyTask task : list) {
-            str += task.getMessage() + "\n";
-        }
-        return str;
+    public ListCommand(String priority) {
+        this.priority = priority;
+    }
+    
+    public ListCommand(Date date) {
+        this.date = date;
+    }
+    
+    public ListCommand(String priority, Date date) {
+        this.priority = priority;
+        this.date = date;
     }
 
 	@Override
 	public CommandResult execute() {
-//		return new CommandResult(format());
-	    model.updateFilteredListToShowAll();
-	    return new CommandResult(MESSAGE_SUCCESS);
+	    if (priority == null && date == null) model.updateFilteredListToShowAll();
+	    else if (priority == null) model.updateFilteredTaskList(date);
+	    else if (date == null) model.updateFilteredTaskList(priority);
+	    else model.updateFilteredTaskList(priority,date);
 	    
+	    return new CommandResult(MESSAGE_SUCCESS);    
 	}
 }

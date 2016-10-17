@@ -57,7 +57,7 @@ public class MainParser {
             case DeleteCommand.COMMAND_WORD:
                 return prepareDelete(task);
             case ListCommand.COMMAND_WORD:
-                return new ListCommand();
+                return prepareList(task);
             case HelpCommand.COMMAND_WORD:
                 return new HelpCommand();
             case ExitCommand.COMMAND_WORD:
@@ -123,6 +123,31 @@ public class MainParser {
         }
 
         return new DeleteCommand(index);
+    }
+    
+    public Command prepareList(String input) {
+        if (input.trim() == "") return new ListCommand();
+        
+        Triple<String, List<Date>, List<Boolean>> info = TimeParser.extractTime(input.trim());
+
+        String priority = info.getLeft();
+        List<Date> dates = info.getMiddle();
+        
+        if (ReferenceList.priorityDictionary.containsKey(priority)) {
+            priority = ReferenceList.priorityDictionary.get(priority);
+        }
+        else {
+            priority = "";
+        }
+        
+        if (dates.size() > 0) {
+            if (priority.equals("")) return new ListCommand(dates.get(0));
+            else return new ListCommand(priority, dates.get(0));
+        }
+        
+        else if (!priority.equals("")) return new ListCommand(priority);
+        else return new ListCommand();
+        
     }
 
     private Task extractTask(String raw) throws MultiplePriorityException, IllegalArgumentException {
