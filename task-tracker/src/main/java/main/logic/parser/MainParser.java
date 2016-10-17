@@ -2,6 +2,7 @@ package main.logic.parser;
 
 import main.commons.core.LogsCenter;
 import main.commons.core.Messages;
+import main.commons.exceptions.MultiplePriorityException;
 
 import java.util.Date;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 
 import main.model.task.Task;
@@ -25,6 +27,7 @@ public class MainParser {
     
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<task>.*)");
     private static final Pattern EDIT_FORMAT = Pattern.compile("(?<index>\\d)(?<task>.*)");
+//    private static final Pattern PRIORITY_FORMAT = Pattern.compile("(?<task>[^/]+)(?<priority>(-h|-m|-l)?)");
     private static final Logger logger = LogsCenter.getLogger(MainParser.class);
 
        
@@ -42,11 +45,11 @@ public class MainParser {
         
         logger.fine("command word: " + commandWord);
 
-        if (!ReferenceList.commandsDictionary.containsKey(commandWord)) {
+        if (!ReferenceList.commandsDictionary.containsKey(commandWord.toLowerCase())) {
             return commandIncorrect(Messages.MESSAGE_UNKNOWN_COMMAND);
         }
 
-        switch (ReferenceList.commandsDictionary.get(commandWord)) {
+        switch (ReferenceList.commandsDictionary.get(commandWord.toLowerCase())) {
             case AddCommand.COMMAND_WORD:
                 return prepareAdd(task);
             case EditCommand.COMMAND_WORD:
@@ -82,6 +85,8 @@ public class MainParser {
         try {
             Task newTask = extractTask(task);
             return new AddCommand(newTask);
+        } catch (MultiplePriorityException e) {
+            return new IncorrectCommand(Messages.MESSAGE_MULTIPLE_PRIORITY);
         } catch (IllegalArgumentException e) {
             return new IncorrectCommand(Messages.MESSAGE_EMPTY_DESCRIPTION);
         }                      
@@ -112,7 +117,7 @@ public class MainParser {
         int index;
         
         try {
-            index = Integer.valueOf(input.trim());
+            index = Integer.valueOf(input.trim()) - 1;
         } catch (NumberFormatException e) {
             return new IncorrectCommand(DeleteCommand.MESSAGE_USAGE);
         }
@@ -120,12 +125,17 @@ public class MainParser {
         return new DeleteCommand(index);
     }
 
-    private Task extractTask(String input) throws IllegalArgumentException {
+    private Task extractTask(String raw) throws MultiplePriorityException, IllegalArgumentException {
+
+        Pair<Integer, String> proc = getPriority(raw.trim());
+        int priority = proc.getKey();
+        String input = proc.getValue();    
         
-        Triple<String, List<Date>, Boolean> info = TimeParser.extractTime(input.trim());
+        Triple<String, List<Date>, List<Boolean>> info = TimeParser.extractTime(input.trim());
         List<Date> dates = info.getMiddle();
         String description = info.getLeft();
-        Boolean isInferred = info.getRight();
+        Boolean isInferred = info.getRight().get(0);
+        Boolean isRecurring = info.getRight().get(1);
         
         if (description.trim().equals("")) {
             throw new IllegalArgumentException();
@@ -144,6 +154,34 @@ public class MainParser {
             else 
                 return new Task(description,dates.get(1),dates.get(0));
         }
+    }
+    
+    /*
+     * 1 for high priority, 3 for low
+     * 
+     */
+    private Pair<Integer,String> getPriority(String input) throws MultiplePriorityException{
+        String [] levels = {"-h", "-m", "-l" };
+        int priority = 0;
+        int index = input.length();
+        int find;
+        
+        for (int i = 0; i < levels.length; i++) {
+            if ((find = argumentIndexInString(input,levels[i])) != -1) {
+                priority = i+1;
+                index = find;
+            }
+        }
+
+        if (priority == 0) priority = 2;
+        
+        input = input.substring(0, index);
+        logger.info(input);
+        return Pair.of(priority,input);
+    }
+    
+    private int argumentIndexInString(String str, String arg) {
+        return (str.toLowerCase().lastIndexOf(arg.toLowerCase()));
     }
     
 }
