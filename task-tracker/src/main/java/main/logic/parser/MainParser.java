@@ -117,7 +117,7 @@ public class MainParser {
         int index;
         
         try {
-            index = Integer.valueOf(input.trim());
+            index = Integer.valueOf(input.trim()) - 1;
         } catch (NumberFormatException e) {
             return new IncorrectCommand(DeleteCommand.MESSAGE_USAGE);
         }
@@ -163,7 +163,7 @@ public class MainParser {
     private Pair<Integer,String> getPriority(String input) throws MultiplePriorityException{
         String [] levels = {"-h", "-m", "-l" };
         int priority = 0;
-        int index = input.length() - 1;
+        int index = input.length();
         int find;
         
         for (int i = 0; i < levels.length; i++) {
@@ -176,6 +176,7 @@ public class MainParser {
         if (priority == 0) priority = 2;
         
         input = input.substring(0, index);
+        logger.info(input);
         return Pair.of(priority,input);
     }
     
