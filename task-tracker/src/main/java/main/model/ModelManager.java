@@ -5,8 +5,11 @@ package main.model;
 import main.commons.core.ComponentManager;
 import main.commons.core.LogsCenter;
 import main.commons.core.UnmodifiableObservableList;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.logging.Logger;
 import javafx.collections.transformation.FilteredList;
 import main.commons.events.model.TaskTrackerChangedEvent;
@@ -105,22 +108,66 @@ public class ModelManager extends ComponentManager implements Model {
         filteredTasks.setPredicate(null);        
     }
 
-    @Override
-    public void updateFilteredTaskList(Set<String> keywords) {
-        // TODO Auto-generated method stub
-        
+    public void updateFilteredTaskList(Date date)) {
+        updateFilteredTaskList(new PredicateExpression(new DateQualifier(date)));        
     }
 
-//    @Override
-//    public void updateFilteredTaskList(Set<String> keywords) {
-//        updateFilteredTaskList(new PredicateExpression(new NameQualifier(keywords)));        
-//    }
-//
-//    @Override
-//    public void updateFilteredTaskList(Expression expression) {
-//        filteredTasks.setPredicate(expression::satisfies);
-//        
-//    }
+    public void updateFilteredTaskList(Expression expression) {
+        filteredTasks.setPredicate(expression::satisfies);
+        
+    }
     
+    //========== Inner classes/interfaces used for filtering =================================================
+
+    interface Expression {
+        boolean satisfies(ReadOnlyTask task);
+        String toString();
+    }
+
+    private class PredicateExpression implements Expression {
+
+        private final Qualifier qualifier;
+
+        PredicateExpression(Qualifier qualifier) {
+            this.qualifier = qualifier;
+        }
+
+        @Override
+        public boolean satisfies(ReadOnlyTask task) {
+            return qualifier.run(task);
+        }
+
+        @Override
+        public String toString() {
+            return qualifier.toString();
+        }
+    }       
+
+    interface Qualifier {
+        boolean run(ReadOnlyTask task);
+        String toString();
+    }
+//
+    private class DateQualifier implements Qualifier {
+        private Date date;
+
+        DateQualifier(Date date) {
+            this.date = date;
+        }
+
+        @Override
+        public boolean run(ReadOnlyTask task) {
+//            return date.stream()
+//                    .filter(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword))
+//                    .findAny()
+//                    .isPresent();
+            return (date.equals(task.getDeadline()) || date.equals(task.getEndTime()) || date.equals(task.getStartTime()));
+        }
+
+        @Override
+        public String toString() {
+            return "name=" + String.join(", ", nameKeyWords);
+        }
+}
 
 }
