@@ -4,59 +4,131 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.tuple.Triple;
 
 import com.joestelmach.natty.*;
 
-import javafx.util.Pair;
+import main.commons.core.LogsCenter;
 
 
 public class TimeParser {
+    private static final Logger logger = LogsCenter.getLogger(TimeParser.class);
+
     
     Parser parser = new Parser();
     
     public TimeParser() {}
     
-    public static Pair<String,List<Date>> extractTime(String input) {
-        List<DateGroup> groups = new Parser().parse(input);
+    public static Triple<String, List<Date>, Boolean> extractTime(String raw_input) {
+        List<DateGroup> groups = new Parser().parse(raw_input);
         
         if (groups.size() == 0) {
-            return new Pair<String,List<Date>>(input,new ArrayList<Date>());
+            return Triple.of(raw_input,new ArrayList<Date>(),true);
         }
         
         DateGroup group = groups.get(0);
         
-        String matchedText = group.getText();
+//        String matchedText = group.getText();
         
-        input = input.substring(0,group.getPosition() - 1);
+//        String input = raw_input.substring(0, group.getPosition() - 1);
 
         List<Date> dates = group.getDates();
         
-        // max number of dates is 2
-        if (dates.size() > 2) {
-            dates = dates.subList(0, 1);
-        }
-        
-        if (group.isTimeInferred()) {
+        String processed = validateDates(raw_input, dates, group.getParseLocations(), group.getPosition() - 1);
+       
+        boolean isInferred = group.isTimeInferred();
+        if (isInferred) {
             for (int i = 0; i < dates.size(); i++) {
                 dates.set(i, setDefaultTime(dates.get(i)));
             }
         }
-        else {
-            for (int i = 0; i < dates.size(); i++) {
-                dates.set(i, correctTime(dates.get(i),matchedText));
-            }
-        }
-
         
-        return new Pair<String,List<Date>>(input.trim(),dates);
+        return Triple.of(processed.trim(),dates,isInferred);
                 
     }
     
+    private static String validateDates(String input, List<Date> dates, Map<String, List<ParseLocation>> parse_locations, int pos) {
+//        System.out.println(parse_locations);
+//        System.out.println(parse_locations.get("hours"));
+//        System.out.println("size: " + parse_locations.size());
+        String out = "";
+
+        // if start of time not a whitespace --> time is invalid, remove
+        if (parse_locations.containsKey("explicit_time") && parse_locations.containsKey("int_00_to_23_optional_prefix")) {
+            
+            List<ParseLocation> hours = parse_locations.get("int_00_to_23_optional_prefix");
+            
+            for (int i = 0; i < hours.size() ; i++) {
+                ParseLocation next = hours.get(i); 
+//                System.out.println(next.getStart() + " " + next.getEnd() + "\n" + next);
+//                System.out.println(input);
+//                System.out.println(input.substring(next.getStart() - 1, next.getEnd() - 1));
+                
+                if (next.getStart() - 1 > 0 && !Character.isWhitespace(input.charAt(next.getStart() - 2))) {
+                    logger.info("removing invalid time");
+                    hours.remove(next);
+                    dates.remove(i);
+                }
+            }
+            
+            // max number of dates is 2
+            if (dates.size() > 2) dates = dates.subList(0, 1);
+
+            // truncate away the dates portion, so left the task description
+            if (hours.size() > 0) out = input.substring(0,hours.get(0).getStart() - 1);
+            
+        }
+        
+        correctTime(dates, parse_locations);
+        
+        if (!out.equals("")) return out;
+        else if (dates.size() == 0) return input;
+        else return input.substring(0, pos);
+    }
+
+    
+    /*
+     * corrects odd timings
+     * 
+     * natty parser defaults unannotated numbers to morning
+     * e.g 4 is 4am by default
+     * 
+     * if time has no postfix (i.e pm or am), set a reasonable time, i.e 4pm instead of 4am
+     * 
+     */
+    private static void correctTime(List<Date> dates, Map<String, List<ParseLocation>> parse_locations) {
+        if (parse_locations.containsKey("int_00_to_23_optional_prefix") && !parse_locations.containsKey("simple_meridian_indicator")) {
+            List<ParseLocation> hours = parse_locations.get("int_00_to_23_optional_prefix");
+            
+            for (int i = 0; i < hours.size() ; i++) {
+                ParseLocation next = hours.get(i); 
+                Integer hour;
+                if (StringUtils.isNumeric(next.getText())) {
+                    logger.info("correcting time");
+                    hour = Integer.valueOf(next.getText());
+                    if (hour < 7) hour += 12;
+                    else if (hour > 22) hour -= 12;
+                    
+                    dates.set(i, setHour(dates.get(i), hour));
+                }
+            }
+        }
+    }
+
     private static Date setDefaultTime(Date date) {
         assert date != null;
+        return setHour(date, 8);
+    }
+
+    private static Date setHour(Date date, int hour) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        cal.set(Calendar.HOUR_OF_DAY, 8);
+        cal.set(Calendar.HOUR_OF_DAY, hour);
+        cal.set(Calendar.SECOND, 0);
         return cal.getTime();
     }
     
@@ -67,7 +139,7 @@ public class TimeParser {
      * e.g 4 is 4am by default
      * 
      */
-    private static Date correctTime(Date date, String extracted) {
+  /*  private static Date correctTime(Date date, String extracted) {
         assert date!= null;
         assert extracted != null;
         Calendar cal = Calendar.getInstance();
@@ -84,10 +156,11 @@ public class TimeParser {
                 hour -= 12;
             }
             cal.set(Calendar.HOUR_OF_DAY, hour);
+            cal.set(Calendar.SECOND, 0);
         }
         
         return cal.getTime();
     }
-    
+    */
 }
 
