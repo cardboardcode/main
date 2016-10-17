@@ -2,13 +2,14 @@ package main.logic.parser;
 
 import main.commons.core.LogsCenter;
 import main.commons.core.Messages;
-import main.commons.exceptions.IllegalValueException;
 
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.lang3.tuple.Triple;
 
 import main.model.task.Task;
 import main.logic.command.AddCommand;
@@ -19,7 +20,6 @@ import main.logic.command.ExitCommand;
 import main.logic.command.HelpCommand;
 import main.logic.command.IncorrectCommand;
 import main.logic.command.ListCommand;
-import javafx.util.Pair;
 
 public class MainParser {
     
@@ -35,7 +35,7 @@ public class MainParser {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(input.trim());
         
         if (!matcher.matches()) {
-            return new IncorrectCommand(Messages.MESSAGE_INVALID_COMMAND_FORMAT);
+            return commandIncorrect(Messages.MESSAGE_INVALID_COMMAND_FORMAT);
         }
         String commandWord = matcher.group("commandWord");
         String task = matcher.group("task");
@@ -43,7 +43,7 @@ public class MainParser {
         logger.fine("command word: " + commandWord);
 
         if (!ReferenceList.commandsDictionary.containsKey(commandWord)) {
-            return new IncorrectCommand(Messages.MESSAGE_UNKNOWN_COMMAND);
+            return commandIncorrect(Messages.MESSAGE_UNKNOWN_COMMAND);
         }
 
         switch (ReferenceList.commandsDictionary.get(commandWord)) {
@@ -62,9 +62,13 @@ public class MainParser {
             case "finish":
                 return prepareDelete(task);
             default: 
-                return new IncorrectCommand(Messages.MESSAGE_UNKNOWN_COMMAND);
+                return commandIncorrect(Messages.MESSAGE_UNKNOWN_COMMAND);
         }
            
+    }
+
+    private Command commandIncorrect(String message) {
+        return new IncorrectCommand(String.format(message, HelpCommand.MESSAGE_USAGE));
     }
     
     /*
@@ -75,29 +79,13 @@ public class MainParser {
      * @return an AddCommand Object
      */    
     public Command prepareAdd(String task) {
-
-        Pair<String,List<Date>> info = TimeParser.extractTime(task.trim());
-        List<Date> dates = info.getValue();
-        String description = info.getKey();
-        if (description.trim().equals("")) {
+        try {
+            Task newTask = extractTask(task);
+            return new AddCommand(newTask);
+        } catch (IllegalArgumentException e) {
             return new IncorrectCommand(Messages.MESSAGE_EMPTY_DESCRIPTION);
-        }
-        
-        if (dates.isEmpty()) {
-            return new AddCommand(new Task(description));
-        }
-        else if (dates.size() == 1) { 
-            return new AddCommand(new Task(description,dates.get(0)));
-        }
-        // compare dates if there are 2 dates
-        else {
-            if (dates.get(0).before(dates.get(1)))
-                return new AddCommand(new Task(description,dates.get(0),dates.get(1)));
-            else 
-                return new AddCommand(new Task(description,dates.get(1),dates.get(0)));
-        }
-                      
-    }
+        }                      
+    }     
     
     public Command prepareEdit(String input) {
         final Matcher edit_matcher = EDIT_FORMAT.matcher(input.trim());
@@ -107,31 +95,16 @@ public class MainParser {
         }
         
         // TODO let index start from 1
-        int index = Integer.valueOf(edit_matcher.group("index"));
+        int index = Integer.valueOf(edit_matcher.group("index")) - 1;     
+        
         String task = edit_matcher.group("task");
       
-        Pair<String,List<Date>> info = TimeParser.extractTime(task.trim());
-
-        List<Date> dates = info.getValue();
-        String description = info.getKey();
-        
-        if (description.trim() == "") {
+        try {
+            Task newTask = extractTask(task);
+            return new EditCommand(index, newTask);
+        } catch (IllegalArgumentException e) {
             return new IncorrectCommand(Messages.MESSAGE_EMPTY_DESCRIPTION);
-        }
-        if (dates.isEmpty()) {
-            return new EditCommand(index, new Task(description));
-        }
-        else if (dates.size() == 1) { 
-            return new EditCommand(index, new Task(description,dates.get(0)));
-        }
-        // compare dates if there are 2 dates
-        else {
-            if (dates.get(0).before(dates.get(1)))
-                return new EditCommand(index, new Task(description,dates.get(0),dates.get(1)));
-            else 
-                return new EditCommand(index, new Task(description,dates.get(1),dates.get(0)));
-
-        }
+        }  
     }
     
     public Command prepareDelete(String input) {
@@ -145,6 +118,32 @@ public class MainParser {
         }
 
         return new DeleteCommand(index);
+    }
+
+    private Task extractTask(String input) throws IllegalArgumentException {
+        
+        Triple<String, List<Date>, Boolean> info = TimeParser.extractTime(input.trim());
+        List<Date> dates = info.getMiddle();
+        String description = info.getLeft();
+        Boolean isInferred = info.getRight();
+        
+        if (description.trim().equals("")) {
+            throw new IllegalArgumentException();
+        }
+        
+        if (dates.isEmpty()) {
+            return new Task(description);
+        }
+        else if (dates.size() == 1) { 
+            return new Task(description,dates.get(0));
+        }
+        // compare dates if there are 2 dates
+        else {
+            if (dates.get(0).before(dates.get(1)))
+                return new Task(description,dates.get(0),dates.get(1));
+            else 
+                return new Task(description,dates.get(1),dates.get(0));
+        }
     }
     
 }

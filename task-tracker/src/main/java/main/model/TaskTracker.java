@@ -83,17 +83,26 @@ public class TaskTracker implements ReadOnlyTaskTracker{
     
     @Override
     public String toString() {
-        return tasks.getInternalList().size() + " tasks";
+//        return tasks.getInternalList().size() + " tasks";
       
-        // TODO: refine later
-//        String str = "";
-//        Iterator<Task> iterate = tasks.iterator();
-//        while (iterate.hasNext()) {
-//            Task element = iterate.next();
-//            str += element + " ";
-//        }
-//        return str;
+//         TODO: refine later
+        String str = "";
+        Iterator<Task> iterate = tasks.iterator();
+        while (iterate.hasNext()) {
+            Task element = iterate.next();
+            str += element + "\n";
+        }
+        str += tasks.getInternalList().size() + " tasks";
+        return str;
         
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        else if (obj == null || !(obj instanceof TaskTracker)) return false;
+        else if (((TaskTracker)obj).tasks.equals(this.tasks)) return true;
+        else return false;
     }
    
 }
