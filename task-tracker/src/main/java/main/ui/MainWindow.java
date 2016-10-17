@@ -71,6 +71,9 @@ public class MainWindow extends UiPart{
 
     @FXML
     private AnchorPane statusbarPlaceholder;
+    
+    @FXML
+    private AnchorPane TTbotPlaceholder;
 
 
     public MainWindow() {
