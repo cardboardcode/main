@@ -10,6 +10,9 @@ import main.commons.events.storage.DataSavingExceptionEvent;
 import main.model.TaskTracker;
 import main.model.ReadOnlyTaskTracker;
 import main.model.UserPrefs;
+import main.testutil.EventsCollector;
+import main.testutil.TypicalTestTasks;
+
 import java.io.IOException;
 
 import static junit.framework.TestCase.assertNotNull;
@@ -51,7 +54,7 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void addressBookReadSave() throws Exception {
+    public void taskTrackerReadSave() throws Exception {
         TaskTracker original = new TypicalTestTasks().getTypicalTaskTracker();
         storageManager.saveTaskTracker(original);
         ReadOnlyTaskTracker retrieved = storageManager.readTaskTracker().get();
@@ -84,7 +87,7 @@ public class StorageManagerTest {
         }
 
         @Override
-        public void saveTaskTracker(ReadOnlyTaskTracker addressBook, String filePath) throws IOException {
+        public void saveTaskTracker(ReadOnlyTaskTracker taskTracker, String filePath) throws IOException {
             throw new IOException("dummy exception");
         }
     }
