@@ -4,6 +4,8 @@ import main.commons.core.EventsCenter;
 import main.commons.core.Messages;
 import main.logic.command.AddCommand;
 import main.logic.command.CommandResult;
+import main.logic.command.DeleteCommand;
+import main.logic.command.EditCommand;
 import main.logic.command.HelpCommand;
 import main.logic.command.ExitCommand;
 import main.logic.command.ClearCommand;
@@ -16,6 +18,8 @@ import main.model.task.Task;
 import main.model.task.UniqueTaskList.DuplicateTaskException;
 import main.storage.StorageManager;
 import static org.junit.Assert.assertEquals;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static main.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -58,7 +62,7 @@ public class LogicManagerTest {
     @Test
     public void execute_unknownCommandWord() throws Exception {
         String unknownCommand = "uicfhmowqewca";
-        assertCommandBehavior(unknownCommand, Messages.MESSAGE_UNKNOWN_COMMAND);
+        assertCommandBehavior(unknownCommand, String.format(MESSAGE_INVALID_COMMAND_FORMAT, Messages.MESSAGE_UNKNOWN_COMMAND));
     }
     
     @Test
@@ -88,6 +92,27 @@ public class LogicManagerTest {
         assertCommandBehavior("clear", ClearCommand.MESSAGE_SUCCESS, new TaskTracker(), Collections.emptyList());
     }
 
+    @Test
+    public void execute_edit_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
+        assertCommandBehavior("edit wrong", expectedMessage);
+        assertCommandBehavior("edit 16 Oct", expectedMessage);
+        assertCommandBehavior("edit 0 ", expectedMessage);        
+
+    }
+
+    @Test
+    public void execute_deleteInvalidArgsFormat_errorMessageShown() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
+        assertCommandBehavior("delete args", expectedMessage);
+    }
+
+    @Test
+    public void execute_add_empty_description_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, Messages.MESSAGE_EMPTY_DESCRIPTION);
+        assertCommandBehavior("add ", expectedMessage);
+    }
+    
     
 //    /**
 //     * Executes the command and confirms that the result message is correct and

@@ -4,6 +4,8 @@ import main.commons.core.LogsCenter;
 import main.commons.core.Messages;
 import main.commons.exceptions.MultiplePriorityException;
 
+import static main.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -47,7 +49,7 @@ public class MainParser {
         logger.fine("command word: " + commandWord);
 
         if (!ReferenceList.commandsDictionary.containsKey(commandWord.toLowerCase())) {
-            return commandIncorrect(Messages.MESSAGE_UNKNOWN_COMMAND);
+            return commandIncorrect(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, Messages.MESSAGE_UNKNOWN_COMMAND));
         }
 
         switch (ReferenceList.commandsDictionary.get(commandWord.toLowerCase())) {
@@ -68,7 +70,7 @@ public class MainParser {
             case ClearCommand.COMMAND_WORD:
                 return new ClearCommand();
             default: 
-                return commandIncorrect(Messages.MESSAGE_UNKNOWN_COMMAND);
+                return commandIncorrect(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, Messages.MESSAGE_UNKNOWN_COMMAND));
         }
            
     }
@@ -89,9 +91,9 @@ public class MainParser {
             Task newTask = extractTask(task);
             return new AddCommand(newTask);
         } catch (MultiplePriorityException e) {
-            return new IncorrectCommand(Messages.MESSAGE_MULTIPLE_PRIORITY);
+            return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, Messages.MESSAGE_MULTIPLE_PRIORITY));
         } catch (IllegalArgumentException e) {
-            return new IncorrectCommand(Messages.MESSAGE_EMPTY_DESCRIPTION);
+            return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, Messages.MESSAGE_EMPTY_DESCRIPTION));
         }                      
     }     
     
@@ -99,7 +101,7 @@ public class MainParser {
         final Matcher edit_matcher = EDIT_FORMAT.matcher(input.trim());
         
         if (!edit_matcher.matches()) {
-            return new IncorrectCommand(EditCommand.MESSAGE_USAGE);
+            return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
         
         // TODO let index start from 1
@@ -111,18 +113,19 @@ public class MainParser {
             Task newTask = extractTask(task);
             return new EditCommand(index, newTask);
         } catch (IllegalArgumentException e) {
-            return new IncorrectCommand(Messages.MESSAGE_EMPTY_DESCRIPTION);
+            return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }  
     }
     
     public Command prepareDelete(String input) {
+        if (input.trim() == "") return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX));
         
         int index;
         
         try {
             index = Integer.valueOf(input.trim()) - 1;
         } catch (NumberFormatException e) {
-            return new IncorrectCommand(DeleteCommand.MESSAGE_USAGE);
+            return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
         }
 
         return new DeleteCommand(index);
