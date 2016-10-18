@@ -72,7 +72,7 @@ public class Task implements ReadOnlyTask {
     
     public String getStartTimeString() {
 		String dateString = "";
-		DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm");
+		DateFormat df = new SimpleDateFormat("dd MMM h:mm a");
 		dateString = df.format(this.startTime);
 		return dateString; 
 	}
@@ -84,7 +84,7 @@ public class Task implements ReadOnlyTask {
     
     public String getEndTimeString() {
 		String dateString = "";
-		DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm");
+		DateFormat df = new SimpleDateFormat("dd MMM h:mm a");
 		dateString = df.format(this.endTime);
 		return dateString;
 	}
@@ -96,7 +96,7 @@ public class Task implements ReadOnlyTask {
     
     public String getDeadlineString() {
 		String dateString = "";
-		DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm");
+		DateFormat df = new SimpleDateFormat("dd MMM h:mm a");
 		dateString = df.format(this.deadline);
 		return dateString;	
 	}
