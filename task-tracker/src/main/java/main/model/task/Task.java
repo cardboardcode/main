@@ -27,6 +27,18 @@ public class Task implements ReadOnlyTask {
         this.isFloating = true; 
     }
     
+    public Task(String message, PriorityType priority) {
+        if(message == null){
+//          throw new IllegalArgumentException("Please fill in the required fields");
+            this.message = "";
+        }
+        else {
+            this.message = message;
+        }
+        this.priority = priority;
+        this.isFloating = true; 
+    }
+    
     public Task(String message, Date deadline) {
     	if(message == null){
     		throw new IllegalArgumentException("Please fill in the required fields");
@@ -34,6 +46,16 @@ public class Task implements ReadOnlyTask {
         this.message = message;
         this.deadline = deadline;
         this.isFloating = false;
+       
+    }
+    public Task(String message, Date deadline, PriorityType priority) {
+        if(message == null){
+            throw new IllegalArgumentException("Please fill in the required fields");
+        }
+        this.message = message;
+        this.deadline = deadline;
+        this.isFloating = false;
+        this.priority=priority;
        
     }
     
@@ -48,6 +70,20 @@ public class Task implements ReadOnlyTask {
         this.isDeadline = false; 
         this.isEvent = true;
     }
+    public Task(String message, Date startTime, Date endTime, PriorityType priority) {
+        if(message == null){
+            throw new IllegalArgumentException("Please fill in the required fields");
+        }
+        this.message = message;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.isFloating = false;
+        this.isDeadline = false; 
+        this.isEvent = true;
+        this.priority = priority;
+    }
+    
+    
     
     public Task(ReadOnlyTask src) {
         this(src.getMessage());

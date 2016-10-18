@@ -1,0 +1,45 @@
+{
+  "name" : "This is a test class",
+  "listOfLocalDateTimes" : [ {
+    "date" : {
+      "year" : -999999999,
+      "month" : 1,
+      "day" : 1
+    },
+    "time" : {
+      "hour" : 0,
+      "minute" : 0,
+      "second" : 0,
+      "nano" : 0
+    }
+  }, {
+    "date" : {
+      "year" : 999999999,
+      "month" : 12,
+      "day" : 31
+    },
+    "time" : {
+      "hour" : 23,
+      "minute" : 59,
+      "second" : 59,
+      "nano" : 999999999
+    }
+  }, {
+    "date" : {
+      "year" : 1,
+      "month" : 1,
+      "day" : 1
+    },
+    "time" : {
+      "hour" : 1,
+      "minute" : 1,
+      "second" : 0,
+      "nano" : 0
+    }
+  } ],
+  "mapOfIntegerToString" : {
+    "1" : "One",
+    "2" : "Two",
+    "3" : "Three"
+  }
+}
