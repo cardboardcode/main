@@ -46,7 +46,20 @@ public interface Model {
 
     /** Updates the filter of the filtered task list to filter by the given priority and date*/
     void updateFilteredTaskList(String priority, Date date);
+
+    /** Returns the number of tasks today **/
+    int getNumToday();
+
+    /** Returns the number of tasks tomorrow **/
+    int getNumTmr();
     
+    /** Returns the total number of events in the list **/
+    int getNumEvent();
 
-
+    /** Returns the total number of tasks with deadline in the list **/
+    int getNumDeadline();
+    
+    /** Returns the total number of floating tasks in the list **/
+    int getNumFloating();
+    
 }

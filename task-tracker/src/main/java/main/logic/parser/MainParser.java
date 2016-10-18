@@ -15,6 +15,7 @@ import org.apache.commons.lang3.tuple.Triple;
 
 import main.model.task.Task;
 import main.logic.command.AddCommand;
+import main.logic.command.ClearCommand;
 import main.logic.command.Command;
 import main.logic.command.DeleteCommand;
 import main.logic.command.EditCommand;
@@ -64,6 +65,8 @@ public class MainParser {
                 return new ExitCommand();
             case "finish":
                 return prepareDelete(task);
+            case ClearCommand.COMMAND_WORD:
+                return new ClearCommand();
             default: 
                 return commandIncorrect(Messages.MESSAGE_UNKNOWN_COMMAND);
         }
