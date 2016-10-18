@@ -17,4 +17,19 @@ public interface Logic {
     /** Returns the filtered list of persons */
     ObservableList<ReadOnlyTask> getFilteredTaskList();
 
+    /** Returns the number of tasks due or happening today **/
+    int getNumToday();
+
+    /** Returns the number of tasks due or happening the next day **/
+    int getNumTmr();
+    
+    /** Returns the number of events in the list **/
+    int getNumEvent();
+
+    /** Returns the number of tasks with deadline in the list **/
+    int getNumDeadline();
+    
+    /** Returns the number of floating tasks in the list **/    
+    int getNumFloating();
+
 }
