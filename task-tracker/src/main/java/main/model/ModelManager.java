@@ -94,6 +94,47 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredListToShowAll();
         indicateTaskTrackerChanged();
     }
+    
+    //=========== User Friendly Accessors ===================================================================
+    @Override
+    public int getNumToday() {        
+        Calendar cal = Calendar.getInstance();
+        updateFilteredTaskList(cal.getTime());
+        return getSizeAndReset();
+    }
+    
+    @Override
+    public int getNumTmr() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DATE,cal.get(Calendar.DATE + 1);
+        updateFilteredTaskList(cal.getTime());
+        return getSizeAndReset();        
+    }
+    
+    @Override
+    public int getNumEvent() {
+        updateFilteredTaskList("event");
+        return getSizeAndReset();  
+    }
+    
+    @Override
+    public int getNumDeadline() {
+        updateFilteredTaskList("deadline");
+        return getSizeAndReset();         
+    }
+    
+    @Override
+    public int getNumFloating() {
+        updateFilteredTaskList("floating");
+        return getSizeAndReset();         
+    }
+
+    private int getSizeAndReset() {
+        int num = filteredTasks.size();
+        updateFilteredListToShowAll();
+        return num;
+    }
+    
 
     //=========== Filtered Task List Accessors ===============================================================
     
@@ -113,13 +154,18 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredTaskList(new PredicateExpression(new DateQualifier(date)));        
     }
     
-    
-    //TODO
     @Override
-    public void updateFilteredTaskList(String priority) {
-        updateFilteredListToShowAll();
-//        updateFilteredTaskList(new PredicateExpression(new DateQualifier(date)));        
+    public void updateFilteredTaskList(String type) {
+        updateFilteredTaskList(new PredicateExpression(new TypeQualifier(type.trim())));        
     }
+    
+    
+//    //TODO
+//    @Override
+//    public void updateFilteredTaskList(String priority) {
+//        updateFilteredListToShowAll();
+////        updateFilteredTaskList(new PredicateExpression(new DateQualifier(date)));        
+//    }
     
     //TODO
     @Override
@@ -180,6 +226,11 @@ public class ModelManager extends ComponentManager implements Model {
             return ((compareDate(date, task.getDeadline())) || (compareDate(date, task.getEndTime())) || (compareDate(date, task.getStartTime())));
         }
         
+        /*
+         * compares the 2 dates, not including the time
+         * 
+         * @returns true if both dates are on the same day
+         */
         private boolean compareDate(Date date1, Date date2) {
             if (date1 == null || date2 == null) return false;
             Calendar cal1 = Calendar.getInstance();
@@ -199,6 +250,28 @@ public class ModelManager extends ComponentManager implements Model {
         @Override
         public String toString() {
             return ((new SimpleDateFormat("dd MMM")).format(this.date));
+        }
+    }
+    
+    private class TypeQualifier implements Qualifier {
+        private String type;
+
+        TypeQualifier(String type) {
+            this.type = type;
+        }
+
+        @Override
+        public boolean run(ReadOnlyTask task) {
+            type = type.toLowerCase();
+            if (type.equals("floating")) return (task.getIsFloating());
+            else if (type.equals("event")) return (task.getIsEvent());
+            else if (type.equlas("deadline")) return (!task.getIsFloating() && !task.getIsEvent());
+            else return false;
+        }
+
+        @Override
+        public String toString() {
+            return type;
         }
     }
 }
