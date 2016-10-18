@@ -33,6 +33,7 @@ public class ReferenceList {
             .put("show", "list")
             .put("help", "help")
             .put("T.T", "help")
+            .put("clear", "clear")
             .build(); 
     
     public static final Map<String,String> priorityDictionary = ImmutableMap.<String, String>builder()
