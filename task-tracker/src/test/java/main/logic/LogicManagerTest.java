@@ -2,6 +2,8 @@ package main.logic;
 
 import main.commons.core.EventsCenter;
 import main.commons.core.Messages;
+import main.commons.events.model.TaskTrackerChangedEvent;
+import main.commons.events.ui.ShowHelpRequestEvent;
 import main.logic.command.AddCommand;
 import main.logic.command.CommandResult;
 import main.logic.command.DeleteCommand;
@@ -17,11 +19,14 @@ import main.model.task.ReadOnlyTask;
 import main.model.task.Task;
 import main.model.task.UniqueTaskList.DuplicateTaskException;
 import main.storage.StorageManager;
-import static org.junit.Assert.assertEquals;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import static main.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -30,14 +35,32 @@ import java.util.List;
 import org.junit.*;
 import org.junit.rules.TemporaryFolder;
 
+import com.google.common.eventbus.Subscribe;
+
 
 public class LogicManagerTest {
     
     @Rule
     public TemporaryFolder saveFolder = new TemporaryFolder();
-    
-    Logic logic;
-    Model model;
+        
+    private Model model;
+    private Logic logic;
+
+    //These are for checking the correctness of the events raised
+    private ReadOnlyTaskTracker latestSavedTaskTracker;
+    private boolean helpShown;
+    private int targetedJumpIndex;
+
+    @Subscribe
+    private void handleLocalModelChangedEvent(TaskTrackerChangedEvent abce) {
+        latestSavedTaskTracker = new TaskTracker(abce.data);
+    }
+
+    @Subscribe
+    private void handleShowHelpRequestEvent(ShowHelpRequestEvent she) {
+        helpShown = true;
+    }
+
     
     @Before
     public void setup() {
@@ -161,7 +184,7 @@ public class LogicManagerTest {
           expectedAB.addTask(toBeAdded);
 
           // setup starting state
-          model.addTask(toBeAdded); // person already in internal address book
+          model.addTask(toBeAdded); // task already in internal address book
 
           // execute command and verify result
           assertCommandBehavior(
@@ -229,18 +252,7 @@ public class LogicManagerTest {
             cal2.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
             return new Task("event1", cal1.getTime(), cal2.getTime());
         }
-        
-        /**
-         * Generates a valid person using the given seed.
-         * Running this function with the same parameter values guarantees the returned task will have the same state.
-         * Each unique seed will generate a unique Task object.
-         *
-         * @param seed used to generate the task data field values
-         */
-        Task generateTask(int seed) throws Exception {
-            return new Task("Task " + seed);
-        }
-        
+               
         protected String generateAddCommand(Task toAdd) {
             if (toAdd.getIsFloating()) {
                 return "add " + toAdd.getMessage();
@@ -252,12 +264,93 @@ public class LogicManagerTest {
                 return "add " + toAdd.getMessage() + " " + toAdd.getDeadlineString(); 
             }
         }
+        
 
-       protected TaskTracker addToTaskTracker(Task toBeAdded) throws DuplicateTaskException {
-            TaskTracker expectedAB = new TaskTracker();
-            expectedAB.addTask(toBeAdded);
-            return expectedAB;
+        /**
+         * Generates an TaskTracker with auto-generated tasks.
+         */
+        TaskTracker generateTaskTracker(int numGenerated) throws Exception{
+            TaskTracker taskTracker = new TaskTracker();
+            addToTaskTracker(taskTracker, numGenerated);
+            return taskTracker;
         }
+
+        /**
+         * Generates an TaskTracker based on the list of Tasks given.
+         */
+        TaskTracker generateTaskTracker(List<Task> tasks) throws Exception{
+            TaskTracker taskTracker = new TaskTracker();
+            addToTaskTracker(taskTracker, tasks);
+            return taskTracker;
+        }
+
+        /**
+         * Adds auto-generated Task objects to the given TaskTracker
+         * @param taskTracker The TaskTracker to which the Tasks will be added
+         */
+        void addToTaskTracker(TaskTracker taskTracker, int numGenerated) throws Exception {
+            addToTaskTracker(taskTracker, generateTaskList(numGenerated));
+        }
+
+        /**
+         * Adds the given list of Tasks to the given TaskTracker
+         */
+        void addToTaskTracker(TaskTracker taskTracker, List<Task> tasksToAdd) throws Exception {
+            for (Task p: tasksToAdd) {
+                taskTracker.addTask(p);
+            }
+        }
+        
+
+        TaskTracker addToTaskTracker(Task toBeAdded) throws DuplicateTaskException {
+             TaskTracker expectedAB = new TaskTracker();
+             expectedAB.addTask(toBeAdded);
+             return expectedAB;
+        }
+
+        /**
+         * Adds auto-generated Task objects to the given model
+         * @param model The model to which the Tasks will be added
+         */
+        void addToModel(Model model, int numGenerated) throws Exception{
+            addToModel(model, generateTaskList(numGenerated));
+        }
+
+        /**
+         * Adds the given list of Tasks to the given model
+         */
+        void addToModel(Model model, List<Task> tasksToAdd) throws Exception{
+            for (Task p: tasksToAdd) {
+                model.addTask(p);
+            }
+        }
+       
+       /**
+        * Generates a valid task using the given seed.
+        * Running this function with the same parameter values guarantees the returned task will have the same state.
+        * Each unique seed will generate a unique Task object.
+        *
+        * @param seed used to generate the task data field values
+        */
+       Task generateTask(int seed) throws Exception {
+           return new Task("Task " + seed);
+       }       
+       
+       /**
+        * Generates a list of Tasks based on the flags.
+        */
+       List<Task> generateTaskList(int numGenerated) throws Exception{
+           List<Task> tasks = new ArrayList<>();
+           for (int i = 1; i <= numGenerated; i++) {
+               tasks.add(generateTask(i));
+           }
+           return tasks;
+       }
+
+       List<Task> generateTaskList(Task... tasks) {
+           return Arrays.asList(tasks);
+       }
+
                     
     }
 
