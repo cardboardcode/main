@@ -2,6 +2,7 @@ package main.logic.command;
 
 import main.model.task.Task;
 import main.model.task.UniqueTaskList;
+import main.ui.ListStatistics;
 
 /**
  * Adds a task to the task-tracker storage.
@@ -32,6 +33,7 @@ public class AddCommand extends Command {
 	public CommandResult execute() {
 		try {
             model.addTask(toAdd);
+            ListStatistics.updateStatistics();
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
 		}
 		catch (UniqueTaskList.DuplicateTaskException e) {
