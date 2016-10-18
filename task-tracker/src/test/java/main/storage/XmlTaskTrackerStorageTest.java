@@ -8,6 +8,7 @@ import org.junit.rules.TemporaryFolder;
 import main.commons.exceptions.DataConversionException;
 import main.commons.util.FileUtil;
 import main.model.TaskTracker;
+import main.model.task.Task;
 import main.testutil.TypicalTestTasks;
 import main.model.ReadOnlyTaskTracker;
 
@@ -70,14 +71,14 @@ public class XmlTaskTrackerStorageTest {
         assertEquals(original, new TaskTracker(readBack));
 
         //Modify data, overwrite exiting file, and read back
-        original.addTask(new Task(TypicalTestTasks.hoon));
-        original.removeTask(new Task(TypicalTestTasks.alice));
+        original.addTask(new Task(TypicalTestTasks.deadline1));
+        original.removeTask(new Task(TypicalTestTasks.event1));
         xmlTaskTrackerStorage.saveTaskTracker(original, filePath);
         readBack = xmlTaskTrackerStorage.readTaskTracker(filePath).get();
         assertEquals(original, new TaskTracker(readBack));
 
         //Save and read without specifying file path
-        original.addTask(new Task(TypicalTestTasks.ida));
+        original.addTask(new Task(TypicalTestTasks.floating1));
         xmlTaskTrackerStorage.saveTaskTracker(original); //file path not specified
         readBack = xmlTaskTrackerStorage.readTaskTracker().get(); //file path not specified
         assertEquals(original, new TaskTracker(readBack));
@@ -90,8 +91,8 @@ public class XmlTaskTrackerStorageTest {
         saveTaskTracker(null, "SomeFile.xml");
     }
 
-    private void saveTaskTracker(ReadOnlyTaskTracker addressBook, String filePath) throws IOException {
-        new XmlTaskTrackerStorage(filePath).saveTaskTracker(addressBook, addToTestDataPathIfNotNull(filePath));
+    private void saveTaskTracker(ReadOnlyTaskTracker taskTracker, String filePath) throws IOException {
+        new XmlTaskTrackerStorage(filePath).saveTaskTracker(taskTracker, addToTestDataPathIfNotNull(filePath));
     }
 
     @Test
