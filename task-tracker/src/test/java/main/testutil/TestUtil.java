@@ -1,6 +1,6 @@
 package main.testutil;
 
-import com.google.common.io.Files;
+//import com.google.common.io.Files;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -8,16 +8,16 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import org.testfx.api.FxToolkit;
+//import org.testfx.api.FxToolkit;
 import junit.framework.AssertionFailedError;
 import main.TestMain;
 import main.commons.exceptions.IllegalValueException;
 import main.commons.util.FileUtil;
 import main.commons.util.XmlUtil;
 import main.model.TaskTracker;
-import main.model.task.Deadline;
-import main.model.task.Event;
-import main.model.task.FloatingTask;
+//import main.model.task.Deadline;
+//import main.model.task.Event;
+//import main.model.task.FloatingTask;
 import main.model.task.ReadOnlyTask;
 import main.model.task.Task;
 import main.model.task.UniqueTaskList;
@@ -35,6 +35,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
+
+import com.google.common.io.Files;
 
 /**
  * A utility class for test cases.
@@ -68,15 +70,14 @@ public class TestUtil {
     private static Task[] getSampleTaskData() {
 //        try {
         return new Task[]{
-                new FloatingTask("do homework"),
-                new FloatingTask("clean room"),
-                new FloatingTask("learn a new instrument"),
-                new Deadline("plan holiday", setDate(2016, 12, 2, 10, 30)),
-                new Deadline("coding project", setDate(2016, 11, 7, 23, 30)),
-                new Deadline("", setDate(2016, 11, 7, 23, 30)),
-                new Event("birthday party", setDate(2016, 11, 20, 12, 0), setDate(2016, 11, 20, 20, 0)),
-                new Event("hackathon", setDate(2016, 12, 11, 8, 0), setDate(2016, 12, 13, 18, 0)),
-                new Event("travel japan", setDate(2016, 12, 20, 0, 0), setDate(2017, 1, 5, 0, 0))
+                new Task("Get a girlfriend"),
+                new Task("Get a boyfriend"),
+                new Task("Take a long nap"),
+                new Task(("Plan for SEP"), setDate(2016, 10, 17, 23, 59)),
+                new Task("", setDate(2016, 11, 7, 23, 30)),
+                new Task("birthday party", setDate(2016, 11, 20, 12, 0), setDate(2016, 11, 20, 20, 0)),
+                new Task("hackathon", setDate(2016, 12, 11, 8, 0), setDate(2016, 12, 13, 18, 0)),
+                new Task("travel Japan", setDate(2016, 12, 20, 0, 0), setDate(2017, 1, 5, 0, 0))
         };
 //        } catch (IllegalValueException e) {
 //            assert false;
@@ -190,14 +191,14 @@ public class TestUtil {
         field.set(null, newValue);
     }
 
-    public static void initRuntime() throws TimeoutException {
+   /* public static void initRuntime() throws TimeoutException {
         FxToolkit.registerPrimaryStage();
         FxToolkit.hideStage();
     }
 
     public static void tearDownRuntime() throws Exception {
         FxToolkit.cleanupStages();
-    }
+    }*/
 
     /**
      * Gets private method of a class

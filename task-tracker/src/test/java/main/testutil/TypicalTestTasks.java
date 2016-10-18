@@ -50,6 +50,7 @@ public class TypicalTestTasks {
 
     public TestTask[] getTypicalTasks() {
         return new TestTask[]{floating1, floating2, floating3, deadline1, deadline2, deadline3, event1, event2, event3};
+
     }
 
     public TaskTracker getTypicalTaskTracker() {
