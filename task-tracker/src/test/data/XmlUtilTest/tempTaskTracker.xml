@@ -5,7 +5,7 @@
         <isFloating>true</isFloating>
 	<isEvent>false</isEvent>
 	<isDeadline>false</isDeadline>
-	<isRecurring>false<isRecurring>
+	<isRecurring>false</isRecurring>
 	<priority>high</priority>
     </task>
    
