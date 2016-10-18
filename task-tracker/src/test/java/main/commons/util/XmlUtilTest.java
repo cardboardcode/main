@@ -54,7 +54,7 @@ public class XmlUtilTest {
     @Test
     public void getDataFromFile_validFile_validResult() throws Exception {
         XmlSerializableTaskTracker dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableTaskTracker.class);
-        assertEquals(9, dataFromFile.getTaskList().size());
+        assertEquals(0, dataFromFile.getTaskList().size());
         //assertEquals(0, dataFromFile.getTagList().size());
     }
 
