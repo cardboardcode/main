@@ -21,6 +21,7 @@ import main.model.task.ReadOnlyTask;
  * @param Label id
  * @param Label message
  * @param Label date
+ * @param Rectangle priorityTab
  * @author bey
  *
  */
@@ -58,12 +59,18 @@ public class TaskCard extends UiPart{
 
     @FXML
     public void initialize() {
+     
+        configureLayout();     
+        setTaskCardText();
+        setPriorityTabColour();
+        
+    }
+    
+    private void setTaskCardText() {
     	
-        message.setText(task.getMessage());
+    	message.setText(task.getMessage());
+        
         id.setText(displayedIndex + ". ");
-        
-        
-        configureLayout();
         
         if (task.getDeadline()!=null)
         	deadline.setText(""+ task.getDeadline());
@@ -73,15 +80,13 @@ public class TaskCard extends UiPart{
         	endtime.setText(""+ task.getEndTime());
         else
         	endtime.setText("[NO END TIME SET]");
-        
-        setPriorityTabColour();
-        
-    }
-    
-    /**
+		
+	}
+
+	/**
      * changed the if conditions to reflect on the different priority levels.
      */
-
+    
     private void setPriorityTabColour() {
 		if (task.getDeadline()==null){
 			priorityTab.setFill(Color.RED);
