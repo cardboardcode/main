@@ -126,7 +126,7 @@ public class MainWindow extends UiPart{
         resultDisplay = ResultDisplay.load(primaryStage, getResultDisplayPlaceholder());
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getTaskTrackerFilePath());
         commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultDisplay, logic);
-        listStatistics = ListStatistics.load(primaryStage, getListStatisticsPlaceholder());
+        listStatistics = ListStatistics.load(primaryStage, getListStatisticsPlaceholder(),logic);
     }
 
     private AnchorPane getCommandBoxPlaceholder() {

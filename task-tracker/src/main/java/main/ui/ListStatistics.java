@@ -8,63 +8,88 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import main.commons.util.FxViewUtil;
+import main.logic.Logic;
 import javafx.fxml.FXML;
 
 public class ListStatistics extends UiPart {
-    public static final String RESULT_DISPLAY_ID = "listStatistics";
-    
-    @FXML
-    private TextArea listStatisticsArea;
 
-    private static final String FXML = "ListStatistics.fxml";
-    
-    @FXML
-    private Label alltasks;
-    
-    @FXML
-    private Label eventtasks;
-    
-    @FXML
-    private Label floatingtasks;
-    
-    @FXML
-    private ImageView image;
-    
-    private AnchorPane placeHolder;
+	private static final String FXML = "ListStatistics.fxml";
 
-    private AnchorPane mainPane;
+	@FXML
+	private Label alltasks;
 
-    public static ListStatistics load(Stage primaryStage, AnchorPane placeHolder) {
-        ListStatistics statusBar = UiPartLoader.loadUiPart(primaryStage, placeHolder, new ListStatistics());
-        statusBar.configure();
-        return statusBar;
-    }
+	@FXML
+	private Label eventtasks;
 
-    public void configure() {
-        image = new ImageView(new Image("file:/images/pp.png"));
-//        listStatisticsArea.setEditable(false);
-//        listStatisticsArea.setText("WHY?");
-//        alltasks.setText("STUB");
-//        eventtasks.setText("STUB");
-//        floatingtasks.setText("STUB");
-//        FxViewUtil.applyAnchorBoundaryParameters(listStatisticsArea, 0.0, 0.0, 0.0, 0.0);
-//        mainPane.getChildren().add(listStatisticsArea);
-//        FxViewUtil.applyAnchorBoundaryParameters(mainPane, 0.0, 0.0, 0.0, 0.0);
-//        placeHolder.getChildren().add(mainPane);
-    }
+	@FXML
+	private Label tomorrowtasks;
 
-    @Override
-    public void setNode(Node node) {
-        mainPane = (AnchorPane) node;
-    }
+	@FXML
+	private Label deadlinetasks;
 
-    @Override
-    public void setPlaceholder(AnchorPane placeholder) {
-        this.placeHolder = placeholder;
-    }
+	@FXML
+	private Label todaytasks;
 
-    @Override
-    public String getFxmlPath() {
-        return FXML;
-    }
+//	@FXML
+//	private ImageView image;
+	private Logic logic;
+	
+	private AnchorPane placeHolder;
+
+	private AnchorPane mainPane;
+
+	public static ListStatistics load(Stage primaryStage, AnchorPane placeHolder,Logic logic) {
+		ListStatistics listDisplay = UiPartLoader.loadUiPart(primaryStage, placeHolder, new ListStatistics());
+		listDisplay.configure(logic);
+		return listDisplay;
+	}
+
+	public ListStatistics() {
+		todaytasks = new Label();
+		tomorrowtasks = new Label();
+		eventtasks = new Label();
+		deadlinetasks = new Label();
+		alltasks = new Label();
+	}
+
+	public void configure(Logic logic) {
+		ListStatistics panel = new ListStatistics();
+		mainPane = new AnchorPane();
+		this.logic = logic;
+		initialize();
+		addAllChildren();
+		placeHolder.getChildren().add(mainPane);
+		
+	}
+
+	private void addAllChildren() {
+		mainPane.getChildren().add(todaytasks);
+		mainPane.getChildren().add(tomorrowtasks);
+		mainPane.getChildren().add(eventtasks);
+		mainPane.getChildren().add(deadlinetasks);
+		mainPane.getChildren().add(alltasks);
+	}
+
+	private void initialize() {
+		todaytasks.setText("STUB");
+		tomorrowtasks.setText("STUB");
+		eventtasks.setText("STUB");
+		deadlinetasks.setText("STUB");
+		alltasks.setText("STUB");
+	}
+
+	@Override
+	public void setNode(Node node) {
+		mainPane = (AnchorPane) node;
+	}
+
+	@Override
+	public void setPlaceholder(AnchorPane placeholder) {
+		this.placeHolder = placeholder;
+	}
+
+	@Override
+	public String getFxmlPath() {
+		return FXML;
+	}
 }
