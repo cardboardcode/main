@@ -49,7 +49,7 @@ public class TypicalTestTasks {
     }
 
     public TestTask[] getTypicalTasks() {
-        return new TestTask[]{alice, benson, carl, daniel, elle, fiona, george};
+        return new TestTask[]{floating1, deadline2, event3};
     }
 
     public TaskTracker getTypicalTaskTracker() {

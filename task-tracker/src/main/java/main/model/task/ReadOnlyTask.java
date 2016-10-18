@@ -16,6 +16,7 @@ public interface ReadOnlyTask {
     boolean getIsEvent();
     boolean getIsDeadline();
     boolean getIsRecurring();
+    PriorityType getPriority();
     
 
     /**

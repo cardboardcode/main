@@ -18,6 +18,8 @@ public class TestTask implements ReadOnlyTask {
     private Date date2;
     private boolean isFloating;
     private boolean isEvent;
+    private boolean isDeadline;
+    private PriorityType priority;
     private boolean isRecurring;
     
 
@@ -41,8 +43,16 @@ public class TestTask implements ReadOnlyTask {
         isEvent = event;
     }
     
+    public void setIsDeadline(boolean deadline){
+    	isDeadline = deadline;
+    }
+    
     public void setIsRecurring(boolean recur) {
         isRecurring = recur;
+    }
+    
+    public void setPriority(PriorityType prior){
+    	priority = prior;
     }
 
     @Override
@@ -107,7 +117,11 @@ public class TestTask implements ReadOnlyTask {
 
     @Override
     public PriorityType getPriority() {
-        // TODO Auto-generated method stub
-        return null;
+        return priority;
     }
+
+	@Override
+	public boolean getIsDeadline() {
+		return isDeadline;
+	}
 }
