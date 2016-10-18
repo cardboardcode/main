@@ -11,7 +11,10 @@ public class Task implements ReadOnlyTask {
     Date startTime;
     Date endTime;
     private boolean isFloating;
+    private boolean isDeadline;
     private boolean isEvent = false;
+    private boolean isRecurring = false;
+    private PriorityType priority = PriorityType.NORMAL; //default priority
     
     public Task(String message) {
     	if(message == null){
@@ -31,6 +34,7 @@ public class Task implements ReadOnlyTask {
         this.message = message;
         this.deadline = deadline;
         this.isFloating = false;
+       
     }
     
     public Task(String message, Date startTime, Date endTime) {
@@ -41,6 +45,7 @@ public class Task implements ReadOnlyTask {
         this.startTime = startTime;
         this.endTime = endTime;
         this.isFloating = false;
+        this.isDeadline = false; 
         this.isEvent = true;
     }
     
@@ -105,6 +110,20 @@ public class Task implements ReadOnlyTask {
         return this.isEvent;
     }
     
+    @Override
+    public boolean getIsDeadline(){
+    	return this.isDeadline;
+    }
+    
+    @Override 
+    public boolean getIsRecurring(){
+    	return this.isRecurring;
+    }
+    
+    public PriorityType getPriority(){
+    	return this.priority;
+    }
+    
     //setters
     public void setMessage(String message){
     	this.message = message;
@@ -124,6 +143,23 @@ public class Task implements ReadOnlyTask {
     public void setIsFloating(boolean isFloating){
     	this.isFloating = isFloating;
     }
+    
+    public void setIsEvent(boolean isEvent){
+    	this.isEvent = isEvent;
+    }
+    
+    public void setIsDeadline(boolean isDeadline){
+    	this.isDeadline = isDeadline;
+    }
+    
+    public void setIsRecurring(boolean isRecurring){
+    	this.isRecurring = isRecurring;
+    }
+    
+    public void setPriority(PriorityType priority){
+    	this.priority = priority;
+    }
+    
      
     @Override
     public boolean equals(Object other) {
