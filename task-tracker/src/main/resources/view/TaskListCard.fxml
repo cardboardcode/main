@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Rectangle?>
 
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -26,6 +27,7 @@
             <Label fx:id="endtime" alignment="CENTER_RIGHT" contentDisplay="RIGHT" minWidth="181.0" prefHeight="21.0" prefWidth="276.0" text="endtime" textAlignment="RIGHT" GridPane.columnIndex="2" />
          </children>
       </GridPane>
+      <Rectangle fx:id="priorityTab" arcHeight="5.0" arcWidth="5.0" fill="#272b2f" height="67.0" stroke="BLACK" strokeType="INSIDE" width="63.0" />
    </children>
    <stylesheets>
       <URL value="@DarkTheme.css" />
