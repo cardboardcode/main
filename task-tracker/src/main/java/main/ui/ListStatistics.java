@@ -6,10 +6,15 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import main.commons.util.AppUtil;
 import main.commons.util.FxViewUtil;
 import main.logic.Logic;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 
 public class ListStatistics extends UiPart {
 
@@ -30,17 +35,19 @@ public class ListStatistics extends UiPart {
 	@FXML
 	private Label todaytasks;
 
-//	@FXML
-//	private ImageView image;
-	private Logic logic;
+	@FXML
+	private ImageView image;
 	
-	private AnchorPane placeHolder;
+	private static Logic logic;
+	
+	private static AnchorPane placeHolder;
 
-	private AnchorPane mainPane;
+	private VBox mainPane;
 
 	public static ListStatistics load(Stage primaryStage, AnchorPane placeHolder,Logic logic) {
 		ListStatistics listDisplay = UiPartLoader.loadUiPart(primaryStage, placeHolder, new ListStatistics());
-		listDisplay.configure(logic);
+		listDisplay.logic = logic;
+		listDisplay.configure();
 		return listDisplay;
 	}
 
@@ -52,35 +59,41 @@ public class ListStatistics extends UiPart {
 		alltasks = new Label();
 	}
 
-	public void configure(Logic logic) {
+	public void configure() {
+		
 		ListStatistics panel = new ListStatistics();
-		mainPane = new AnchorPane();
-		this.logic = logic;
+		mainPane = new VBox();
+		
 		initialize();
-		addAllChildren();
+		setListIcon();
+		mainPane.getChildren().addAll(image, todaytasks, tomorrowtasks, eventtasks, deadlinetasks,alltasks);
+		mainPane.setSpacing(30.0);
+		mainPane.setPadding(new Insets(30.0, 0.0, 30.0, 30.0));
 		placeHolder.getChildren().add(mainPane);
 		
 	}
 
-	private void addAllChildren() {
-		mainPane.getChildren().add(todaytasks);
-		mainPane.getChildren().add(tomorrowtasks);
-		mainPane.getChildren().add(eventtasks);
-		mainPane.getChildren().add(deadlinetasks);
-		mainPane.getChildren().add(alltasks);
+	private void setListIcon() {
+		image = new ImageView(AppUtil.getImage("/images/statistics.png"));
 	}
 
 	private void initialize() {
-		todaytasks.setText("STUB");
-		tomorrowtasks.setText("STUB");
-		eventtasks.setText("STUB");
-		deadlinetasks.setText("STUB");
-		alltasks.setText("STUB");
+
+		todaytasks.setText("No. of Task Due Today: ");
+		tomorrowtasks.setText("No. of Task Due Tomorrow: ");
+		eventtasks.setText("No. of Events: ");
+		deadlinetasks.setText("No. of Deadlines: ");
+		alltasks.setText("No. of Total: ");
+
+	}
+	
+	private void updateStatistics(){
+		alltasks.setText(""+logic.getFilteredTaskList().size());
 	}
 
 	@Override
 	public void setNode(Node node) {
-		mainPane = (AnchorPane) node;
+		mainPane = (VBox) node;
 	}
 
 	@Override
