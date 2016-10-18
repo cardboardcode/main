@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import javafx.collections.transformation.FilteredList;
 import main.commons.events.model.TaskTrackerChangedEvent;
+import main.commons.util.DateUtil;
 import main.model.TaskTracker;
 import main.model.task.ReadOnlyTask;
 import main.model.task.Task;
@@ -106,7 +107,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public int getNumTmr() {
         Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.DATE,cal.get(Calendar.DATE + 1);
+        cal.set(Calendar.DATE,cal.get(Calendar.DATE) + 1);
         updateFilteredTaskList(cal.getTime());
         return getSizeAndReset();        
     }
@@ -223,29 +224,12 @@ public class ModelManager extends ComponentManager implements Model {
 //                    .filter(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword))
 //                    .findAny()
 //                    .isPresent();
-            return ((compareDate(date, task.getDeadline())) || (compareDate(date, task.getEndTime())) || (compareDate(date, task.getStartTime())));
+//            return ((compareDate(date, task.getDeadline())) || (compareDate(date, task.getEndTime())) || (compareDate(date, task.getStartTime())));
+            if (task.getIsEvent()) return DateUtil.dateWithin(task.getStartTime(), task.getEndTime(), date);
+            else if (!task.getIsFloating() && !task.getIsEvent()) return DateUtil.areSameDay(date, task.getDeadline()); 
+            else return false;
         }
-        
-        /*
-         * compares the 2 dates, not including the time
-         * 
-         * @returns true if both dates are on the same day
-         */
-        private boolean compareDate(Date date1, Date date2) {
-            if (date1 == null || date2 == null) return false;
-            Calendar cal1 = Calendar.getInstance();
-            cal1.setTime(date1);
-            
-            Calendar cal2 = Calendar.getInstance();
-            cal2.setTime(date2);
-            
-            if ((cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)) && (cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH)) && (cal1.get(Calendar.DATE) == cal2.get(Calendar.DATE))) {
-                return true;
-            }
-            
-            return false;
-                
-        }
+
 
         @Override
         public String toString() {
@@ -265,7 +249,7 @@ public class ModelManager extends ComponentManager implements Model {
             type = type.toLowerCase();
             if (type.equals("floating")) return (task.getIsFloating());
             else if (type.equals("event")) return (task.getIsEvent());
-            else if (type.equlas("deadline")) return (!task.getIsFloating() && !task.getIsEvent());
+            else if (type.equals("deadline")) return (!task.getIsFloating() && !task.getIsEvent());
             else return false;
         }
 
