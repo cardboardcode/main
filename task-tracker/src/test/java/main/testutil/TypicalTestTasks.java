@@ -36,20 +36,20 @@ public class TypicalTestTasks {
         try {
             ab.addTask(new Task(floating1));
             ab.addTask(new Task(floating2));
-            ab.addTask(new Task(floating3));
+            //ab.addTask(new Task(floating3));
             ab.addTask(new Task(deadline1));
             ab.addTask(new Task(deadline2));
-            ab.addTask(new Task(deadline3));
+            //ab.addTask(new Task(deadline3));
             ab.addTask(new Task(event1));
             ab.addTask(new Task(event2));
-            ab.addTask(new Task(event3));
+            //ab.addTask(new Task(event3));
         } catch (UniqueTaskList.DuplicateTaskException e) {
             assert false : "not possible";
         }
     }
 
     public TestTask[] getTypicalTasks() {
-        return new TestTask[]{floating1, floating2, floating3, deadline1, deadline2, deadline3, event1, event2, event3};
+        return new TestTask[]{floating1, floating2, deadline1, deadline2, event1, event2};
 
     }
 

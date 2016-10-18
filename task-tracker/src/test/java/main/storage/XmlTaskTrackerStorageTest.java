@@ -71,14 +71,14 @@ public class XmlTaskTrackerStorageTest {
         assertEquals(original, new TaskTracker(readBack));
 
         //Modify data, overwrite exiting file, and read back
-        original.addTask(new Task(TypicalTestTasks.deadline1));
+        original.addTask(new Task(TypicalTestTasks.deadline3));
         original.removeTask(new Task(TypicalTestTasks.event1));
         xmlTaskTrackerStorage.saveTaskTracker(original, filePath);
         readBack = xmlTaskTrackerStorage.readTaskTracker(filePath).get();
         assertEquals(original, new TaskTracker(readBack));
 
         //Save and read without specifying file path
-        original.addTask(new Task(TypicalTestTasks.floating1));
+        original.addTask(new Task(TypicalTestTasks.floating3));
         xmlTaskTrackerStorage.saveTaskTracker(original); //file path not specified
         readBack = xmlTaskTrackerStorage.readTaskTracker().get(); //file path not specified
         assertEquals(original, new TaskTracker(readBack));
