@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlElement;
 import com.joestelmach.natty.generated.DateParser.date_return;
 
 import java.util.Date;
+import java.util.IllegalFormatCodePointException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,12 @@ public class XmlAdaptedTask {
     private boolean isFloating;    
     @XmlElement(required = true)
     private boolean isEvent;
+    @XmlElement(required = true)
+    private boolean isDeadline;
+    @XmlElement(required = true)
+    private boolean isRecurring;
+    @XmlElement(required = true)
+    private PriorityType priority;
     
     //@XmlElement
     //private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -50,6 +57,9 @@ public class XmlAdaptedTask {
         endTime = source.getEndTime();
         isFloating = source.getIsFloating();
         isEvent = source.getIsEvent();
+        isDeadline = source.getIsDeadline();
+        isRecurring = source.getIsRecurring();
+        priority = source.getPriority();
     }
 
     /**
@@ -59,8 +69,10 @@ public class XmlAdaptedTask {
      */
     public Task toModelType() throws IllegalValueException {
             
-        if (isFloating) return new Task(message);
-        else if (isEvent) return new Task(message, startTime, endTime);
-        else return new Task(message, deadline);
+        if (isFloating)
+            return new Task(message, priority);
+        else if (isEvent) return new Task(message, startTime, endTime, priority);
+        else return new Task(message, deadline, priority);
+        
     }
 }
