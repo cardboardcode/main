@@ -48,6 +48,7 @@ public class MainWindow extends UiPart{
     private ResultDisplay resultDisplay;
     private StatusBarFooter statusBarFooter;
     private CommandBox commandBox;
+    private ListStatistics listStatistics;
     private Config config;
     private UserPrefs userPrefs;
 
@@ -73,8 +74,7 @@ public class MainWindow extends UiPart{
     private AnchorPane statusbarPlaceholder;
     
     @FXML
-    private AnchorPane TTbotPlaceholder;
-
+    private AnchorPane listStatisticsPlaceholder;
 
     public MainWindow() {
         super();
@@ -126,6 +126,7 @@ public class MainWindow extends UiPart{
         resultDisplay = ResultDisplay.load(primaryStage, getResultDisplayPlaceholder());
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getTaskTrackerFilePath());
         commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultDisplay, logic);
+        listStatistics = ListStatistics.load(primaryStage, getListStatisticsPlaceholder());
     }
 
     private AnchorPane getCommandBoxPlaceholder() {
@@ -144,8 +145,8 @@ public class MainWindow extends UiPart{
         return taskListPanelPlaceholder;
     }
     
-    public AnchorPane getTTBotPlaceholder(){
-    	return TTbotPlaceholder;
+    public AnchorPane getListStatisticsPlaceholder(){
+    	return listStatisticsPlaceholder;
     }
 
     public void hide() {

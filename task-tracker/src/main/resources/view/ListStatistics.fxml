@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="398.0" prefWidth="202.0" styleClass="anchor-pane-with-border" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.ui.ListStatistics">
+   <stylesheets>
+      <URL value="@DarkTheme.css" />
+      <URL value="@Extensions.css" />
+   </stylesheets>
+   <children>
+      <TextArea fx:id="listStatisticsArea" prefHeight="413.0" prefWidth="200.0" />
+      <Label fx:id="alltasks" layoutX="14.0" layoutY="51.0" text="[ALL]" />
+      <Label fx:id="floatingtasks" layoutX="14.0" layoutY="138.0" text="[FLOATING]" />
+      <Label fx:id="eventtasks" layoutX="14.0" layoutY="224.0" styleClass="anchor-pane-with-border" text="[EVENT]">
+         <stylesheets>
+            <URL value="@DarkTheme.css" />
+            <URL value="@Extensions.css" />
+         </stylesheets>
+      </Label>
+      <ImageView fx:id="image" fitHeight="59.0" fitWidth="62.0" layoutX="115.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>
