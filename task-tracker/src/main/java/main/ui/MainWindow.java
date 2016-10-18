@@ -48,7 +48,6 @@ public class MainWindow extends UiPart{
     private ResultDisplay resultDisplay;
     private StatusBarFooter statusBarFooter;
     private CommandBox commandBox;
-    private TTBot TTbot;
     private Config config;
     private UserPrefs userPrefs;
 
@@ -127,7 +126,6 @@ public class MainWindow extends UiPart{
         resultDisplay = ResultDisplay.load(primaryStage, getResultDisplayPlaceholder());
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getTaskTrackerFilePath());
         commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultDisplay, logic);
-        TTbot = TTBot.load(primaryStage, getTTBotPlaceholder()); 
     }
 
     private AnchorPane getCommandBoxPlaceholder() {
