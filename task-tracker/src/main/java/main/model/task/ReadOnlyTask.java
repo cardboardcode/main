@@ -32,7 +32,8 @@ public interface ReadOnlyTask {
                 && other.getIsFloating() == this.getIsFloating()
                 && other.getIsEvent() == this.getIsEvent()
                 && other.getIsDeadline() == this.getIsDeadline()
-				&& other.getIsRecurring() == this.getIsRecurring());
+				&& other.getIsRecurring() == this.getIsRecurring()
+				&&other.getPriority() == this.getPriority());
                 
     }
 
@@ -48,7 +49,8 @@ public interface ReadOnlyTask {
                 .append(getIsFloating())
         		.append(getIsEvent())
         		.append(getIsDeadline())
-        		.append(getIsRecurring());
+        		.append(getIsRecurring())
+        		.append(getPriority());
                 
                 
         return builder.toString();
