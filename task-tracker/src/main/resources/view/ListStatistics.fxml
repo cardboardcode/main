@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="398.0" prefWidth="202.0" styleClass="anchor-pane-with-border" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.ui.ListStatistics">
-   <stylesheets>
-      <URL value="@DarkTheme.css" />
-      <URL value="@Extensions.css" />
-   </stylesheets>
+
+<VBox fx:id="mainPane" prefHeight="398.0" prefWidth="202.0" styleClass="anchor-pane-with-border" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.ui.ListStatistics">
    <children>
-      <Label fx:id="todaytasks" layoutX="14.0" layoutY="51.0" text="[today]" />
-      <Label fx:id="tomorrowtasks" layoutX="14.0" layoutY="92.0" text="[tomorrow]" />
-      <Label fx:id="eventtasks" layoutX="19.0" layoutY="127.0" styleClass="anchor-pane-with-border" text="event">
+      <ImageView fx:id="image" fitHeight="53.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" x="100.0">
+         <VBox.margin>
+            <Insets left="65.0" />
+         </VBox.margin>
+      </ImageView>
+      <Label fx:id="todaytasks" styleClass="label-bright" text="[today]">
          <stylesheets>
             <URL value="@DarkTheme.css" />
             <URL value="@Extensions.css" />
          </stylesheets>
       </Label>
-      <Label fx:id="deadlinetasks" layoutX="14.0" layoutY="160.0" text="[deadline]" />
-      <Label fx:id="alltasks" layoutX="14.0" layoutY="199.0" text="all" />
+      <Label fx:id="tomorrowtasks" styleClass="label-bright" text="[tomorrow]" />
+      <Label fx:id="eventtasks" styleClass="label-bright" text="event" />
+      <Label fx:id="deadlinetasks" styleClass="label-bright" text="[deadline]" />
+      <Label fx:id="alltasks" styleClass="label-bright" text="all" />
    </children>
-</AnchorPane>
+   <stylesheets>
+      <URL value="@DarkTheme.css" />
+      <URL value="@Extensions.css" />
+   </stylesheets>
+</VBox>
