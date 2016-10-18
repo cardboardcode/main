@@ -107,7 +107,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public int getNumTmr() {
         Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.DATE,cal.get(Calendar.DATE) + 1);
+        cal.add(Calendar.DATE, 1);  //TODO check if at 31 will error
         updateFilteredTaskList(cal.getTime());
         return getSizeAndReset();        
     }
