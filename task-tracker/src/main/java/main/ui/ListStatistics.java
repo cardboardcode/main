@@ -107,18 +107,18 @@ public class ListStatistics extends UiPart {
 	 * You would not be using logic to get the data. You will have to use the model component directly. Wait for Ruth
 	 */
 	private void initializeStringProperty() {
-		todaytaskNo.setValue(TODAY_TASK_MESSAGE + logic.getFilteredTaskList().size());
-		tomorrowtaskNo.setValue(TOMORROW_TASK_MESSAGE + logic.getFilteredTaskList().size());
-		eventtaskNo.setValue(EVENT_TASK_MESSAGE + logic.getFilteredTaskList().size());
-		deadlinetaskNo.setValue(DEADLINE_TASK_MESSAGE + logic.getFilteredTaskList().size());
+		todaytaskNo.setValue(TODAY_TASK_MESSAGE + logic.getNumToday());
+		tomorrowtaskNo.setValue(TOMORROW_TASK_MESSAGE + logic.getNumTmr());
+		eventtaskNo.setValue(EVENT_TASK_MESSAGE + logic.getNumEvent());
+		deadlinetaskNo.setValue(DEADLINE_TASK_MESSAGE + logic.getNumDeadline());
 		alltaskNo.setValue(ALL_TASK_MESSAGE + logic.getFilteredTaskList().size());
 	}
 	
 	public static void updateStatistics(){
-		listDisplay.getTodayTaskNo().setValue(TODAY_TASK_MESSAGE+logic.getFilteredTaskList().size());
-		listDisplay.getTomorrowTaskNo().setValue(TOMORROW_TASK_MESSAGE+logic.getFilteredTaskList().size());
-		listDisplay.getEventTaskNo().setValue(EVENT_TASK_MESSAGE+logic.getFilteredTaskList().size());
-		listDisplay.getDeadlineTaskNo().setValue(DEADLINE_TASK_MESSAGE+logic.getFilteredTaskList().size());
+		listDisplay.getTodayTaskNo().setValue(TODAY_TASK_MESSAGE+logic.getNumToday());
+		listDisplay.getTomorrowTaskNo().setValue(TOMORROW_TASK_MESSAGE+logic.getNumTmr());
+		listDisplay.getEventTaskNo().setValue(EVENT_TASK_MESSAGE+logic.getNumEvent());
+		listDisplay.getDeadlineTaskNo().setValue(DEADLINE_TASK_MESSAGE+logic.getNumDeadline());
 		listDisplay.getAllTaskNo().setValue(ALL_TASK_MESSAGE+logic.getFilteredTaskList().size());
 		
 	}
