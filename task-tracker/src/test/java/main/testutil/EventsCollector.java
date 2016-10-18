@@ -1,8 +1,8 @@
 package main.testutil;
 
 import com.google.common.eventbus.Subscribe;
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.BaseEvent;
+import main.commons.core.EventsCenter;
+import main.commons.events.BaseEvent;
 
 import java.util.ArrayList;
 import java.util.List;
