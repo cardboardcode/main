@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 
+import main.model.task.PriorityType;
 import main.model.task.Task;
 import main.logic.command.AddCommand;
 import main.logic.command.ClearCommand;
@@ -30,7 +31,7 @@ public class MainParser {
     
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<task>.*)");
     private static final Pattern EDIT_FORMAT = Pattern.compile("(?<index>\\d)(?<task>.*)");
-//    private static final Pattern PRIORITY_FORMAT = Pattern.compile("(?<task>[^/]+)(?<priority>(-h|-m|-l)?)");
+    private static final Pattern PRIORITY_FORMAT = Pattern.compile("(?<task>[^/]+)(?<priority>(-h|-m|-l)?)");
     private static final Logger logger = LogsCenter.getLogger(MainParser.class);
 
        
@@ -82,8 +83,7 @@ public class MainParser {
     /*
      * checks whether task has a deadline, is an event, or is floating,
      * and uses the appropriate constructors accordingly.
-     *         String commandWord = matcher.group("commandWord");
-        String task = matcher.group("task");
+     * 
      * @return an AddCommand Object
      */    
     public Command prepareAdd(String task) {
@@ -158,8 +158,8 @@ public class MainParser {
 
     private Task extractTask(String raw) throws MultiplePriorityException, IllegalArgumentException {
 
-        Pair<Integer, String> proc = getPriority(raw.trim());
-        int priority = proc.getKey();
+        Pair<PriorityType, String> proc = getPriority(raw.trim());
+        PriorityType priority = proc.getKey();
         String input = proc.getValue();    
         
         Triple<String, List<Date>, List<Boolean>> info = TimeParser.extractTime(input.trim());
@@ -173,25 +173,26 @@ public class MainParser {
         }
         
         if (dates.isEmpty()) {
-            return new Task(description);
+            return new Task(description, priority);
         }
         else if (dates.size() == 1) { 
-            return new Task(description,dates.get(0));
+            return new Task(description,dates.get(0), priority);
         }
         // compare dates if there are 2 dates
         else {
             if (dates.get(0).before(dates.get(1)))
-                return new Task(description,dates.get(0),dates.get(1));
+                return new Task(description,dates.get(0),dates.get(1), priority);
             else 
-                return new Task(description,dates.get(1),dates.get(0));
+                return new Task(description,dates.get(1),dates.get(0), priority);
         }
     }
     
     /*
-     * 1 for high priority, 3 for low
+     * uses PriorityType enum class
      * 
+     * @return a pair consisting PriorityType and truncated message (without priority indicator)
      */
-    private Pair<Integer,String> getPriority(String input) throws MultiplePriorityException{
+    private Pair<PriorityType,String> getPriority(String input) throws MultiplePriorityException{
         String [] levels = {"-h", "-m", "-l" };
         int priority = 0;
         int index = input.length();
@@ -199,6 +200,9 @@ public class MainParser {
         
         for (int i = 0; i < levels.length; i++) {
             if ((find = argumentIndexInString(input,levels[i])) != -1) {
+                if (priority != 0) {
+                    throw new MultiplePriorityException();
+                }
                 priority = i+1;
                 index = find;
             }
@@ -206,9 +210,16 @@ public class MainParser {
 
         if (priority == 0) priority = 2;
         
+        PriorityType priority_enum;
+        
+        if (priority == 1) priority_enum = PriorityType.HIGH;
+        else if (priority == 2) priority_enum = PriorityType.NORMAL;
+        else priority_enum = PriorityType.LOW;
+        
         input = input.substring(0, index);
-        logger.info(input);
-        return Pair.of(priority,input);
+        logger.info(input + " priority " + priority_enum);
+        
+        return Pair.of(priority_enum,input);
     }
     
     private int argumentIndexInString(String str, String arg) {
