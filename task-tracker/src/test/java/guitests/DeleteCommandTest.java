@@ -29,7 +29,7 @@ public class DeleteCommandTest extends TaskTrackerGuiTest {
 
         //invalid index
         commandBox.runCommand("delete " + currentList.length + 1);
-        assertResultMessage("The person index provided is invalid");
+        assertResultMessage("Task does not exist in task-tracker");
 
     }
 
@@ -48,7 +48,7 @@ public class DeleteCommandTest extends TaskTrackerGuiTest {
         assertTrue(taskListPanel.isListMatching(expectedRemainder));
 
         //confirm the result message is correct
-        assertResultMessage(String.format("Deleted Person: %1$s", taskToDelete));
+        assertResultMessage(String.format("Deleted Task: " +(targetIndexOneIndexed-1) , taskToDelete));
     }
 
 }

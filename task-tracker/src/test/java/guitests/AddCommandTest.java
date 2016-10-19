@@ -17,12 +17,12 @@ public class AddCommandTest extends TaskTrackerGuiTest {
     public void add() {
         //add one task
         TestTask[] currentList = td.getTypicalTasks();
-        TestTask taskToAdd = td.event2;
-        assertAddSuccess(taskToAdd, currentList);
-        currentList = TestUtil.addTasksToList(currentList, taskToAdd);
+//        TestTask taskToAdd = td.event2;
+//        assertAddSuccess(taskToAdd, currentList);
+//        currentList = TestUtil.addTasksToList(currentList, taskToAdd);
 
-        //add another person
-        taskToAdd = td.event3;
+        //add another task
+        TestTask taskToAdd = td.event3;
         assertAddSuccess(taskToAdd, currentList);
         currentList = TestUtil.addTasksToList(currentList, taskToAdd);
 
@@ -37,7 +37,7 @@ public class AddCommandTest extends TaskTrackerGuiTest {
 
         //invalid command
         commandBox.runCommand("adds wrongcommandinput");
-        assertResultMessage(Messages.MESSAGE_UNKNOWN_COMMAND);
+        assertResultMessage("Invalid command format! \nUnknown command");
     }
 
     private void assertAddSuccess(TestTask taskToAdd, TestTask... currentList) {

@@ -63,6 +63,10 @@ public class TestTask implements ReadOnlyTask {
     public String getAddCommand() {
         StringBuilder sb = new StringBuilder();
         sb.append("add " + this.getMessage());
+        
+        if (date1==null|date2==null)
+            return sb.toString();
+        
         if (isEvent) {
             sb.append(" " + readableDate(date1) + " ");
             sb.append(readableDate(date2));
@@ -70,6 +74,7 @@ public class TestTask implements ReadOnlyTask {
         else if (!isEvent && !isFloating) {
             sb.append(" " + readableDate(date1));
         }
+        
         return sb.toString();
     }
     

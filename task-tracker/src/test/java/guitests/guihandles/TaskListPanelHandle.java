@@ -57,18 +57,18 @@ public class TaskListPanelHandle extends GuiHandle {
     }
 
     /**
-     * Returns true if the {@code persons} appear as the sub list (in that order) at position {@code startPosition}.
+     * Returns true if the {@code tasks} appear as the sub list (in that order) at position {@code startPosition}.
      */
     public boolean containsInOrder(int startPosition, ReadOnlyTask... tasks) {
         List<ReadOnlyTask> tasksInList = getListView().getItems();
 
         // Return false if the list in panel is too short to contain the given list
-        if (startPosition + tasks.length > tasksInList.size()){
+        if (startPosition + tasks.length - 1 > tasksInList.size()){
             return false;
         }
 
         // Return false if any of the tasks doesn't match
-        for (int i = 0; i < tasks.length; i++) {
+        for (int i = 0; i < tasks.length - 1; i++) {
             if (!tasksInList.get(startPosition + i).getMessage().equals(tasks[i].getMessage())){
                 return false;
             }
@@ -83,9 +83,11 @@ public class TaskListPanelHandle extends GuiHandle {
      * @param tasks A list of person in the correct order.
      */
     public boolean isListMatching(int startPosition, ReadOnlyTask... tasks) throws IllegalArgumentException {
+        System.out.println(tasks.length + startPosition);
+        System.out.println(getListView().getItems().size());
         if (tasks.length + startPosition != getListView().getItems().size()) {
             throw new IllegalArgumentException("List size mismatched\n" +
-                    "Expected " + (getListView().getItems().size() - 1) + " persons");
+                    "Expected " + (getListView().getItems().size()) + " tasks");
         }
         assertTrue(this.containsInOrder(startPosition, tasks));
         for (int i = 0; i < tasks.length; i++) {
