@@ -5,6 +5,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Objects;
 
+import main.commons.util.DateUtil;
+
 public class Task implements ReadOnlyTask {
     private String message;
     Date deadline;
@@ -115,11 +117,9 @@ public class Task implements ReadOnlyTask {
     	return this.startTime;
     }
     
+    @Override
     public String getStartTimeString() {
-		String dateString = "";
-		DateFormat df = new SimpleDateFormat("dd MMM h:mm a");
-		dateString = df.format(this.startTime);
-		return dateString; 
+		return DateUtil.readableDate(startTime);
 	}
     
     @Override
@@ -127,11 +127,9 @@ public class Task implements ReadOnlyTask {
     	return this.endTime;
     }
     
+    @Override
     public String getEndTimeString() {
-		String dateString = "";
-		DateFormat df = new SimpleDateFormat("dd MMM h:mm a");
-		dateString = df.format(this.endTime);
-		return dateString;
+		return DateUtil.readableDate(startTime);
 	}
     
     @Override
@@ -139,11 +137,9 @@ public class Task implements ReadOnlyTask {
     	return this.deadline;
     }
     
+    @Override
     public String getDeadlineString() {
-		String dateString = "";
-		DateFormat df = new SimpleDateFormat("dd MMM h:mm a");
-		dateString = df.format(this.deadline);
-		return dateString;	
+		return DateUtil.readableDate(deadline);	
 	}
     @Override
     public boolean getIsFloating(){

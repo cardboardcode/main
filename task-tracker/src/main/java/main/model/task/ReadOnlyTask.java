@@ -56,6 +56,9 @@ public interface ReadOnlyTask {
         return builder.toString();
     }
     PriorityType getPriority();
+    String getDeadlineString();
+    String getStartTimeString();
+    String getEndTimeString();
 
   
 }
