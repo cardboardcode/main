@@ -75,11 +75,11 @@ public class TaskCard extends UiPart{
         if (task.getDeadline()!=null)
         	deadline.setText(""+ task.getDeadline());
         else
-        	deadline.setText("[NO DEADLINE SET]");
+        	deadline.setText("");
         if (task.getEndTime()!=null)
         	endtime.setText(""+ task.getEndTime());
         else
-        	endtime.setText("[NO END TIME SET]");
+        	endtime.setText("");
 		
 	}
 

@@ -9,7 +9,7 @@ public class ClearCommand extends Command {
     
     public static final String COMMAND_WORD = "clear";
     public static final String MESSAGE_USAGE = COMMAND_WORD;
-    public static final String MESSAGE_SUCCESS = "Task Tracker cleared";
+    public static final String MESSAGE_SUCCESS = "Task-Tracker has been cleared!";
     
     public ClearCommand() {}
 
