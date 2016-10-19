@@ -30,6 +30,7 @@ public class Task implements ReadOnlyTask {
     	    this.message = message;
     	}
         this.isFloating = true; 
+        this.isDeadline = false;
     }
     
     public Task(String message, PriorityType priority) {
@@ -42,6 +43,7 @@ public class Task implements ReadOnlyTask {
         }
         this.priority = priority;
         this.isFloating = true; 
+        this.isDeadline = false;
     }
     
     public Task(String message, Date deadline) {
@@ -51,6 +53,7 @@ public class Task implements ReadOnlyTask {
         this.message = message;
         this.deadline = deadline;
         this.isFloating = false;
+        this.isDeadline = true;
        
     }
     public Task(String message, Date deadline, PriorityType priority) {
