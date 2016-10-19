@@ -1,6 +1,7 @@
 package main.logic.command;
 
 import main.model.task.UniqueTaskList.TaskNotFoundException;
+import main.ui.ListStatistics;
 
 /**
  * Deletes a task identified using it's last displayed index from the address book.
@@ -16,7 +17,7 @@ public class DeleteCommand extends Command {
             + "Parameters: [index]\n"
             + "Eg: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted existing task: %1$s";
     
     private int taskIndex;
 
@@ -31,6 +32,7 @@ public class DeleteCommand extends Command {
     public CommandResult execute() {
         try {
             model.deleteTask(model.getTaskfromIndex(taskIndex));
+            ListStatistics.updateStatistics();
             return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, taskIndex));
 
         } catch (IndexOutOfBoundsException ie) {

@@ -3,6 +3,7 @@ package main.logic.command;
 import main.model.ReadOnlyTaskTracker;
 import main.model.TaskTracker;
 import main.model.task.UniqueTaskList;
+import main.ui.ListStatistics;
 
 public class ClearCommand extends Command {
     
@@ -15,6 +16,7 @@ public class ClearCommand extends Command {
     @Override
     public CommandResult execute() {
         model.resetData((ReadOnlyTaskTracker) new TaskTracker(new UniqueTaskList()));
+        ListStatistics.updateStatistics();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
