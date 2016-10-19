@@ -142,6 +142,7 @@ Getting the hang of it? Here’s a quick and dirty summary of all T-T commands
 **Q**: __How do I transfer my data to another Computer?__
 
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder. <br>
+<br>
 **Q**: __How do check if I have the correct Java Version?__ 
 
 **A**:  
