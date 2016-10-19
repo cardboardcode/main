@@ -1,6 +1,8 @@
 //A0144132W
 package main.commons.util;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -58,5 +60,16 @@ public class DateUtil {
             return true;
         }
         else return false;
+    }
+    
+    
+    /*
+     * @returns a string with a nice format
+     */
+    public static String readableDate(Date date) {
+        DateFormat df = new SimpleDateFormat("dd MMM h:mm a");
+        String dateString = df.format(date);
+        return dateString; 
+        
     }
 }

@@ -5,14 +5,24 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Objects;
 
+import main.commons.util.DateUtil;
+
 public class Task implements ReadOnlyTask {
     private String message;
     Date deadline;
     Date startTime;
     Date endTime;
     private boolean isFloating;
+    private boolean isDeadline;
     private boolean isEvent = false;
-    
+    private boolean isRecurring = false;
+    private PriorityType priority = PriorityType.NORMAL; //default priority
+    //TO-DO
+    //ADD RECURRING VARIABLES N METHODS(DAILY, WEEKLY, MONTHLY)
+    //private boolean isUpdated; to update the frequency if isRecurring == true
+    //private boolean isDone;
+    //private boolean isCompleted; 
+    //private String frequency;
     public Task(String message) {
     	if(message == null){
 //    		throw new IllegalArgumentException("Please fill in the required fields");
@@ -22,6 +32,20 @@ public class Task implements ReadOnlyTask {
     	    this.message = message;
     	}
         this.isFloating = true; 
+        this.isDeadline = false;
+    }
+    
+    public Task(String message, PriorityType priority) {
+        if(message == null){
+//          throw new IllegalArgumentException("Please fill in the required fields");
+            this.message = "";
+        }
+        else {
+            this.message = message;
+        }
+        this.priority = priority;
+        this.isFloating = true; 
+        this.isDeadline = false;
     }
     
     public Task(String message, Date deadline) {
@@ -31,6 +55,19 @@ public class Task implements ReadOnlyTask {
         this.message = message;
         this.deadline = deadline;
         this.isFloating = false;
+        this.isDeadline = true;
+       
+    }
+    public Task(String message, Date deadline, PriorityType priority) {
+        if(message == null){
+            throw new IllegalArgumentException("Please fill in the required fields");
+        }
+        this.message = message;
+        this.deadline = deadline;
+        this.isFloating = false;
+        this.isDeadline = true;
+        this.priority=priority;
+       
     }
     
     public Task(String message, Date startTime, Date endTime) {
@@ -41,8 +78,23 @@ public class Task implements ReadOnlyTask {
         this.startTime = startTime;
         this.endTime = endTime;
         this.isFloating = false;
+        this.isDeadline = false; 
         this.isEvent = true;
     }
+    public Task(String message, Date startTime, Date endTime, PriorityType priority) {
+        if(message == null){
+            throw new IllegalArgumentException("Please fill in the required fields");
+        }
+        this.message = message;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.isFloating = false;
+        this.isDeadline = false; 
+        this.isEvent = true;
+        this.priority = priority;
+    }
+    
+    
     
     public Task(ReadOnlyTask src) {
         this(src.getMessage());
@@ -65,11 +117,9 @@ public class Task implements ReadOnlyTask {
     	return this.startTime;
     }
     
+    @Override
     public String getStartTimeString() {
-		String dateString = "";
-		DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm");
-		dateString = df.format(this.startTime);
-		return dateString; 
+		return DateUtil.readableDate(startTime);
 	}
     
     @Override
@@ -77,11 +127,9 @@ public class Task implements ReadOnlyTask {
     	return this.endTime;
     }
     
+    @Override
     public String getEndTimeString() {
-		String dateString = "";
-		DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm");
-		dateString = df.format(this.endTime);
-		return dateString;
+		return DateUtil.readableDate(startTime);
 	}
     
     @Override
@@ -89,11 +137,9 @@ public class Task implements ReadOnlyTask {
     	return this.deadline;
     }
     
+    @Override
     public String getDeadlineString() {
-		String dateString = "";
-		DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm");
-		dateString = df.format(this.deadline);
-		return dateString;	
+		return DateUtil.readableDate(deadline);	
 	}
     @Override
     public boolean getIsFloating(){
@@ -103,6 +149,20 @@ public class Task implements ReadOnlyTask {
     @Override
     public boolean getIsEvent(){
         return this.isEvent;
+    }
+    
+    @Override
+    public boolean getIsDeadline(){
+    	return this.isDeadline;
+    }
+    
+    @Override 
+    public boolean getIsRecurring(){
+    	return this.isRecurring;
+    }
+    
+    public PriorityType getPriority(){
+    	return this.priority;
     }
     
     //setters
@@ -124,6 +184,23 @@ public class Task implements ReadOnlyTask {
     public void setIsFloating(boolean isFloating){
     	this.isFloating = isFloating;
     }
+    
+    public void setIsEvent(boolean isEvent){
+    	this.isEvent = isEvent;
+    }
+    
+    public void setIsDeadline(boolean isDeadline){
+    	this.isDeadline = isDeadline;
+    }
+    
+    public void setIsRecurring(boolean isRecurring){
+    	this.isRecurring = isRecurring;
+    }
+    
+    public void setPriority(PriorityType priority){
+    	this.priority = priority;
+    }
+    
      
     @Override
     public boolean equals(Object other) {

@@ -23,7 +23,7 @@ public class UniqueTaskList implements Iterable<Task> {
 	@SuppressWarnings("serial")
     public static class DuplicateTaskException extends DuplicateDataException {
         protected DuplicateTaskException() {
-            super("Operation would result in duplicate persons");
+            super("Operation would result in duplicate tasks");
         }
     }
 

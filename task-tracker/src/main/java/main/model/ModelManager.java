@@ -25,6 +25,7 @@ public class ModelManager extends ComponentManager implements Model {
     TaskTracker taskTracker;
     UserPrefs userPref;
     private final FilteredList<Task> filteredTasks;
+    PredicateExpression current;
     
     public ModelManager(TaskTracker taskTracker, UserPrefs userPref) {
         super();
@@ -98,41 +99,54 @@ public class ModelManager extends ComponentManager implements Model {
     
     //=========== User Friendly Accessors ===================================================================
     @Override
-    public int getNumToday() {        
-        Calendar cal = Calendar.getInstance();
+    public int getNumToday() {
+        PredicateExpression original = current;
+        Calendar cal = Calendar.getInstance(); //TODO shift to DateUtil
         updateFilteredTaskList(cal.getTime());
-        return getSizeAndReset();
+        return getSizeAndReset(original);
     }
     
     @Override
     public int getNumTmr() {
+        PredicateExpression original = current;
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, 1);  //TODO check if at 31 will error
         updateFilteredTaskList(cal.getTime());
-        return getSizeAndReset();        
+        return getSizeAndReset(original);
     }
     
     @Override
     public int getNumEvent() {
+        PredicateExpression original = current;
         updateFilteredTaskList("event");
-        return getSizeAndReset();  
+        return getSizeAndReset(original);  
     }
     
     @Override
     public int getNumDeadline() {
+        PredicateExpression original = current;
         updateFilteredTaskList("deadline");
-        return getSizeAndReset();         
+        return getSizeAndReset(original);         
     }
     
     @Override
     public int getNumFloating() {
+        PredicateExpression original = current;
         updateFilteredTaskList("floating");
-        return getSizeAndReset();         
+        return getSizeAndReset(original); 
+    }
+    
+    @Override 
+    public int getTotalNum() {
+        PredicateExpression original = current;
+        updateFilteredListToShowAll();
+        return getSizeAndReset(original);
     }
 
-    private int getSizeAndReset() {
+    private int getSizeAndReset(PredicateExpression original) {
         int num = filteredTasks.size();
-        updateFilteredListToShowAll();
+        if (original == null) updateFilteredListToShowAll();
+        else updateFilteredTaskList(original);
         return num;
     }
     
@@ -147,17 +161,21 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void updateFilteredListToShowAll() {
-        filteredTasks.setPredicate(null);        
+        current = null;
+        filteredTasks.setPredicate(null);
     }
 
     @Override
     public void updateFilteredTaskList(Date date) {
-        updateFilteredTaskList(new PredicateExpression(new DateQualifier(date)));        
+        current = new PredicateExpression(new DateQualifier(date));
+        updateFilteredTaskList(current);
+        
     }
     
     @Override
     public void updateFilteredTaskList(String type) {
-        updateFilteredTaskList(new PredicateExpression(new TypeQualifier(type.trim())));        
+        current = new PredicateExpression(new TypeQualifier(type.trim()));
+        updateFilteredTaskList(current);        
     }
     
     

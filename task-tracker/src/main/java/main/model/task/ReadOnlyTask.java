@@ -14,6 +14,9 @@ public interface ReadOnlyTask {
     Date getDeadline();
     boolean getIsFloating();
     boolean getIsEvent();
+    boolean getIsDeadline();
+    boolean getIsRecurring();
+    //PriorityType getPriority();
     
 
     /**
@@ -27,7 +30,10 @@ public interface ReadOnlyTask {
                 && other.getEndTime().equals(this.getEndTime())
                 && other.getDeadline().equals(this.getDeadline())
                 && other.getIsFloating() == this.getIsFloating()
-                && other.getIsEvent() == this.getIsEvent());
+                && other.getIsEvent() == this.getIsEvent()
+                && other.getIsDeadline() == this.getIsDeadline()
+				&& other.getIsRecurring() == this.getIsRecurring()
+				&&other.getPriority() == this.getPriority());
                 
     }
 
@@ -41,11 +47,18 @@ public interface ReadOnlyTask {
                 .append(getEndTime())
                 .append(getDeadline())
                 .append(getIsFloating())
-        		.append(getIsEvent());
+        		.append(getIsEvent())
+        		.append(getIsDeadline())
+        		.append(getIsRecurring())
+        		.append(getPriority());
                 
                 
         return builder.toString();
     }
+    PriorityType getPriority();
+    String getDeadlineString();
+    String getStartTimeString();
+    String getEndTimeString();
 
   
 }

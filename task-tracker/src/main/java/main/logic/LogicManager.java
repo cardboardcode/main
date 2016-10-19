@@ -65,4 +65,9 @@ public class LogicManager extends ComponentManager implements Logic {
     public int getNumFloating(){
         return model.getNumFloating();
     }
+    
+    @Override
+    public int getTotalNum(){
+        return model.getTotalNum();
+    }
 }

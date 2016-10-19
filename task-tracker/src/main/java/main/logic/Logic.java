@@ -32,4 +32,6 @@ public interface Logic {
     /** Returns the number of floating tasks in the list **/    
     int getNumFloating();
 
+    int getTotalNum();
+
 }

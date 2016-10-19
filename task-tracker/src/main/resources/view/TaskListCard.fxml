@@ -1,48 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 
-<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.ui.TaskCard">
-    <children>
-        <GridPane HBox.hgrow="ALWAYS">
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
-            </columnConstraints>
-            <children>
-                <VBox alignment="CENTER_LEFT" maxHeight="150.0" minHeight="105.0" prefHeight="115.0" GridPane.columnIndex="0">
-                    <stylesheets>
-                        <URL value="@DarkTheme.css" />
-                        <URL value="@Extensions.css" />
-                    </stylesheets>
-                    <padding>
-                        <Insets bottom="5" left="15" right="5" top="5" />
-                    </padding>
-
-                    <children>
-                        <HBox alignment="CENTER_LEFT" spacing="5">
-                            <children>
-                                <HBox>
-                                    <Label fx:id="id" styleClass="cell_big_label" />
-                                </HBox>
-                            </children>
-                        </HBox>
-                          <Label fx:id="id" styleClass="cell_small_label" text="\$id" />
-                           <Label fx:id="date" prefHeight="17.0" prefWidth="32.0" styleClass="cell_big_label" text="\$date" />
-                        <Label fx:id="message" styleClass="cell_small_label" text="\$message" />
-                    </children>
-                </VBox>
-            </children>
-         <rowConstraints>
-            <RowConstraints />
-         </rowConstraints>
-        </GridPane>
-    </children>
+<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane>
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="36.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="170.0" minWidth="10.0" prefWidth="164.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="170.0" minWidth="10.0" prefWidth="164.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="id" text="id" translateX="10.0" />
+            <Label fx:id="deadline" prefHeight="21.0" prefWidth="65.0" text="deadline" textAlignment="RIGHT" translateX="5.0" GridPane.columnIndex="1" />
+            <Label fx:id="message" minWidth="300.0" prefHeight="17.0" prefWidth="146.0" text="message" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="endtime" alignment="CENTER_RIGHT" contentDisplay="RIGHT" minWidth="181.0" prefHeight="21.0" prefWidth="276.0" text="endtime" textAlignment="RIGHT" GridPane.columnIndex="2" />
+         </children>
+      </GridPane>
+      <Rectangle fx:id="priorityTab" arcHeight="5.0" arcWidth="5.0" fill="#272b2f" height="67.0" stroke="BLACK" strokeType="INSIDE" width="63.0" />
+   </children>
+   <stylesheets>
+      <URL value="@DarkTheme.css" />
+      <URL value="@Extensions.css" />
+   </stylesheets>
 </HBox>

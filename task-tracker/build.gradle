@@ -24,6 +24,7 @@ project.ext {
     guavaVersion = '19.0'
     jacksonVersion = '2.7.0'
 	jacksonDataTypeVersion = '2.7.4'
+	testFxVersion = '4.0.+'
 }
 
 
@@ -31,13 +32,19 @@ project.ext {
 dependencies {
     // The production code uses the SLF4J logging API at compile time
     // compile 'org.slf4j:slf4j-api:1.7.21'
-    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
+    // compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.21'
 
     // Declare the dependency for your favourite test framework you want to use in your tests.
     // TestNG is also supported by the Gradle Test task. Just change the
     // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
     // 'test.useTestNG()' to your build script.
     testCompile 'junit:junit:4.12'
+    testCompile "org.testfx:testfx-core:$testFxVersion"
+    testCompile "org.testfx:testfx-junit:$testFxVersion"
+    testCompile "org.testfx:testfx-legacy:$testFxVersion", {
+       exclude group: "junit", module: "junit"
+    }
     
     compile "org.controlsfx:controlsfx:$controlsFxVersion"
     

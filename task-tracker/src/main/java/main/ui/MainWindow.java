@@ -38,7 +38,7 @@ public class MainWindow extends UiPart{
 	
 	private static final String ICON = "/images/pp.png";
     private static final String FXML = "MainWindow.fxml";
-    public static final int MIN_HEIGHT = 600;
+    public static final int MIN_HEIGHT = 620;
     public static final int MIN_WIDTH = 450;
 
     private Logic logic;
@@ -48,6 +48,7 @@ public class MainWindow extends UiPart{
     private ResultDisplay resultDisplay;
     private StatusBarFooter statusBarFooter;
     private CommandBox commandBox;
+    private ListStatistics listStatistics;
     private Config config;
     private UserPrefs userPrefs;
 
@@ -71,7 +72,9 @@ public class MainWindow extends UiPart{
 
     @FXML
     private AnchorPane statusbarPlaceholder;
-
+    
+    @FXML
+    private AnchorPane listStatisticsPlaceholder;
 
     public MainWindow() {
         super();
@@ -111,18 +114,19 @@ public class MainWindow extends UiPart{
         scene = new Scene(rootLayout);
         primaryStage.setScene(scene);
 
-        setAccelerators();
+//        setAccelerators();
     }
 
-    private void setAccelerators() {
-        helpMenuItem.setAccelerator(KeyCombination.valueOf("F1"));
-    }
+//    private void setAccelerators() {
+//        helpMenuItem.setAccelerator(KeyCombination.valueOf("F1"));
+//    }
 
     void fillInnerParts() {
         taskListPanel = TaskListPanel.load(primaryStage, getTaskListPlaceholder(), logic.getFilteredTaskList());
         resultDisplay = ResultDisplay.load(primaryStage, getResultDisplayPlaceholder());
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getTaskTrackerFilePath());
         commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultDisplay, logic);
+        listStatistics = ListStatistics.load(primaryStage, getListStatisticsPlaceholder(),logic);
     }
 
     private AnchorPane getCommandBoxPlaceholder() {
@@ -139,6 +143,10 @@ public class MainWindow extends UiPart{
 
     public AnchorPane getTaskListPlaceholder() {
         return taskListPanelPlaceholder;
+    }
+    
+    public AnchorPane getListStatisticsPlaceholder(){
+    	return listStatisticsPlaceholder;
     }
 
     public void hide() {
@@ -164,6 +172,8 @@ public class MainWindow extends UiPart{
     private void setWindowMinSize() {
         primaryStage.setMinHeight(MIN_HEIGHT);
         primaryStage.setMinWidth(MIN_WIDTH);
+        primaryStage.setMaxHeight(MIN_HEIGHT);
+        
     }
 
     /**
