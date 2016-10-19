@@ -38,6 +38,8 @@ import java.util.stream.Collectors;
 
 import com.google.common.io.Files;
 
+import guitests.guihandles.TaskCardHandle;
+
 /**
  * A utility class for test cases.
  */
@@ -322,8 +324,8 @@ public class TestUtil {
     }
 
     //TODO when guitests are up
-//    public static boolean compareCardAndTask(TaskCardHandle card, ReadOnlyTask task) {
-//        return card.isSameTask(task);
-//    }
+    public static boolean compareCardAndTask(TaskCardHandle card, ReadOnlyTask task) {
+        return card.isSameTask(task);
+    }
 
 }
