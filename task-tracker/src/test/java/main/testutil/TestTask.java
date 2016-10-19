@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import main.commons.util.DateUtil;
 import main.model.task.PriorityType;
 import main.model.task.ReadOnlyTask;
 
@@ -68,21 +69,14 @@ public class TestTask implements ReadOnlyTask {
             return sb.toString();
         
         if (isEvent) {
-            sb.append(" " + readableDate(date1) + " ");
-            sb.append(readableDate(date2));
+            sb.append(" " + getStartTimeString() + " ");
+            sb.append(getEndTimeString());
         }
         else if (!isEvent && !isFloating) {
-            sb.append(" " + readableDate(date1));
+            sb.append(" " + getStartTimeString());
         }
         
         return sb.toString();
-    }
-    
-    private String readableDate(Date date) {
-        DateFormat df = new SimpleDateFormat("dd MMM h-mm a");
-        String dateString = df.format(date);
-        return dateString; 
-        
     }
 
     @Override
@@ -129,4 +123,19 @@ public class TestTask implements ReadOnlyTask {
 	public boolean getIsDeadline() {
 		return isDeadline;
 	}
+
+    @Override
+    public String getDeadlineString() {
+        return DateUtil.readableDate(getDeadline());
+    }
+
+    @Override
+    public String getStartTimeString() {
+        return DateUtil.readableDate(getStartTime());
+    }
+
+    @Override
+    public String getEndTimeString() {
+        return DateUtil.readableDate(getEndTime());
+    }
 }
