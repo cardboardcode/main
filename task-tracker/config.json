@@ -1,7 +1,0 @@
-{
-  "appTitle" : "TaskTracker",
-  "logLevel" : "INFO",
-  "userPrefsFilePath" : "preferences.json",
-  "taskTrackerFilePath" : "data/tasktracker.xml",
-  "taskTrackerName" : "T-T"
-}
