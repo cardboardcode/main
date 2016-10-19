@@ -1,5 +1,5 @@
  
-![T-T](images/Logo.png)
+![T-T](images/T-T.png)
 
 # **USER GUIDE** 
 ---
@@ -12,13 +12,13 @@
     -   [Delete a Task](https://github.com/CS2103AUG2016-T09-C3/main/blob/documents/docs/UserGuide.md#3-delete-a-task)
     -   [List Tasks](https://github.com/CS2103AUG2016-T09-C3/main/blob/documents/docs/UserGuide.md#4-list-tasks)
     -   [Help Command](https://github.com/CS2103AUG2016-T09-C3/main/blob/documents/docs/UserGuide.md#5-help-command)
-*   [T-T Bot](https://github.com/CS2103AUG2016-T09-C3/main/blob/documents/docs/UserGuide.md#t-t-bot)
-    -   [Call the T-T Bot](https://github.com/CS2103AUG2016-T09-C3/main/blob/documents/docs/UserGuide.md#1call-the-t-t-bot)
-    -   [Kill the T-T Bot](https://github.com/CS2103AUG2016-T09-C3/main/blob/documents/docs/UserGuide.md#2kill-the-t-t-bot)
+*   [List Statistics](#liststatistics)
+*   [Cheat Sheet](https://github.com/CS2103AUG2016-T09-C3/main/blob/documents/docs/UserGuide.md#liststatistics)
+*   [FAQ](https://github.com/CS2103AUG2016-T09-C3/main/blob/documents/docs/UserGuide.md#liststatistics)
 
 ## **About**
 
-**Task Tracker (T-T)**, is a lightweight, easy-to-use software which helps you manage your daily tasks. It is a no-nonsense product which uses Command Line Interface to make the operations quick, easy and intuitive. 
+**_Task Tracker_ (T-T)** is an easy-to-use software which helps you manage your daily tasks. It is a simple and fun product which uses a creative Graphical User Interface to make the operations quick, easy and intuitive.
 
 ## **Quick Start**
 
@@ -28,94 +28,131 @@ T-T is a lightweight app which does not require much time to install and run.
 
 In order to install T-T, 
 
-1.  Open **Gitbash** at the desired location on your PC and type <br>
-    `git clone https://github.com/t09-c3/task-tracker`<br><br>
-    Press `Enter`.<br>
-    The Git respository will be cloned onto your PC.<br><br>
-
-    (*If you do not have Git on your PC, you can download the T-T files directly from https://github.com/t09-c3/task-tracker*)
-
-2.  Double Click on file named `T-T` to start the app.<br>
-
-When T-T starts up, you will be asked a friendly `"How are you feeling today?"` question. You may input the hotkey for your current mood and the colour theme for the session will change accordingly.<br>
-
-![Start Screen](images/Screen1.png)
+1. Download the T-T files from https://github.com/t09-c3/task-tracker
+2. Double-click on the T-T.jar file to start the app.<br>
 
 ## **Commands**
 
+`<>` _indicates that field is compulsory_ and `[]` _indicates that field is optional._ 
+
 ###1. **ADD** a Task
 
-The format for adding a new task is : <br>
-&nbsp; &nbsp;   `add [task] [date] [time] [priority]` <br>
+The format for adding a new task is: <br>
+&nbsp; &nbsp;   `add <task> [date1] [date2] [-h | -m | -l]` <br>
 
-> * [Task] is compulsary. <br>
-> * If [date] is not specified, the task will be assumed to be a floating task. <br>
-> * [priority] formats are: <br>
->   *   high
->   *   normal
->   *   low
-> * If [priority] is not specified, `normal` priority will be assumed.
+
+*  T-T can accept flexible date formats. Examples are:
+    *  `today`
+    *  `monday`(to set the date as next monday)
+    *  `31 Oct`
+*   If **no date** is specified, the task will be assumed to be a **floating task** which is an action whose deadline is indefinite.
+*   You do not need to specify any dates. You can specify only 1 date or 2 dates.
+    *   If **1 date** is written, it would be taken as the deadline.
+    -   If **2 date** is written, they would be the start and end times for the task.
+
+*   `[-h | -l]` refers to the priority of the task. 
+    *   `-h` means **high** priority. 
+    *   `-m` means **medium** priority.
+    *   `-l` means **low** priority.
+    *   If not specified, priority is **medium**.
+    *   Except for `<task>`, the other parameters can be inputed in any order.
 
 <br>For example:<br>
-*   `add washdishes 09102016 1600 high` will create a high priority washdishes task to be done on 9th October.<br><br>
-*   `add callmom 09102016` will create a task named "callmom" to be done anytime on 9th October with normal priority.<br>
-
-![Add Screen](images/ScreenAdd.png)
+*   `•  add wash dishes monday 4pm -h ` will create a high priority `wash dishes` task to be done on the **next Monday**.
+*   `•  add call mum tmr ` will create a task named `call mum` to be done anytime on **the next day** with **normal** priority.<br>
+![Add Screen](images/Add_Command2.png)
+<br>
+![Add Screen](images/Add_Command.png)
 
 ###2. EDIT a Task
 
 The format to edit an existing task is : <br>
-&nbsp; &nbsp; `edit [task] [existing date] [existing time] [existing priority] [new date] [new time] [new priority]` <br>
+&nbsp; &nbsp; `edit <task index> <new task> [new date1] [new date2] [-h | -m | -l] ` <br>
 
->   * [existing date], [existing priority] and [existing time] must be mentioned if they were initialised with the original task.
->   * [new date], [new priority] and [new time] are optional.
+  * `<task index>` can be obtained from the list panel, or by using the list command (See **List** command).
 
 <br> For example: <br>
-*   `edit washdishes 09102016 1600 high 09102016 1800`  will edit the existing washdishes task and change the time to 1800 from 1600 and priority to normal from high.<br>
+
+Let’s say task index “**1**” refers to the task `wash dishes monday 4pm`
+
+*  `edit 1 wash dishes tuesday 6pm -h` will edit the existing `wash dishes` task to `use dishes` and change the date from **monday** to **tuesday** , time from **4pm** to **6pm** and priority from **medium** to **high**.
 
 ###3. DELETE a Task
 
 The format to edit an existing task is : <br>
-&nbsp; &nbsp; `delete [task] [existing date] [existing time] [existing priority]` <br>
+&nbsp; &nbsp; `delete <task index>` <br>
 
->   *   [existing date], [existing time] and [existing priority] must be mentioned if they were initialised in the original task.
->   *   Tasks deleted in the same session can be retrieved with the undo function 
+>   *  `<task index>` can be obtained from the list panel, or by using the list 
 
 
 <br> For example: <br>
-*   `delete washdishes 09102016 1800` will delete the existing washdishes task.
+
+Let’s say task index “**1**” refers to the task `wash dishes monday 4pm`
+
+*   `delete 1` will delete the aforementioned `wash dishes` task.
 
 ###4. LIST Tasks
 
 The format to edit an existing task is : <br>
-&nbsp; &nbsp; `list [date] [priority]`<br>
+&nbsp; &nbsp; `list [date | priority]`<br>
 
->   *   [date] and [priority] are optional.
->   *   If [date] and [priority] are not mentioned, all tasks will be displayed organised by date.
+>   *   The tasks will be shown based on the parameters specified. If no parameters given, the tasks are organized by date.
+>   *   Both date and priority can be specified at the same time.
 
 <br> For example : <br>
-*   `list 09102016`  will display all tasks due on 9th October.
-*   `list high` will display all tasks of high priority.
-*   `list` will display all tasks organised by date.
-![List Screen](images/ScreenList.jpg)
+`list 9 Oct`  will display all tasks due on 9th October.
+`list high` will display all tasks of high priority.
+`list` will display all tasks organised by date.
+`list high today` will display all tasks of high priority due today.
+
+<br>
+![List Screen](images/List_Command.png)
 
 ###5. HELP command
 
-Enter `help` into the CLI to list out all the commands.<br> <br>
+Enter `help` into the command line to list out all the commands available in T-T.<br> <br>
 
-##**T-T Bot**
-T-T has it's very own playful T-T bot, to provide suggestions and help to you. Managing tasts was never this fun!<br>
+## **T-T List Statistics**
 
-###1. Call the T-T Bot
-You can call your friendly T-T bot by typing `T-T` in your input window.
-The T-T bot will awaken and be at your service!
-![T-T Bot] (images/bot_gif.gif)
+T-T also provides an intuitive listing the number of tasks stored, giving you a clearer idea on how to better deal with them. As seen in **the example below**, the numbers are displayed on the right of the task list. 
 
-###2. Kill the T-T Bot
-If you find the T-T Bot too distracting, you can kill it by typing `X-X` in the input window. The T-T Bot will go back to sleep.
-<br><br>
+T-T's list statistics provides data on all the different types of tasks available in storage:
 
+    -      Today's Tasks 
+    -      Tomorrow's Tasks
+    -      Event Tasks (Tasks with parameters all filled.)
+    -      Deadline Tasks (Tasks which are much due much later)
+    -      Floating Tasks (Tasks with incomplete parameters)  
+<br>
+![List Screen](images/List_Statistics.png)
+<br>
+## **Cheat Sheet**
+Getting the hang of it? Here’s a quick and dirty summary of all T-T commands
 
+| Commands  | Function  | Usage  |
+|---|---|---|
+| add  |  Adds a new task to the list | `add question life 14 Oct 1045 -l` |
+| edit  | Edits an existing task  | `edit 1 review UG tuesday 10am -h`  |
+| delete  | Deletes an existing task  |  `delete 1`    |
+| list  | Sorts and displays the list of existing tasks  | `list high today` |
+|  help | Displays the list of commands available on T-T  |  `help` |
 
+## **FAQ**
 
+**Q**: __How do I transfer my data to another Computer?__
 
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder. <br>
+<br>
+**Q**: __How do check if I have the correct Java Version?__ 
+
+**A**:  
+     1. Click Start on the task bar. 
+     2. Select Control Panel (or Settings > Control Panel) from the Start menu. The Control Panel is displayed. 
+     3. Select Java. The Java Control Panel dialog box is displayed.
+     4. NOTE: if the Control Panel is in Category mode and you cannot see the Java option, switch the Control Panel to Classic View. 
+     5. Click the Java tab. 9 of 9 6. In the Java Application Runtime Setting box, click View. The JNLP Runtime Settings dialog box is displayed.
+     6. In the Java Application Runtime Setting box, click View. The JNLP Runtime Settings dialog box is displayed.
+<br>
+
+If you encounter any further issues using T-T, please contact us at:
+    **tasktrackerT-T@gmail.com**
