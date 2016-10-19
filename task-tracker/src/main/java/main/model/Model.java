@@ -61,5 +61,7 @@ public interface Model {
     
     /** Returns the total number of floating tasks in the list **/
     int getNumFloating();
+
+    int getTotalNum();
     
 }
