@@ -15,7 +15,12 @@ public class Task implements ReadOnlyTask {
     private boolean isEvent = false;
     private boolean isRecurring = false;
     private PriorityType priority = PriorityType.NORMAL; //default priority
-    
+    //TO-DO
+    //ADD RECURRING VARIABLES N METHODS(DAILY, WEEKLY, MONTHLY)
+    //private boolean isUpdated; to update the frequency if isRecurring == true
+    //private boolean isDone;
+    //private boolean isCompleted; 
+    //private String frequency;
     public Task(String message) {
     	if(message == null){
 //    		throw new IllegalArgumentException("Please fill in the required fields");
@@ -55,6 +60,7 @@ public class Task implements ReadOnlyTask {
         this.message = message;
         this.deadline = deadline;
         this.isFloating = false;
+        this.isDeadline = true;
         this.priority=priority;
        
     }
