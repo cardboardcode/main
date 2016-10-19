@@ -22,7 +22,10 @@ import javafx.geometry.Pos;
 public class ListStatistics extends UiPart {
 
 	private static final String FXML = "ListStatistics.fxml";
-
+	
+    @FXML
+    private Label floatingtasks;	
+    
 	@FXML
 	private Label alltasks;
 
@@ -45,6 +48,7 @@ public class ListStatistics extends UiPart {
 	private static final String TOMORROW_TASK_MESSAGE = "No. of Task Due Tomorrow: ";
 	private static final String EVENT_TASK_MESSAGE = "No. of Events: ";
 	private static final String DEADLINE_TASK_MESSAGE = "No. of Deadlines: ";
+	private static final String FLOATING_TASK_MESSAGE = "No. of Floating: ";
 	private static final String ALL_TASK_MESSAGE = "Total: ";
 	
 	private Model model;
@@ -61,6 +65,7 @@ public class ListStatistics extends UiPart {
 	private StringProperty tomorrowtaskNo  = new SimpleStringProperty("");
 	private StringProperty eventtaskNo  = new SimpleStringProperty("");
 	private StringProperty deadlinetaskNo  = new SimpleStringProperty("");
+	private StringProperty floatingtaskNo  = new SimpleStringProperty("");
 	private StringProperty alltaskNo  = new SimpleStringProperty("");
 	
 	public static ListStatistics load(Stage primaryStage, AnchorPane placeHolder,Logic logic) {
@@ -75,6 +80,7 @@ public class ListStatistics extends UiPart {
 		tomorrowtasks = new Label();
 		eventtasks = new Label();
 		deadlinetasks = new Label();
+		floatingtasks = new Label();
 		alltasks = new Label();
 	}
 
@@ -83,7 +89,7 @@ public class ListStatistics extends UiPart {
 		bindingAllStringProperty();
 		initializeStringProperty();
 		setListIcon();
-		mainPane.getChildren().addAll(image, todaytasks, tomorrowtasks, eventtasks, deadlinetasks,alltasks);
+		mainPane.getChildren().addAll(image, todaytasks, tomorrowtasks, eventtasks, deadlinetasks,floatingtasks, alltasks);
 		mainPane.setSpacing(30.0);
 		mainPane.setPadding(new Insets(30.0, 0.0, 30.0, 30.0));
 		placeHolder.getChildren().add(mainPane);
@@ -95,6 +101,7 @@ public class ListStatistics extends UiPart {
 		tomorrowtasks.textProperty().bind(tomorrowtaskNo);
 		eventtasks.textProperty().bind(eventtaskNo);
 		deadlinetasks.textProperty().bind(deadlinetaskNo);
+		floatingtasks.textProperty().bind(floatingtaskNo);
 		alltasks.textProperty().bind(alltaskNo);
 	}
 
@@ -111,6 +118,7 @@ public class ListStatistics extends UiPart {
 		tomorrowtaskNo.setValue(TOMORROW_TASK_MESSAGE + logic.getNumTmr());
 		eventtaskNo.setValue(EVENT_TASK_MESSAGE + logic.getNumEvent());
 		deadlinetaskNo.setValue(DEADLINE_TASK_MESSAGE + logic.getNumDeadline());
+		floatingtaskNo.setValue(FLOATING_TASK_MESSAGE + logic.getNumFloating());
 		alltaskNo.setValue(ALL_TASK_MESSAGE + logic.getFilteredTaskList().size());
 	}
 	
@@ -119,6 +127,7 @@ public class ListStatistics extends UiPart {
 		listDisplay.getTomorrowTaskNo().setValue(TOMORROW_TASK_MESSAGE+logic.getNumTmr());
 		listDisplay.getEventTaskNo().setValue(EVENT_TASK_MESSAGE+logic.getNumEvent());
 		listDisplay.getDeadlineTaskNo().setValue(DEADLINE_TASK_MESSAGE+logic.getNumDeadline());
+		listDisplay.getFloatingTaskNo().setValue(FLOATING_TASK_MESSAGE+logic.getNumFloating());
 		listDisplay.getAllTaskNo().setValue(ALL_TASK_MESSAGE+logic.getFilteredTaskList().size());
 		
 	}
@@ -138,6 +147,10 @@ public class ListStatistics extends UiPart {
 	public StringProperty getDeadlineTaskNo(){
 		return deadlinetaskNo;
 	}
+	
+	public StringProperty getFloatingTaskNo(){
+        return floatingtaskNo;
+    }
 	
 	public Label getAllTasksLabel(){
 		return alltasks;
