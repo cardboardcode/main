@@ -1,6 +1,7 @@
 package main.logic.command;
 
 import main.model.task.UniqueTaskList.TaskNotFoundException;
+import main.ui.ListStatistics;
 
 /**
  * Deletes a task identified using it's last displayed index from the address book.
@@ -16,7 +17,9 @@ public class DeleteCommand extends Command {
             + "Parameters: [index]\n"
             + "Eg: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_TASK_SUCCESS = "Deleted Person: %1$s";
+
+    public static final String MESSAGE_DELETE_TASK_SUCCESS = "Deleted Task: %1$s";
+
     
     private int taskIndex;
 

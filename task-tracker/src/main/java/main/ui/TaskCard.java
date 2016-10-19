@@ -1,10 +1,16 @@
 package main.ui;
 
 
+import java.text.DateFormat;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import main.model.task.ReadOnlyTask;
 
 /**
@@ -15,6 +21,7 @@ import main.model.task.ReadOnlyTask;
  * @param Label id
  * @param Label message
  * @param Label date
+ * @param Rectangle priorityTab
  * @author bey
  *
  */
@@ -29,7 +36,12 @@ public class TaskCard extends UiPart{
     @FXML
     private Label message;
     @FXML
-    private Label date;
+    private Label deadline;
+    @FXML
+    private Label endtime;
+    
+    @FXML
+    private Rectangle priorityTab;
 
     private ReadOnlyTask task;
     private int displayedIndex;
@@ -47,12 +59,52 @@ public class TaskCard extends UiPart{
 
     @FXML
     public void initialize() {
-        message.setText(task.getMessage());
-        id.setText(displayedIndex + ". ");
-        date.setText(task.getAsText());
+     
+        configureLayout();     
+        setTaskCardText();
+        setPriorityTabColour();
+        
     }
+    
+    private void setTaskCardText() {
+    	
+    	message.setText(task.getMessage());
+        
+        id.setText(displayedIndex + ". ");
+        
+        if (task.getDeadline()!=null)
+        	deadline.setText(""+ task.getDeadline());
+        else
+        	deadline.setText("[NO DEADLINE SET]");
+        if (task.getEndTime()!=null)
+        	endtime.setText(""+ task.getEndTime());
+        else
+        	endtime.setText("[NO END TIME SET]");
+		
+	}
 
-    public HBox getLayout() {
+	/**
+     * changed the if conditions to reflect on the different priority levels.
+     */
+    
+    private void setPriorityTabColour() {
+		if (task.getDeadline()==null){
+			priorityTab.setFill(Color.RED);
+		}
+		else{
+			priorityTab.setFill(Color.BLACK);
+		}	
+	}
+
+	private void configureLayout() {
+    	
+    	cardPane.setSpacing(30.0);
+        deadline.setMinWidth(300);
+        endtime.setMinWidth(70);
+
+	}
+
+	public HBox getLayout() {
         return cardPane;
     }
 
