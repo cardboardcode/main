@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tasktracker>
+    <task>
+        <message>Clean room</message>
+        <isFloating>true</isFloating>
+	<isEvent>false</isEvent>
+	<isDeadline>false</isDeadline>
+	<isRecurring>false</isRecurring>
+	<priority>high</priority>
+    </task>
+   
+</tasktracker>

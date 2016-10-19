@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tasktracker>
+    <tasks>
+        <message>Get a girlfriend</message>
+        <isFloating>true</isFloating>
+        <isEvent>false</isEvent>
+        <isDeadline>false</isDeadline>
+        <isRecurring>false</isRecurring>
+        <priority>NORMAL</priority>
+    </tasks>
+</tasktracker>

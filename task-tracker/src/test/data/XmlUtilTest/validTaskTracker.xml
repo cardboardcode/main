@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tasktracker>
+    <tasks>
+        <message>Clean room</message>
+        <isFloating>true</isFloating>
+	<isEvent>false</isEvent>
+	<isDeadline>false</isDeadline>
+	<isRecurring>false</isRecurring>
+	<priority>high</priority>
+    </tasks>
+    <tasks>
+        <message>eat food</message>
+        <isFloating>true</isFloating>
+	<isEvent>false</isEvent>
+	<isDeadline>false</isDeadline>
+	<isRecurring>false</isRecurring>
+	<priority>high</priority>
+    </tasks>
+    
+</tasktracker>
