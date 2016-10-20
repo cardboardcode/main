@@ -11,7 +11,7 @@ public class DateUtil {
     /*
      * convenient constructor for Date, with time
      * 
-     * returns a Date object
+     * @returns a Date object
      */
     public static Date getDate(int year, int month, int day, int hour, int min){
         Calendar cal = Calendar.getInstance();
@@ -22,11 +22,22 @@ public class DateUtil {
     /*
      * convenient constructor for Date, without time
      * 
-     * returns a Date object
+     * @returns a Date object
      */
     public static Date getDate(int year, int month, int day){
         Calendar cal = Calendar.getInstance();
         cal.set(year, month, day);
+        return cal.getTime();
+    }
+    
+    /*
+     * @returns today's date
+     */
+    public static Date getToday(){
+        Calendar cal = Calendar.getInstance();
+        cal.clear(Calendar.HOUR_OF_DAY);
+        cal.clear(Calendar.SECOND);
+        cal.clear(Calendar.MILLISECOND);
         return cal.getTime();
     }
     

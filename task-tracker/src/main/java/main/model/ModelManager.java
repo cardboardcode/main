@@ -7,14 +7,23 @@ import main.commons.core.LogsCenter;
 import main.commons.core.UnmodifiableObservableList;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.logging.Logger;
+
+import org.apache.commons.lang3.tuple.Triple;
+
+import com.google.common.collect.Lists;
+
 import javafx.collections.transformation.FilteredList;
 import main.commons.events.model.TaskTrackerChangedEvent;
 import main.commons.util.DateUtil;
+import main.model.ModelManager.Qualifier;
 import main.model.TaskTracker;
+import main.model.task.PriorityType;
 import main.model.task.ReadOnlyTask;
 import main.model.task.Task;
 import main.model.task.UniqueTaskList.DuplicateTaskException;
@@ -25,7 +34,7 @@ public class ModelManager extends ComponentManager implements Model {
     TaskTracker taskTracker;
     UserPrefs userPref;
     private final FilteredList<Task> filteredTasks;
-    PredicateExpression current;
+    Expression current;
     
     public ModelManager(TaskTracker taskTracker, UserPrefs userPref) {
         super();
@@ -100,50 +109,49 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== User Friendly Accessors ===================================================================
     @Override
     public int getNumToday() {
-        PredicateExpression original = current;
-        Calendar cal = Calendar.getInstance(); //TODO shift to DateUtil
-        updateFilteredTaskList(cal.getTime());
+        Expression original = current;
+        updateFilteredTaskList(Triple.of(null, DateUtil.getToday(), null));
         return getSizeAndReset(original);
     }
     
     @Override
     public int getNumTmr() {
-        PredicateExpression original = current;
+        Expression original = current;
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, 1);  //TODO check if at 31 will error
-        updateFilteredTaskList(cal.getTime());
+        updateFilteredTaskList(Triple.of(null, cal.getTime(), null));
         return getSizeAndReset(original);
     }
     
     @Override
     public int getNumEvent() {
-        PredicateExpression original = current;
-        updateFilteredTaskList("event");
+        Expression original = current;
+        updateFilteredTaskList(Triple.of(null, null, "event"));
         return getSizeAndReset(original);  
     }
     
     @Override
     public int getNumDeadline() {
-        PredicateExpression original = current;
-        updateFilteredTaskList("deadline");
+        Expression original = current;
+        updateFilteredTaskList(Triple.of(null, null, "deadline"));
         return getSizeAndReset(original);         
     }
     
     @Override
     public int getNumFloating() {
-        PredicateExpression original = current;
-        updateFilteredTaskList("floating");
+        Expression original = current;
+        updateFilteredTaskList(Triple.of(null, null, "floating"));
         return getSizeAndReset(original); 
     }
     
     @Override 
     public int getTotalNum() {
-        PredicateExpression original = current;
+        Expression original = current;
         updateFilteredListToShowAll();
         return getSizeAndReset(original);
     }
 
-    private int getSizeAndReset(PredicateExpression original) {
+    private int getSizeAndReset(Expression original) {
         int num = filteredTasks.size();
         if (original == null) updateFilteredListToShowAll();
         else updateFilteredTaskList(original);
@@ -156,7 +164,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList() {
         return new UnmodifiableObservableList<>(filteredTasks);
-//        return new UnmodifiableObservableList<>(taskTracker.getTasks());
     }
 
     @Override
@@ -164,58 +171,72 @@ public class ModelManager extends ComponentManager implements Model {
         current = null;
         filteredTasks.setPredicate(null);
     }
-
+    
     @Override
-    public void updateFilteredTaskList(Date date) {
-        current = new PredicateExpression(new DateQualifier(date));
-        updateFilteredTaskList(current);
+    public void updateFilteredTaskList(Triple<PriorityType, Date, String> params) {
+        Expression filter = new PredicateExpression();
         
+        if (params.getLeft() != null) filter.and(new PriorityQualifier(params.getLeft()));
+        if (params.getMiddle() != null) filter.and(new DateQualifier(params.getMiddle()));        
+        if (params.getRight() != null) filter.and(new TypeQualifier(params.getRight()));
+        
+        updateFilteredTaskList(filter);
+        current = filter;
     }
-    
-    @Override
-    public void updateFilteredTaskList(String type) {
-        current = new PredicateExpression(new TypeQualifier(type.trim()));
-        updateFilteredTaskList(current);        
-    }
-    
-    
-//    //TODO
+
 //    @Override
-//    public void updateFilteredTaskList(String priority) {
-//        updateFilteredListToShowAll();
-////        updateFilteredTaskList(new PredicateExpression(new DateQualifier(date)));        
+//    public void updateFilteredTaskList(Date date) {
+//        current = new PredicateExpression(new DateQualifier(date));
+//        updateFilteredTaskList(current);
+//        
 //    }
-    
-    //TODO
-    @Override
-    public void updateFilteredTaskList(String priority, Date date) {
-        updateFilteredListToShowAll();
-//        updateFilteredTaskList(new PredicateExpression(new DateQualifier(date)));        
-    }
+//    
+//    @Override
+//    public void updateFilteredTaskList(String type) {
+//        current = new PredicateExpression(new TypeQualifier(type.trim()));
+//        updateFilteredTaskList(current);        
+//    }
+//    
+//    
+//    @Override
+//    public void updateFilteredTaskList(PriorityType priority) {
+//        current = new PredicateExpression(new PriorityQualifier(priority));
+//        updateFilteredTaskList(current);
+//    }
+
 
     public void updateFilteredTaskList(Expression expression) {
         filteredTasks.setPredicate(expression::satisfies);
-        
     }
     
     //========== Inner classes/interfaces used for filtering =================================================
-
+    
     interface Expression {
         boolean satisfies(ReadOnlyTask task);
+        void and(Qualifier qualifier);
         String toString();
     }
 
     private class PredicateExpression implements Expression {
 
-        private final Qualifier qualifier;
-
-        PredicateExpression(Qualifier qualifier) {
-            this.qualifier = qualifier;
+        private List<Qualifier> qualifier = Lists.newArrayList();
+        
+        PredicateExpression() {}
+        
+        @Override
+        public void and(Qualifier qualifier) {
+            this.qualifier.add(qualifier);
         }
 
         @Override
         public boolean satisfies(ReadOnlyTask task) {
-            return qualifier.run(task);
+            boolean qualify = true;
+            
+            for (Qualifier q : qualifier) {
+                qualify = qualify && q.run(task); 
+            }
+            
+            return qualify;
         }
 
         @Override
@@ -276,4 +297,22 @@ public class ModelManager extends ComponentManager implements Model {
             return type;
         }
     }
+    
+    private class PriorityQualifier implements Qualifier {
+        private PriorityType priority;
+
+        PriorityQualifier(PriorityType priority) {
+            this.priority = priority;
+        }
+
+        @Override
+        public boolean run(ReadOnlyTask task) {
+            return priority == task.getPriority();
+        }
+
+        @Override
+        public String toString() {
+            return priority.toString();
+        }
+    }    
 }

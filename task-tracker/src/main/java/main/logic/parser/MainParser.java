@@ -105,8 +105,8 @@ public class MainParser {
         }
         
         // TODO let index start from 1
-        int index = Integer.valueOf(edit_matcher.group("index")) - 1;     
-        
+        int index = Integer.valueOf(edit_matcher.group("index")) - 1;
+                
         String task = edit_matcher.group("task");
       
         try {
@@ -136,24 +136,26 @@ public class MainParser {
         
         Triple<String, List<Date>, List<Boolean>> info = TimeParser.extractTime(input.trim());
 
-        String priority = info.getLeft();
+        String left = info.getLeft();
         List<Date> dates = info.getMiddle();
+        PriorityType priority = null;
+        String type = null;
         
-        if (ReferenceList.priorityDictionary.containsKey(priority)) {
-            priority = ReferenceList.priorityDictionary.get(priority);
-        }
-        else {
-            priority = "";
-        }
+        for (String param: left.split(" ")) {
+            System.out.println(param);
+            if (ReferenceList.priorityDictionary.containsKey(param) && priority == null) {
+                priority = ReferenceList.priorityDictionary.get(param);
+            }
+            else if (ReferenceList.typeDictionary.containsKey(param) && type == null) {
+                type = ReferenceList.typeDictionary.get(param);
+            }
+            else {
+                return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_PARAMETERS,"ListCommand", ListCommand.MESSAGE_USAGE));
+            }           
+        }    
         
-        if (dates.size() > 0) {
-            if (priority.equals("")) return new ListCommand(dates.get(0));
-            else return new ListCommand(priority, dates.get(0));
-        }
-        
-        else if (!priority.equals("")) return new ListCommand(priority);
-        else return new ListCommand();
-        
+        if (dates.size() > 0) return new ListCommand(Triple.of(priority, dates.get(0), type));
+        else return new ListCommand(Triple.of(priority, null, type));
     }
 
     private Task extractTask(String raw) throws MultiplePriorityException, IllegalArgumentException {

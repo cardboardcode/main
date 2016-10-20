@@ -40,13 +40,19 @@ public class TimeParser {
         
         DateGroup group = groups.get(0);
         
-//        String matchedText = group.getText();
+        String matchedText = group.getText();
         
-//        String input = raw_input.substring(0, group.getPosition() - 1);
+//        System.out.println(matchedText);
+//        System.out.println(raw_input);
+//        System.out.println(group.getPosition());
+        
+        
+        String processed = raw_input.substring(0, group.getPosition() - 1);
+        processed = processed.trim() + " " + raw_input.substring(group.getPosition() + matchedText.length() - 1, raw_input.length()).trim(); 
 
         List<Date> dates = group.getDates();
         
-        String processed = validateDates(raw_input, dates, group.getParseLocations(), group.getPosition() - 1);
+//        String processed = validateDates(raw_input, dates, group.getParseLocations(), group.getPosition() - 1);
        
         boolean isInferred = group.isTimeInferred();
         if (isInferred) {
@@ -58,44 +64,72 @@ public class TimeParser {
         return Triple.of(processed.trim(),dates,ImmutableList.of(isInferred,group.isRecurring()));
     }
     
-    private static String validateDates(String input, List<Date> dates, Map<String, List<ParseLocation>> parse_locations, int pos) {
-//        System.out.println(parse_locations);
-//        System.out.println(parse_locations.get("hours"));
-//        System.out.println("size: " + parse_locations.size());
-        String out = "";
-
-        // if start of time not a whitespace --> time is invalid, remove
-        if (parse_locations.containsKey("explicit_time") && parse_locations.containsKey("int_00_to_23_optional_prefix")) {
-            
-            List<ParseLocation> hours = parse_locations.get("int_00_to_23_optional_prefix");
-            
-            for (int i = 0; i < hours.size() ; i++) {
-                ParseLocation next = hours.get(i); 
-//                System.out.println(next.getStart() + " " + next.getEnd() + "\n" + next);
-//                System.out.println(input);
-//                System.out.println(input.substring(next.getStart() - 1, next.getEnd() - 1));
-                
-                if (next.getStart() - 1 > 0 && !Character.isWhitespace(input.charAt(next.getStart() - 2))) {
-                    logger.info("removing invalid time");
-                    hours.remove(next);
-                    dates.remove(i);
-                }
-            }
-            
-            // max number of dates is 2
-            if (dates.size() > 2) dates = dates.subList(0, 1);
-
-            // truncate away the dates portion, so left the task description
-            if (hours.size() > 0) out = input.substring(0,hours.get(0).getStart() - 1);
-            
-        }
-        
-        correctTime(dates, parse_locations);
-        
-        if (!out.equals("")) return out;
-        else if (dates.size() == 0) return input;
-        else return input.substring(0, pos);
-    }
+//    private static String validateDates(String input, List<Date> dates, Map<String, List<ParseLocation>> parse_locations, int pos) {
+////        System.out.println(parse_locations);
+////        System.out.println(parse_locations.get("hours"));
+////        System.out.println("size: " + parse_locations.size());
+//        String out = "";
+//
+//        // if start of time not a whitespace --> time is invalid, remove
+//        if (parse_locations.containsKey("explicit_time") && parse_locations.containsKey("int_00_to_23_optional_prefix")) {
+//            
+//            List<ParseLocation> hours = parse_locations.get("int_00_to_23_optional_prefix");
+//            
+//            for (int i = 0; i < hours.size() ; i++) {
+//                ParseLocation next = hours.get(i); 
+////                System.out.println(next.getStart() + " " + next.getEnd() + "\n" + next);
+////                System.out.println(input);
+////                System.out.println(input.substring(next.getStart() - 1, next.getEnd() - 1));
+//                
+//                if (next.getStart() - 1 > 0 && !Character.isWhitespace(input.charAt(next.getStart() - 2))) {
+//                    logger.info("removing invalid time");
+//                    hours.remove(next);
+//                    dates.remove(i);
+//                }
+//            }
+//            
+//            // max number of dates is 2
+//            if (dates.size() > 2) dates = dates.subList(0, 1);
+//
+//            
+//            StringBuilder builder = new StringBuilder();
+//            // truncate away the dates portion, so left the task description or other relevant portions
+//            if (hours.size() > 0) {
+//                builder.append(input.substring(0,hours.get(0).getStart() - 1).trim());
+//                System.out.println("in1: " + input);
+//
+//                builder.append(" ");
+//                System.out.println("in2: " + input);
+//
+//                builder.append(input.substring(hours.get(0).getEnd(), input.length()));
+//                
+//                out = builder.toString();
+//                System.out.println("out1: " + out);
+//
+////                
+////                StringBuffer text = new StringBuffer(input);
+////                text.replace(StartIndex ,EndIndex ,String);
+//            }
+//            else {
+//                out = input;
+//            }
+//            
+//        }
+//        
+//        correctTime(dates, parse_locations);
+//        
+//        System.out.println("in3: " + input);
+////        System.out.println("pos: " + pos);
+////        System.out.println("len " + input.length());
+////        System.out.println("parse location size " + parse_locations.size());
+//        
+//        System.out.println(out);
+//        
+//        if (!out.equals("")) return out;
+//        else if (dates.size() == 0) return input;
+//        else if (pos == 0) return input.substring(parse_locations.size(), input.length());
+//        else return input.substring(0, pos);
+//    }
 
     
     /*
