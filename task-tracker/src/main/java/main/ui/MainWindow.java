@@ -130,7 +130,8 @@ public class MainWindow extends UiPart{
         setInitialInputFocus();
         
     }
-
+    
+    @FXML
     private void setInitialInputFocus() {
     	commandBox.getCommandBoxTextField().requestFocus();
 }
@@ -176,10 +177,8 @@ public class MainWindow extends UiPart{
     }
 
     private void setWindowMinSize() {
-        primaryStage.setMinHeight(MIN_HEIGHT);
-        primaryStage.setMinWidth(MIN_WIDTH);
-        primaryStage.setMaxHeight(MIN_HEIGHT);
-        
+//        primaryStage.setMinHeight(MIN_HEIGHT);
+//        primaryStage.setMinWidth(MIN_WIDTH);
     }
 
     /**
