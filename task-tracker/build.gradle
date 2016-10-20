@@ -72,3 +72,15 @@ sourceSets {
 }
 
 
+jar {
+    archiveName = "task-tracker.jar"
+    version = "0.3"
+
+    manifest {
+       attributes "Main-Class": "main.Main"
+    }
+
+    destinationDir = file("${buildDir}/jar/")
+}
+
+
