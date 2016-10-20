@@ -16,7 +16,6 @@ public class ClearCommand extends Command {
     @Override
     public CommandResult execute() {
         model.resetData((ReadOnlyTaskTracker) new TaskTracker(new UniqueTaskList()));
-        ListStatistics.updateStatistics();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

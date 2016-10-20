@@ -33,7 +33,6 @@ public class AddCommand extends Command {
 	public CommandResult execute() {
 		try {
             model.addTask(toAdd);
-            ListStatistics.updateStatistics();
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
 		}
 		catch (UniqueTaskList.DuplicateTaskException e) {

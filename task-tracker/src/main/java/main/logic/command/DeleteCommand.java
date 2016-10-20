@@ -34,7 +34,6 @@ public class DeleteCommand extends Command {
     public CommandResult execute() {
         try {
             model.deleteTask(model.getTaskfromIndex(taskIndex));
-            ListStatistics.updateStatistics();
             return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS, taskIndex));
 
         } catch (IndexOutOfBoundsException ie) {
