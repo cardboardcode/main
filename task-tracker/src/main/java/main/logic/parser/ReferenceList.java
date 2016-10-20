@@ -3,6 +3,7 @@ package main.logic.parser;
 import java.util.Map;
 import com.google.common.collect.*;
 import main.logic.command.*;
+import main.model.task.PriorityType;
 
 public class ReferenceList {
     
@@ -36,15 +37,24 @@ public class ReferenceList {
             .put("clear", "clear")
             .build(); 
     
-    public static final Map<String,String> priorityDictionary = ImmutableMap.<String, String>builder()
-            .put("high", "high")
-            .put("impt", "high")
-            .put("important", "high")
-            .put("medium", "medium")
-            .put("med", "medium")
-            .put("normal", "medium")
-            .put("low", "low")
-            .build(); 
+    public static final Map<String,PriorityType> priorityDictionary = ImmutableMap.<String, PriorityType>builder()
+            .put("high", PriorityType.HIGH)
+            .put("impt", PriorityType.HIGH)
+            .put("important", PriorityType.HIGH)
+            .put("medium", PriorityType.NORMAL)
+            .put("med", PriorityType.NORMAL)
+            .put("normal", PriorityType.NORMAL)
+            .put("low", PriorityType.LOW)
+            .build();
+    
+    public static final Map<String,String> typeDictionary = ImmutableMap.<String, String>builder()
+            .put("event", "event")
+            .put("events", "event")
+            .put("deadline", "deadline")
+            .put("deadlines", "deadline")
+            .put("floating", "floating")
+            .put("floatings", "floating")
+            .build();
             
     public ReferenceList() {}
 
