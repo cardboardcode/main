@@ -127,9 +127,15 @@ public class MainWindow extends UiPart{
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getTaskTrackerFilePath());
         commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultDisplay, logic);
         listStatistics = ListStatistics.load(primaryStage, getListStatisticsPlaceholder(),logic);
+        setInitialInputFocus();
+        
     }
 
-    private AnchorPane getCommandBoxPlaceholder() {
+    private void setInitialInputFocus() {
+    	commandBox.getCommandBoxTextField().requestFocus();
+}
+
+	private AnchorPane getCommandBoxPlaceholder() {
         return commandBoxPlaceholder;
     }
 
