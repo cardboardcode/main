@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox onMouseClicked="#setInitialInputFocus" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.ui.MainWindow">
+<VBox onContextMenuRequested="#setInitialInputFocus" onMouseClicked="#setInitialInputFocus" onMouseEntered="#setInitialInputFocus" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.ui.MainWindow">
    <children>
       <SplitPane fx:id="splitpane" dividerPositions="0.7">
          <items>

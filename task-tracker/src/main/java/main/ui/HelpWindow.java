@@ -1,5 +1,7 @@
 package main.ui;
 
+
+
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -9,6 +11,7 @@ import main.commons.util.FxViewUtil;
 import main.Main;
 import main.commons.core.LogsCenter;
 import java.util.logging.Logger;
+import javafx.fxml.FXML;
 
 /**
  * Controller for a help page
@@ -33,7 +36,7 @@ public class HelpWindow extends UiPart {
         helpWindow.configure();
         return helpWindow;
     }
-
+   
     @Override
     public void setNode(Node node) {
         mainPane = (AnchorPane) node;
@@ -60,5 +63,6 @@ public class HelpWindow extends UiPart {
 
     public void show() {
         dialogStage.showAndWait();
-    }
+    }  
+ 
 }
