@@ -6,7 +6,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import main.commons.util.FxViewUtil;
-
+import main.Main;
 import main.commons.core.LogsCenter;
 import java.util.logging.Logger;
 
@@ -22,8 +22,6 @@ public class HelpWindow extends UiPart {
     private static final String ICON = "/images/pp.png";
     private static final String FXML = "HelpWindow.fxml";
     private static final String TITLE = "Help";
-    private static final String USERGUIDE_URL =
-            "https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md";
 
     private AnchorPane mainPane;
 
@@ -54,7 +52,8 @@ public class HelpWindow extends UiPart {
         setIcon(dialogStage, ICON);
 
         WebView browser = new WebView();
-        browser.getEngine().load(USERGUIDE_URL);
+        String url  = Main.class.getResource("/html/help.html").toExternalForm();
+        browser.getEngine().load(url);
         FxViewUtil.applyAnchorBoundaryParameters(browser, 0.0, 0.0, 0.0, 0.0);
         mainPane.getChildren().add(browser);
     }
