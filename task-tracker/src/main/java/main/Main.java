@@ -3,10 +3,6 @@ package main;
 import java.io.IOException;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import main.commons.events.ui.ExitAppRequestEvent;
 import main.commons.exceptions.DataConversionException;
@@ -19,7 +15,6 @@ import main.commons.core.Version;
 import main.logic.Logic;
 import main.storage.Storage;
 import main.storage.StorageManager;
-import main.ui.MainWindow;
 import main.ui.Ui;
 import main.ui.UiManager;
 import main.logic.LogicManager;

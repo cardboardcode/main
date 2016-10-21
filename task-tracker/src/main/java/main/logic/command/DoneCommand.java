@@ -8,11 +8,11 @@ public class DoneCommand extends Command{
 	public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Indicates a task to be done\n"
-            + "Parameters: [task index]\n"
+            + "Parameters: <task index>\n"
             + "Eg: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SUCCESS = "The following task is done: %1$s";
-    public static final String MESSAGE_TASK_ALREADY_DONE = "This task is already done";
+    public static final String MESSAGE_TASK_ALREADY_DONE = "This task is already marked as done";
     
     private int taskIndex;
 
