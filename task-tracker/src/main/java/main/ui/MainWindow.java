@@ -55,6 +55,7 @@ public class MainWindow extends UiPart {
 	private StatusBarFooter statusBarFooter;
 	private CommandBox commandBox;
 	private ListStatistics listStatistics;
+	private HelpWindow helpWindow;
 	private Config config;
 	private UserPrefs userPrefs;
 
@@ -196,8 +197,13 @@ public class MainWindow extends UiPart {
 	}
 
 	public void handleHelp() {
-		HelpWindow helpWindow = HelpWindow.load(primaryStage);
+		helpWindow = HelpWindow.load(primaryStage);
 		helpWindow.show();
+	}
+	
+	public void closeHelpWindow(){
+		if (helpWindow!=null)
+		   helpWindow.closeHelpWindow();
 	}
 
 	public void show() {
@@ -214,6 +220,10 @@ public class MainWindow extends UiPart {
 
 	public TaskListPanel getTaskListPanel() {
 		return this.taskListPanel;
+	}
+	
+	public void checkHelpWindow(){
+		
 	}
 
 }
