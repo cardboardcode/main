@@ -90,4 +90,8 @@ public class GuiHandle {
         guiRobot.interact(() -> ((Stage)window.get()).close());
         focusOnMainApp();
     }
+    
+    public boolean checkMainIsClosed(){
+    	return stageTitle==null;
+    }
 }

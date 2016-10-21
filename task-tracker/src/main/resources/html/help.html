@@ -1,0 +1,216 @@
+<html>
+<head>
+<style>
+body {font-family:Verdana;}
+code {background-color: #d1d1e0; font-family:Verdana;}
+</style>
+</head>
+<body>
+
+<p><img src="images/T-T.png" alt="T-T" /></p>
+
+<h2 id="userguide"><strong>HELP GUIDE</strong> </h2>
+<h3>Press "Alt + F4" to close this window. </h3>
+<h2 id="commands"><strong>Commands</strong></h2>
+
+<p><code>&lt;&gt;</code> <em>indicates that field is compulsory</em> and <code>[]</code> <em>indicates that field is optional.</em> </p>
+
+<h3 id="1addatask">1. <strong>ADD</strong> a Task</h3>
+
+<p>The format for adding a new task is: <br>
+&nbsp; &nbsp;   <code>add &lt;task&gt; [date1] [date2] [-h | -m | -l]</code> <br></p>
+
+<ul>
+<li><p>T-T can accept flexible date formats. Examples are:</p>
+
+<p><ul>
+<li><code>today</code></li></p>
+
+<p><li><code>monday</code>(to set the date as next monday)</li></p>
+
+<p><li><code>31 Oct</code></li></ul>
+
+<p></p></li></p>
+
+<p><li><p>If <strong>no date</strong> is specified, the task will be assumed to be a <strong>floating task</strong> which is an action whose deadline is indefinite.</p></li></p>
+
+<p><li><p>You do not need to specify any dates. You can specify only 1 date or 2 dates.</p></p>
+
+<ul>
+<li>If <strong>1 date</strong> is written, it would be taken as the deadline.</li>
+
+<li>If <strong>2 date</strong> is written, they would be the start and end times for the task.</li></ul>
+
+<p></li></p>
+
+<p><li><p><code>[-h | -l]</code> refers to the priority of the task. </p></p>
+
+<p><ul>
+<li><code>-h</code> means <strong>high</strong> priority. </li></p>
+
+<p><li><code>-m</code> means <strong>medium</strong> priority.</li></p>
+
+<p><li><code>-l</code> means <strong>low</strong> priority.</li></p>
+
+<p><li>If not specified, priority is <strong>medium</strong>.</li></p>
+
+<p><li>Except for <code>&lt;task&gt;</code>, the other parameters can be inputed in any order.</li></ul></p>
+
+<p></li>
+</ul></p>
+
+<p><br>For example:<br></p>
+
+<ul>
+<li><code> add wash dishes monday 4pm -h</code> will create a high priority <code>wash dishes</code> task to be done on the <strong>next Monday</strong>.</li>
+
+<li><code> add call mum tmr</code> will create a task named <code>call mum</code> to be done anytime on <strong>the next day</strong> with <strong>normal</strong> priority.<br>
+<br />
+<br />
+<img src="images/Add_Command2.png" alt="Add Screen" />
+<br>
+<br />
+<img src="images/Add_Command.png" alt="Add Screen" /></li>
+</ul>
+
+<h3 id="2editatask">2. EDIT a Task</h3>
+
+<p>The format to edit an existing task is : <br>
+&nbsp; &nbsp; <code>edit &lt;task index&gt; &lt;new task&gt; [new date1] [new date2] [-h | -m | -l]</code> <br></p>
+
+<ul>
+<li><code>&lt;task index&gt;</code> can be obtained from the list panel, or by using the list command (See <strong>List</strong> command).</li>
+</ul>
+
+<p><br> For example: <br></p>
+
+<p>Let say task index <strong>1</strong> refers to the task <code>wash dishes monday 4pm</code></p>
+
+<ul>
+<li><code>edit 1 wash dishes tuesday 6pm -h</code> will edit the existing <code>wash dishes</code> task to <code>use dishes</code> and change the date from <strong>monday</strong> to <strong>tuesday</strong> , time from <strong>4pm</strong> to <strong>6pm</strong> and priority from <strong>medium</strong> to <strong>high</strong>.</li>
+</ul>
+
+<h3 id="3deleteatask">3. DELETE a Task</h3>
+
+<p>The format to edit an existing task is : <br>
+&nbsp; &nbsp; <code>delete &lt;task index&gt;</code> <br></p>
+
+<blockquote>
+  <ul>
+  <li><code>&lt;task index&gt;</code> can be obtained from the list panel, or by using the list </li>
+  </ul>
+</blockquote>
+
+<p><br> For example: <br></p>
+
+<p>Let say task index <strong>1</strong>refers to the task <code>wash dishes monday 4pm</code></p>
+
+<ul>
+<li><code>delete 1</code> will delete the aforementioned <code>wash dishes</code> task.</li>
+</ul>
+
+<h3 id="4listtasks">4. LIST Tasks</h3>
+
+<p>The format to edit an existing task is : <br>
+&nbsp; &nbsp; <code>list [date | priority]</code><br></p>
+
+<blockquote>
+  <ul>
+  <li>The tasks will be shown based on the parameters specified. If no parameters given, the tasks are organized by date.</li>
+  
+  <li>Both date and priority can be specified at the same time.</li>
+  </ul>
+</blockquote>
+
+<p><br> For example : <br> <ul>
+<li><code>list 9 Oct</code>  will display all tasks due on 9th October. </li>
+<li><code>list high</code> will display all tasks of high priority. </li>
+<li><code>list</code> will display all tasks organised by date. </li>
+<li><code>list high today</code> will display all tasks of high priority due today. </li>
+</ul>
+</p>
+
+<p><br>
+<img src="images/List_Command.png" alt="List Screen" /></p>
+
+<h3 id="5helpcommand">5. HELP command</h3>
+
+<p>Enter <code>help</code> into the command line to list out all the commands available in T-T.<br> <br></p>
+
+<h2 id="ttliststatistics"><strong>T-T List Statistics</strong></h2>
+
+<p>T-T also provides an intuitive listing the number of tasks stored, giving you a clearer idea on how to better deal with them. As seen in <strong>the example below</strong>, the numbers are displayed on the right of the task list. </p>
+
+<p>T-T's list statistics provides data on all the different types of tasks available in storage:</p>
+<ul>
+     <li> Today's Tasks </li>
+     <li> Tomorrow's Tasks  </li>
+     <li> Event Tasks (Tasks with parameters all filled.) </li>
+     <li> Deadline Tasks (Tasks which are much due much later) </li>
+     <li> Floating Tasks (Tasks with incomplete parameters) </li> 
+</ul>
+
+<p><br>
+<img src="images/List_Statistics.png" alt="List Screen" />
+<br></p>
+
+<h2 id="cheatsheet"><strong>Cheat Sheet</strong></h2>
+
+<p>Getting the hang of it? Here's a quick and dirty summary of all T-T commands</p>
+
+<table class="tg">
+  <tr>
+    <th class="tg-031e">Commands</th>
+    <th class="tg-031e">Function</th>
+    <th class="tg-031e">Usage</th>
+  </tr>
+  <tr>
+    <td class="tg-031e">add</td>
+    <td class="tg-031e">Adds a new task to the list</td>
+    <td class="tg-031e"><code>add question life 14 Oct 1045 -l</code></td>
+  </tr>
+  <tr>
+    <td class="tg-031e">edit</td>
+    <td class="tg-031e">Edits an existing task</td>
+    <td class="tg-031e"><code>edit 1 review UG tuesday 10am -h</code></td>
+  </tr>
+  <tr>
+    <td class="tg-031e">delete</td>
+    <td class="tg-031e">Deletes an existing task </td>
+    <td class="tg-031e"><code>delete 1</code></td>
+  </tr>
+  <tr>
+    <td class="tg-031e">list</td>
+    <td class="tg-031e">Sorts and displays the list of existing tasks </td>
+    <td class="tg-031e"><code>list high today</code></td>
+  </tr>
+  <tr>
+    <td class="tg-031e">help</td>
+    <td class="tg-031e">Displays the list of commands available on T-T</td>
+    <td class="tg-031e"><code>help</code></td>
+  </tr>
+</table>
+<h2 id="faq"><strong>FAQ</strong></h2>
+
+<p><strong>Q</strong>: <strong>How do I transfer my data to another Computer?</strong></p>
+
+<p><strong>A</strong>: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder. <br>
+<br>
+<strong>Q</strong>: <strong>How do check if I have the correct Java Version?</strong> </p>
+
+<p><strong>A</strong>: <br /> 
+<ol>
+     <li> Click Start on the task bar. </li>
+     <li> Select Control Panel (or Settings > Control Panel) from the Start menu. The Control Panel is displayed. </li>
+     <li> Select Java. The Java Control Panel dialog box is displayed. </li>
+     <li> NOTE: if the Control Panel is in Category mode and you cannot see the Java option, switch the Control Panel to Classic View. </li>
+     <li> Click the Java tab. 9 of 9 6. In the Java Application Runtime Setting box, click View. The JNLP Runtime Settings dialog box is displayed. </li>
+     <li> In the Java Application Runtime Setting box, click View. The JNLP Runtime Settings dialog box is displayed. </li>
+<br></p>
+</ol>
+<p>If you encounter any further issues using T-T, please contact us at:
+    <strong>tasktrackerT-T@gmail.com</strong></p>
+    
+    
+</body>
+</html>

@@ -59,6 +59,7 @@ public class CommandBox extends UiPart {
         placeHolderPane.getChildren().add(commandTextField);
         FxViewUtil.applyAnchorBoundaryParameters(commandPane, 0.0, 0.0, 0.0, 0.0);
         FxViewUtil.applyAnchorBoundaryParameters(commandTextField, 0.0, 0.0, 0.0, 0.0);
+        placeHolderPane.setMaxHeight(50);
     }
 
     @Override
@@ -87,6 +88,7 @@ public class CommandBox extends UiPart {
          */
         setStyleToIndicateCorrectCommand();
         mostRecentResult = logic.execute(previousCommandTest);
+        ListStatistics.updateStatistics();
         resultDisplay.postMessage(mostRecentResult.feedbackToUser);
         logger.info("Result: " + mostRecentResult.feedbackToUser);
     }
@@ -104,21 +106,17 @@ public class CommandBox extends UiPart {
     private void handleIncorrectCommandAttempted(IncorrectCommandAttemptedEvent event){
         logger.info(LogsCenter.getEventHandlingLogMessage(event,"Invalid command: " + previousCommandTest));
         setStyleToIndicateIncorrectCommand();
-        restoreCommandText();
+        commandTextField.setText("");
     }
-
-    /**
-     * Restores the command box text to the previously entered command
-     */
-    private void restoreCommandText() {
-        commandTextField.setText(previousCommandTest);
-    }
-
     /**
      * Sets the command box style to indicate an error
      */
     private void setStyleToIndicateIncorrectCommand() {
         commandTextField.getStyleClass().add("error");
     }
-
+    
+    public TextField getCommandBoxTextField(){
+    	return commandTextField;
+    }
+    
 }

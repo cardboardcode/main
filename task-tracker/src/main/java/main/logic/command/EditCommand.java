@@ -18,9 +18,9 @@ public static final String COMMAND_WORD = "edit";
 	public static final String MESSAGE_USAGE = COMMAND_WORD + ": " + "Edits a task in the Task-Tracker.\n"
 												+ "Parameters: [task] [date] [time]\n"
 												+ "Eg: " + COMMAND_WORD
-												+ "2 wash dishes 0900 081016";
+												+ "2 wash dishes tuesday 6pm -h";
 	
-	public static final String MESSAGE_SUCCESS = "Task changed to %1$s";
+	public static final String MESSAGE_SUCCESS = "Task changed to: %1$s";
 	public static final String MESSAGE_NO_SUCH_TASK = "This task does not exist in the Task-Tracker";
 	
 	private Task toEdit;

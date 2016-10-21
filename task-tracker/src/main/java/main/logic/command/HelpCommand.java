@@ -1,5 +1,7 @@
 package main.logic.command;
 
+import main.commons.core.EventsCenter;
+import main.commons.events.ui.ShowHelpRequestEvent;
 import main.logic.command.CommandResult;
 
 /**
@@ -9,25 +11,18 @@ import main.logic.command.CommandResult;
 
 public class HelpCommand extends Command {
     
-    public static final String COMMAND_WORD = "help";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Displays list of available commands.";
+	public static final String COMMAND_WORD = "help";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows program usage instructions.\n"
+            + "Example: " + COMMAND_WORD;
+
+    public static final String SHOWING_HELP_MESSAGE = "Opened help window.";
 
     public HelpCommand() {}
-    
-    private String getCommandsList() {
-        String str = "";
-        str += AddCommand.MESSAGE_USAGE + "\n\n";
-        str += EditCommand.MESSAGE_USAGE + "\n\n";
-        str += ExitCommand.MESSAGE_USAGE + "\n\n";
-//        str += ListCommand.MESSAGE_USAGE + "\n";
-        str += HelpCommand.MESSAGE_USAGE + "\n\n";
-        str += DeleteCommand.MESSAGE_USAGE + "\n\n";
-      
-        return str;
-    }
 
-	@Override
-	public CommandResult execute() {
-		return new CommandResult(getCommandsList());
-	}
+    @Override
+    public CommandResult execute() {
+        EventsCenter.getInstance().post(new ShowHelpRequestEvent());
+        return new CommandResult(SHOWING_HELP_MESSAGE);
+    }
 }

@@ -18,192 +18,205 @@ import javafx.stage.Stage;
 import main.commons.core.Config;
 import main.commons.core.GuiSettings;
 import main.commons.events.ui.ExitAppRequestEvent;
+import main.commons.util.FxViewUtil;
 import main.logic.Logic;
 import main.model.UserPrefs;
 
 /**
- * Instantiates all the individual components for the Gui and interacts with UiManager
- * - CommandBox, HelpWindow, StatusBarFooter, TaskCard, TaskListPanel
- * "person" keyword check done
- * "addressbook" keyword check done
- * @param AnchorPane commandBoxPlaceholder
- * @param MenuItem helpMenuItem
- * @param AnchorPane taskListPanelPlaceholder
- * @param AnchorPane resultDisplayPlaceholder
- * @param AnchorPane statusbarPlaceholder
+ * Instantiates all the individual components for the Gui and interacts with
+ * UiManager - CommandBox, HelpWindow, StatusBarFooter, TaskCard, TaskListPanel
+ * "person" keyword check done "addressbook" keyword check done
+ * 
+ * @param AnchorPane
+ *            commandBoxPlaceholder
+ * @param MenuItem
+ *            helpMenuItem
+ * @param AnchorPane
+ *            taskListPanelPlaceholder
+ * @param AnchorPane
+ *            resultDisplayPlaceholder
+ * @param AnchorPane
+ *            statusbarPlaceholder
  * @author bey
  */
 
-public class MainWindow extends UiPart{
-	
+public class MainWindow extends UiPart {
+
 	private static final String ICON = "/images/pp.png";
-    private static final String FXML = "MainWindow.fxml";
-    public static final int MIN_HEIGHT = 620;
-    public static final int MIN_WIDTH = 450;
+	private static final String FXML = "MainWindow.fxml";
+	public static final int MIN_HEIGHT = 620;
+	public static final int MIN_WIDTH = 450;
 
-    private Logic logic;
+	private Logic logic;
 
-    // Independent Ui parts residing in this Ui container
-    private TaskListPanel taskListPanel;
-    private ResultDisplay resultDisplay;
-    private StatusBarFooter statusBarFooter;
-    private CommandBox commandBox;
-    private ListStatistics listStatistics;
-    private Config config;
-    private UserPrefs userPrefs;
+	// Independent Ui parts residing in this Ui container
+	private TaskListPanel taskListPanel;
+	private ResultDisplay resultDisplay;
+	private StatusBarFooter statusBarFooter;
+	private CommandBox commandBox;
+	private ListStatistics listStatistics;
+	private HelpWindow helpWindow;
+	private Config config;
+	private UserPrefs userPrefs;
 
-    // Handles to elements of this Ui container
-    private VBox rootLayout;
-    private Scene scene;
+	// Handles to elements of this Ui container
+	private VBox rootLayout;
+	private Scene scene;
 
-    private String taskTrackerName;
+	private String taskTrackerName;
 
-    @FXML
-    private AnchorPane commandBoxPlaceholder;
+	@FXML
+	private AnchorPane commandBoxPlaceholder;
 
-    @FXML
-    private MenuItem helpMenuItem;
+	@FXML
+	private AnchorPane taskListPanelPlaceholder;
 
-    @FXML
-    private AnchorPane taskListPanelPlaceholder;
+	@FXML
+	private AnchorPane resultDisplayPlaceholder;
 
-    @FXML
-    private AnchorPane resultDisplayPlaceholder;
+	@FXML
+	private AnchorPane statusbarPlaceholder;
 
-    @FXML
-    private AnchorPane statusbarPlaceholder;
-    
-    @FXML
-    private AnchorPane listStatisticsPlaceholder;
+	@FXML
+	private AnchorPane listStatisticsPlaceholder;
 
-    public MainWindow() {
-        super();
-    }
+	public MainWindow() {
+		super();
+	}
 
-    @Override
-    public void setNode(Node node) {
-        rootLayout = (VBox) node;
-    }
+	@Override
+	public void setNode(Node node) {
+		rootLayout = (VBox) node;
+	}
 
-    @Override
-    public String getFxmlPath() {
-        return FXML;
-    }
+	@Override
+	public String getFxmlPath() {
+		return FXML;
+	}
 
-    public static MainWindow load(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
+	public static MainWindow load(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
 
-        MainWindow mainWindow = UiPartLoader.loadUiPart(primaryStage, new MainWindow());
-        mainWindow.configure(config.getAppTitle(), config.getTaskTrackerName(), config, prefs, logic);
-        return mainWindow;
-    }
+		MainWindow mainWindow = UiPartLoader.loadUiPart(primaryStage, new MainWindow());
+		mainWindow.configure(config.getAppTitle(), config.getTaskTrackerName(), config, prefs, logic);
+		return mainWindow;
+	}
 
-    private void configure(String appTitle, String taskTrackerName, Config config, UserPrefs prefs,
-                           Logic logic) {
+	private void configure(String appTitle, String taskTrackerName, Config config, UserPrefs prefs, Logic logic) {
 
-        //Set dependencies
-        this.logic = logic;
-        this.taskTrackerName = taskTrackerName;
-        this.config = config;
-        this.userPrefs = prefs;
+		// Set dependencies
+		this.logic = logic;
+		this.taskTrackerName = taskTrackerName;
+		this.config = config;
+		this.userPrefs = prefs;
 
-        //Configure the UI
-        setTitle(appTitle);
-        setIcon(ICON);
-        setWindowMinSize();
-        setWindowDefaultSize(prefs);
-        scene = new Scene(rootLayout);
-        primaryStage.setScene(scene);
+		// Configure the UI
+		setTitle(appTitle);
+		setIcon(ICON);
+		setWindowMinSize();
+		setWindowDefaultSize(prefs);
+		scene = new Scene(rootLayout);
+		primaryStage.setScene(scene);
 
-//        setAccelerators();
-    }
+		// setAccelerators();
+	}
 
-//    private void setAccelerators() {
-//        helpMenuItem.setAccelerator(KeyCombination.valueOf("F1"));
-//    }
+	// private void setAccelerators() {
+	// helpMenuItem.setAccelerator(KeyCombination.valueOf("F1"));
+	// }
 
-    void fillInnerParts() {
-        taskListPanel = TaskListPanel.load(primaryStage, getTaskListPlaceholder(), logic.getFilteredTaskList());
-        resultDisplay = ResultDisplay.load(primaryStage, getResultDisplayPlaceholder());
-        statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getTaskTrackerFilePath());
-        commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultDisplay, logic);
-        listStatistics = ListStatistics.load(primaryStage, getListStatisticsPlaceholder(),logic);
-    }
+	void fillInnerParts() {
+		taskListPanel = TaskListPanel.load(primaryStage, getTaskListPlaceholder(), logic.getFilteredTaskList());
+		resultDisplay = ResultDisplay.load(primaryStage, getResultDisplayPlaceholder());
+		statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(),
+				config.getTaskTrackerFilePath());
+		commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultDisplay, logic);
+		listStatistics = ListStatistics.load(primaryStage, getListStatisticsPlaceholder(), logic);
+		setInitialInputFocus();
+		FxViewUtil.applyAnchorBoundaryParameters(rootLayout, 0.0, 0.0, 0.0, 0.0);
+	}
 
-    private AnchorPane getCommandBoxPlaceholder() {
-        return commandBoxPlaceholder;
-    }
+	@FXML
+	private void setInitialInputFocus() {
+		commandBox.getCommandBoxTextField().requestFocus();
+	}
 
-    private AnchorPane getStatusbarPlaceholder() {
-        return statusbarPlaceholder;
-    }
+	private AnchorPane getCommandBoxPlaceholder() {
+		return commandBoxPlaceholder;
+	}
 
-    private AnchorPane getResultDisplayPlaceholder() {
-        return resultDisplayPlaceholder;
-    }
+	private AnchorPane getStatusbarPlaceholder() {
+		return statusbarPlaceholder;
+	}
 
-    public AnchorPane getTaskListPlaceholder() {
-        return taskListPanelPlaceholder;
-    }
-    
-    public AnchorPane getListStatisticsPlaceholder(){
-    	return listStatisticsPlaceholder;
-    }
+	private AnchorPane getResultDisplayPlaceholder() {
+		return resultDisplayPlaceholder;
+	}
 
-    public void hide() {
-        primaryStage.hide();
-    }
+	public AnchorPane getTaskListPlaceholder() {
+		return taskListPanelPlaceholder;
+	}
 
-    private void setTitle(String appTitle) {
-        primaryStage.setTitle(appTitle);
-    }
+	public AnchorPane getListStatisticsPlaceholder() {
+		return listStatisticsPlaceholder;
+	}
 
-    /**
-     * Sets the default size based on user preferences.
-     */
-    protected void setWindowDefaultSize(UserPrefs prefs) {
-        primaryStage.setHeight(prefs.getGuiSettings().getWindowHeight());
-        primaryStage.setWidth(prefs.getGuiSettings().getWindowWidth());
-        if (prefs.getGuiSettings().getWindowCoordinates() != null) {
-            primaryStage.setX(prefs.getGuiSettings().getWindowCoordinates().getX());
-            primaryStage.setY(prefs.getGuiSettings().getWindowCoordinates().getY());
-        }
-    }
+	public void hide() {
+		primaryStage.hide();
+	}
 
-    private void setWindowMinSize() {
-        primaryStage.setMinHeight(MIN_HEIGHT);
-        primaryStage.setMinWidth(MIN_WIDTH);
-        primaryStage.setMaxHeight(MIN_HEIGHT);
-        
-    }
+	private void setTitle(String appTitle) {
+		primaryStage.setTitle(appTitle);
+	}
 
-    /**
-     * Returns the current size and the position of the main Window.
-     */
-    public GuiSettings getCurrentGuiSetting() {
-        return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-                (int) primaryStage.getX(), (int) primaryStage.getY());
-    }
+	/**
+	 * Sets the default size based on user preferences.
+	 */
+	protected void setWindowDefaultSize(UserPrefs prefs) {
+		primaryStage.setHeight(prefs.getGuiSettings().getWindowHeight());
+		primaryStage.setWidth(prefs.getGuiSettings().getWindowWidth());
+		if (prefs.getGuiSettings().getWindowCoordinates() != null) {
+			primaryStage.setX(prefs.getGuiSettings().getWindowCoordinates().getX());
+			primaryStage.setY(prefs.getGuiSettings().getWindowCoordinates().getY());
+		}
+	}
 
-    @FXML
-    public void handleHelp() {
-        HelpWindow helpWindow = HelpWindow.load(primaryStage);
-        helpWindow.show();
-    }
+	private void setWindowMinSize() {
+		// primaryStage.setMinHeight(MIN_HEIGHT);
+//		primaryStage.setMaximized(true);
+	}
 
-    public void show() {
-        primaryStage.show();
-    }
+	/**
+	 * Returns the current size and the position of the main Window.
+	 */
+	public GuiSettings getCurrentGuiSetting() {
+		return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(), (int) primaryStage.getX(),
+				(int) primaryStage.getY());
+	}
 
-    /**
-     * Closes the application.
-     */
-    @FXML
-    private void handleExit() {
-        raise(new ExitAppRequestEvent());
-    }
+	public void handleHelp() {
+		helpWindow = HelpWindow.load(primaryStage);
+		helpWindow.show();
+	}
+	
+	public void closeHelpWindow(){
+		if (helpWindow!=null)
+		   helpWindow.closeHelpWindow();
+	}
 
-    public TaskListPanel getTaskListPanel() {
-        return this.taskListPanel;
-    }
+	public void show() {
+		primaryStage.show();
+	}
+
+	/**
+	 * Closes the application.
+	 */
+	@FXML
+	private void handleExit() {
+		raise(new ExitAppRequestEvent());
+	}
+
+	public TaskListPanel getTaskListPanel() {
+		return this.taskListPanel;
+	}
 
 }

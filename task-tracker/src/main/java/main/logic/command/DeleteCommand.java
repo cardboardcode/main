@@ -13,8 +13,8 @@ public class DeleteCommand extends Command {
 	public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": " 
-            + "Deletes the person identified by the index number used in the last person listing.\n"
-            + "Parameters: [index]\n"
+            + "Deletes the existing task by the index number shown in the list above.\n"
+            + "Parameters: <task index>\n"
             + "Eg: " + COMMAND_WORD + " 1";
 
 
@@ -34,7 +34,6 @@ public class DeleteCommand extends Command {
     public CommandResult execute() {
         try {
             model.deleteTask(model.getTaskfromIndex(taskIndex));
-            ListStatistics.updateStatistics();
             return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS, taskIndex));
 
         } catch (IndexOutOfBoundsException ie) {
