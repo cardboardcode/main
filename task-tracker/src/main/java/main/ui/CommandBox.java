@@ -106,16 +106,8 @@ public class CommandBox extends UiPart {
     private void handleIncorrectCommandAttempted(IncorrectCommandAttemptedEvent event){
         logger.info(LogsCenter.getEventHandlingLogMessage(event,"Invalid command: " + previousCommandTest));
         setStyleToIndicateIncorrectCommand();
-        restoreCommandText();
+        commandTextField.setText("");
     }
-
-    /**
-     * Restores the command box text to the previously entered command
-     */
-    private void restoreCommandText() {
-        commandTextField.setText(previousCommandTest);
-    }
-
     /**
      * Sets the command box style to indicate an error
      */
