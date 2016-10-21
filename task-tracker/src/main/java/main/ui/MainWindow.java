@@ -69,9 +69,6 @@ public class MainWindow extends UiPart {
 	private AnchorPane commandBoxPlaceholder;
 
 	@FXML
-	private MenuItem helpMenuItem;
-
-	@FXML
 	private AnchorPane taskListPanelPlaceholder;
 
 	@FXML
@@ -185,7 +182,7 @@ public class MainWindow extends UiPart {
 
 	private void setWindowMinSize() {
 		// primaryStage.setMinHeight(MIN_HEIGHT);
-		// primaryStage.setMinWidth(MIN_WIDTH);
+		primaryStage.setMaximized(true);
 	}
 
 	/**
@@ -220,10 +217,6 @@ public class MainWindow extends UiPart {
 
 	public TaskListPanel getTaskListPanel() {
 		return this.taskListPanel;
-	}
-	
-	public void checkHelpWindow(){
-		
 	}
 
 }
