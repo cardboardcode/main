@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import main.commons.core.Config;
 import main.commons.core.GuiSettings;
 import main.commons.events.ui.ExitAppRequestEvent;
+import main.commons.util.FxViewUtil;
 import main.logic.Logic;
 import main.model.UserPrefs;
 
@@ -128,7 +129,7 @@ public class MainWindow extends UiPart{
         commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultDisplay, logic);
         listStatistics = ListStatistics.load(primaryStage, getListStatisticsPlaceholder(),logic);
         setInitialInputFocus();
-        
+        FxViewUtil.applyAnchorBoundaryParameters(rootLayout, 0.0, 0.0, 0.0, 0.0);
     }
     
     @FXML

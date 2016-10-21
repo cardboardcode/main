@@ -71,7 +71,7 @@ public class TaskListPanel extends UiPart {
         setEventHandlerForSelectionChangeEvent();
     }
 
-    private void addToPlaceholder() {
+    private void addToPlaceholder() { 
         SplitPane.setResizableWithParent(placeHolderPane, true);
         placeHolderPane.getChildren().add(panel);
     }

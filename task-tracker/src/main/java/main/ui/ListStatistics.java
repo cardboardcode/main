@@ -93,7 +93,7 @@ public class ListStatistics extends UiPart {
 		mainPane.setSpacing(30.0);
 		mainPane.setPadding(new Insets(30.0, 0.0, 30.0, 30.0));
 		placeHolder.getChildren().add(mainPane);
-		
+		FxViewUtil.applyAnchorBoundaryParameters(mainPane, 0.0, 0.0, 0.0, 0.0);
 	}
 
 	private void bindingAllStringProperty() {

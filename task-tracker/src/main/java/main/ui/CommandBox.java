@@ -59,6 +59,7 @@ public class CommandBox extends UiPart {
         placeHolderPane.getChildren().add(commandTextField);
         FxViewUtil.applyAnchorBoundaryParameters(commandPane, 0.0, 0.0, 0.0, 0.0);
         FxViewUtil.applyAnchorBoundaryParameters(commandTextField, 0.0, 0.0, 0.0, 0.0);
+        placeHolderPane.setMaxHeight(50);
     }
 
     @Override
