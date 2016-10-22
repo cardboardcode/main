@@ -66,8 +66,8 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
-    public void saveTaskTracker(ReadOnlyTaskTracker addressBook) throws IOException {
-        saveTaskTracker(addressBook, taskTrackerStorage.getTaskTrackerFilePath());
+    public void saveTaskTracker(ReadOnlyTaskTracker taskTracker) throws IOException {
+        saveTaskTracker(taskTracker, taskTrackerStorage.getTaskTrackerFilePath());
     }
 
     @Override
