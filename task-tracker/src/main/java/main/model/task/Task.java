@@ -201,6 +201,28 @@ public class Task implements ReadOnlyTask {
     	this.priority = priority;
     }
     
+    /*
+     * compares the task's time
+     * 
+     * @returns -1 if this task is due earlier than the given task, 0 if both are 
+     *  due the same time, and 1 if this task is due later
+     */
+    public int compareTime(Task other) {
+        if (this.isFloating) {
+            if (other.isFloating) return 0;
+            else return 1;
+        }
+        else {
+            Date time;
+        
+            if (this.isDeadline) time = this.deadline;
+            else time = this.endTime;
+        
+            if (other.isFloating) return -1;
+            else if (other.isDeadline) return time.compareTo(other.deadline);
+            else return time.compareTo(other.endTime);
+        }        
+    }
      
     @Override
     public boolean equals(Object other) {
@@ -240,6 +262,7 @@ public class Task implements ReadOnlyTask {
     		return  getMessage() + " due by " + getDeadlineString();
     	}
     }
+    
 
 
 }
