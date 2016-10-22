@@ -26,6 +26,7 @@ import main.logic.command.ExitCommand;
 import main.logic.command.HelpCommand;
 import main.logic.command.IncorrectCommand;
 import main.logic.command.ListCommand;
+import main.logic.command.UndoCommand;
 
 public class MainParser {
     
@@ -70,6 +71,8 @@ public class MainParser {
                 return prepareDelete(task);
             case ClearCommand.COMMAND_WORD:
                 return new ClearCommand();
+            case UndoCommand.COMMAND_WORD:
+                return prepareUndo();
             default: 
                 return commandIncorrect(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, Messages.MESSAGE_UNKNOWN_COMMAND));
         }
@@ -129,6 +132,10 @@ public class MainParser {
         }
 
         return new DeleteCommand(index);
+    }
+    
+    public Command prepareUndo(){
+        return new UndoCommand();
     }
     
     public Command prepareList(String input) {
