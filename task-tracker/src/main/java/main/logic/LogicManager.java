@@ -6,6 +6,7 @@ import main.logic.command.Command;
 import main.logic.command.CommandResult;
 import main.logic.parser.MainParser;
 import main.model.Model;
+import main.model.filter.SortCriteria;
 import main.model.task.ReadOnlyTask;
 import main.storage.Storage;
 
@@ -24,6 +25,7 @@ public class LogicManager extends ComponentManager implements Logic {
 
     public LogicManager(Model model, Storage storage) {
         this.model = model;
+        model.sortBy(SortCriteria.TIME);
         this.parser = new MainParser();
     }
 
