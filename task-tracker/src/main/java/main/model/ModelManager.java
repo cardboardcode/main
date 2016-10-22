@@ -88,7 +88,7 @@ public class ModelManager extends ComponentManager implements Model {
     
     @Override
     public synchronized void editTask(int index, Task newtask) throws TaskNotFoundException, DuplicateTaskException {
-        addToUndo(UndoCommand.EDIT, newtask, getTaskfromIndex(index));
+        addToUndo(UndoCommand.EDIT, newtask, getTaskfromIndex(index));  //NEED TO CHECK ORDER
         taskTracker.editTask(index, newtask);
         updateFilteredListToShowAll();
         indicateTaskTrackerChanged();
@@ -334,6 +334,29 @@ public class ModelManager extends ComponentManager implements Model {
     private void addToUndo(int ID, Task... tasks){
         UndoHistory undoHistory = new UndoHistory(ID, tasks);
         undoStack.push(undoHistory);
+    }
+
+    @Override
+    public void addTaskUndo(Task task) throws DuplicateTaskException {
+        taskTracker.addTask(task);
+        updateFilteredListToShowAll();
+        indicateTaskTrackerChanged();
+        
+    }
+
+    @Override
+    public void deleteTaskUndo(ReadOnlyTask target) throws TaskNotFoundException {
+        taskTracker.removeTask(target);
+        indicateTaskTrackerChanged();
+        
+    }
+
+    @Override
+    public void editTaskUndo(int index, Task newTask) throws DuplicateTaskException {
+        taskTracker.editTask(index, newTask);
+        updateFilteredListToShowAll();
+        indicateTaskTrackerChanged();
+        
     }
 }
 

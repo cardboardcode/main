@@ -72,7 +72,7 @@ public class UndoCommand extends Command {
     
     private void undoAdd(Task task){
         try {
-            model.deleteTask(task);
+            model.deleteTaskUndo(task);
         } catch (TaskNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -80,14 +80,14 @@ public class UndoCommand extends Command {
     }
     private void undoDelete(Task task){
         try {
-            model.addTask(task);
+            model.addTaskUndo(task);
         } catch (DuplicateTaskException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
-    private void undoEdit(Task newTask, ReadOnlyTask originalTask) throws DuplicateTaskException, IndexOutOfBoundsException, TaskNotFoundException{
-        model.editTask(model.getIndexFromTask(originalTask), newTask);
+    private void undoEdit(Task newTask, Task originalTask) throws DuplicateTaskException, IndexOutOfBoundsException, TaskNotFoundException{
+        model.editTaskUndo(model.getIndexFromTask(originalTask), newTask);
     }
     
 //    private void undoDone(ReadOnlyTask task){

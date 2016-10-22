@@ -6,8 +6,10 @@ import main.model.filter.SortFilter;
 import main.model.task.PriorityType;
 import main.model.task.ReadOnlyTask;
 import main.model.task.UniqueTaskList;
+import main.model.task.UniqueTaskList.DuplicateTaskException;
 import main.model.task.UniqueTaskList.TaskNotFoundException;
 import main.commons.core.UnmodifiableObservableList;
+import main.commons.exceptions.DuplicateDataException;
 
 import java.util.Date;
 //daryl
@@ -37,6 +39,10 @@ public interface Model {
     /** Returns the task at the corresponding index **/
     Task getTaskfromIndex(int index) throws  UniqueTaskList.TaskNotFoundException, IndexOutOfBoundsException;
     int getIndexFromTask(ReadOnlyTask task) throws UniqueTaskList.TaskNotFoundException, IndexOutOfBoundsException;
+    
+    void addTaskUndo(Task task) throws DuplicateTaskException;
+    void deleteTaskUndo(ReadOnlyTask target) throws TaskNotFoundException;
+    void editTaskUndo(int index, Task newTask) throws DuplicateTaskException;
 
     /** Returns the filtered person list as an {@code UnmodifiableObservableList<ReadOnlyPerson>} */
     UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList();
