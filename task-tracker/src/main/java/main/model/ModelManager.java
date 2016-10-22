@@ -117,9 +117,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public int getNumTmr() {
         Expression original = current;
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, 1);  //TODO check if at 31 will error
-        updateFilteredTaskList(Triple.of(null, cal.getTime(), null));
+        updateFilteredTaskList(Triple.of(null, DateUtil.getTmr(), null));
         return getSizeAndReset(original);
     }
     
@@ -183,28 +181,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredTaskList(filter);
         current = filter;
     }
-
-//    @Override
-//    public void updateFilteredTaskList(Date date) {
-//        current = new PredicateExpression(new DateQualifier(date));
-//        updateFilteredTaskList(current);
-//        
-//    }
-//    
-//    @Override
-//    public void updateFilteredTaskList(String type) {
-//        current = new PredicateExpression(new TypeQualifier(type.trim()));
-//        updateFilteredTaskList(current);        
-//    }
-//    
-//    
-//    @Override
-//    public void updateFilteredTaskList(PriorityType priority) {
-//        current = new PredicateExpression(new PriorityQualifier(priority));
-//        updateFilteredTaskList(current);
-//    }
-
-
+    
     public void updateFilteredTaskList(Expression expression) {
         filteredTasks.setPredicate(expression::satisfies);
     }

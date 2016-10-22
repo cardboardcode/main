@@ -36,8 +36,16 @@ public class DateUtil {
     public static Date getToday(){
         Calendar cal = Calendar.getInstance();
         cal.clear(Calendar.HOUR_OF_DAY);
+        cal.clear(Calendar.MINUTE);
         cal.clear(Calendar.SECOND);
         cal.clear(Calendar.MILLISECOND);
+        return cal.getTime();
+    }
+    
+    public static Date getTmr() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(getToday());
+        cal.add(Calendar.DATE, 1);
         return cal.getTime();
     }
     
@@ -100,6 +108,5 @@ public class DateUtil {
             cal.clear(Calendar.MILLISECOND);
         }
         return cal.getTime();
-        
     }
 }
