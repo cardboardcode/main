@@ -78,10 +78,6 @@ allprojects {
 	    }
 	    
 	    mainClassName = 'main.Main'
-
-		task wrapper(type: Wrapper) {
-    		gradleVersion = '2.13'
-		}
 	}
 	
     shadowJar {
@@ -93,6 +89,10 @@ allprojects {
 
         destinationDir = file("${buildDir}/jar/")
 	}
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.13'
 }
 
 task coverage(type: JacocoReport) {
@@ -136,7 +136,7 @@ class TaskTrackerTest extends Test {
     }
 }
 
-task guiTests(type: AddressBookTest) {
+task guiTests(type: TaskTrackerTest) {
     include 'guitests/**'
 
     jacoco {
@@ -145,7 +145,7 @@ task guiTests(type: AddressBookTest) {
 }
 
 
-task nonGuiTests(type: AddressBookTest) {
+task nonGuiTests(type: TaskTrackerTest) {
     include 'main/**'
 
     jacoco {
