@@ -13,11 +13,9 @@ public class SortFilter {
     //Sort by comparing deadlines and end date of events
     Comparator<Task> byTime = (t1, t2) -> t1.compareTime(t2);
 
-/*
-    //Sort lexicographically sort case insensitive
-    Comparator<Task> byName = (t1, t2) -> t1.getName().toLowerCase().compareTo(
-  t2.getName().toLowerCase());
-*/
+    //Sort lexicographically, case insensitive
+    Comparator<Task> byName = (t1, t2) -> t1.getMessage().toLowerCase().compareTo(t2.getMessage().toLowerCase());
+
     
     private Comparator<Task> sortCriteria;
     private boolean isReversed = false;
@@ -25,10 +23,16 @@ public class SortFilter {
     public SortFilter(SortCriteria criteria) {
         switch (criteria) {
             case TIME:
-                sortCriteria = byTime;
+                sortCriteria = byTime.thenComparing(byName);
+//                isReversed = false;
+                break;
+            case NAME:
+                sortCriteria = byName.thenComparing(byTime); 
+//                isReversed = true; // so appears in the order a-z
                 break;
             default:
-                sortCriteria = byTime;
+                sortCriteria = byTime.thenComparing(byName);
+//                isReversed = false;
                 break;
         }
     }
