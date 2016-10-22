@@ -22,6 +22,10 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import main.commons.events.model.TaskTrackerChangedEvent;
 import main.commons.util.DateUtil;
+
+import main.logic.command.UndoCommand;
+import main.model.ModelManager.Qualifier;
+
 import main.model.TaskTracker;
 import main.model.filter.SortCriteria;
 import main.model.filter.SortFilter;
@@ -35,6 +39,7 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
     
     public static Stack<UndoHistory> undoStack = new Stack<UndoHistory>();
+    
     TaskTracker taskTracker;
     UserPrefs userPref;
     private final FilteredList<Task> filteredTasks;
@@ -78,14 +83,16 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
         taskTracker.removeTask(target);
         indicateTaskTrackerChanged();
-        
+        addToUndo(UndoCommand.DEL, target);
     }
     
     @Override
     public synchronized void editTask(int index, Task newtask) throws TaskNotFoundException, DuplicateTaskException {
+        addToUndo(UndoCommand.EDIT, newtask, getTaskfromIndex(index));
         taskTracker.editTask(index, newtask);
         updateFilteredListToShowAll();
-        indicateTaskTrackerChanged();  
+        indicateTaskTrackerChanged();
+        
     }
     
     @Override 
@@ -111,6 +118,7 @@ public class ModelManager extends ComponentManager implements Model {
         taskTracker.addTask(task);
         updateFilteredListToShowAll();
         indicateTaskTrackerChanged();
+        addToUndo(UndoCommand.ADD, task);
     }
     
     //=========== Sorting ===================================================================
@@ -312,5 +320,11 @@ public class ModelManager extends ComponentManager implements Model {
         public String toString() {
             return priority.toString();
         }
-    }    
+    }
+    
+    private void addToUndo(int ID, ReadOnlyTask... tasks){
+        UndoHistory undoHistory = new UndoHistory(ID, tasks);
+        undoStack.push(undoHistory);
+    }
 }
+
