@@ -36,6 +36,7 @@ public interface Model {
     
     /** Returns the task at the corresponding index **/
     Task getTaskfromIndex(int index) throws  UniqueTaskList.TaskNotFoundException, IndexOutOfBoundsException;
+    int getIndexFromTask(ReadOnlyTask task) throws UniqueTaskList.TaskNotFoundException, IndexOutOfBoundsException;
 
     /** Returns the filtered person list as an {@code UnmodifiableObservableList<ReadOnlyPerson>} */
     UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList();

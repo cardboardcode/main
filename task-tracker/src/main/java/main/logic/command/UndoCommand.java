@@ -6,6 +6,8 @@ import main.model.ModelManager;
 import main.model.UndoHistory;
 import main.model.task.ReadOnlyTask;
 import main.model.task.Task;
+import main.model.task.UniqueTaskList.DuplicateTaskException;
+import main.model.task.UniqueTaskList.TaskNotFoundException;
 
 /**
  * Stub command for now. Should take in the last known input. Last known input
@@ -47,19 +49,49 @@ public class UndoCommand extends Command {
             return new CommandResult(MESSAGE_SUCCESS);
         }
         if(ID==EDIT){
-            undoUpdate(undoHistory.getTasks().get(0), undoHistory.getTasks().get(1));
+            try {
+                undoEdit(undoHistory.getTasks().get(0), undoHistory.getTasks().get(1));
+            } catch (DuplicateTaskException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IndexOutOfBoundsException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (TaskNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             return new CommandResult(MESSAGE_SUCCESS);
         }
-        if(ID==DONE){
-            undoDone(undoHistory.getTasks().get(1));
-            return new CommandResult(MESSAGE_SUCCESS);
-        }
+//        if(ID==DONE){
+//            undoDone(undoHistory.getTasks().get(1));
+//            return new CommandResult(MESSAGE_SUCCESS);
+//        }
         return new CommandResult(MESSAGE_EMPTY_HISTORY);
     }
     
-    private void undoAdd(ReadOnlyTask task){}
-    private void undoDelete(ReadOnlyTask task){}
-    private void undoUpdate(ReadOnlyTask newTask, ReadOnlyTask originalTask){}
-    private void undoDone(ReadOnlyTask task){}
+    private void undoAdd(Task task){
+        try {
+            model.deleteTask(task);
+        } catch (TaskNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    private void undoDelete(Task task){
+        try {
+            model.addTask(task);
+        } catch (DuplicateTaskException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    private void undoEdit(Task newTask, ReadOnlyTask originalTask) throws DuplicateTaskException, IndexOutOfBoundsException, TaskNotFoundException{
+        model.editTask(model.getIndexFromTask(originalTask), newTask);
+    }
+    
+//    private void undoDone(ReadOnlyTask task){
+//        
+//    }
 
 }

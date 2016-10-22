@@ -83,7 +83,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
         taskTracker.removeTask(target);
         indicateTaskTrackerChanged();
-        addToUndo(UndoCommand.DEL, target);
+        addToUndo(UndoCommand.DEL, (Task)target);
     }
     
     @Override
@@ -108,7 +108,8 @@ public class ModelManager extends ComponentManager implements Model {
         return task;
     }
     
-    public int getIndexFromTask(Task task) throws TaskNotFoundException {
+    @Override
+    public int getIndexFromTask(ReadOnlyTask task) throws TaskNotFoundException {
         int index;
         List<ReadOnlyTask> temp = new LinkedList<ReadOnlyTask>();
         temp=taskTracker.getTaskList();
@@ -330,7 +331,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
     
-    private void addToUndo(int ID, ReadOnlyTask... tasks){
+    private void addToUndo(int ID, Task... tasks){
         UndoHistory undoHistory = new UndoHistory(ID, tasks);
         undoStack.push(undoHistory);
     }
