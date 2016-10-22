@@ -132,7 +132,7 @@ public class MainParser {
     }
     
     public Command prepareList(String input) {
-        if (input.trim() == "") return new ListCommand();
+        if (input.trim().equals("")) return new ListCommand();
         
         Triple<String, List<Date>, List<Boolean>> info = TimeParser.extractTime(input.trim());
 
@@ -142,7 +142,6 @@ public class MainParser {
         String type = null;
         
         for (String param: left.split(" ")) {
-            System.out.println(param);
             if (ReferenceList.priorityDictionary.containsKey(param) && priority == null) {
                 priority = ReferenceList.priorityDictionary.get(param);
             }
