@@ -88,7 +88,7 @@ public class ModelManager extends ComponentManager implements Model {
     
     @Override
     public synchronized void editTask(int index, Task newtask) throws TaskNotFoundException, DuplicateTaskException {
-        addToUndo(UndoCommand.EDIT, newtask, getTaskfromIndex(index));  //NEED TO CHECK ORDER
+        addToUndo(UndoCommand.EDIT, getTaskfromIndex(index), newtask);  //NEED TO CHECK ORDER
         taskTracker.editTask(index, newtask);
         updateFilteredListToShowAll();
         indicateTaskTrackerChanged();
