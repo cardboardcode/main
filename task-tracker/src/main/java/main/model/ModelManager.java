@@ -108,6 +108,14 @@ public class ModelManager extends ComponentManager implements Model {
         return task;
     }
     
+    public int getIndexFromTask(Task task) throws TaskNotFoundException {
+        int index;
+        List<ReadOnlyTask> temp = new LinkedList<ReadOnlyTask>();
+        temp=taskTracker.getTaskList();
+        index=temp.lastIndexOf(task);
+        return index;
+    }
+    
     /** Raises an event to indicate the model has changed */
     private void indicateTaskTrackerChanged() {
         raise(new TaskTrackerChangedEvent(taskTracker));
