@@ -8,8 +8,12 @@ import main.commons.core.UnmodifiableObservableList;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
+//import java.util.function.Predicate;
 import java.util.logging.Logger;
+//import java.util.LinkedList;
 
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -19,6 +23,10 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import main.commons.events.model.TaskTrackerChangedEvent;
 import main.commons.util.DateUtil;
+
+import main.logic.command.UndoCommand;
+import main.model.ModelManager.Qualifier;
+
 import main.model.TaskTracker;
 import main.model.filter.SortCriteria;
 import main.model.filter.SortFilter;
@@ -30,6 +38,9 @@ import main.model.task.UniqueTaskList.TaskNotFoundException;
 
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
+    
+    public static Stack<UndoHistory> undoStack = new Stack<UndoHistory>();
+    
     TaskTracker taskTracker;
     UserPrefs userPref;
     private final FilteredList<Task> filteredTasks;
@@ -73,14 +84,16 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
         taskTracker.removeTask(target);
         indicateTaskTrackerChanged();
-        
+        addToUndo(UndoCommand.DEL, (Task)target);
     }
     
     @Override
     public synchronized void editTask(int index, Task newtask) throws TaskNotFoundException, DuplicateTaskException {
+        addToUndo(UndoCommand.EDIT, getTaskfromIndex(index), newtask);  //NEED TO CHECK ORDER
         taskTracker.editTask(index, newtask);
         updateFilteredListToShowAll();
-        indicateTaskTrackerChanged();  
+        indicateTaskTrackerChanged();
+        
     }
     
     @Override 
@@ -96,6 +109,15 @@ public class ModelManager extends ComponentManager implements Model {
         return task;
     }
     
+    @Override
+    public int getIndexFromTask(ReadOnlyTask task) throws TaskNotFoundException {
+        int index;
+        List<ReadOnlyTask> temp = new LinkedList<ReadOnlyTask>();
+        temp=taskTracker.getTaskList();
+        index=temp.lastIndexOf(task);
+        return index;
+    }
+    
     /** Raises an event to indicate the model has changed */
     private void indicateTaskTrackerChanged() {
         raise(new TaskTrackerChangedEvent(taskTracker));
@@ -106,6 +128,7 @@ public class ModelManager extends ComponentManager implements Model {
         taskTracker.addTask(task);
         updateFilteredListToShowAll();
         indicateTaskTrackerChanged();
+        addToUndo(UndoCommand.ADD, task);
     }
     
     //=========== Sorting ===================================================================
@@ -307,5 +330,34 @@ public class ModelManager extends ComponentManager implements Model {
         public String toString() {
             return priority.toString();
         }
-    }    
+    }
+    
+    private void addToUndo(int ID, Task... tasks){
+        UndoHistory undoHistory = new UndoHistory(ID, tasks);
+        undoStack.push(undoHistory);
+    }
+
+    @Override
+    public void addTaskUndo(Task task) throws DuplicateTaskException {
+        taskTracker.addTask(task);
+        updateFilteredListToShowAll();
+        indicateTaskTrackerChanged();
+        
+    }
+
+    @Override
+    public void deleteTaskUndo(ReadOnlyTask target) throws TaskNotFoundException {
+        taskTracker.removeTask(target);
+        indicateTaskTrackerChanged();
+        
+    }
+
+    @Override
+    public void editTaskUndo(int index, Task newTask) throws DuplicateTaskException {
+        taskTracker.editTask(index, newTask);
+        updateFilteredListToShowAll();
+        indicateTaskTrackerChanged();
+        
+    }
 }
+
