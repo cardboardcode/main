@@ -52,14 +52,14 @@ public class XmlAdaptedTask {
      */
     public XmlAdaptedTask(ReadOnlyTask source) {
         message = source.getMessage();
-        deadline = source.getDeadline();
-        startTime = source.getStartTime();
-        endTime = source.getEndTime();
-        isFloating = source.getIsFloating();
-        isEvent = source.getIsEvent();
-        isDeadline = source.getIsDeadline();
-        isRecurring = source.getIsRecurring();
-        priority = source.getPriority();
+        deadline = (Date)(source.getDeadline());
+        startTime =(Date)(source.getStartTime());
+        endTime = (Date)(source.getEndTime());
+        isFloating =(Boolean)(source.getIsFloating());
+        isEvent = (Boolean)(source.getIsEvent());
+        isDeadline = (Boolean)(source.getIsDeadline());
+        isRecurring = (Boolean)(source.getIsRecurring());
+        priority = (PriorityType)(source.getPriority());
     }
 
     /**
@@ -70,9 +70,9 @@ public class XmlAdaptedTask {
     public Task toModelType() throws IllegalValueException {
             
         if (isFloating)
-            return new Task(message, priority);
-        else if (isEvent) return new Task(message, startTime, endTime, priority);
-        else return new Task(message, deadline, priority);
+            return new Task(message, (PriorityType)priority);
+        else if (isEvent) return new Task(message, (Date)startTime, (Date)endTime, (PriorityType)priority);
+        else return new Task(message, (Date)deadline, (PriorityType)priority);
         
     }
 }
