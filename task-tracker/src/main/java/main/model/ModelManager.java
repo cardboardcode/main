@@ -221,7 +221,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         private List<Qualifier> qualifier = Lists.newArrayList();
         
-        PredicateExpression() {}
+        public PredicateExpression() {}
         
         @Override
         public void and(Qualifier qualifier) {
