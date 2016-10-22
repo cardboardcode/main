@@ -47,6 +47,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.userPref = userPref;
         filteredTasks = new FilteredList<>(this.taskTracker.getTasks());
         sortedTasks = new SortedList<>(this.filteredTasks);
+        sortDefault();
     }
     
     public ModelManager() {
@@ -112,6 +113,11 @@ public class ModelManager extends ComponentManager implements Model {
     public void sortBy(SortCriteria criteria) {
         SortFilter sortFilter = new SortFilter(criteria);
         sortedTasks.setComparator(sortFilter.getComparator());
+    }
+    
+    @Override
+    public void sortDefault() {
+        sortedTasks.setComparator(new SortFilter(SortCriteria.TIME).getComparator());
     }
     
     //=========== User Friendly Accessors ===================================================================
