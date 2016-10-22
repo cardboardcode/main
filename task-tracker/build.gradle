@@ -1,88 +1,127 @@
 // adapted from addressbook level 4 
 
-// Apply the java plugin to add support for Java
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'application'
-
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
-
-// In this section you declare where to find the dependencies of your project
-repositories {
-    // Use 'jcenter' for resolving your dependencies.
-    // You can declare any Maven/Ivy/file repository here.
-    jcenter()
-    mavenCentral()
-    
+plugins {
+    id "com.github.kt3k.coveralls" version "2.4.0"
+    id "com.github.johnrengelman.shadow" version '1.2.3'
 }
+
+
+allprojects {
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+	apply plugin: 'application'
+	apply plugin: 'jacoco'
+	apply plugin: 'checkstyle'
+	apply plugin: 'idea'
 	
-// This part is similar to global variables
-// Access them by using double-quoted strings (GStrings) and referencing by $ e.g. "Variable contains $Variable"
-project.ext {
-    controlsFxVersion = '8.40.11'
-    guavaVersion = '19.0'
-    jacksonVersion = '2.7.0'
-	jacksonDataTypeVersion = '2.7.4'
-	testFxVersion = '4.0.+'
-}
-
-
-// In this section you declare the dependencies for your production and test code
-dependencies {
-    // The production code uses the SLF4J logging API at compile time
-    // compile 'org.slf4j:slf4j-api:1.7.21'
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
-    // compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
-    // compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.21'
-    
-
-    // Declare the dependency for your favourite test framework you want to use in your tests.
-    // TestNG is also supported by the Gradle Test task. Just change the
-    // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
-    // 'test.useTestNG()' to your build script.
-    testCompile 'junit:junit:4.12'
-    testCompile "org.testfx:testfx-core:$testFxVersion"
-    testCompile "org.testfx:testfx-junit:$testFxVersion"
-    testCompile "org.testfx:testfx-legacy:$testFxVersion", {
-       exclude group: "junit", module: "junit"
+	sourceCompatibility = JavaVersion.VERSION_1_8
+	targetCompatibility = JavaVersion.VERSION_1_8
+	
+	repositories {
+	    jcenter()
+	    mavenCentral()
+	}
+		
+	// This part is similar to global variables
+	// Access them by using double-quoted strings (GStrings) and referencing by $ e.g. "Variable contains $Variable"
+	project.ext {
+	    controlsFxVersion = '8.40.11'
+	    guavaVersion = '19.0'
+	    jacksonVersion = '2.7.0'
+		jacksonDataTypeVersion = '2.7.4'
+		testFxVersion = '4.0.+'
+		slf4jVersion = '1.7.21'
+		junitVersion = '4.12'
+	}
+	
+	
+    checkstyle {
+        toolVersion = "$checkstyleVersion"
     }
-    
-    compile "org.controlsfx:controlsfx:$controlsFxVersion"
-    
-    compile "com.google.guava:guava:$guavaVersion"
-    compile 'com.joestelmach:natty:0.12'
-    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonDataTypeVersion"
-    compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.5'
-}
 
-sourceSets {
-    main {
-        java {
-            srcDir 'src/main/java'
+    jacocoTestReport {
+        reports {
+            xml.enabled false
+            csv.enabled false
+            html.destination "${buildDir}/jacocoHtml"
         }
-        resources {
-            srcDir 'src/main/resources'
+	}
+	
+	dependencies {
+	    // The production code uses the SLF4J logging API at compile time
+	    // compile 'org.slf4j:slf4j-api:$slf4jVersion
+	    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
+	    // compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
+	    // compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.21'
+	    
+	    testCompile 'junit:junit:$junitVersion'
+	    testCompile "org.testfx:testfx-core:$testFxVersion"
+	    testCompile "org.testfx:testfx-junit:$testFxVersion"
+	    testCompile "org.testfx:testfx-legacy:$testFxVersion", {
+	       exclude group: "junit", module: "junit"
+	    }
+	    
+	    compile "org.controlsfx:controlsfx:$controlsFxVersion"
+	    
+	    compile "com.google.guava:guava:$guavaVersion"
+	    compile 'com.joestelmach:natty:0.12'
+	    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonDataTypeVersion"
+	    compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+	    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.5'
+	}
+	
+	sourceSets {
+	    main {
+	        java {
+	            srcDir 'src/main/java'
+	        }
+	        resources {
+	            srcDir 'src/main/resources'
+	        }
+	    }
+	    
+	    mainClassName = 'main.Main'
+
+	}
+	
+    shadowJar {
+        archiveName = "tasktracker.jar"
+
+        manifest {
+            attributes "Main-Class": "main.Main"
         }
-    }
-    
-    mainClassName = 'main.Main'
-	task wrapper(type: Wrapper) {
-	    gradleVersion = '2.13'
+
+        destinationDir = file("${buildDir}/jar/")
 	}
 }
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.13'
+}
 
-jar {
-    archiveName = "task-tracker.jar"
-    version = "0.3"
-
-    manifest {
-       attributes "Main-Class": "main.Main"
+task coverage(type: JacocoReport) {
+    sourceDirectories = files(allprojects.sourceSets.main.allSource.srcDirs)
+    classDirectories =  files(allprojects.sourceSets.main.output)
+    executionData = files(allprojects.jacocoTestReport.executionData)
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: ['**/*.jar'])
+        })
     }
+    reports {
+        html.enabled = true
+        xml.enabled = true
+    }
+}
 
-    destinationDir = file("${buildDir}/jar/")
+coveralls {
+    sourceDirs = allprojects.sourceSets.main.allSource.srcDirs.flatten()
+    jacocoReportPath = "${buildDir}/reports/jacoco/coverage/coverage.xml"
+}
+
+tasks.coveralls {
+    dependsOn coverage
+    onlyIf { System.env.'CI' }
 }
 
 
