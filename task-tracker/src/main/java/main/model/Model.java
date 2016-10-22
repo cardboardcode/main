@@ -1,6 +1,8 @@
 package main.model;
 
 import main.model.task.Task;
+import main.model.filter.SortCriteria;
+import main.model.filter.SortFilter;
 import main.model.task.PriorityType;
 import main.model.task.ReadOnlyTask;
 import main.model.task.UniqueTaskList;
@@ -71,6 +73,8 @@ public interface Model {
     int getTotalNum();
 
     void updateFilteredTaskList(Triple<PriorityType, Date, String> params);
+
+    void sortBy(SortCriteria criteria);
 
 
 
