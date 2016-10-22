@@ -121,3 +121,55 @@ tasks.coveralls {
 }
 
 
+class TaskTrackerTest extends Test {
+    public TaskTrackerTest() {
+    	  forkEvery = 1
+        systemProperty 'testfx.setup.timeout', '60000'
+    }
+
+    public void setHeadless() {
+        systemProperty 'java.awt.robot', 'true'
+        systemProperty 'testfx.robot', 'glass'
+        systemProperty 'testfx.headless', 'true'
+        systemProperty 'prism.order', 'sw'
+        systemProperty 'prism.text', 't2k'
+    }
+}
+
+task guiTests(type: AddressBookTest) {
+    include 'guitests/**'
+
+    jacoco {
+        destinationFile = new File("${buildDir}/jacoco/test.exec")
+    }
+}
+
+
+task nonGuiTests(type: AddressBookTest) {
+    include 'main/**'
+
+    jacoco {
+        destinationFile = new File("${buildDir}/jacoco/test.exec")
+    }
+}
+
+// Test mode depends on whether headless task has been run
+task allTests(type: TaskTrackerTest) {
+    jacoco {
+        destinationFile = new File("${buildDir}/jacoco/test.exec")
+    }
+}
+
+task headless << {
+    println "Setting headless mode properties."
+    guiTests.setHeadless()
+    nonGuiTests.setHeadless()
+    allTests.setHeadless()
+}
+
+// Makes sure that headless properties are set before running tests
+nonGuiTests.mustRunAfter headless
+guiTests.mustRunAfter headless
+allTests.mustRunAfter headless
+
+defaultTasks 'clean', 'headless', 'allTests', 'coverage'
