@@ -1,4 +1,4 @@
-//A0144132W
+//@@author A0144132W
 package main.commons.util;
 
 import java.text.DateFormat;
@@ -86,6 +86,9 @@ public class DateUtil {
      * @returns a string with a nice format
      */
     public static String readableDate(Date date) {
+        if (areSameDay(date, getToday())) return "today";
+        else if (areSameDay(date, getTmr())) return "tomorrow";
+                
         DateFormat df = new SimpleDateFormat("dd MMM h:mm a");
         String dateString = df.format(date);
         return dateString; 
