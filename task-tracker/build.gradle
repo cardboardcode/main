@@ -78,6 +78,10 @@ allprojects {
 	    }
 	    
 	    mainClassName = 'main.Main'
+
+		task wrapper(type: Wrapper) {
+    		gradleVersion = '2.13'
+		}
 	}
 	
     shadowJar {
@@ -89,10 +93,6 @@ allprojects {
 
         destinationDir = file("${buildDir}/jar/")
 	}
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.13'
 }
 
 task coverage(type: JacocoReport) {
