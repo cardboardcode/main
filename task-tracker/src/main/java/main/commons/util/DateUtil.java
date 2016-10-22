@@ -36,8 +36,16 @@ public class DateUtil {
     public static Date getToday(){
         Calendar cal = Calendar.getInstance();
         cal.clear(Calendar.HOUR_OF_DAY);
+        cal.clear(Calendar.MINUTE);
         cal.clear(Calendar.SECOND);
         cal.clear(Calendar.MILLISECOND);
+        return cal.getTime();
+    }
+    
+    public static Date getTmr() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(getToday());
+        cal.add(Calendar.DATE, 1);
         return cal.getTime();
     }
     
@@ -82,5 +90,23 @@ public class DateUtil {
         String dateString = df.format(date);
         return dateString; 
         
+    }
+    
+    /*
+     * changes the time to the hour given (in 24 hours format) and
+     * resets minutes, depending on the boolean input
+     *       
+     * @returns the original date with given time
+     */
+    public static Date setTime(Date date, int hour, boolean resetMinutes) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, hour);
+        if (resetMinutes) {
+            cal.clear(Calendar.MINUTE);
+            cal.clear(Calendar.SECOND);
+            cal.clear(Calendar.MILLISECOND);
+        }
+        return cal.getTime();
     }
 }

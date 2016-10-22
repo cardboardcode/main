@@ -7,11 +7,8 @@ import main.commons.core.LogsCenter;
 import main.commons.core.UnmodifiableObservableList;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import org.apache.commons.lang3.tuple.Triple;
@@ -19,10 +16,12 @@ import org.apache.commons.lang3.tuple.Triple;
 import com.google.common.collect.Lists;
 
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import main.commons.events.model.TaskTrackerChangedEvent;
 import main.commons.util.DateUtil;
-import main.model.ModelManager.Qualifier;
 import main.model.TaskTracker;
+import main.model.filter.SortCriteria;
+import main.model.filter.SortFilter;
 import main.model.task.PriorityType;
 import main.model.task.ReadOnlyTask;
 import main.model.task.Task;
@@ -34,6 +33,7 @@ public class ModelManager extends ComponentManager implements Model {
     TaskTracker taskTracker;
     UserPrefs userPref;
     private final FilteredList<Task> filteredTasks;
+    private SortedList<Task> sortedTasks;
     Expression current;
     
     public ModelManager(TaskTracker taskTracker, UserPrefs userPref) {
@@ -46,6 +46,8 @@ public class ModelManager extends ComponentManager implements Model {
         this.taskTracker = new TaskTracker(taskTracker);
         this.userPref = userPref;
         filteredTasks = new FilteredList<>(this.taskTracker.getTasks());
+        sortedTasks = new SortedList<>(this.filteredTasks);
+        sortDefault();
     }
     
     public ModelManager() {
@@ -106,6 +108,18 @@ public class ModelManager extends ComponentManager implements Model {
         indicateTaskTrackerChanged();
     }
     
+    //=========== Sorting ===================================================================
+    @Override
+    public void sortBy(SortCriteria criteria) {
+        SortFilter sortFilter = new SortFilter(criteria);
+        sortedTasks.setComparator(sortFilter.getComparator());
+    }
+    
+    @Override
+    public void sortDefault() {
+        sortedTasks.setComparator(new SortFilter(SortCriteria.TIME).getComparator());
+    }
+    
     //=========== User Friendly Accessors ===================================================================
     @Override
     public int getNumToday() {
@@ -117,9 +131,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public int getNumTmr() {
         Expression original = current;
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, 1);  //TODO check if at 31 will error
-        updateFilteredTaskList(Triple.of(null, cal.getTime(), null));
+        updateFilteredTaskList(Triple.of(null, DateUtil.getTmr(), null));
         return getSizeAndReset(original);
     }
     
@@ -163,7 +175,9 @@ public class ModelManager extends ComponentManager implements Model {
     
     @Override
     public UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList() {
-        return new UnmodifiableObservableList<>(filteredTasks);
+//        return new UnmodifiableObservableList<>(filteredTasks);
+        return new UnmodifiableObservableList<>(sortedTasks);
+        
     }
 
     @Override
@@ -183,28 +197,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredTaskList(filter);
         current = filter;
     }
-
-//    @Override
-//    public void updateFilteredTaskList(Date date) {
-//        current = new PredicateExpression(new DateQualifier(date));
-//        updateFilteredTaskList(current);
-//        
-//    }
-//    
-//    @Override
-//    public void updateFilteredTaskList(String type) {
-//        current = new PredicateExpression(new TypeQualifier(type.trim()));
-//        updateFilteredTaskList(current);        
-//    }
-//    
-//    
-//    @Override
-//    public void updateFilteredTaskList(PriorityType priority) {
-//        current = new PredicateExpression(new PriorityQualifier(priority));
-//        updateFilteredTaskList(current);
-//    }
-
-
+    
     public void updateFilteredTaskList(Expression expression) {
         filteredTasks.setPredicate(expression::satisfies);
     }
@@ -221,7 +214,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         private List<Qualifier> qualifier = Lists.newArrayList();
         
-        PredicateExpression() {}
+        public PredicateExpression() {}
         
         @Override
         public void and(Qualifier qualifier) {

@@ -21,8 +21,11 @@ public class ListCommand extends Command {
     PriorityType priority;
     Date date;
     String type;
+    boolean toShowAll = false;
     
-    public ListCommand() {}
+    public ListCommand() {
+        toShowAll = true;
+    }
       
     public ListCommand(Triple<PriorityType, Date, String> parameters) {
         priority = parameters.getLeft();
@@ -32,8 +35,9 @@ public class ListCommand extends Command {
 
 	@Override
 	public CommandResult execute() {
-	    model.updateFilteredListToShowAll();	    
-	    model.updateFilteredTaskList(Triple.of(priority, date, type));
+	       
+	    model.updateFilteredListToShowAll();
+	    if (!toShowAll) model.updateFilteredTaskList(Triple.of(priority, date, type));
 	    
 	    return new CommandResult(MESSAGE_SUCCESS);    
 	}

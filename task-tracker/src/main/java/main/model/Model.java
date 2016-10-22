@@ -1,6 +1,8 @@
 package main.model;
 
 import main.model.task.Task;
+import main.model.filter.SortCriteria;
+import main.model.filter.SortFilter;
 import main.model.task.PriorityType;
 import main.model.task.ReadOnlyTask;
 import main.model.task.UniqueTaskList;
@@ -41,18 +43,6 @@ public interface Model {
     /** Updates the filter of the filtered person list to show all persons */
     void updateFilteredListToShowAll();
 
-//    /** Updates the filter of the filtered task list to filter by the given date*/
-//    void updateFilteredTaskList(Date date);
-//
-//    /** Updates the filter of the filtered task list to filter by the given priority*/
-//    void updateFilteredTaskList(PriorityType priority);
-//    
-//    /** Updates the filter of the filtered task list to filter by the given task type*/
-//    void updateFilteredTaskList(String type);    
-//    
-//    /** Updates the filter of the filtered task list to filter by the given priority and date*/
-//    void updateFilteredTaskList(PriorityType priority, Date date);
-
     /** Returns the number of tasks today **/
     int getNumToday();
 
@@ -68,9 +58,17 @@ public interface Model {
     /** Returns the total number of floating tasks in the list **/
     int getNumFloating();
 
+    /** Returns the total number of tasks in the list **/
     int getTotalNum();
 
+    /** Updates the FilteredList based on criterias given **/
     void updateFilteredTaskList(Triple<PriorityType, Date, String> params);
+
+    /** Sorts the list based on criterias given **/
+    void sortBy(SortCriteria criteria);
+
+    /** THe default sorting done at the start **/
+    void sortDefault();
 
 
 
