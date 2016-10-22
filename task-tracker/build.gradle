@@ -31,6 +31,8 @@ allprojects {
 		testFxVersion = '4.0.+'
 		slf4jVersion = '1.7.21'
 		junitVersion = '4.12'
+		apacheCommonsLang = '3.5'
+		prettyTimeVersion = '3.2.7.Final'
 	}
 
     jacocoTestReport {
@@ -61,7 +63,8 @@ allprojects {
 	    compile 'com.joestelmach:natty:0.12'
 	    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonDataTypeVersion"
 	    compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
-	    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.5'
+	    compile group: 'org.apache.commons', name: 'commons-lang3', version: "$apacheCommonsLang"
+   	 	compile group: 'org.ocpsoft.prettytime', name: 'prettytime', version: "$prettyTimeVersion"
 	}
 	
 	sourceSets {
@@ -75,7 +78,6 @@ allprojects {
 	    }
 	    
 	    mainClassName = 'main.Main'
-
 	}
 	
     shadowJar {

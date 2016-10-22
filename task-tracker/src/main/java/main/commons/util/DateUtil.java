@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
 public class DateUtil {
     
     /*
@@ -86,12 +88,13 @@ public class DateUtil {
      * @returns a string with a nice format
      */
     public static String readableDate(Date date) {
-        if (areSameDay(date, getToday())) return "today";
-        else if (areSameDay(date, getTmr())) return "tomorrow";
+     
+        PrettyTime p = new PrettyTime();
+        return p.format(date);
                 
-        DateFormat df = new SimpleDateFormat("dd MMM h:mm a");
-        String dateString = df.format(date);
-        return dateString; 
+//        DateFormat df = new SimpleDateFormat("dd MMM h:mm a");
+//        String dateString = df.format(date);
+//        return dateString; 
         
     }
     
