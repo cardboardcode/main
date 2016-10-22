@@ -1,6 +1,7 @@
 package main.logic.command;
 
 import java.util.IllegalFormatCodePointException;
+import java.util.logging.Logger;
 
 import main.model.ModelManager;
 import main.model.UndoHistory;
@@ -8,7 +9,9 @@ import main.model.task.ReadOnlyTask;
 import main.model.task.Task;
 import main.model.task.UniqueTaskList.DuplicateTaskException;
 import main.model.task.UniqueTaskList.TaskNotFoundException;
-
+import java.util.logging.Logger;
+import main.commons.core.LogsCenter;
+import main.logic.parser.MainParser;
 /**
  * Stub command for now. Should take in the last known input. Last known input
  * should be a part of a list called History. Undo command reads in last input
@@ -25,7 +28,7 @@ public class UndoCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Reverts the last known command input.\n" + "eg. "
             + COMMAND_WORD;
 
-    public static final String MESSAGE_SUCCESS = "Reverted last command: ";
+    public static final String MESSAGE_SUCCESS = "Reverted last command. ";
     public static final String MESSAGE_EMPTY_HISTORY = "There are no more inputs before this.";
 
     public static final int ADD = 1;
@@ -34,9 +37,13 @@ public class UndoCommand extends Command {
     public static final int DONE = 4;
     
     private UndoHistory undoHistory;
+    private static final Logger logger = LogsCenter.getLogger(MainParser.class);
 
     @Override
     public CommandResult execute() {
+        if(ModelManager.undoStack.size()==0){
+            return new CommandResult(MESSAGE_EMPTY_HISTORY);
+        }
         undoHistory=ModelManager.undoStack.pop();
         int ID=undoHistory.getID();
         
@@ -61,6 +68,7 @@ public class UndoCommand extends Command {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+            //logger.info(String.valueOf(ID));
             return new CommandResult(MESSAGE_SUCCESS);
         }
 //        if(ID==DONE){
