@@ -105,7 +105,7 @@ public class LogicManagerTest {
         assertCommandBehavior("exit", ExitCommand.MESSAGE_EXIT_ACKNOWLEDGEMENT);
     }
 
-    /*
+    
     @Test
     public void execute_clear() throws Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -115,7 +115,6 @@ public class LogicManagerTest {
 
         assertCommandBehavior("clear", ClearCommand.MESSAGE_SUCCESS, new TaskTracker(), Collections.emptyList());
     }
-    */
 
     @Test
     public void execute_edit_invalidArgsFormat() throws Exception {
@@ -163,7 +162,6 @@ public class LogicManagerTest {
 //        assertEquals(expectedTaskTracker, latestSavedTaskTracker);
     }
     
-  /*
       @Test
       public void execute_add_floating_successful() throws Exception {
           
@@ -176,7 +174,7 @@ public class LogicManagerTest {
                   expectedAB,
                   expectedAB.getTaskList());
       }
-    */ 
+
       @Test
       public void execute_addDuplicate_notAllowed() throws Exception {
           // setup expectations
@@ -224,7 +222,6 @@ public class LogicManagerTest {
                   expectedAB.getTaskList());
       }
     */
-
     
     /**
      * A utility class to generate test data.
