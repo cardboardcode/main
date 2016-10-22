@@ -5,7 +5,7 @@ import main.model.task.UniqueTaskList.TaskNotFoundException;
 
 public class DoneCommand extends Command{
 	
-	public static final String COMMAND_WORD = "add";
+	public static final String COMMAND_WORD = "done";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Indicates a task to be done\n"
             + "Parameters: <task index>\n"
@@ -28,7 +28,7 @@ public class DoneCommand extends Command{
         try {
         	//Remove comment after Model component adds a setIsDone() method which changes the value of 
         	//it isDone attribute.
-//            model.getTaskfromIndex().setIsDone();
+//            model.getTaskfromIndex().setIsDone(true);
             return new CommandResult(String.format(MESSAGE_SUCCESS, taskIndex));
 
         } catch (IndexOutOfBoundsException ie) {
