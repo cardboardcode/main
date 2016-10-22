@@ -9,7 +9,10 @@ import main.commons.core.UnmodifiableObservableList;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Stack;
+//import java.util.function.Predicate;
 import java.util.logging.Logger;
+//import java.util.LinkedList;
 
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -30,6 +33,8 @@ import main.model.task.UniqueTaskList.TaskNotFoundException;
 
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
+    
+    public static Stack<UndoHistory> undoStack = new Stack<UndoHistory>();
     TaskTracker taskTracker;
     UserPrefs userPref;
     private final FilteredList<Task> filteredTasks;

@@ -1,5 +1,12 @@
 package main.logic.command;
 
+import java.util.IllegalFormatCodePointException;
+
+import main.model.ModelManager;
+import main.model.UndoHistory;
+import main.model.task.ReadOnlyTask;
+import main.model.task.Task;
+
 /**
  * Stub command for now. Should take in the last known input. Last known input
  * should be a part of a list called History. Undo command reads in last input
@@ -23,25 +30,36 @@ public class UndoCommand extends Command {
     public static final int DEL = 2;
     public static final int EDIT = 3;
     public static final int DONE = 4;
-
-    public UndoCommand() {
-
-    }
+    
+    private UndoHistory undoHistory;
 
     @Override
     public CommandResult execute() {
-        return null;
-//        if (lastInput != null)
-//            // Process
-//            /**
-//             * Add - Delete, Delete - Add, Edit - Delete & Add, Clear - AddAll
-//             * 
-//             */
-//            return new CommandResult(MESSAGE_SUCCESS);
-//        else
-//            return new CommandResult("never gonna give you up, never gonna let you down,"
-//                    + "never gonna run around and desert you. Never gonna make you "
-//                    + "cry, never gonna say goodbye. Never gonna tell a lie and hurt you.");
+        undoHistory=ModelManager.undoStack.pop();
+        int ID=undoHistory.getID();
+        
+        if(ID==ADD){
+           undoAdd(undoHistory.getTasks().get(0));
+           return new CommandResult(MESSAGE_SUCCESS);
+        }
+        if(ID==DEL){
+            undoDelete(undoHistory.getTasks().get(0));
+            return new CommandResult(MESSAGE_SUCCESS);
+        }
+        if(ID==EDIT){
+            undoUpdate(undoHistory.getTasks().get(0), undoHistory.getTasks().get(1));
+            return new CommandResult(MESSAGE_SUCCESS);
+        }
+        if(ID==DONE){
+            undoDone(undoHistory.getTasks().get(1));
+            return new CommandResult(MESSAGE_SUCCESS);
+        }
+        return new CommandResult(MESSAGE_EMPTY_HISTORY);
     }
+    
+    private void undoAdd(ReadOnlyTask task){}
+    private void undoDelete(ReadOnlyTask task){}
+    private void undoUpdate(ReadOnlyTask newTask, ReadOnlyTask originalTask){}
+    private void undoDone(ReadOnlyTask task){}
 
 }
