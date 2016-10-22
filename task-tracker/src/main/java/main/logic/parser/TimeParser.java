@@ -14,6 +14,7 @@ import com.google.common.collect.ImmutableList;
 import com.joestelmach.natty.*;
 
 import main.commons.core.LogsCenter;
+import main.commons.util.DateUtil;
 
 
 public class TimeParser {
@@ -91,7 +92,7 @@ public class TimeParser {
                     if (hour < 7) hour += 12;
                     else if (hour > 22) hour -= 12;
                     
-                    dates.set(i, setHour(dates.get(i), hour));
+                    dates.set(i, DateUtil.setTime(dates.get(i), hour, false));
                 }
             }
         }
@@ -99,16 +100,10 @@ public class TimeParser {
     
     private static Date setDefaultTime(Date date) {
         assert date != null;
-        return setHour(date, 8);
+        return DateUtil.setTime(date, 8, true);
     }
 
-    private static Date setHour(Date date, int hour) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.set(Calendar.HOUR_OF_DAY, hour);
-        cal.clear(Calendar.SECOND);
-        return cal.getTime();
-    }
+
     
     private static String getProcessedString(String input, DateGroup group) {
 

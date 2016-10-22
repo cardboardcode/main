@@ -83,4 +83,23 @@ public class DateUtil {
         return dateString; 
         
     }
+    
+    /*
+     * changes the time to the hour given (in 24 hours format) and
+     * resets minutes, depending on the boolean input
+     *       
+     * @returns the original date with given time
+     */
+    public static Date setTime(Date date, int hour, boolean resetMinutes) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, hour);
+        if (resetMinutes) {
+            cal.clear(Calendar.MINUTE);
+            cal.clear(Calendar.SECOND);
+            cal.clear(Calendar.MILLISECOND);
+        }
+        return cal.getTime();
+        
+    }
 }
