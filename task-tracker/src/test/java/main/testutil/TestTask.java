@@ -18,11 +18,11 @@ public class TestTask implements ReadOnlyTask {
     private String message;
     private Date date1;
     private Date date2;
-    private TaskType task;
+    private TaskType type;
     private PriorityType priority;
-    private boolean isRecurring;
-    private boolean isDone;
-    private boolean isInferred;
+    private boolean isRecurring = false;
+    private boolean isDone = false;
+    private boolean isInferred = false;
     
 
     public void setMessage(String msg) {
@@ -53,15 +53,12 @@ public class TestTask implements ReadOnlyTask {
     public String getAddCommand() {
         StringBuilder sb = new StringBuilder();
         sb.append("add " + this.getMessage());
-        
-        if (date1==null|date2==null)
-            return sb.toString();
-        
-        if (task == TaskType.EVENT) {
-            sb.append(" " + getStartTimeString() + " ");
-            sb.append(getEndTimeString());
+      
+        if (type == TaskType.EVENT) {
+            sb.append(" " + getStartTimeString() + " ")
+              .append(getEndTimeString());
         }
-        else if (task == TaskType.DEADLINE) {
+        else if (type == TaskType.DEADLINE) {
             sb.append(" " + getStartTimeString());
         }
         
@@ -90,12 +87,12 @@ public class TestTask implements ReadOnlyTask {
 
     @Override
     public boolean getIsFloating() {
-        return this.task == TaskType.FLOATING;
+        return this.type == TaskType.FLOATING;
     }
 
     @Override
     public boolean getIsEvent() {
-        return this.task == TaskType.EVENT;
+        return this.type == TaskType.EVENT;
     }
 
     @Override
@@ -110,7 +107,7 @@ public class TestTask implements ReadOnlyTask {
 
 	@Override
 	public boolean getIsDeadline() {
-		return this.task == TaskType.DEADLINE;
+		return this.type == TaskType.DEADLINE;
 	}
 
     @Override
@@ -128,10 +125,13 @@ public class TestTask implements ReadOnlyTask {
         return DateUtil.readableDate(getEndTime());
     }
 
+    public void setType(TaskType type) {
+        this.type = type;
+    }
+    
     @Override
     public TaskType getType() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.type;
     }
 
     @Override
@@ -141,7 +141,6 @@ public class TestTask implements ReadOnlyTask {
 
     @Override
     public boolean getIsInferred() {
-        // TODO Auto-generated method stub
-        return false;
+        return isInferred;
     }
 }
