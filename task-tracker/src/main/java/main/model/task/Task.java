@@ -273,7 +273,7 @@ public class Task implements ReadOnlyTask {
     					+ getEndTimeString();
     	}
     	else{
-    		return  getMessage() + " due by " + getDeadlineString();
+    		return  getMessage() + " due " + getDeadlineString();
     	}
     }
     

@@ -23,10 +23,10 @@ public class AddCommandTest extends TaskTrackerGuiTest {
 //        currentList = TestUtil.addTasksToList(currentList, taskToAdd);
 
         //add another task
-        TestTask taskToAdd = TypicalTestTasks.event3;
+        TestTask taskToAdd = TypicalTestTasks.floating3;
         assertAddSuccess(taskToAdd, currentList);
         currentList = TestUtil.addTasksToList(currentList, taskToAdd);
-
+        
         //add duplicate person
         commandBox.runCommand(TypicalTestTasks.event2.getAddCommand());
         assertResultMessage(AddCommand.MESSAGE_DUPLICATE_TASK);
@@ -36,6 +36,7 @@ public class AddCommandTest extends TaskTrackerGuiTest {
         commandBox.runCommand("clear");
         assertAddSuccess(TypicalTestTasks.floating1);
 
+        
         //invalid command
         commandBox.runCommand("adds wrongcommandinput");
         assertResultMessage("Invalid command format! \nUnknown command");

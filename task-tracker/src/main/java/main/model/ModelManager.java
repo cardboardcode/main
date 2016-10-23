@@ -7,6 +7,7 @@ import main.commons.core.LogsCenter;
 import main.commons.core.UnmodifiableObservableList;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,6 +20,7 @@ import org.apache.commons.lang3.tuple.Triple;
 
 import com.google.common.collect.Lists;
 
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import main.commons.events.model.TaskTrackerChangedEvent;
@@ -102,7 +104,7 @@ public class ModelManager extends ComponentManager implements Model {
         Task task;
         
         try {
-            task = taskTracker.getTask(index);
+            task = sortedTasks.get(index);
         } catch (IndexOutOfBoundsException e) {
             throw new TaskNotFoundException();
         }
@@ -196,7 +198,7 @@ public class ModelManager extends ComponentManager implements Model {
     
 
     //=========== Filtered Task List Accessors ===============================================================
-    
+
     @Override
     public UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList() {
 //        return new UnmodifiableObservableList<>(filteredTasks);
