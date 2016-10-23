@@ -41,7 +41,12 @@ public class RedoCommand extends Command {
         }
         if(ID==EDIT){
             try {
-                redoEdit(redoHistory.getTasks().get(0), redoHistory.getTasks().get(1));
+                try {
+                    redoEdit(redoHistory.getTasks().get(0), redoHistory.getTasks().get(1));
+                } catch (DuplicateTaskException | TaskNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             } catch (IndexOutOfBoundsException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -56,9 +61,24 @@ public class RedoCommand extends Command {
         return new CommandResult(MESSAGE_EMPTY_HISTORY);
     }
     
-    private void redoAdd(Task task){}
-    private void redoDelete(Task task){}
-    private void redoEdit(Task newTask, Task originalTask){}
-    
-    
+    private void redoAdd(Task task){
+        try {
+            model.addTaskUndo(task);
+        } catch (DuplicateTaskException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    private void redoDelete(Task task){
+        try {
+            model.deleteTaskUndo(task);
+        } catch (TaskNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    private void redoEdit(Task newTask, Task originalTask) throws DuplicateTaskException, IndexOutOfBoundsException, TaskNotFoundException{
+        model.editTaskUndo(model.getIndexFromTask(originalTask), newTask);
+    }
+        
 }
