@@ -71,7 +71,7 @@ public class UndoCommand extends Command {
             return new CommandResult(MESSAGE_SUCCESS);
         }
 //        if(ID==DONE){
-//            undoDone(undoHistory.getTasks().get(1));
+//            ndoDone(undoHistory.getTasks().get(1));
 //            return new CommandResult(MESSAGE_SUCCESS);
 //        }
         return new CommandResult(MESSAGE_EMPTY_HISTORY);
