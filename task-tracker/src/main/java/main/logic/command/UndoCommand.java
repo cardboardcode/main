@@ -13,12 +13,10 @@ import java.util.logging.Logger;
 import main.commons.core.LogsCenter;
 import main.logic.parser.MainParser;
 /**
- * Stub command for now. Should take in the last known input. Last known input
- * should be a part of a list called History. Undo command reads in last input
- * and dose its own parsing. Whenever an UndoCommand is executed, the elements
- * in the list should be reduced like a stack.
+ *Undoes the previous command. 
+ *Maintains a stack of changes made by last entered command
  * 
- * @author bey
+ * @author Chandra
  *
  */
 public class UndoCommand extends Command {
