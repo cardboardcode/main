@@ -17,7 +17,8 @@ public interface ReadOnlyTask {
     TaskType getIsDeadline();
     boolean getIsRecurring();
     //TaskType getType();
-    Status getStatus();
+    boolean getIsDone();
+    boolean getIsInferred();
     PriorityType getPriority();
     String getDeadlineString();
     String getStartTimeString();
@@ -38,8 +39,9 @@ public interface ReadOnlyTask {
                 && other.getIsEvent() == this.getIsEvent()
                 && other.getIsDeadline() == this.getIsDeadline()
 				&& other.getIsRecurring() == this.getIsRecurring()
-				&& other.getPriority() == this.getPriority())
-                && other.getStatus() == this.getStatus();
+				&& other.getPriority() == this.getPriority()
+                && other.getIsDone() == this.getIsDone()
+                && other.getIsInferred() == this.getIsInferred());
                 
     }
 
@@ -57,7 +59,8 @@ public interface ReadOnlyTask {
         		.append(getIsDeadline())
         		.append(getIsRecurring())
         		.append(getPriority())
-        		.append(getStatus());
+        		.append(getIsDone())
+        		.append(getIsInferred());
                 
                 
         return builder.toString();
