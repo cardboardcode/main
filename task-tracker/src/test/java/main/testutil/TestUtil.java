@@ -316,7 +316,6 @@ public class TestUtil {
     public static TestTask[] addTasksToList(final TestTask[] tasks, TestTask... tasksToAdd) {
         List<TestTask> listOfTasks = asList(tasks);
         listOfTasks.addAll(asList(tasksToAdd));
-        listOfTasks.sort(SortCriteria.TIME);
         return listOfTasks.toArray(new TestTask[listOfTasks.size()]);
     }
 
