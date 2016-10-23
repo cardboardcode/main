@@ -190,9 +190,9 @@ public class Task implements ReadOnlyTask {
     	this.priority = priority;
     }
     
-   // public void setType(TaskType type){
-   // 	this.type = type;
-   // }
+    public void setType(TaskType type){
+    	this.type = type;
+    }
     
     public boolean setIsDone(){
 	    this.isDone = true;
@@ -265,14 +265,15 @@ public class Task implements ReadOnlyTask {
     
     @Override
     public String toString() {
-    	if(this.type.equals(TaskType.FLOATING)){
-    		return  getMessage(); 
+    	if(this.type == TaskType.FLOATING){
+    		return getMessage(); 
     	}
-    	else if(this.type.equals(TaskType.EVENT)){
+    	else if(this.type == TaskType.EVENT){
     		return  getMessage()+ " from " + getStartTimeString() + " to "
     					+ getEndTimeString();
     	}
     	else{
+    	    System.out.println(type);
     		return  getMessage() + " due by " + getDeadlineString();
     	}
     }
