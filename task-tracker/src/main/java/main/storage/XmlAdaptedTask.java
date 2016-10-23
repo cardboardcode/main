@@ -73,10 +73,7 @@ public class XmlAdaptedTask {
     public Task toModelType() throws IllegalValueException {
             
         if (type == TaskType.FLOATING) return new Task(message, priority);
-        else if (type == TaskType.EVENT) {
-            System.out.println(message);
-            return new Task(message, startTime, endTime, priority);
-        }
+        else if (type == TaskType.EVENT) return new Task(message, startTime, endTime, priority);
         else return new Task(message, deadline, priority);
         
     }
