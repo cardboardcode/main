@@ -12,9 +12,6 @@ public class Task implements ReadOnlyTask {
     Date deadline;
     Date startTime;
     Date endTime;
-    //private boolean isFloating;
-    //private boolean isDeadline;
-    //private boolean isEvent = false;
     private boolean isRecurring = false;
     private PriorityType priority = PriorityType.NORMAL; //default priority
     private TaskType type;
@@ -66,19 +63,17 @@ public class Task implements ReadOnlyTask {
         this.type = TaskType.EVENT;
         this.isInferred = false;
     }
-    
-    
-    
+     
     public Task(ReadOnlyTask src) {
-        this(src.getMessage(), src.getPriority());
-        if (!(src.getIsFloating().equals(TaskType.FLOATING))) {
-            if (!(src.getIsEvent().equals(TaskType.DEADLINE))) 
-                this.deadline = src.getDeadline();
-            else {
-                this.startTime = src.getStartTime();
-                this.endTime = src.getEndTime();
-            }
-        }
+        this.message = src.getMessage();
+        this.deadline = src.getDeadline();
+        this.startTime = src.getStartTime();
+        this.endTime = src.getEndTime();
+        this.isRecurring = src.getIsRecurring();
+        this.priority = src.getPriority();
+        this.type = src.getType();
+        this.isDone = src.getIsDone();
+        this.isInferred = src.getIsInferred();
     }
     //getters
     @Override
@@ -115,23 +110,28 @@ public class Task implements ReadOnlyTask {
 		return DateUtil.readableDate(deadline);	
 	}
     @Override
-    public TaskType getIsFloating(){
-    	return TaskType.FLOATING;
+    public boolean getIsFloating(){
+    	return type == TaskType.FLOATING ;
     }
     
     @Override
-    public TaskType getIsEvent(){
-        return TaskType.EVENT;
+    public boolean getIsEvent(){
+        return type == TaskType.EVENT;
     }
     
     @Override
-    public TaskType getIsDeadline(){
-    	return TaskType.DEADLINE;
+    public boolean getIsDeadline(){
+    	return type == TaskType.DEADLINE;
     }
     
     @Override 
     public boolean getIsRecurring(){
     	return this.isRecurring;
+    }
+    
+    @Override
+    public TaskType getType(){
+        return this.type;
     }
     
     @Override
@@ -215,18 +215,18 @@ public class Task implements ReadOnlyTask {
      *  due the same time, and 1 if this task is due later
      */
     public int compareTime(Task other) {
-        if (this.type.equals(TaskType.FLOATING)) {
-            if (other.equals(TaskType.FLOATING)) return 0;
+        if (this.type == TaskType.FLOATING) {
+            if (other.type == TaskType.FLOATING) return 0;
             else return 1;
         }
         else {
             Date time;
         
-            if (this.type.equals(TaskType.DEADLINE)) time = this.deadline;
+            if (this.type == TaskType.DEADLINE) time = this.deadline;
             else time = this.endTime;
         
-            if (other.equals(TaskType.FLOATING)) return -1;
-            else if (other.equals(TaskType.DEADLINE)) return time.compareTo(other.deadline);
+            if (other.type == TaskType.FLOATING) return -1;
+            else if (other.type == TaskType.DEADLINE) return time.compareTo(other.deadline);
             else return time.compareTo(other.endTime);
         }        
     }
