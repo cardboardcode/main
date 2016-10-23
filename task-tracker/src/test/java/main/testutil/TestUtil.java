@@ -15,6 +15,8 @@ import main.commons.exceptions.IllegalValueException;
 import main.commons.util.FileUtil;
 import main.commons.util.XmlUtil;
 import main.model.TaskTracker;
+import main.model.filter.SortCriteria;
+import main.model.task.PriorityType;
 //import main.model.task.Deadline;
 //import main.model.task.Event;
 //import main.model.task.FloatingTask;
@@ -74,14 +76,14 @@ public class TestUtil {
     private static Task[] getSampleTaskData() {
 //        try {
         return new Task[]{
-                new Task("Get a girlfriend"),
-                new Task("Get a boyfriend"),
-                new Task("Take a long nap"),
-                new Task(("Plan for SEP"), setDate(2016, 10, 17, 23, 59)),
-                new Task("", setDate(2016, 11, 7, 23, 30)),
-                new Task("birthday party", setDate(2016, 11, 20, 12, 0), setDate(2016, 11, 20, 20, 0)),
-                new Task("hackathon", setDate(2016, 12, 11, 8, 0), setDate(2016, 12, 13, 18, 0)),
-                new Task("travel Japan", setDate(2016, 12, 20, 0, 0), setDate(2017, 1, 5, 0, 0))
+                new Task("Get a girlfriend", PriorityType.HIGH),
+                new Task("Get a boyfriend", PriorityType.HIGH),
+                new Task("Take a long nap", PriorityType.HIGH),
+                new Task(("Plan for SEP"), setDate(2016, 10, 17, 23, 59), PriorityType.NORMAL),
+                new Task("Complete code", setDate(2016, 11, 7, 23, 30), PriorityType.LOW),
+                new Task("birthday party", setDate(2016, 11, 20, 12, 0), setDate(2016, 11, 20, 20, 0), PriorityType.NORMAL),
+                new Task("hackathon", setDate(2016, 12, 11, 8, 0), setDate(2016, 12, 13, 18, 0), PriorityType.NORMAL),
+                new Task("travel Japan", setDate(2016, 12, 20, 0, 0), setDate(2017, 1, 5, 0, 0), PriorityType.NORMAL)
         };
 //        } catch (IllegalValueException e) {
 //            assert false;

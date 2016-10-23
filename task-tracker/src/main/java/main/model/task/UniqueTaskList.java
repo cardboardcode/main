@@ -83,7 +83,14 @@ public class UniqueTaskList implements Iterable<Task> {
         }
         return taskFoundAndDeleted;
     }
-
+    public boolean complete(ReadOnlyTask toComplete) throws TaskNotFoundException {
+        assert toComplete != null;
+        if (!internalList.contains(toComplete)) {
+            throw new TaskNotFoundException();
+        }
+        Task taskFoundAndCompleted = internalList.get(internalList.indexOf(toComplete));
+        return taskFoundAndCompleted.setIsDone();
+    }
     public ObservableList<Task> getInternalList() {
         return internalList;
     }

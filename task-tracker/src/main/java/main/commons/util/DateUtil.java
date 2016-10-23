@@ -50,7 +50,7 @@ public class DateUtil {
         cal.add(Calendar.DATE, 1);
         return cal.getTime();
     }
-    
+     
     /*
      * checks if the date is within start and end
      * 

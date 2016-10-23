@@ -35,13 +35,15 @@ public class XmlAdaptedTask {
     private boolean isRecurring;
     @XmlElement(required = true)
     private PriorityType priority;
+    @XmlElement(required = true)
+    private TaskType type;
     
     //@XmlElement
     //private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
     /**
      * No-arg constructor for JAXB use.
-     */
+     */ 
     public XmlAdaptedTask() {}
 
 
@@ -60,6 +62,7 @@ public class XmlAdaptedTask {
         isDeadline = (Boolean)(source.getIsDeadline());
         isRecurring = (Boolean)(source.getIsRecurring());
         priority = (PriorityType)(source.getPriority());
+        type = source.getType();
     }
 
     /**
@@ -69,10 +72,9 @@ public class XmlAdaptedTask {
      */
     public Task toModelType() throws IllegalValueException {
             
-        if (isFloating)
-            return new Task(message, (PriorityType)priority);
-        else if (isEvent) return new Task(message, (Date)startTime, (Date)endTime, (PriorityType)priority);
-        else return new Task(message, (Date)deadline, (PriorityType)priority);
+        if (type == TaskType.FLOATING) return new Task(message, priority);
+        else if (type == TaskType.EVENT) return new Task(message, startTime, endTime, priority);
+        else return new Task(message, deadline, priority);
         
     }
 }

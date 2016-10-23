@@ -6,7 +6,8 @@
 	<isEvent>false</isEvent>
 	<isDeadline>false</isDeadline>
 	<isRecurring>false</isRecurring>
-	<priority>high</priority>
+	<priority>HIGH</priority>
+	<type>FLOATING</type>
     </tasks>
     <tasks>
         <message>eat food</message>
@@ -14,7 +15,9 @@
 	<isEvent>false</isEvent>
 	<isDeadline>false</isDeadline>
 	<isRecurring>false</isRecurring>
-	<priority>high</priority>
+	<priority>HIGH</priority>
+	<type>FLOATING</type>
+
     </tasks>
     
 </tasktracker>

@@ -71,7 +71,17 @@ public class TaskTracker implements ReadOnlyTaskTracker{
 
     public void editTask(int index, Task newtask) throws DuplicateTaskException {
         tasks.replace(index, newtask);
-    }   
+    } 
+    
+    public boolean completeTask(ReadOnlyTask task)  throws UniqueTaskList.TaskNotFoundException{
+    	if(tasks.contains(task)){
+    		tasks.complete(task);
+    		return true;
+    	}
+    	else{
+    		throw new UniqueTaskList.TaskNotFoundException();
+    	}
+    }
     
     public ObservableList<Task> getTasks() {
         return tasks.getInternalList();
