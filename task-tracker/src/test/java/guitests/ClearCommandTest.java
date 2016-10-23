@@ -2,6 +2,8 @@ package guitests;
 
 import org.junit.Test;
 
+import main.testutil.TypicalTestTasks;
+
 import static org.junit.Assert.assertTrue;
 
 public class ClearCommandTest extends TaskTrackerGuiTest {
@@ -14,8 +16,8 @@ public class ClearCommandTest extends TaskTrackerGuiTest {
         assertClearCommandSuccess();
 
         //verify other commands can work after a clear command
-        commandBox.runCommand(td.event2.getAddCommand());
-        assertTrue(taskListPanel.isListMatching(td.event2));
+        commandBox.runCommand(TypicalTestTasks.event2.getAddCommand());
+        assertTrue(taskListPanel.isListMatching(TypicalTestTasks.event2));
         commandBox.runCommand("delete 1");
         assertListSize(0);
 
