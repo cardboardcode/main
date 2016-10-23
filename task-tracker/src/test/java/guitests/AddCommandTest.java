@@ -13,7 +13,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
 public class AddCommandTest extends TaskTrackerGuiTest {
-
+/*
     @Test
     public void add() {
         //add one task
@@ -41,7 +41,7 @@ public class AddCommandTest extends TaskTrackerGuiTest {
         commandBox.runCommand("adds wrongcommandinput");
         assertResultMessage("Invalid command format! \nUnknown command");
     }
-
+*/
     private void assertAddSuccess(TestTask taskToAdd, TestTask... currentList) {
         commandBox.runCommand(taskToAdd.getAddCommand());
 
