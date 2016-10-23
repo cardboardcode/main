@@ -12,10 +12,12 @@ public interface ReadOnlyTask {
     Date getStartTime();
     Date getEndTime();
     Date getDeadline();
-    boolean getIsFloating();
-    boolean getIsEvent();
-    boolean getIsDeadline();
+    TaskType getIsFloating();
+    TaskType getIsEvent();
+    TaskType getIsDeadline();
     boolean getIsRecurring();
+    //TaskType getType();
+    Status getStatus();
     //PriorityType getPriority();
     
 

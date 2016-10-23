@@ -38,13 +38,12 @@ public class Status {
 	}
 	@Override
 	public String toString(){
-		String statusString;
 		
 		if(status == State.DONE){
-			return statusString = "Done";
+			return "Done";
 		}
 		else{
-			return statusString = "Undone";
+			return "Undone";
 		}
 	}
 	
