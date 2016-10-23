@@ -15,6 +15,8 @@ import main.model.Model;
 import main.model.ModelManager;
 import main.model.ReadOnlyTaskTracker;
 import main.model.TaskTracker;
+import main.model.task.PriorityType;
+import main.model.task.TaskType;
 import main.model.task.ReadOnlyTask;
 import main.model.task.Task;
 import main.model.task.UniqueTaskList.DuplicateTaskException;
@@ -229,19 +231,19 @@ public class LogicManagerTest {
     class TestDataHelper{
         
         protected Task floating1() {
-            return new Task("floating1");
+            return new Task("floating1", PriorityType.NORMAL);
         }
         
         protected Task deadline_natural() {
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.DATE, 1);
-            return new Task("deadline_natural", cal.getTime());
+            return new Task("deadline_natural", cal.getTime(), PriorityType.NORMAL);
         }
         
         protected Task deadline1() {
             Calendar cal = Calendar.getInstance();
             cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-            return new Task("deadline1", cal.getTime());
+            return new Task("deadline1", cal.getTime(), PriorityType.NORMAL);
         }
         
         protected Task event1() {
@@ -249,7 +251,7 @@ public class LogicManagerTest {
             cal1.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
             Calendar cal2 = Calendar.getInstance();
             cal2.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
-            return new Task("event1", cal1.getTime(), cal2.getTime());
+            return new Task("event1", cal1.getTime(), cal2.getTime(), PriorityType.NORMAL);
         }
                
         protected String generateAddCommand(Task toAdd) {
@@ -332,7 +334,7 @@ public class LogicManagerTest {
         * @param seed used to generate the task data field values
         */
        Task generateTask(int seed) throws Exception {
-           return new Task("Task " + seed);
+           return new Task("Task " + seed, PriorityType.NORMAL);
        }       
        
        /**
