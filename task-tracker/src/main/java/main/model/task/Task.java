@@ -12,30 +12,16 @@ public class Task implements ReadOnlyTask {
     Date deadline;
     Date startTime;
     Date endTime;
-    private boolean isFloating;
-    private boolean isDeadline;
-    private boolean isEvent = false;
+    //private boolean isFloating;
+    //private boolean isDeadline;
+    //private boolean isEvent = false;
     private boolean isRecurring = false;
     private PriorityType priority = PriorityType.NORMAL; //default priority
-    //TO-DO
-    //ADD RECURRING VARIABLES N METHODS(DAILY, WEEKLY, MONTHLY)
-    //private boolean isUpdated; to update the frequency if isRecurring == true
-    //private boolean isDone;
-    //private boolean isCompleted; 
-    //private String frequency;
-    public Task(String message) {
-    	if(message == null){
-//    		throw new IllegalArgumentException("Please fill in the required fields");
-    	    this.message = "";
-    	}
-    	else {
-    	    this.message = message;
-    	}
-        this.isFloating = true; 
-        this.isDeadline = false;
-    }
+    private TaskType type;
+    private Status status;
+   
     
-    public Task(String message, PriorityType priority) {
+    public Task(String message, PriorityType priority, Status status) {
         if(message == null){
 //          throw new IllegalArgumentException("Please fill in the required fields");
             this.message = "";
@@ -44,20 +30,13 @@ public class Task implements ReadOnlyTask {
             this.message = message;
         }
         this.priority = priority;
-        this.isFloating = true; 
-        this.isDeadline = false;
+        this.status = status;
+        this.type = TaskType.FLOATING;
+        
+        
     }
     
-    public Task(String message, Date deadline) {
-    	if(message == null){
-    		throw new IllegalArgumentException("Please fill in the required fields");
-    	}
-        this.message = message;
-        this.deadline = deadline;
-        this.isFloating = false;
-        this.isDeadline = true;
-       
-    }
+ 
     public Task(String message, Date deadline, PriorityType priority) {
         if(message == null){
             throw new IllegalArgumentException("Please fill in the required fields");
