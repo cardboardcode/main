@@ -16,7 +16,7 @@ import main.logic.parser.MainParser;
  *Undoes the previous command. 
  *Maintains a stack of changes made by last entered command
  * 
- * @author Chandra
+ * 
  *
  */
 public class UndoCommand extends Command {
@@ -43,6 +43,7 @@ public class UndoCommand extends Command {
             return new CommandResult(MESSAGE_EMPTY_HISTORY);
         }
         undoHistory=ModelManager.undoStack.pop();
+        ModelManager.redoStack.push(undoHistory);
         int ID=undoHistory.getID();
         
         if(ID==ADD){

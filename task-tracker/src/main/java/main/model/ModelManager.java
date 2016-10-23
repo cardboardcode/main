@@ -40,6 +40,7 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
     
     public static Stack<UndoHistory> undoStack = new Stack<UndoHistory>();
+    public static Stack<UndoHistory> redoStack = new Stack<UndoHistory>();
     
     TaskTracker taskTracker;
     UserPrefs userPref;
