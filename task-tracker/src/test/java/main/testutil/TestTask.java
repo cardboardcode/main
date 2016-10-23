@@ -8,6 +8,7 @@ import java.util.Date;
 import main.commons.util.DateUtil;
 import main.model.task.PriorityType;
 import main.model.task.ReadOnlyTask;
+import main.model.task.TaskType;
 
 /**
  * A mutable task object. For testing only.
@@ -17,11 +18,11 @@ public class TestTask implements ReadOnlyTask {
     private String message;
     private Date date1;
     private Date date2;
-    private boolean isFloating;
-    private boolean isEvent;
-    private boolean isDeadline;
+    private TaskType task;
     private PriorityType priority;
     private boolean isRecurring;
+    private boolean isDone;
+    private boolean isInferred;
     
 
     public void setMessage(String msg) {
@@ -35,19 +36,7 @@ public class TestTask implements ReadOnlyTask {
     public void setDate2(Date date) {
         this.date2 = date;
     }
-    
-    public void setIsFloating(boolean floating) {
-        isFloating = floating;
-    }
-    
-    public void setIsEvent(boolean event) {
-        isEvent = event;
-    }
-    
-    public void setIsDeadline(boolean deadline){
-    	isDeadline = deadline;
-    }
-    
+
     public void setIsRecurring(boolean recur) {
         isRecurring = recur;
     }
@@ -68,11 +57,11 @@ public class TestTask implements ReadOnlyTask {
         if (date1==null|date2==null)
             return sb.toString();
         
-        if (isEvent) {
+        if (task == TaskType.EVENT) {
             sb.append(" " + getStartTimeString() + " ");
             sb.append(getEndTimeString());
         }
-        else if (!isEvent && !isFloating) {
+        else if (task == TaskType.DEADLINE) {
             sb.append(" " + getStartTimeString());
         }
         
@@ -101,12 +90,12 @@ public class TestTask implements ReadOnlyTask {
 
     @Override
     public boolean getIsFloating() {
-        return isFloating;
+        return this.task == TaskType.FLOATING;
     }
 
     @Override
     public boolean getIsEvent() {
-        return isEvent;
+        return this.task == TaskType.EVENT;
     }
 
     @Override
@@ -121,7 +110,7 @@ public class TestTask implements ReadOnlyTask {
 
 	@Override
 	public boolean getIsDeadline() {
-		return isDeadline;
+		return this.task == TaskType.DEADLINE;
 	}
 
     @Override
@@ -137,5 +126,22 @@ public class TestTask implements ReadOnlyTask {
     @Override
     public String getEndTimeString() {
         return DateUtil.readableDate(getEndTime());
+    }
+
+    @Override
+    public TaskType getType() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public boolean getIsDone() {
+        return isDone;
+    }
+
+    @Override
+    public boolean getIsInferred() {
+        // TODO Auto-generated method stub
+        return false;
     }
 }
