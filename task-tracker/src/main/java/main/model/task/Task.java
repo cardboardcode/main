@@ -20,7 +20,7 @@ public class Task implements ReadOnlyTask {
     private TaskType type;
     private Status status;
    
-    
+    //Floating
     public Task(String message, PriorityType priority, Status status) {
         if(message == null){
 //          throw new IllegalArgumentException("Please fill in the required fields");
@@ -36,49 +36,38 @@ public class Task implements ReadOnlyTask {
         
     }
     
- 
-    public Task(String message, Date deadline, PriorityType priority) {
+    //Deadline Task
+    public Task(String message, Date deadline, PriorityType priority, Status status) {
         if(message == null){
             throw new IllegalArgumentException("Please fill in the required fields");
         }
         this.message = message;
         this.deadline = deadline;
-        this.isFloating = false;
-        this.isDeadline = true;
+        this.status = status;
         this.priority=priority;
+        this.type = TaskType.DEADLINE;
        
     }
     
-    public Task(String message, Date startTime, Date endTime) {
-    	if(message == null){
-    		throw new IllegalArgumentException("Please fill in the required fields");
-    	}
-        this.message = message;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.isFloating = false;
-        this.isDeadline = false; 
-        this.isEvent = true;
-    }
-    public Task(String message, Date startTime, Date endTime, PriorityType priority) {
+    //Event Task
+    public Task(String message, Date startTime, Date endTime, PriorityType priority, Status status) {
         if(message == null){
             throw new IllegalArgumentException("Please fill in the required fields");
         }
         this.message = message;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.isFloating = false;
-        this.isDeadline = false; 
-        this.isEvent = true;
+        this.status = status;
         this.priority = priority;
+        this.type = TaskType.EVENT;
     }
     
     
     
     public Task(ReadOnlyTask src) {
-        this(src.getMessage());
-        if (!src.getIsFloating()) {
-            if (!src.getIsEvent()) 
+        this(src.getMessage(), src.getPriority(), src.getStatus());
+        if (!(src.getIsFloating().equals(TaskType.FLOATING))) {
+            if (!(src.getIsEvent().equals(TaskType.DEADLINE))) 
                 this.deadline = src.getDeadline();
             else {
                 this.startTime = src.getStartTime();
@@ -121,18 +110,18 @@ public class Task implements ReadOnlyTask {
 		return DateUtil.readableDate(deadline);	
 	}
     @Override
-    public boolean getIsFloating(){
-    	return this.isFloating;
+    public TaskType getIsFloating(){
+    	return TaskType.FLOATING;
     }
     
     @Override
-    public boolean getIsEvent(){
-        return this.isEvent;
+    public TaskType getIsEvent(){
+        return TaskType.EVENT;
     }
     
     @Override
-    public boolean getIsDeadline(){
-    	return this.isDeadline;
+    public TaskType getIsDeadline(){
+    	return TaskType.DEADLINE;
     }
     
     @Override 
@@ -142,6 +131,14 @@ public class Task implements ReadOnlyTask {
     
     public PriorityType getPriority(){
     	return this.priority;
+    }
+    
+   // public TaskType getType(){
+   //	return this.type;
+   // }
+    
+    public Status getStatus(){
+    	return this.status;
     }
     
     //setters
@@ -160,16 +157,16 @@ public class Task implements ReadOnlyTask {
     	this.deadline = deadline;
     }  
     
-    public void setIsFloating(boolean isFloating){
-    	this.isFloating = isFloating;
+    public void setIsFloating(){
+    	this.type = TaskType.FLOATING;
     }
     
-    public void setIsEvent(boolean isEvent){
-    	this.isEvent = isEvent;
+    public void setIsEvent(){
+    	this.type = TaskType.EVENT;
     }
     
-    public void setIsDeadline(boolean isDeadline){
-    	this.isDeadline = isDeadline;
+    public void setIsDeadline(){
+    	this.type = TaskType.DEADLINE;
     }
     
     public void setIsRecurring(boolean isRecurring){
@@ -180,6 +177,14 @@ public class Task implements ReadOnlyTask {
     	this.priority = priority;
     }
     
+   // public void setType(TaskType type){
+   // 	this.type = type;
+   // }
+    
+    public void setStatus(Status status){
+    	this.status = status;
+    }
+    
     /*
      * compares the task's time
      * 
@@ -187,18 +192,18 @@ public class Task implements ReadOnlyTask {
      *  due the same time, and 1 if this task is due later
      */
     public int compareTime(Task other) {
-        if (this.isFloating) {
-            if (other.isFloating) return 0;
+        if (this.type.equals(TaskType.FLOATING)) {
+            if (other.equals(TaskType.FLOATING)) return 0;
             else return 1;
         }
         else {
             Date time;
         
-            if (this.isDeadline) time = this.deadline;
+            if (this.type.equals(TaskType.DEADLINE)) time = this.deadline;
             else time = this.endTime;
         
-            if (other.isFloating) return -1;
-            else if (other.isDeadline) return time.compareTo(other.deadline);
+            if (other.equals(TaskType.FLOATING)) return -1;
+            else if (other.equals(TaskType.DEADLINE)) return time.compareTo(other.deadline);
             else return time.compareTo(other.endTime);
         }        
     }
@@ -206,19 +211,29 @@ public class Task implements ReadOnlyTask {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
+        
         else if (other instanceof Task) {
-        	if(this.isFloating){ 
-        		return (this.message.equals(((Task) other).message));
+        	if(this.type.equals(TaskType.FLOATING)){ 
+        		return (this.message.equals(((Task) other).message)) 
+        		&& this.priority.equals(((Task) other).priority)
+        		&& this.status.equals(((Task) other).status);
         	}
-        	else if(this.isEvent) {
+        	
+        	else if(this.type.equals(TaskType.EVENT)) {
         	    return (this.message.equals(((Task) other).message)
         	 	&& this.startTime.equals(((Task) other).startTime)
-        		&& this.endTime.equals(((Task) other).endTime));
+        		&& this.endTime.equals(((Task) other).endTime))
+        	   	&& this.priority.equals(((Task) other).priority)
+             	&& this.status.equals(((Task) other).status);
         	}
+        	
         	else {
                 return (this.message.equals(((Task) other).message)
-                && this.deadline.equals(((Task) other).deadline));
+                && this.deadline.equals(((Task) other).deadline))
+                && this.priority.equals(((Task) other).priority)
+        		&& this.status.equals(((Task) other).status);
         	}
+                
         }
         else return false;
     }
@@ -230,10 +245,10 @@ public class Task implements ReadOnlyTask {
     
     @Override
     public String toString() {
-    	if(this.isFloating){
+    	if(this.type.equals(TaskType.FLOATING)){
     		return  getMessage(); 
     	}
-    	else if(this.isEvent){
+    	else if(this.type.equals(TaskType.EVENT)){
     		return  getMessage()+ " from " + getStartTimeString() + " to "
     					+ getEndTimeString();
     	}
