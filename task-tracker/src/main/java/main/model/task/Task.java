@@ -18,7 +18,8 @@ public class Task implements ReadOnlyTask {
     private boolean isRecurring = false;
     private PriorityType priority = PriorityType.NORMAL; //default priority
     private TaskType type;
-    private Status status;
+    private boolean isDone;
+    private boolean isInferred;
    
     //Floating
     public Task(String message, PriorityType priority) {
@@ -30,36 +31,40 @@ public class Task implements ReadOnlyTask {
             this.message = message;
         }
         this.priority = priority;
-       // this.isDone = false;
+        this.isDone = false;
         this.type = TaskType.FLOATING;
-        
+        this.isInferred = false;
         
     }
     
     //Deadline Task
-    public Task(String message, Date deadline, PriorityType priority, Status status) {
+    public Task(String message, Date deadline, PriorityType priority) {
+    	assert deadline != null;
         if(message == null){
             throw new IllegalArgumentException("Please fill in the required fields");
         }
         this.message = message;
         this.deadline = deadline;
-        //this.isDone = false;
+        this.isDone = false;
         this.priority=priority;
         this.type = TaskType.DEADLINE;
+        this.isInferred = false;
        
     }
     
     //Event Task
-    public Task(String message, Date startTime, Date endTime, PriorityType priority, Status status) {
-        if(message == null){
+    public Task(String message, Date startTime, Date endTime, PriorityType priority) {
+        assert (startTime != null && endTime != null);
+    	if(message == null){
             throw new IllegalArgumentException("Please fill in the required fields");
         }
         this.message = message;
         this.startTime = startTime;
         this.endTime = endTime;
-      //  this.isDone = false;
+        this.isDone = false;
         this.priority = priority;
         this.type = TaskType.EVENT;
+        this.isInferred = false;
     }
     
     
@@ -138,14 +143,16 @@ public class Task implements ReadOnlyTask {
    //	return this.type;
    // }
     
- //  @Override
- //  public boolean getIsDone(){
- //	   return this.isDone;
- //  }
-    @Override
-    public Status getStatus(){
-    	return this.status;
+   @Override
+    public boolean getIsDone(){
+	   return this.isDone;
     }
+   
+   @Override
+   public boolean getIsInferred(){
+	   return this.isInferred;
+   }
+  
     
     //setters
     public void setMessage(String message){
@@ -187,15 +194,18 @@ public class Task implements ReadOnlyTask {
    // 	this.type = type;
    // }
     
-  //  public void setIsDone(){
-  //  	this.isDone = true;
-  //   }
+    public boolean setIsDone(){
+	    this.isDone = true;
+	    return this.isDone;
+    }
     
-  //  public void setIsUnDone(){
-  //  	this.isDone = false;
-  // }
-    public void setStatus(Status status){
-    	this.status = status;
+    public boolean setIsUnDone(){
+	   this.isDone = false;
+	   return this.isDone;
+    }
+    
+    public void setIsInferred(boolean isInferred){
+    	this.isInferred = isInferred;
     }
     
     /*
