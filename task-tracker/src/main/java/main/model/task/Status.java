@@ -1,11 +1,13 @@
 package main.model.task;
 
 public class Status {
-	public static enum State{
-		DONE, UNDONE
+	public enum State{
+		DONE, UNDONE, OVERDUE
 	}
 	private static final String MESSAGE_TASK_DONE = "DONE";
 	private static final String MESSAGE_TASK_UNDONE = "UNDONE";
+	private static final String MESSAGE_TASK_OVERDUE = "OVERDUE";
+	
 	private State status;
 	
 	public Status(State status){
@@ -20,14 +22,22 @@ public class Status {
 	
 	
 	
-	private State getStatusString(String statusString){
+	public State getStatusString(String statusString){
+		switch(statusString){
 		
-		if(statusString.equals(MESSAGE_TASK_DONE)){
+		case MESSAGE_TASK_DONE:
 			return State.DONE;
-		}
-		else{
+		
+		case MESSAGE_TASK_UNDONE:
 			return State.UNDONE;
+			
+		case MESSAGE_TASK_OVERDUE:
+			return State.OVERDUE;
+			
+		default:
+			throw new IllegalArgumentException("Invalid status");
 		}
+		
 	}
 	
 	@Override
@@ -42,8 +52,11 @@ public class Status {
 		if(status == State.DONE){
 			return "Done";
 		}
-		else{
+		else if(status == State.UNDONE){
 			return "Undone";
+		}
+		else{
+			return "Overdue";
 		}
 	}
 	

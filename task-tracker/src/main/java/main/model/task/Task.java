@@ -21,7 +21,7 @@ public class Task implements ReadOnlyTask {
     private Status status;
    
     //Floating
-    public Task(String message, PriorityType priority, Status status) {
+    public Task(String message, PriorityType priority) {
         if(message == null){
 //          throw new IllegalArgumentException("Please fill in the required fields");
             this.message = "";
@@ -30,7 +30,7 @@ public class Task implements ReadOnlyTask {
             this.message = message;
         }
         this.priority = priority;
-        this.status = status;
+       // this.isDone = false;
         this.type = TaskType.FLOATING;
         
         
@@ -43,7 +43,7 @@ public class Task implements ReadOnlyTask {
         }
         this.message = message;
         this.deadline = deadline;
-        this.status = status;
+        //this.isDone = false;
         this.priority=priority;
         this.type = TaskType.DEADLINE;
        
@@ -57,7 +57,7 @@ public class Task implements ReadOnlyTask {
         this.message = message;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.status = status;
+      //  this.isDone = false;
         this.priority = priority;
         this.type = TaskType.EVENT;
     }
@@ -65,7 +65,7 @@ public class Task implements ReadOnlyTask {
     
     
     public Task(ReadOnlyTask src) {
-        this(src.getMessage(), src.getPriority(), src.getStatus());
+        this(src.getMessage(), src.getPriority());
         if (!(src.getIsFloating().equals(TaskType.FLOATING))) {
             if (!(src.getIsEvent().equals(TaskType.DEADLINE))) 
                 this.deadline = src.getDeadline();
@@ -129,6 +129,7 @@ public class Task implements ReadOnlyTask {
     	return this.isRecurring;
     }
     
+    @Override
     public PriorityType getPriority(){
     	return this.priority;
     }
@@ -137,6 +138,11 @@ public class Task implements ReadOnlyTask {
    //	return this.type;
    // }
     
+ //  @Override
+ //  public boolean getIsDone(){
+ //	   return this.isDone;
+ //  }
+    @Override
     public Status getStatus(){
     	return this.status;
     }
@@ -181,6 +187,13 @@ public class Task implements ReadOnlyTask {
    // 	this.type = type;
    // }
     
+  //  public void setIsDone(){
+  //  	this.isDone = true;
+  //   }
+    
+  //  public void setIsUnDone(){
+  //  	this.isDone = false;
+  // }
     public void setStatus(Status status){
     	this.status = status;
     }
@@ -215,23 +228,20 @@ public class Task implements ReadOnlyTask {
         else if (other instanceof Task) {
         	if(this.type.equals(TaskType.FLOATING)){ 
         		return (this.message.equals(((Task) other).message)) 
-        		&& this.priority.equals(((Task) other).priority)
-        		&& this.status.equals(((Task) other).status);
+        		&& this.priority.equals(((Task) other).priority);
         	}
         	
         	else if(this.type.equals(TaskType.EVENT)) {
         	    return (this.message.equals(((Task) other).message)
         	 	&& this.startTime.equals(((Task) other).startTime)
         		&& this.endTime.equals(((Task) other).endTime))
-        	   	&& this.priority.equals(((Task) other).priority)
-             	&& this.status.equals(((Task) other).status);
+        	   	&& this.priority.equals(((Task) other).priority);
         	}
         	
         	else {
                 return (this.message.equals(((Task) other).message)
                 && this.deadline.equals(((Task) other).deadline))
-                && this.priority.equals(((Task) other).priority)
-        		&& this.status.equals(((Task) other).status);
+                && this.priority.equals(((Task) other).priority);
         	}
                 
         }
