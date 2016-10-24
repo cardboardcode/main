@@ -70,6 +70,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void resetData(ReadOnlyTaskTracker newData) {
+        if(newData.getTaskList().size()==0){
+            List<Task> prevTasks = (List<Task>)(List<?>)taskTracker.getTaskList();
+            addToUndo(UndoCommand.CLR, prevTasks.toArray(new Task [prevTasks.size()]));
+        }
         taskTracker.resetData(newData);
         indicateTaskTrackerChanged();
     }
@@ -361,6 +365,12 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredListToShowAll();
         indicateTaskTrackerChanged();
         
+    }
+    @Override
+    public void clearTaskUndo(ArrayList<Task> tasks){
+        TaskTracker prevTaskTracker = new TaskTracker();
+        prevTaskTracker.setTasks(tasks);
+        taskTracker.resetData(prevTaskTracker);
     }
 }
 
