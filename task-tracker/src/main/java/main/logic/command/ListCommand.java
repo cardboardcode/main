@@ -49,6 +49,10 @@ public class ListCommand extends Command {
 	
 	private String getReadableCriteria() {
 	    StringBuilder readable = new StringBuilder();
+	 
+	    String prefix;
+	    if (isDone) prefix = "completed";
+	    else prefix = "pending";
 	    
 	    String task;
 	    if (type == null) task = "tasks";
@@ -56,10 +60,10 @@ public class ListCommand extends Command {
         else if (type == TaskType.DEADLINE) task = "tasks with deadlines";
         else task = "floating tasks";
 	    
-	    if (priority == null) readable.append(task);
-	    else if (priority == PriorityType.LOW) readable.append("low priority ").append(task);
-	    else if (priority == PriorityType.HIGH) readable.append("high priority ").append(task);
-	    else readable.append("normal priority ").append(task);
+	    if (priority == null) readable.append(prefix).append(" ").append(task);
+	    else if (priority == PriorityType.LOW) readable.append(prefix).append(" low priority ").append(task);
+	    else if (priority == PriorityType.HIGH) readable.append(prefix).append(" high priority ").append(task);
+	    else readable.append(prefix).append(" normal priority ").append(task);
 
 	    if (date != null) readable.append(" due ").append(DateUtil.readableDate(date));
 	    
