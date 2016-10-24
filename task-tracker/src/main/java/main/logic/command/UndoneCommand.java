@@ -1,5 +1,6 @@
 package main.logic.command;
 
+
 import main.model.task.UniqueTaskList.TaskNotFoundException;
 
 public class UndoneCommand extends Command{
@@ -27,7 +28,9 @@ public class UndoneCommand extends Command{
         try {
             //Remove comment after Model component adds a setIsDone() method which changes the value of 
             //it isDone attribute.
+
             model.getTaskfromIndex(taskIndex).setIsUnDone();
+
             return new CommandResult(String.format(MESSAGE_SUCCESS, taskIndex));
 
         } catch (IndexOutOfBoundsException ie) {
@@ -36,6 +39,7 @@ public class UndoneCommand extends Command{
         catch (TaskNotFoundException pnfe) {
             return new CommandResult("Task does not exist in task-tracker");
         }
+
     }
     
 }
