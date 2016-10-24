@@ -184,15 +184,15 @@ public class MainParser {
         List<Date> dates = info.getMiddle();
         PriorityType priority = null;
         TaskType type = null;
-        
-        for (String param: left.split(" ")) {
+     
+        for (String param: left.trim().split(" ")) {
             if (ReferenceList.priorityDictionary.containsKey(param) && priority == null) {
                 priority = ReferenceList.priorityDictionary.get(param);
             }
             else if (ReferenceList.typeDictionary.containsKey(param) && type == null) {
                 type = ReferenceList.typeDictionary.get(param);
             }
-            else {
+            else if (!param.trim().equals("")) {
                 return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_PARAMETERS,"ListCommand", ListCommand.MESSAGE_USAGE));
             }           
         }    

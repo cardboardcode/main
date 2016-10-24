@@ -40,19 +40,15 @@ public class TimeParser {
         }
 
         DateGroup group = groups.get(0);
-
-        // if suffix of date is not a whitespace. Most likely incorrectly parsed
-        try {
-            if (!Character.isWhitespace(group.getSuffix(1).charAt(0))) { 
-                return Triple.of(raw_input, new ArrayList<Date>(), ImmutableList.of(true, false));
-            }
-        } catch (StringIndexOutOfBoundsException e) {} // happens when the date is at the start of the string
+        
+        if(!isValidDate(raw_input, group)) return Triple.of(raw_input, new ArrayList<Date>(), ImmutableList.of(true, false));
                 
         correctTime(group);
 
         List<Date> dates = group.getDates();
         
         boolean isInferred = group.isTimeInferred();
+        
         if (isInferred) {
             for (int i = 0; i < dates.size(); i++) {
                 dates.set(i, setDefaultTime(dates.get(i)));
@@ -62,6 +58,19 @@ public class TimeParser {
         String processed = getProcessedString(raw_input, group);
         
         return Triple.of(processed.trim(),dates,ImmutableList.of(isInferred,group.isRecurring()));
+    }
+
+    private static boolean isValidDate(String raw_input, DateGroup group) {
+        // if suffix of date is not a whitespace. Most likely incorrectly parsed
+        try {
+            if (!Character.isWhitespace(group.getSuffix(1).charAt(0))) {
+                logger.info("invalid date");
+                return false;
+            }
+        } catch (StringIndexOutOfBoundsException e) {
+            return true; // happens when the date is at the start of the string
+        } 
+        return true;
     }
     
     /*
