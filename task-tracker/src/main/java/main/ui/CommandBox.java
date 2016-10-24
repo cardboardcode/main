@@ -180,6 +180,7 @@ public class CommandBox extends UiPart {
     //@@author A0144132W   
     @FXML
     public void handleKeyReleased(KeyEvent event) {
+        if (!event.getCode().isDigitKey() && !event.getCode().isLetterKey() && event.getCode() != KeyCode.BACK_SPACE && event.getCode() != KeyCode.DELETE) return;
         String input = commandTextField.getText();
         EventsCenter.getInstance().post(new KeyPressEvent(event.getCode(), input));
     }
@@ -195,7 +196,6 @@ public class CommandBox extends UiPart {
     
     @Subscribe
     public void handleAutoComplete(AutoCompleteEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event, "autocomplete current command"));
         commandTextField.replaceText(event.getStart(), event.getEnd(), event.getSuggestion());
     }
     
