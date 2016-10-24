@@ -64,6 +64,12 @@ public class TaskTracker implements ReadOnlyTaskTracker{
             throw new UniqueTaskList.TaskNotFoundException();
         }
     }
+    
+    public void doneTask(ReadOnlyTask target) throws UniqueTaskList.TaskNotFoundException {
+        if (!tasks.complete(target)) {
+            throw new UniqueTaskList.TaskNotFoundException();
+        }
+    }
 
     public void addTask(Task task) throws DuplicateTaskException {
         tasks.add(task);        

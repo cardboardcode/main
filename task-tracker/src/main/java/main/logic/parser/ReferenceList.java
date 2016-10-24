@@ -1,40 +1,42 @@
+//@@author A0144132W
 package main.logic.parser;
 
 import java.util.Map;
 import com.google.common.collect.*;
 import main.logic.command.*;
 import main.model.task.PriorityType;
+import main.model.task.TaskType;
 
 public class ReferenceList {
     
     public static final Map<String,String> commandsDictionary = ImmutableMap.<String, String>builder()
             .put("add", AddCommand.COMMAND_WORD)
-            .put("create",AddCommand.COMMAND_WORD)
-            .put("edit","edit")
-            .put("change", "edit")
-            .put("delete","delete")                        
-            .put("del","delete")
-            .put("remove","delete")
-            .put("rm","delete")
-            .put("rem","delete")
-            .put("trash","delete")
-            .put("done","finish")
-            .put("finish","finish")
-            .put("finished","finish")
-            .put("complete","finish")               
-            .put("completed","finish")
-            .put("mark","finish")
-            .put("undo","undo")
-            .put("redo","redo")
-            .put("exit","exit")
-            .put("close","exit")
+            .put("create", AddCommand.COMMAND_WORD)
+            .put("edit", EditCommand.COMMAND_WORD)
+            .put("change", EditCommand.COMMAND_WORD)
+            .put("delete", DeleteCommand.COMMAND_WORD)                        
+            .put("del", DeleteCommand.COMMAND_WORD)
+            .put("remove", DeleteCommand.COMMAND_WORD)
+            .put("rm", DeleteCommand.COMMAND_WORD)
+            .put("rem", DeleteCommand.COMMAND_WORD)
+            .put("trash", DeleteCommand.COMMAND_WORD)
+            .put("done", DoneCommand.COMMAND_WORD)
+            .put("finish", DoneCommand.COMMAND_WORD)
+            .put("finished", DoneCommand.COMMAND_WORD)
+            .put("complete", DoneCommand.COMMAND_WORD)               
+            .put("completed", DoneCommand.COMMAND_WORD)
+            .put("mark", DoneCommand.COMMAND_WORD)
+            .put("undo", UndoCommand.COMMAND_WORD)
+            .put("redo", RedoCommand.COMMAND_WORD)
+            .put("exit", ExitCommand.COMMAND_WORD)
+            .put("close", ExitCommand.COMMAND_WORD)
             .put("find","find")
             .put("search","find")
-            .put("list", "list")
-            .put("show", "list")
-            .put("help", "help")
-            .put("T.T", "help")
-            .put("clear", "clear")
+            .put("list", ListCommand.COMMAND_WORD)
+            .put("show", ListCommand.COMMAND_WORD)
+            .put("help", HelpCommand.COMMAND_WORD)
+            .put("T.T", HelpCommand.COMMAND_WORD)
+            .put("clear", ClearCommand.COMMAND_WORD)
             .build(); 
     
     public static final Map<String,PriorityType> priorityDictionary = ImmutableMap.<String, PriorityType>builder()
@@ -47,13 +49,13 @@ public class ReferenceList {
             .put("low", PriorityType.LOW)
             .build();
     
-    public static final Map<String,String> typeDictionary = ImmutableMap.<String, String>builder()
-            .put("event", "event")
-            .put("events", "event")
-            .put("deadline", "deadline")
-            .put("deadlines", "deadline")
-            .put("floating", "floating")
-            .put("floatings", "floating")
+    public static final Map<String,TaskType> typeDictionary = ImmutableMap.<String, TaskType>builder()
+            .put("event", TaskType.EVENT)
+            .put("events", TaskType.EVENT)
+            .put("deadline", TaskType.DEADLINE)
+            .put("deadlines", TaskType.DEADLINE)
+            .put("floating", TaskType.FLOATING)
+            .put("floatings", TaskType.FLOATING)
             .build();
             
     public ReferenceList() {}
