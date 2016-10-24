@@ -1,22 +1,22 @@
 package main.logic.command;
 
-import main.model.task.Task;
+
 import main.model.task.UniqueTaskList.TaskNotFoundException;
 
-public class DoneCommand extends Command{
-	
-	public static final String COMMAND_WORD = "done";
+public class UndoneCommand extends Command{
+    
+    public static final String COMMAND_WORD = "undone";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Indicates a task to be done\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes the done indication of an existing task\n"
             + "Parameters: <task index>\n"
             + "Eg: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SUCCESS = "The following task is done: %1$s";
-    public static final String MESSAGE_TASK_ALREADY_DONE = "This task is already marked as done";
+    public static final String MESSAGE_SUCCESS = "The following task is undone: %1$s";
+    public static final String MESSAGE_TASK_ALREADY_DONE = "This task is already not marked as done";
     
     private int taskIndex;
 
-    public DoneCommand(int targetVisibleIndex) {
+    public UndoneCommand(int targetVisibleIndex) {
         super(targetVisibleIndex);
         
         this.taskIndex = targetVisibleIndex;
@@ -26,10 +26,10 @@ public class DoneCommand extends Command{
     @Override
     public CommandResult execute() {
         try {
-        	//Remove comment after Model component adds a setIsDone() method which changes the value of 
-        	//it isDone attribute.
+            //Remove comment after Model component adds a setIsDone() method which changes the value of 
+            //it isDone attribute.
 
-            model.getTaskfromIndex(taskIndex).setIsDone();
+            model.getTaskfromIndex(taskIndex).setIsUnDone();
 
             return new CommandResult(String.format(MESSAGE_SUCCESS, taskIndex));
 
@@ -39,6 +39,7 @@ public class DoneCommand extends Command{
         catch (TaskNotFoundException pnfe) {
             return new CommandResult("Task does not exist in task-tracker");
         }
-    }
 
+    }
+    
 }

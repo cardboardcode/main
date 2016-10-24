@@ -13,35 +13,48 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
 public class AddCommandTest extends TaskTrackerGuiTest {
-/*
+
     @Test
     public void add() {
-        //add one task
+//        //add one task
         TestTask[] currentList = td.getTypicalTasks();
 //        TestTask taskToAdd = td.event2;
 //        assertAddSuccess(taskToAdd, currentList);
 //        currentList = TestUtil.addTasksToList(currentList, taskToAdd);
 
-        //add another task
+//        //add another task
         TestTask taskToAdd = TypicalTestTasks.floating3;
         assertAddSuccess(taskToAdd, currentList);
         currentList = TestUtil.addTasksToList(currentList, taskToAdd);
         
-        //add duplicate person
-        commandBox.runCommand(TypicalTestTasks.event2.getAddCommand());
+////        //add duplicate floating task
+        commandBox.runCommand(TypicalTestTasks.floating2.getAddCommand());
         assertResultMessage(AddCommand.MESSAGE_DUPLICATE_TASK);
         assertTrue(taskListPanel.isListMatching(currentList));
-
-        //add to empty list
+//        
+////        add duplicate event task
+////        commandBox.runCommand(TypicalTestTasks.event2.getAddCommand());
+////        System.out.println(TypicalTestTasks.event2.getDeadline());
+////        System.out.println(TypicalTestTasks.event2.getStartTime());
+////        System.out.println(TypicalTestTasks.event2.getEndTime());
+////        assertResultMessage(AddCommand.MESSAGE_DUPLICATE_TASK);
+////        assertTrue(taskListPanel.isListMatching(currentList));
+        
+        //add duplicate deadline task
+//        commandBox.runCommand(TypicalTestTasks.deadline2.getAddCommand());
+//        assertResultMessage(AddCommand.MESSAGE_DUPLICATE_TASK);
+//        assertTrue(taskListPanel.isListMatching(currentList));
+        
+//        //add to empty list
         commandBox.runCommand("clear");
         assertAddSuccess(TypicalTestTasks.floating1);
 
-        
-        //invalid command
+//        
+//        //invalid command
         commandBox.runCommand("adds wrongcommandinput");
         assertResultMessage("Invalid command format! \nUnknown command");
     }
-*/
+
     private void assertAddSuccess(TestTask taskToAdd, TestTask... currentList) {
         commandBox.runCommand(taskToAdd.getAddCommand());
 

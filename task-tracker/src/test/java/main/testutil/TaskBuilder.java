@@ -14,7 +14,7 @@ public class TaskBuilder {
     private TestTask task;
 
     public TaskBuilder() {
-        this.task = new TestTask();
+        this.task = new TestTask("", PriorityType.NORMAL);
         this.task.setType(TaskType.FLOATING);
     }
 
@@ -24,15 +24,15 @@ public class TaskBuilder {
     }
     
     public TaskBuilder withDate(Date date) throws IllegalValueException {
-        this.task.setDate1(date);
+        this.task.setDeadline(date);
         this.task.setType(TaskType.DEADLINE);
         return this;
     }
 
 
     public TaskBuilder withDates(Date date1, Date date2) throws IllegalValueException {
-        this.task.setDate1(date1);
-        this.task.setDate2(date2);
+        this.task.setStartTime(date1);
+        this.task.setEndTime(date2);
         this.task.setType(TaskType.EVENT);
         return this;
     }
