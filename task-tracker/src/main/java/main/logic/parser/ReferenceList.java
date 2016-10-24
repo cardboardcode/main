@@ -2,6 +2,8 @@
 package main.logic.parser;
 
 import java.util.Map;
+import java.util.Set;
+
 import com.google.common.collect.*;
 import main.logic.command.*;
 import main.model.task.PriorityType;
@@ -57,7 +59,12 @@ public class ReferenceList {
             .put("floating", TaskType.FLOATING)
             .put("floatings", TaskType.FLOATING)
             .build();
-            
-    public ReferenceList() {}
-
+    
+    public static final Set<String> doneSet = ImmutableSet.<String>builder()
+            .add("done")
+            .add("complete")
+            .add("completed")
+            .add("finish")
+            .add("finished")
+            .build();
 }
