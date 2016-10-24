@@ -184,6 +184,7 @@ public class MainParser {
         List<Date> dates = info.getMiddle();
         PriorityType priority = null;
         TaskType type = null;
+        boolean isDone = false;
      
         for (String param: left.trim().split(" ")) {
             if (ReferenceList.priorityDictionary.containsKey(param) && priority == null) {
@@ -192,13 +193,17 @@ public class MainParser {
             else if (ReferenceList.typeDictionary.containsKey(param) && type == null) {
                 type = ReferenceList.typeDictionary.get(param);
             }
+            else if (ReferenceList.doneSet.contains(param)) {
+                isDone = true;
+            }
+            
             else if (!param.trim().equals("")) {
                 return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_PARAMETERS,"ListCommand", ListCommand.MESSAGE_USAGE));
             }           
         }    
         
-        if (dates.size() > 0) return new ListCommand(Triple.of(priority, dates.get(0), type));
-        else return new ListCommand(Triple.of(priority, null, type));
+        if (dates.size() > 0) return new ListCommand(Triple.of(priority, dates.get(0), type), isDone);
+        else return new ListCommand(Triple.of(priority, null, type), isDone);
     }
 
     private Task extractTask(String raw) throws MultiplePriorityException, IllegalArgumentException {

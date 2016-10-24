@@ -91,7 +91,7 @@ public interface Model {
     int getTotalNum();
 
     /** Updates the FilteredList based on criterias given **/
-    void updateFilteredTaskList(Triple<PriorityType, Date, TaskType> params);
+    void updateFilteredTaskList(Triple<PriorityType, Date, TaskType> params, boolean isDone);
 
     /** Sorts the list based on criterias given **/
     void sortBy(SortCriteria criteria);

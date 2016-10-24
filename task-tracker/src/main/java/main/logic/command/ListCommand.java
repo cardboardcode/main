@@ -24,23 +24,25 @@ public class ListCommand extends Command {
     PriorityType priority;
     Date date;
     TaskType type;
-    boolean toShowAll = false;
+    boolean isDefault = false;
+    boolean isDone = false;
     
     public ListCommand() {
-        toShowAll = true;
+        isDefault = true;
     }
       
-    public ListCommand(Triple<PriorityType, Date, TaskType> parameters) {
+    public ListCommand(Triple<PriorityType, Date, TaskType> parameters, boolean isDone) {
         priority = parameters.getLeft();
         date = parameters.getMiddle();
         type = parameters.getRight();
+        this.isDone = isDone;
     }
 
 	@Override
 	public CommandResult execute() {
-	       
-	    model.updateFilteredListToShowAllPending();
-	    if (!toShowAll) model.updateFilteredTaskList(Triple.of(priority, date, type));
+
+	    if (isDefault) model.updateFilteredListToShowAllPending();
+	    else model.updateFilteredTaskList(Triple.of(priority, date, type), isDone);
 	    
 	    return new CommandResult(String.format(MESSAGE_SUCCESS, getReadableCriteria()));    
 	}

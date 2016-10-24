@@ -145,35 +145,35 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public int getNumToday() {
         Expression original = current;
-        updateFilteredTaskList(Triple.of(null, DateUtil.getToday(), null));
+        updateFilteredTaskList(Triple.of(null, DateUtil.getToday(), null), false);
         return getSizeAndReset(original);
     }
     
     @Override
     public int getNumTmr() {
         Expression original = current;
-        updateFilteredTaskList(Triple.of(null, DateUtil.getTmr(), null));
+        updateFilteredTaskList(Triple.of(null, DateUtil.getTmr(), null), false);
         return getSizeAndReset(original);
     }
     
     @Override
     public int getNumEvent() {
         Expression original = current;
-        updateFilteredTaskList(Triple.of(null, null, TaskType.EVENT));
+        updateFilteredTaskList(Triple.of(null, null, TaskType.EVENT), false);
         return getSizeAndReset(original);  
     }
     
     @Override
     public int getNumDeadline() {
         Expression original = current;
-        updateFilteredTaskList(Triple.of(null, null, TaskType.DEADLINE));
+        updateFilteredTaskList(Triple.of(null, null, TaskType.DEADLINE), false);
         return getSizeAndReset(original);         
     }
     
     @Override
     public int getNumFloating() {
         Expression original = current;
-        updateFilteredTaskList(Triple.of(null, null, TaskType.FLOATING));
+        updateFilteredTaskList(Triple.of(null, null, TaskType.FLOATING), false);
         return getSizeAndReset(original); 
     }
     
@@ -219,8 +219,10 @@ public class ModelManager extends ComponentManager implements Model {
     
     
     @Override
-    public void updateFilteredTaskList(Triple<PriorityType, Date, TaskType> params) {
+    public void updateFilteredTaskList(Triple<PriorityType, Date, TaskType> params, boolean isDone) {
         Expression filter = new PredicateExpression();
+        
+        filter.and(new DoneQualifier(isDone));
         
         if (params.getLeft() != null) filter.and(new PriorityQualifier(params.getLeft()));
         if (params.getMiddle() != null) filter.and(new DateQualifier(params.getMiddle()));        
