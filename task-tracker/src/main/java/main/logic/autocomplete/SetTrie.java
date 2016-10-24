@@ -1,4 +1,4 @@
-package main.logic.realtime;
+package main.logic.autocomplete;
 
 import java.util.ArrayList;
 import java.util.List;
