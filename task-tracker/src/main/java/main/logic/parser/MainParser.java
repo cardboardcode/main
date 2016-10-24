@@ -1,7 +1,9 @@
+//@@author A0144132W
 package main.logic.parser;
 
 import main.commons.core.LogsCenter;
 import main.commons.core.Messages;
+import main.commons.exceptions.IllegalValueException;
 import main.commons.exceptions.MultiplePriorityException;
 
 import static main.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -17,10 +19,12 @@ import org.apache.commons.lang3.tuple.Triple;
 
 import main.model.task.PriorityType;
 import main.model.task.Task;
+import main.model.task.TaskType;
 import main.logic.command.AddCommand;
 import main.logic.command.ClearCommand;
 import main.logic.command.Command;
 import main.logic.command.DeleteCommand;
+import main.logic.command.DoneCommand;
 import main.logic.command.EditCommand;
 import main.logic.command.ExitCommand;
 import main.logic.command.HelpCommand;
@@ -33,7 +37,6 @@ public class MainParser {
     
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<task>.*)");
     private static final Pattern EDIT_FORMAT = Pattern.compile("(?<index>\\d)(?<task>.*)");
-    private static final Pattern PRIORITY_FORMAT = Pattern.compile("(?<task>[^/]+)(?<priority>(-h|-m|-l)?)");
     private static final Logger logger = LogsCenter.getLogger(MainParser.class);
 
        
@@ -68,8 +71,8 @@ public class MainParser {
                 return new HelpCommand();
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
-            case "finish":
-                return prepareDelete(task);
+            case DoneCommand.COMMAND_WORD:
+                return prepareDone(task);
             case ClearCommand.COMMAND_WORD:
                 return new ClearCommand();
             case UndoCommand.COMMAND_WORD:
@@ -124,18 +127,44 @@ public class MainParser {
     }
     
     public Command prepareDelete(String input) {
-        if (input.trim() == "") return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX));
-        
         int index;
         
         try {
-            index = Integer.valueOf(input.trim()) - 1;
+            index = extractValidIndex(input);
         } catch (NumberFormatException e) {
             return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
-        }
-
+        } catch (IllegalValueException e) {
+            return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, e.getMessage()));
+        } 
+   
         return new DeleteCommand(index);
     }
+
+    
+    public Command prepareDone(String input) {
+        int index;
+        
+        try {
+            index = extractValidIndex(input);
+        } catch (NumberFormatException e) {
+            return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DoneCommand.MESSAGE_USAGE));
+        } catch (IllegalValueException e) {
+            return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, e.getMessage()));
+        } 
+   
+        return new DoneCommand(index);
+    }
+
+    private int extractValidIndex(String input) throws IllegalValueException, NumberFormatException{
+        if (input.trim() == "") throw new IllegalValueException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX); 
+        
+        int index;
+        
+        index = Integer.valueOf(input.trim()) - 1;
+
+        return index;
+    }
+    
   //@@author A0142686X
     public Command prepareUndo() {
         return new UndoCommand();
@@ -144,7 +173,8 @@ public class MainParser {
     public Command prepareRedo() {
         return new RedoCommand();
     }
-    //@@author
+    
+    //@@author A0144132W
     public Command prepareList(String input) {
         if (input.trim().equals("")) return new ListCommand();
         
@@ -153,22 +183,27 @@ public class MainParser {
         String left = info.getLeft();
         List<Date> dates = info.getMiddle();
         PriorityType priority = null;
-        String type = null;
-        
-        for (String param: left.split(" ")) {
+        TaskType type = null;
+        boolean isDone = false;
+     
+        for (String param: left.trim().split(" ")) {
             if (ReferenceList.priorityDictionary.containsKey(param) && priority == null) {
                 priority = ReferenceList.priorityDictionary.get(param);
             }
             else if (ReferenceList.typeDictionary.containsKey(param) && type == null) {
                 type = ReferenceList.typeDictionary.get(param);
             }
-            else {
+            else if (ReferenceList.doneSet.contains(param)) {
+                isDone = true;
+            }
+            
+            else if (!param.trim().equals("")) {
                 return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_PARAMETERS,"ListCommand", ListCommand.MESSAGE_USAGE));
             }           
         }    
         
-        if (dates.size() > 0) return new ListCommand(Triple.of(priority, dates.get(0), type));
-        else return new ListCommand(Triple.of(priority, null, type));
+        if (dates.size() > 0) return new ListCommand(Triple.of(priority, dates.get(0), type), isDone);
+        else return new ListCommand(Triple.of(priority, null, type), isDone);
     }
 
     private Task extractTask(String raw) throws MultiplePriorityException, IllegalArgumentException {
@@ -188,17 +223,17 @@ public class MainParser {
         }
         
         if (dates.isEmpty()) {
-            return new Task(description, priority);
+            return (new Task(description, priority)).setIsInferred(isInferred);
         }
         else if (dates.size() == 1) { 
-            return new Task(description,dates.get(0), priority);
+            return new Task(description,dates.get(0), priority).setIsInferred(isInferred);
         }
         // compare dates if there are 2 dates
         else {
             if (dates.get(0).before(dates.get(1)))
-                return new Task(description,dates.get(0),dates.get(1), priority);
+                return new Task(description,dates.get(0),dates.get(1), priority).setIsInferred(isInferred);
             else 
-                return new Task(description,dates.get(1),dates.get(0), priority);
+                return new Task(description,dates.get(1),dates.get(0), priority).setIsInferred(isInferred);
         }
     }
     

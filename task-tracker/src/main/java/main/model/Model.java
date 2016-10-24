@@ -1,6 +1,7 @@
 package main.model;
 
 import main.model.task.Task;
+import main.model.task.TaskType;
 import main.model.filter.SortCriteria;
 import main.model.filter.SortFilter;
 import main.model.task.PriorityType;
@@ -29,7 +30,10 @@ public interface Model {
     ReadOnlyTaskTracker getTaskTracker();
 
     /** Deletes the given person. */
-    void deleteTask(ReadOnlyTask target) throws UniqueTaskList.TaskNotFoundException;
+    void deleteTask(int index) throws UniqueTaskList.TaskNotFoundException;
+    
+    /** Marks the task at the given index as done **/
+    void doneTask(int index) throws UniqueTaskList.TaskNotFoundException;
 
     /** Adds the given person */
     void addTask(Task task) throws UniqueTaskList.DuplicateTaskException;
@@ -58,13 +62,16 @@ public interface Model {
     /** Clears Tasks upon undo **/
     void clearTaskUndoRedo(ArrayList<Task> tasks);
     
-    //@@author
-    /** Returns the filtered person list as an {@code UnmodifiableObservableList<ReadOnlyPerson>} */
+    //@@author A0144132W
+    /** Returns the filtered task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
     UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList();
 
-    /** Updates the filter of the filtered person list to show all persons */
-    void updateFilteredListToShowAll();
+    /** Updates the filter of the filtered task list to show all pending tasks */
+    void updateFilteredListToShowAllPending();
 
+    /** Updates the filter of the filtered task list to show all completed tasks */    
+    void updateFilteredListToShowAllDone();
+    
     /** Returns the number of tasks today **/
     int getNumToday();
 
@@ -84,13 +91,14 @@ public interface Model {
     int getTotalNum();
 
     /** Updates the FilteredList based on criterias given **/
-    void updateFilteredTaskList(Triple<PriorityType, Date, String> params);
+    void updateFilteredTaskList(Triple<PriorityType, Date, TaskType> params, boolean isDone);
 
     /** Sorts the list based on criterias given **/
     void sortBy(SortCriteria criteria);
 
     /** THe default sorting done at the start **/
     void sortDefault();
+
 
 
 

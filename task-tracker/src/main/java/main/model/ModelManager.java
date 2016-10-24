@@ -1,3 +1,4 @@
+//@@author A0144132W
 // adapted from addressbook level 4
 
 package main.model;
@@ -35,6 +36,7 @@ import main.model.filter.SortFilter;
 import main.model.task.PriorityType;
 import main.model.task.ReadOnlyTask;
 import main.model.task.Task;
+import main.model.task.TaskType;
 import main.model.task.UniqueTaskList.DuplicateTaskException;
 import main.model.task.UniqueTaskList.TaskNotFoundException;
 
@@ -47,7 +49,7 @@ public class ModelManager extends ComponentManager implements Model {
     TaskTracker taskTracker;
     UserPrefs userPref;
     private final FilteredList<Task> filteredTasks;
-    private SortedList<Task> sortedTasks;
+    private final SortedList<Task> sortedTasks;
     Expression current;
     
     public ModelManager(TaskTracker taskTracker, UserPrefs userPref) {
@@ -71,7 +73,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetData(ReadOnlyTaskTracker newData) {
         if(newData.getTaskList().size()==0){
-            List<Task> prevTasks = (List<Task>)(List<?>)taskTracker.getTaskList();
+            List<ReadOnlyTask> prevTasks = taskTracker.getTaskList();
             addToUndo(UndoCommand.CLR, prevTasks.toArray(new Task [prevTasks.size()]));
         }
         taskTracker.resetData(newData);
@@ -88,17 +90,26 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
+    public synchronized void deleteTask(int index) throws TaskNotFoundException {
+        ReadOnlyTask target = getTaskfromIndex(index);
         taskTracker.removeTask(target);
         indicateTaskTrackerChanged();
         addToUndo(UndoCommand.DEL, (Task)target);
     }
     
     @Override
+    public synchronized void doneTask(int index) throws TaskNotFoundException {
+        ReadOnlyTask target = getTaskfromIndex(index);
+        taskTracker.doneTask(target);
+        indicateTaskTrackerChanged();
+        addToUndo(UndoCommand.DONE, (Task)target);
+    }
+    
+    @Override
     public synchronized void editTask(int index, Task newtask) throws TaskNotFoundException, DuplicateTaskException {
         addToUndo(UndoCommand.EDIT, getTaskfromIndex(index), newtask);  //NEED TO CHECK ORDER
         taskTracker.editTask(index, newtask);
-        updateFilteredListToShowAll();
+        updateFilteredListToShowAllPending();
         indicateTaskTrackerChanged();
         
     }
@@ -113,7 +124,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addTask(Task task) throws DuplicateTaskException {
         taskTracker.addTask(task);
-        updateFilteredListToShowAll();
+        updateFilteredListToShowAllPending();
         indicateTaskTrackerChanged();
         addToUndo(UndoCommand.ADD, task);
     }
@@ -134,48 +145,48 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public int getNumToday() {
         Expression original = current;
-        updateFilteredTaskList(Triple.of(null, DateUtil.getToday(), null));
+        updateFilteredTaskList(Triple.of(null, DateUtil.getToday(), null), false);
         return getSizeAndReset(original);
     }
     
     @Override
     public int getNumTmr() {
         Expression original = current;
-        updateFilteredTaskList(Triple.of(null, DateUtil.getTmr(), null));
+        updateFilteredTaskList(Triple.of(null, DateUtil.getTmr(), null), false);
         return getSizeAndReset(original);
     }
     
     @Override
     public int getNumEvent() {
         Expression original = current;
-        updateFilteredTaskList(Triple.of(null, null, "event"));
+        updateFilteredTaskList(Triple.of(null, null, TaskType.EVENT), false);
         return getSizeAndReset(original);  
     }
     
     @Override
     public int getNumDeadline() {
         Expression original = current;
-        updateFilteredTaskList(Triple.of(null, null, "deadline"));
+        updateFilteredTaskList(Triple.of(null, null, TaskType.DEADLINE), false);
         return getSizeAndReset(original);         
     }
     
     @Override
     public int getNumFloating() {
         Expression original = current;
-        updateFilteredTaskList(Triple.of(null, null, "floating"));
+        updateFilteredTaskList(Triple.of(null, null, TaskType.FLOATING), false);
         return getSizeAndReset(original); 
     }
     
     @Override 
     public int getTotalNum() {
         Expression original = current;
-        updateFilteredListToShowAll();
+        updateFilteredListToShowAllPending();
         return getSizeAndReset(original);
     }
 
     private int getSizeAndReset(Expression original) {
         int num = filteredTasks.size();
-        if (original == null) updateFilteredListToShowAll();
+        if (original == null) updateFilteredListToShowAllPending();
         else updateFilteredTaskList(original);
         return num;
     }
@@ -185,20 +196,33 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList() {
-//        return new UnmodifiableObservableList<>(filteredTasks);
-        return new UnmodifiableObservableList<>(sortedTasks);
-        
+        return new UnmodifiableObservableList<>(sortedTasks);        
     }
 
     @Override
-    public void updateFilteredListToShowAll() {
-        current = null;
-        filteredTasks.setPredicate(null);
+    public void updateFilteredListToShowAllPending() {
+        Expression filter = new PredicateExpression();
+        filter.and(new DoneQualifier(false));
+        
+        updateFilteredTaskList(filter);
+        current = filter;
     }
     
     @Override
-    public void updateFilteredTaskList(Triple<PriorityType, Date, String> params) {
+    public void updateFilteredListToShowAllDone() {
         Expression filter = new PredicateExpression();
+        filter.and(new DoneQualifier(true));
+        
+        updateFilteredTaskList(filter);
+        current = filter;
+    }
+    
+    
+    @Override
+    public void updateFilteredTaskList(Triple<PriorityType, Date, TaskType> params, boolean isDone) {
+        Expression filter = new PredicateExpression();
+        
+        filter.and(new DoneQualifier(isDone));
         
         if (params.getLeft() != null) filter.and(new PriorityQualifier(params.getLeft()));
         if (params.getMiddle() != null) filter.and(new DateQualifier(params.getMiddle()));        
@@ -209,6 +233,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
     
     public void updateFilteredTaskList(Expression expression) {
+        current = expression;
         filteredTasks.setPredicate(expression::satisfies);
     }
     
@@ -280,24 +305,20 @@ public class ModelManager extends ComponentManager implements Model {
     }
     
     private class TypeQualifier implements Qualifier {
-        private String type;
+        private TaskType type;
 
-        TypeQualifier(String type) {
+        TypeQualifier(TaskType type) {
             this.type = type;
         }
 
         @Override
         public boolean run(ReadOnlyTask task) {
-            type = type.toLowerCase();
-            if (type.equals("floating")) return (task.getIsFloating());
-            else if (type.equals("event")) return (task.getIsEvent());
-            else if (type.equals("deadline")) return (!task.getIsFloating() && !task.getIsEvent());
-            else return false;
+            return task.getType() == type;
         }
 
         @Override
         public String toString() {
-            return type;
+            return type.name();
         }
     }
     
@@ -318,6 +339,25 @@ public class ModelManager extends ComponentManager implements Model {
             return priority.toString();
         }
     }
+    
+    private class DoneQualifier implements Qualifier {
+        private boolean isDone;
+
+        DoneQualifier(boolean isDone) {
+            this.isDone = isDone;
+        }
+
+        @Override
+        public boolean run(ReadOnlyTask task) {
+            return isDone == task.getIsDone();
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(isDone);
+        }        
+        
+    }
 //@@author A0142686X
     
     /**
@@ -335,7 +375,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addTaskUndoRedo(Task task) throws DuplicateTaskException {
         taskTracker.addTask(task);
-        updateFilteredListToShowAll();
+        updateFilteredListToShowAllPending();
         indicateTaskTrackerChanged();
         
     }
@@ -356,7 +396,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void editTaskUndoRedo(int index, Task newTask) throws DuplicateTaskException {
         taskTracker.editTask(index, newTask);
-        updateFilteredListToShowAll();
+        updateFilteredListToShowAllPending();
         indicateTaskTrackerChanged();
         
     }

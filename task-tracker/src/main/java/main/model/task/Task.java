@@ -15,8 +15,8 @@ public class Task implements ReadOnlyTask {
     private boolean isRecurring = false;
     private PriorityType priority = PriorityType.NORMAL; //default priority
     private TaskType type;
-    private boolean isDone;
-    private boolean isInferred;
+    private boolean isDone = false;
+    private boolean isInferred = false;
    
     //Floating
     public Task(String message, PriorityType priority) {
@@ -87,7 +87,7 @@ public class Task implements ReadOnlyTask {
     
     @Override
     public String getStartTimeString() {
-		return DateUtil.readableDate(startTime);
+		return DateUtil.readableDate(startTime, isInferred);
 	}
     
     @Override
@@ -97,7 +97,7 @@ public class Task implements ReadOnlyTask {
     
     @Override
     public String getEndTimeString() {
-		return DateUtil.readableDate(startTime);
+		return DateUtil.readableDate(endTime, isInferred);
 	}
     
     @Override
@@ -107,7 +107,7 @@ public class Task implements ReadOnlyTask {
     
     @Override
     public String getDeadlineString() {
-		return DateUtil.readableDate(deadline);	
+		return DateUtil.readableDate(deadline, isInferred);	
 	}
     @Override
     public boolean getIsFloating(){
@@ -204,8 +204,9 @@ public class Task implements ReadOnlyTask {
 	   return this.isDone;
     }
     
-    public void setIsInferred(boolean isInferred){
+    public Task setIsInferred(boolean isInferred){
     	this.isInferred = isInferred;
+    	return this;
     }
     
     /*
@@ -236,24 +237,23 @@ public class Task implements ReadOnlyTask {
         if (this == other) return true;
         
         else if (other instanceof Task) {
-        	if(this.type.equals(TaskType.FLOATING)){ 
-        		return (this.message.equals(((Task) other).message)) 
-        		&& this.priority.equals(((Task) other).priority);
+            boolean basic = this.message.equals(((Task) other).message) 
+                        && this.priority.equals(((Task) other).priority) 
+//                        && this.isInferred == ((Task) other).isInferred
+                        && this.isDone == ((Task) other).isDone
+                        && this.isRecurring == ((Task) other).isRecurring;
+                                                                
+                        
+        	if(this.type == TaskType.FLOATING){ 
+        		return basic;
         	}
-        	
-        	else if(this.type.equals(TaskType.EVENT)) {
-        	    return (this.message.equals(((Task) other).message)
-        	 	&& this.startTime.equals(((Task) other).startTime)
-        		&& this.endTime.equals(((Task) other).endTime))
-        	   	&& this.priority.equals(((Task) other).priority);
+        	else if(this.type == TaskType.EVENT) {
+        	    return (basic && this.startTime.equals(((Task) other).startTime)
+        	    && this.endTime.equals(((Task) other).endTime));
         	}
-        	
         	else {
-                return (this.message.equals(((Task) other).message)
-                && this.deadline.equals(((Task) other).deadline))
-                && this.priority.equals(((Task) other).priority);
+                return (basic && this.deadline.equals(((Task) other).deadline));
         	}
-                
         }
         else return false;
     }
