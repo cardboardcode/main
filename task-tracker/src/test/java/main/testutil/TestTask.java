@@ -291,11 +291,12 @@ public class TestTask implements ReadOnlyTask {
         sb.append("add " + this.getMessage());
         
         if (type == TaskType.EVENT) {
-            sb.append(" " + getStartTimeString() + " ")
-              .append(getEndTimeString());
+            sb.append(" " + getStartTime() + " ")
+              .append("to")
+              .append(" " + getEndTime() + " ");
         }
         else if (type == TaskType.DEADLINE) {
-            sb.append(" " + getStartTimeString());
+            sb.append(" " + getDeadline());
         }
         
         String priorityInput;
