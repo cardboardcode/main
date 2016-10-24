@@ -4,6 +4,7 @@ import main.commons.core.EventsCenter;
 import main.commons.core.Messages;
 import main.commons.events.model.TaskTrackerChangedEvent;
 import main.commons.events.ui.ShowHelpRequestEvent;
+import main.commons.util.DateUtil;
 import main.logic.command.AddCommand;
 import main.logic.command.CommandResult;
 import main.logic.command.DeleteCommand;
@@ -17,23 +18,20 @@ import main.model.Model;
 import main.model.ModelManager;
 import main.model.ReadOnlyTaskTracker;
 import main.model.TaskTracker;
+import main.model.UserPrefs;
 import main.model.task.PriorityType;
-import main.model.task.TaskType;
 import main.model.task.ReadOnlyTask;
 import main.model.task.Task;
 import main.model.task.UniqueTaskList.DuplicateTaskException;
 import main.storage.StorageManager;
 
 import static main.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.*;
@@ -56,8 +54,8 @@ public class LogicManagerTest {
     private int targetedJumpIndex;
 
     @Subscribe
-    private void handleLocalModelChangedEvent(TaskTrackerChangedEvent abce) {
-        latestSavedTaskTracker = new TaskTracker(abce.data);
+    private void handleLocalModelChangedEvent(TaskTrackerChangedEvent ttce) {
+        latestSavedTaskTracker = new TaskTracker(ttce.data);
     }
 
     @Subscribe
@@ -72,6 +70,11 @@ public class LogicManagerTest {
         String tempTaskTrackerFile = saveFolder.getRoot().getPath() + "TempTaskTracker.xml";
         String tempPreferencesFile = saveFolder.getRoot().getPath() + "TempPreferences.json";
         logic = new LogicManager(model, new StorageManager(tempTaskTrackerFile, tempPreferencesFile));
+
+        EventsCenter.getInstance().registerHandler(this);
+
+        latestSavedTaskTracker = new TaskTracker(model.getTaskTracker()); // last saved assumed to be up to date
+        helpShown = false;
     }
     
     @After
@@ -80,7 +83,7 @@ public class LogicManagerTest {
 }
     
     private void assertCommandBehavior(String inputCommand, String expectedMessage) throws Exception {
-//        assertCommandBehavior(inputCommand, expectedMessage, new TaskList(), Collections.emptyList());
+        assertCommandBehavior(inputCommand, expectedMessage, new TaskTracker(), Collections.emptyList());
         String result = logic.execute(inputCommand).feedbackToUser;
         assertEquals(expectedMessage,result);
     }
@@ -167,16 +170,15 @@ public class LogicManagerTest {
                                        List<? extends ReadOnlyTask> expectedShownList) throws Exception {
 
         //Execute the command
-        CommandResult result = logic.execute(inputCommand);
+        CommandResult result = logic.execute(inputCommand);     
 
         //Confirm the ui display elements should contain the right data
-        System.out.println(inputCommand + "\n" + result.feedbackToUser);
         assertEquals(expectedMessage, result.feedbackToUser);
         assertEquals(expectedShownList, model.getFilteredTaskList());
 
         //Confirm the state of data (saved and in-memory) is as expected
         assertEquals(expectedTaskTracker, model.getTaskTracker());
-//        assertEquals(expectedTaskTracker, latestSavedTaskTracker);
+        assertEquals(expectedTaskTracker, latestSavedTaskTracker);
     }
     
       @Test
@@ -184,12 +186,12 @@ public class LogicManagerTest {
           
           TestDataHelper helper = new TestDataHelper();
           Task toBeAdded = helper.floating1();
-          TaskTracker expectedAB = helper.addToTaskTracker(toBeAdded);
-          
+          TaskTracker expectedTT = helper.addToTaskTracker(toBeAdded);
+                    
           assertCommandBehavior(helper.generateAddCommand(toBeAdded),
                   String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
-                  expectedAB,
-                  expectedAB.getTaskList());
+                  expectedTT,
+                  expectedTT.getTaskList());
       }
 
       @Test
@@ -197,32 +199,29 @@ public class LogicManagerTest {
           // setup expectations
           TestDataHelper helper = new TestDataHelper();
           Task toBeAdded = helper.floating1();
-          TaskTracker expectedAB = new TaskTracker();
-          expectedAB.addTask(toBeAdded);
-
-          // setup starting state
-          model.addTask(toBeAdded); // task already in internal address book
+          TaskTracker expectedTT = helper.addToTaskTracker(toBeAdded);
+          model.addTask(toBeAdded); // duplicate
 
           // execute command and verify result
           assertCommandBehavior(
                   helper.generateAddCommand(toBeAdded),
                   AddCommand.MESSAGE_DUPLICATE_TASK,
-                  expectedAB,
-                  expectedAB.getTaskList());
+                  expectedTT,
+                  expectedTT.getTaskList());
 
       }      
       
-      /*
+      
       @Test
       public void execute_add_deadline_natural_date_successful() throws Exception {
           TestDataHelper helper = new TestDataHelper();
-          Task toBeAdded = helper.deadline_natural();
-          TaskTracker expectedAB = helper.addToTaskTracker(toBeAdded);
+          Task toBeAdded = helper.deadline_natural_tmr_inferred();
+          TaskTracker expectedTT = helper.addToTaskTracker(toBeAdded);
           
           assertCommandBehavior(("add " + toBeAdded.getMessage() + " tmr"),
                   String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
-                  expectedAB,
-                  expectedAB.getTaskList());          
+                  expectedTT,
+                  expectedTT.getTaskList());          
       }
       
      
@@ -231,14 +230,61 @@ public class LogicManagerTest {
           
           TestDataHelper helper = new TestDataHelper();
           Task toBeAdded = helper.deadline1();
-          TaskTracker expectedAB = helper.addToTaskTracker(toBeAdded);
+          TaskTracker expectedTT = helper.addToTaskTracker(toBeAdded);
           
           assertCommandBehavior(helper.generateAddCommand(toBeAdded),
                   String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
-                  expectedAB,
-                  expectedAB.getTaskList());
+                  expectedTT,
+                  expectedTT.getTaskList());
       }
-    */
+      
+      @Test
+      public void execute_add_event_successful() throws Exception {
+          
+          TestDataHelper helper = new TestDataHelper();
+          Task toBeAdded = helper.event1();
+          TaskTracker expectedTT = helper.addToTaskTracker(toBeAdded);
+                    
+          assertCommandBehavior(helper.generateAddCommand(toBeAdded),
+                  String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
+                  expectedTT,
+                  expectedTT.getTaskList());
+      }
+      
+      @Test
+      public void execute_list_showsAllPendingTasks() throws Exception{
+          TestDataHelper helper = new TestDataHelper();
+          TaskTracker expectedTT = helper.generateTaskTracker(2);
+          Model expectedModel = new ModelManager(expectedTT, new UserPrefs());
+          expectedModel.updateFilteredListToShowAllPending();
+          List<? extends ReadOnlyTask> expectedList = model.getFilteredTaskList();
+
+          // prepare address book state
+          helper.addToModel(model, 2);
+          
+          assertCommandBehavior("list",
+                  String.format(ListCommand.MESSAGE_SUCCESS, "pending tasks"),
+                  expectedTT,
+                  expectedList);
+      }
+
+      @Test
+      public void execute_list_showsAllDoneTasks() throws Exception{
+          TestDataHelper helper = new TestDataHelper();
+          TaskTracker expectedTT = helper.generateTaskTracker(2);
+          Model expectedModel = new ModelManager(expectedTT, new UserPrefs());
+          expectedModel.updateFilteredListToShowAllDone();
+          List<? extends ReadOnlyTask> expectedList = model.getFilteredTaskList();
+
+          // prepare address book state
+          helper.addToModel(model, 2);
+          
+          assertCommandBehavior("list done",
+                  String.format(ListCommand.MESSAGE_SUCCESS, "completed tasks"),
+                  expectedTT,
+                  expectedList);
+      }
+      
     
     /**
      * A utility class to generate test data.
@@ -249,16 +295,14 @@ public class LogicManagerTest {
             return new Task("floating1", PriorityType.NORMAL);
         }
         
-        protected Task deadline_natural() {
-            Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.DATE, 1);
-            return new Task("deadline_natural", cal.getTime(), PriorityType.NORMAL);
+        protected Task deadline_natural_tmr_inferred() {
+            return new Task("deadline_natural", DateUtil.getTmr(), PriorityType.NORMAL).setIsInferred(true);
         }
         
         protected Task deadline1() {
             Calendar cal = Calendar.getInstance();
             cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-            return new Task("deadline1", cal.getTime(), PriorityType.NORMAL);
+            return new Task("deadline1", DateUtil.defaultTime(cal.getTime()), PriorityType.NORMAL);
         }
         
         protected Task event1() {
@@ -266,7 +310,7 @@ public class LogicManagerTest {
             cal1.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
             Calendar cal2 = Calendar.getInstance();
             cal2.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
-            return new Task("event1", cal1.getTime(), cal2.getTime(), PriorityType.NORMAL);
+            return new Task("event1", DateUtil.defaultTime(cal1.getTime()), DateUtil.defaultTime(cal2.getTime()), PriorityType.NORMAL).setIsInferred(true);
         }
                
         protected String generateAddCommand(Task toAdd) {
@@ -274,7 +318,7 @@ public class LogicManagerTest {
                 return "add " + toAdd.getMessage();
             }
             else if (toAdd.getIsEvent()) {
-                return "add " + toAdd.getMessage() + " " + toAdd.getStartTimeString() + " " + toAdd.getEndTimeString();
+                return "add " + toAdd.getMessage() + " " + toAdd.getStartTimeString() + " to " + toAdd.getEndTimeString();
             }
             else {
                 return "add " + toAdd.getMessage() + " " + toAdd.getDeadlineString(); 
@@ -319,9 +363,9 @@ public class LogicManagerTest {
         
 
         TaskTracker addToTaskTracker(Task toBeAdded) throws DuplicateTaskException {
-             TaskTracker expectedAB = new TaskTracker();
-             expectedAB.addTask(toBeAdded);
-             return expectedAB;
+             TaskTracker expectedTT = new TaskTracker();
+             expectedTT.addTask(toBeAdded);
+             return expectedTT;
         }
 
         /**
