@@ -223,17 +223,17 @@ public class MainParser {
         }
         
         if (dates.isEmpty()) {
-            return new Task(description, priority);
+            return (new Task(description, priority)).setIsInferred(isInferred);
         }
         else if (dates.size() == 1) { 
-            return new Task(description,dates.get(0), priority);
+            return new Task(description,dates.get(0), priority).setIsInferred(isInferred);
         }
         // compare dates if there are 2 dates
         else {
             if (dates.get(0).before(dates.get(1)))
-                return new Task(description,dates.get(0),dates.get(1), priority);
+                return new Task(description,dates.get(0),dates.get(1), priority).setIsInferred(isInferred);
             else 
-                return new Task(description,dates.get(1),dates.get(0), priority);
+                return new Task(description,dates.get(1),dates.get(0), priority).setIsInferred(isInferred);
         }
     }
     
