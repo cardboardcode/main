@@ -1,5 +1,6 @@
 package main.logic.command;
 
+import java.util.ArrayList;
 import java.util.IllegalFormatCodePointException;
 import java.util.logging.Logger;
 
@@ -33,6 +34,7 @@ public class UndoCommand extends Command {
     public static final int DEL = 2;
     public static final int EDIT = 3;
     public static final int DONE = 4;
+    public static final int CLR = 5;
     
     private UndoHistory undoHistory;
     private static final Logger logger = LogsCenter.getLogger(MainParser.class);
@@ -54,6 +56,10 @@ public class UndoCommand extends Command {
             undoDelete(undoHistory.getTasks().get(0));
             return new CommandResult(MESSAGE_SUCCESS);
         }
+        if(ID==CLR){
+            undoClear(undoHistory.getTasks());
+            return new CommandResult(MESSAGE_SUCCESS);
+        }
         if(ID==EDIT){
             try {
                 undoEdit(undoHistory.getTasks().get(0), undoHistory.getTasks().get(1));
@@ -70,6 +76,7 @@ public class UndoCommand extends Command {
             //logger.info(String.valueOf(ID));
             return new CommandResult(MESSAGE_SUCCESS);
         }
+        
 //        if(ID==DONE){
 //            ndoDone(undoHistory.getTasks().get(1));
 //            return new CommandResult(MESSAGE_SUCCESS);
@@ -95,6 +102,10 @@ public class UndoCommand extends Command {
     }
     private void undoEdit(Task newTask, Task originalTask) throws DuplicateTaskException, IndexOutOfBoundsException, TaskNotFoundException{
         model.editTaskUndo(model.getIndexFromTask(originalTask), newTask);
+    }
+    
+    private void undoClear(ArrayList<Task> tasks){
+        model.clearTaskUndo(tasks);
     }
     
 //    private void undoDone(ReadOnlyTask task){
