@@ -1,6 +1,8 @@
 package main.ui;
 
 import com.google.common.eventbus.Subscribe;
+
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
@@ -9,11 +11,14 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import main.commons.events.ui.AutoCompleteEvent;
 import main.commons.events.ui.IncorrectCommandAttemptedEvent;
+import main.commons.events.ui.KeyPressEvent;
+import main.commons.events.ui.TabPressEvent;
 import main.commons.util.FxViewUtil;
 import main.logic.Logic;
 import main.logic.command.CommandResult;
-
+import main.commons.core.EventsCenter;
 import main.commons.core.LogsCenter;
 
 import java.util.ArrayList;
@@ -133,6 +138,7 @@ public class CommandBox extends UiPart {
     public void handleAllEvents() {
         handleUpEvent();
         handleDownEvent();
+        handleTabEvent();
     }
 
     private void handleUpEvent() {
@@ -144,6 +150,7 @@ public class CommandBox extends UiPart {
                 else
                     historyPointer = 0;
                 commandTextField.setText(CommandBox.getHistory().get(historyPointer));
+                event.consume();
 
             }
         });
@@ -157,6 +164,7 @@ public class CommandBox extends UiPart {
                 else 
                     historyPointer = (CommandBox.getHistory().size()) - 1;
                 commandTextField.setText(CommandBox.getHistory().get(historyPointer));
+                event.consume();
             }
         });
     }
@@ -168,4 +176,27 @@ public class CommandBox extends UiPart {
     public static void updateHistoryPointer() {
         ++historyPointer;
     }
+    
+    //@@author A0144132W   
+    @FXML
+    public void handleKeyReleased(KeyEvent event) {
+        String input = commandTextField.getText();
+        EventsCenter.getInstance().post(new KeyPressEvent(event.getCode(), input));
+    }
+    
+    public void handleTabEvent() {
+        commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
+            if (event.getCode() == KeyCode.TAB) {
+                EventsCenter.getInstance().post(new TabPressEvent(event.getCode()));
+                event.consume();
+            }
+        });
+    }
+    
+    @Subscribe
+    public void handleAutoComplete(AutoCompleteEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "autocomplete current command"));
+        commandTextField.replaceText(event.getStart(), event.getEnd(), event.getSuggestion());
+    }
+    
 }
