@@ -37,6 +37,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -288,8 +289,7 @@ public class TestUtil {
 	 * @return The modified tasks after removal of the subset from tasks.
 	 */
 	public static TestTask[] removeTasksFromList(final TestTask[] tasks, TestTask... tasksToRemove) {
-		List<TestTask> listOfTasks = asList(tasks, tasksToRemove, false);
-		// listOfTasks.removeAll(asList(tasksToRemove));
+		List<TestTask> listOfTasks = asList(tasks);
 		return listOfTasks.toArray(new TestTask[listOfTasks.size()]);
 	}
 
@@ -332,28 +332,44 @@ public class TestUtil {
 	 * @return The modified array of tasks.
 	 */
 	public static TestTask[] addTasksToList(final TestTask[] tasks, TestTask... tasksToAdd) {
-		SortedList<TestTask> listOfTasks = asList(tasks, tasksToAdd, true);
-		// listOfTasks.addAll(asList(tasksToAdd));
+		List<TestTask> listOfTasks = asList(tasks);
+		listOfTasks.addAll(asList(tasksToAdd));
+		listOfTasks = sortList(listOfTasks);
 		return listOfTasks.toArray(new TestTask[listOfTasks.size()]);
 	}
+	
+	private static List<TestTask> sortList(List<TestTask> tasks){
+		
 
-	private static  SortedList<TestTask> asList(TestTask[] objs, TestTask[] objs2, boolean addTasks) {
-		ObservableList<TestTask> list = FXCollections.observableArrayList();
-		for (TestTask obj : objs) {
-			list.add(obj);
-		}
-		if (addTasks)
-			for (TestTask obj : objs2) {
-				list.add(obj);
-			}
-		else
-			for (TestTask obj : objs2) {
-				list.remove(obj);
-			}
+		
 		Comparator<TestTask> byTime = (t1, t2) -> t1.compareTime(t2);
-		SortedList<TestTask> sortedList = new SortedList<TestTask>(list, byTime);
-		return sortedList;
+		
+		Comparator<TestTask> byName = (t1, t2) -> t1.getMessage().toLowerCase().compareTo(t2.getMessage().toLowerCase());
+		
+		Collections.sort(tasks, byTime.thenComparing(byName));
+		
+//		for (int i=0; i<tasks.size(); i++){
+//			TestTask previous = tasks.get(i);
+//			for (int j=0; j<temp.size(); j++){
+//				if (temp.size()==0){
+//					temp.add(previous);
+//				}
+//				else if ((byTime.thenComparing(byName))==){
+//					
+//				}
+//			}
+//		}
+		return tasks;
+		
 	}
+
+    private static <T> List<T> asList(T[] objs) {
+        List<T> list = new ArrayList<>();
+        for(T obj : objs) {
+            list.add(obj);
+        }
+        return list;
+    }
 
 	// TODO when guitests are up
 
