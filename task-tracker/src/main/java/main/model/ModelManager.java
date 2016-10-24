@@ -1,3 +1,4 @@
+//@@author A0144132W
 // adapted from addressbook level 4
 
 package main.model;
@@ -35,6 +36,7 @@ import main.model.filter.SortFilter;
 import main.model.task.PriorityType;
 import main.model.task.ReadOnlyTask;
 import main.model.task.Task;
+import main.model.task.TaskType;
 import main.model.task.UniqueTaskList.DuplicateTaskException;
 import main.model.task.UniqueTaskList.TaskNotFoundException;
 
@@ -88,10 +90,19 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
+    public synchronized void deleteTask(int index) throws TaskNotFoundException {
+        ReadOnlyTask target = getTaskfromIndex(index);
         taskTracker.removeTask(target);
         indicateTaskTrackerChanged();
         addToUndo(UndoCommand.DEL, (Task)target);
+    }
+    
+    @Override
+    public synchronized void doneTask(int index) throws TaskNotFoundException {
+        ReadOnlyTask target = getTaskfromIndex(index);
+        taskTracker.doneTask(target);
+        indicateTaskTrackerChanged();
+        addToUndo(UndoCommand.DONE, (Task)target);
     }
     
     @Override
@@ -148,21 +159,21 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public int getNumEvent() {
         Expression original = current;
-        updateFilteredTaskList(Triple.of(null, null, "event"));
+        updateFilteredTaskList(Triple.of(null, null, TaskType.EVENT));
         return getSizeAndReset(original);  
     }
     
     @Override
     public int getNumDeadline() {
         Expression original = current;
-        updateFilteredTaskList(Triple.of(null, null, "deadline"));
+        updateFilteredTaskList(Triple.of(null, null, TaskType.DEADLINE));
         return getSizeAndReset(original);         
     }
     
     @Override
     public int getNumFloating() {
         Expression original = current;
-        updateFilteredTaskList(Triple.of(null, null, "floating"));
+        updateFilteredTaskList(Triple.of(null, null, TaskType.FLOATING));
         return getSizeAndReset(original); 
     }
     
@@ -197,7 +208,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
     
     @Override
-    public void updateFilteredTaskList(Triple<PriorityType, Date, String> params) {
+    public void updateFilteredTaskList(Triple<PriorityType, Date, TaskType> params) {
         Expression filter = new PredicateExpression();
         
         if (params.getLeft() != null) filter.and(new PriorityQualifier(params.getLeft()));
@@ -280,24 +291,20 @@ public class ModelManager extends ComponentManager implements Model {
     }
     
     private class TypeQualifier implements Qualifier {
-        private String type;
+        private TaskType type;
 
-        TypeQualifier(String type) {
+        TypeQualifier(TaskType type) {
             this.type = type;
         }
 
         @Override
         public boolean run(ReadOnlyTask task) {
-            type = type.toLowerCase();
-            if (type.equals("floating")) return (task.getIsFloating());
-            else if (type.equals("event")) return (task.getIsEvent());
-            else if (type.equals("deadline")) return (!task.getIsFloating() && !task.getIsEvent());
-            else return false;
+            return task.getType() == type;
         }
 
         @Override
         public String toString() {
-            return type;
+            return type.name();
         }
     }
     
