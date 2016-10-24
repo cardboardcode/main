@@ -1,6 +1,5 @@
 package main.logic.autocomplete;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -11,13 +10,10 @@ import javafx.scene.input.KeyCode;
 import main.commons.core.EventsCenter;
 import main.commons.core.LogsCenter;
 import main.commons.events.ui.AutoCompleteEvent;
-import main.commons.events.ui.IncorrectCommandAttemptedEvent;
 import main.commons.events.ui.KeyPressEvent;
 import main.commons.events.ui.TabPressEvent;
 import main.logic.autocomplete.SetTrie.TrieBuilder;
-import main.logic.parser.MainParser;
 import main.logic.parser.ReferenceList;
-import main.model.Model;
 
 public class AutoComplete {
     
@@ -28,12 +24,14 @@ public class AutoComplete {
     private int start_index;
     private int end_index;
     private int tabCount = 0;
-    private Model model;
+    EventsCenter eventsCenter;
     
-    public AutoComplete(Model model) {
-        buildCommandList();
+    public AutoComplete() {
+        this.eventsCenter = EventsCenter.getInstance().registerHandler(this);
         suggestions = new ArrayList<String>();
-        this.model = model;
+        buildCommandList();
+        updateSuggestions("");
+
     }
     
     private void buildCommandList() {
@@ -65,23 +63,24 @@ public class AutoComplete {
         if (suggestions.size() == 0) return;
         
         String suggest = suggestions.get(tabCount % suggestions.size());
-        EventsCenter.getInstance().post(new AutoCompleteEvent(start_index, end_index, suggest));
+
+        eventsCenter.post(new AutoCompleteEvent(start_index, end_index, suggest));
+        end_index = start_index + suggest.length();
         
     }
     
     @Subscribe
     private void handleKeyPressEvent(KeyPressEvent event) {
         System.out.println(suggestions);
-        logger.info(LogsCenter.getEventHandlingLogMessage(event, "updating suggestions"));
         
         updateSuggestions(event.getInput());
         tabCount = 0;
+        
 
     }
     
     @Subscribe
     private void handleTabPressEvent(TabPressEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event, "TAB pressed"));
         tabCount++;
         
         fillInSuggestions();

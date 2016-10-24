@@ -55,6 +55,10 @@ public class SetTrie {
         private TreeSet<String> wordList;
         private boolean caseInsensitive = false;
         
+        private TrieBuilder() {
+            wordList = new TreeSet<String>();
+        }
+        
         public TrieBuilder caseInsensitive() {
             this.caseInsensitive = true;
             return this;

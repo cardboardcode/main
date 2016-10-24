@@ -13,20 +13,15 @@ public class ReferenceList {
     
     public static final Map<String,String> commandsDictionary = ImmutableMap.<String, String>builder()
             .put("add", AddCommand.COMMAND_WORD)
-            .put("create", AddCommand.COMMAND_WORD)
             .put("edit", EditCommand.COMMAND_WORD)
             .put("change", EditCommand.COMMAND_WORD)
             .put("delete", DeleteCommand.COMMAND_WORD)                        
-            .put("del", DeleteCommand.COMMAND_WORD)
             .put("remove", DeleteCommand.COMMAND_WORD)
             .put("rm", DeleteCommand.COMMAND_WORD)
-            .put("rem", DeleteCommand.COMMAND_WORD)
             .put("trash", DeleteCommand.COMMAND_WORD)
             .put("done", DoneCommand.COMMAND_WORD)
             .put("finish", DoneCommand.COMMAND_WORD)
-            .put("finished", DoneCommand.COMMAND_WORD)
             .put("complete", DoneCommand.COMMAND_WORD)               
-            .put("completed", DoneCommand.COMMAND_WORD)
             .put("mark", DoneCommand.COMMAND_WORD)
             .put("undo", UndoCommand.COMMAND_WORD)
             .put("redo", RedoCommand.COMMAND_WORD)
@@ -67,4 +62,5 @@ public class ReferenceList {
             .add("finish")
             .add("finished")
             .build();
+            
 }
