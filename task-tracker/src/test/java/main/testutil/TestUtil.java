@@ -290,6 +290,8 @@ public class TestUtil {
 	 */
 	public static TestTask[] removeTasksFromList(final TestTask[] tasks, TestTask... tasksToRemove) {
 		List<TestTask> listOfTasks = asList(tasks);
+		listOfTasks.removeAll(asList(tasksToRemove));
+		listOfTasks = sortList(listOfTasks);
 		return listOfTasks.toArray(new TestTask[listOfTasks.size()]);
 	}
 
