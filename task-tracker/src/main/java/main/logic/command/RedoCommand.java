@@ -1,3 +1,4 @@
+//@@author A0142686X
 package main.logic.command;
 
 import main.model.ModelManager;
@@ -8,6 +9,11 @@ import main.model.task.Task;
 import main.model.task.UniqueTaskList;
 import main.model.task.UniqueTaskList.DuplicateTaskException;
 import main.model.task.UniqueTaskList.TaskNotFoundException;
+/**
+     * Redoes the previous undo'd command. 
+     * Pops from redo stack and executes appropriate add/del/edit/clr commands
+     * 
+ */
 
 public class RedoCommand extends Command {
 
@@ -29,67 +35,58 @@ public class RedoCommand extends Command {
     
     @Override
     public CommandResult execute() {
-        if(ModelManager.redoStack.size()==0){
+        if(ModelManager.redoStack.size()==0) {
             return new CommandResult(MESSAGE_EMPTY_HISTORY);
         }
         redoHistory=ModelManager.redoStack.pop();
         int ID=redoHistory.getID();
         
-        if(ID==ADD){
+        if(ID==ADD) {
            redoAdd(redoHistory.getTasks().get(0));
            return new CommandResult(MESSAGE_SUCCESS);
         }
-        if(ID==DEL){
+        if(ID==DEL) {
             redoDelete(redoHistory.getTasks().get(0));
             return new CommandResult(MESSAGE_SUCCESS);
         }
-        if(ID==EDIT){
+        if(ID==EDIT) {
             try {
                 try {
                     redoEdit(redoHistory.getTasks().get(0), redoHistory.getTasks().get(1));
                 } catch (DuplicateTaskException | TaskNotFoundException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             } catch (IndexOutOfBoundsException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            //logger.info(String.valueOf(ID));
             return new CommandResult(MESSAGE_SUCCESS);
         }
-        if(ID==CLR){
+        if(ID==CLR) {
             redoClear();
             return new CommandResult(MESSAGE_SUCCESS);
         }
-//        if(ID==DONE){
-//            undoDone(undoHistory.getTasks().get(1));
-//            return new CommandResult(MESSAGE_SUCCESS);
-//        }
         return new CommandResult(MESSAGE_EMPTY_HISTORY);
     }
     
-    private void redoAdd(Task task){
+    private void redoAdd(Task task) {
         try {
-            model.addTaskUndo(task);
+            model.addTaskUndoRedo(task);
         } catch (DuplicateTaskException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
-    private void redoDelete(Task task){
+    private void redoDelete(Task task) {
         try {
-            model.deleteTaskUndo(task);
+            model.deleteTaskUndoRedo(task);
         } catch (TaskNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
-    private void redoEdit(Task newTask, Task originalTask) throws DuplicateTaskException, IndexOutOfBoundsException, TaskNotFoundException{
-        model.editTaskUndo(model.getIndexFromTask(originalTask), newTask);
+    private void redoEdit(Task newTask, Task originalTask) throws DuplicateTaskException, IndexOutOfBoundsException, TaskNotFoundException {
+        model.editTaskUndoRedo(model.getIndexFromTask(originalTask), newTask);
     }
     
-    private void redoClear(){
+    private void redoClear() {
         model.resetData((ReadOnlyTaskTracker) new TaskTracker(new UniqueTaskList()));
     }
         

@@ -1,3 +1,4 @@
+//@@author A0142686X
 package main.commons.core;
 
 import java.util.Objects;
@@ -49,16 +50,16 @@ public class Config {
         return taskTrackerFilePath;
     }
 
-    public void setTaskTrackerFilePath(String addressBookFilePath) {
-        this.taskTrackerFilePath = addressBookFilePath;
+    public void setTaskTrackerFilePath(String taskTrackerFilePath) {
+        this.taskTrackerFilePath = taskTrackerFilePath;
     }
 
     public String getTaskTrackerName() {
         return taskTrackerName;
     }
 
-    public void setTaskTrackerName(String addressBookName) {
-        this.taskTrackerName = addressBookName;
+    public void setTaskTrackerName(String taskTrackerName) {
+        this.taskTrackerName = taskTrackerName;
     }
 
 

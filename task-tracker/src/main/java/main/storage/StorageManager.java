@@ -1,3 +1,4 @@
+//@@author A0142686X
 package main.storage;
 
 import com.google.common.eventbus.Subscribe;
@@ -15,7 +16,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 /**
- * Manages storage of AddressBook data in local storage.
+ * Manages storage of TaskTracker data in local storage.
  */
 public class StorageManager extends ComponentManager implements Storage {
 
@@ -47,7 +48,7 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
 
-    // ================ AddressBook methods ==============================
+    // ================ TaskTracker methods ==============================
 
     @Override
     public String getTaskTrackerFilePath() {

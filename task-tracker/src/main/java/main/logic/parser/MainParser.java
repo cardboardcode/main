@@ -136,15 +136,15 @@ public class MainParser {
 
         return new DeleteCommand(index);
     }
-    
-    public Command prepareUndo(){
+  //@@author A0142686X
+    public Command prepareUndo() {
         return new UndoCommand();
     }
     
-    public Command prepareRedo(){
+    public Command prepareRedo() {
         return new RedoCommand();
     }
-    
+    //@@author
     public Command prepareList(String input) {
         if (input.trim().equals("")) return new ListCommand();
         

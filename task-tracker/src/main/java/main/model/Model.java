@@ -38,14 +38,27 @@ public interface Model {
     void editTask(int index, Task newTask) throws TaskNotFoundException, UniqueTaskList.DuplicateTaskException;
     
     /** Returns the task at the corresponding index **/
+    
+    //@@author A0142686X
+    /** Returns the Task at a specific index number inside TaskTracker **/
     Task getTaskfromIndex(int index) throws  UniqueTaskList.TaskNotFoundException, IndexOutOfBoundsException;
+    
+    /** Returns index number of specific task inside TaskTracker **/
     int getIndexFromTask(ReadOnlyTask task) throws UniqueTaskList.TaskNotFoundException, IndexOutOfBoundsException;
     
-    void addTaskUndo(Task task) throws DuplicateTaskException;
-    void deleteTaskUndo(ReadOnlyTask target) throws TaskNotFoundException;
-    void editTaskUndo(int index, Task newTask) throws DuplicateTaskException;
-    void clearTaskUndo(ArrayList<Task> tasks);
-
+    /** Adds task upon undo **/
+    void addTaskUndoRedo(Task task) throws DuplicateTaskException;
+    
+    /** Deletes task upon undo **/
+    void deleteTaskUndoRedo(ReadOnlyTask target) throws TaskNotFoundException;
+    
+    /** Edits task upon undo **/
+    void editTaskUndoRedo(int index, Task newTask) throws DuplicateTaskException;
+    
+    /** Clears Tasks upon undo **/
+    void clearTaskUndoRedo(ArrayList<Task> tasks);
+    
+    //@@author
     /** Returns the filtered person list as an {@code UnmodifiableObservableList<ReadOnlyPerson>} */
     UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList();
 

@@ -1,3 +1,4 @@
+//@@author A0142686X
 package main.storage;
 
 import main.commons.exceptions.DataConversionException;
@@ -7,7 +8,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 /**
- * Represents a storage for {@link seedu.address.model.AddressBook}.
+ * Represents a storage for TaskTracker.
  */
 public interface TaskTrackerStorage {
 
@@ -17,28 +18,22 @@ public interface TaskTrackerStorage {
     String getTaskTrackerFilePath();
 
     /**
-     * Returns AddressBook data as a {@link ReadOnlyTaskTracker}.
+     * Returns TaskTracker data as a ReadOnlyTaskTracker.
      *   Returns {@code Optional.empty()} if storage file is not found.
      * @throws DataConversionException if the data in storage is not in the expected format.
      * @throws IOException if there was any problem when reading from the storage.
      */
     Optional<ReadOnlyTaskTracker> readTaskTracker() throws DataConversionException, IOException;
 
-    /**
-     * @see #getAddressBookFilePath()
-     */
     Optional<ReadOnlyTaskTracker> readTaskTracker(String filePath) throws DataConversionException, IOException;
 
     /**
-     * Saves the given {@link ReadOnlyAddressBook} to the storage.
-     * @param addressBook cannot be null.
+     * Saves the given ReadOnlyTaskTracker to the storage.
+     * @param taskTracker cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
     void saveTaskTracker(ReadOnlyTaskTracker taskTracker) throws IOException;
-
-    /**
-     * @see #saveAddressBook(ReadOnlyAddressBook)
-     */
+    
     void saveTaskTracker(ReadOnlyTaskTracker taskTracker, String filePath) throws IOException;
 
 }

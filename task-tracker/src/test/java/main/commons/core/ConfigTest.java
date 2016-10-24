@@ -1,3 +1,4 @@
+//@@author A0142686X
 package main.commons.core;
 
 import org.junit.Rule;
@@ -24,7 +25,7 @@ public class ConfigTest {
     }
 
     @Test
-    public void equalsMethod(){
+    public void equalsMethod() {
         Config defaultConfig = new Config();
         assertFalse(defaultConfig.equals(null));
         assertTrue(defaultConfig.equals(defaultConfig));

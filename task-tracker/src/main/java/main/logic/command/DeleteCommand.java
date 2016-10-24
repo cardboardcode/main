@@ -4,7 +4,7 @@ import main.model.task.UniqueTaskList.TaskNotFoundException;
 import main.ui.ListStatistics;
 
 /**
- * Deletes a task identified using it's last displayed index from the address book.
+ * Deletes a task identified using it's last displayed index from the task tracker.
  * Prints success message and the corresponding deleted index.
  * @author bey
  */

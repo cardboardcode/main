@@ -1,3 +1,4 @@
+//@@author A0142686X
 package main.storage;
 
 import main.commons.core.LogsCenter;
@@ -12,7 +13,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 /**
- * A class to access AddressBook data stored as an xml file on the hard disk.
+ * A class to access TaskTracker data stored as an xml file on the hard disk.
  */
 public class XmlTaskTrackerStorage implements TaskTrackerStorage {
 
@@ -29,7 +30,7 @@ public class XmlTaskTrackerStorage implements TaskTrackerStorage {
     }
 
     /**
-     * Similar to {@link #readAddressBook()}
+     * Similar to readTaskTracker
      * @param filePath location of the data. Cannot be null
      * @throws DataConversionException if the file is not in the correct format.
      */
@@ -49,7 +50,7 @@ public class XmlTaskTrackerStorage implements TaskTrackerStorage {
     }
 
     /**
-     * Similar to {@link #saveAddressBook(ReadOnlyAddressBook)}
+     * Similar to saveTaskTracker(ReadOnlyTaskTracker)
      * @param filePath location of the data. Cannot be null
      */
     public void saveTaskTracker(ReadOnlyTaskTracker taskTracker, String filePath) throws IOException {
