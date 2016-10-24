@@ -7,8 +7,10 @@ import main.commons.events.ui.ShowHelpRequestEvent;
 import main.logic.command.AddCommand;
 import main.logic.command.CommandResult;
 import main.logic.command.DeleteCommand;
+import main.logic.command.DoneCommand;
 import main.logic.command.EditCommand;
 import main.logic.command.HelpCommand;
+import main.logic.command.ListCommand;
 import main.logic.command.ExitCommand;
 import main.logic.command.ClearCommand;
 import main.model.Model;
@@ -119,7 +121,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_edit_invalidArgsFormat() throws Exception {
+    public void execute_edit_invalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
         assertCommandBehavior("edit wrong", expectedMessage);
         assertCommandBehavior("edit 16 Oct", expectedMessage);
@@ -128,13 +130,26 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_deleteInvalidArgsFormat_errorMessageShown() throws Exception {
+    public void execute_done_invalidArgsFormat_errorMessageShown() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DoneCommand.MESSAGE_USAGE);
+        assertCommandBehavior("done wrong", expectedMessage);
+        assertCommandBehavior("done", expectedMessage);
+    }
+    
+    @Test
+    public void execute_list_invalidArgsFormat_errorMessageShown() throws Exception {
+        String expectedMessage = String.format(Messages.MESSAGE_INVALID_PARAMETERS,"ListCommand", ListCommand.MESSAGE_USAGE);
+        assertCommandBehavior("list wrong", expectedMessage);
+    }    
+    
+    @Test
+    public void execute_delete_InvalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
         assertCommandBehavior("delete args", expectedMessage);
     }
 
     @Test
-    public void execute_add_empty_description_invalidArgsFormat() throws Exception {
+    public void execute_add_empty_description_invalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, Messages.MESSAGE_EMPTY_DESCRIPTION);
         assertCommandBehavior("add ", expectedMessage);
     }
@@ -178,7 +193,7 @@ public class LogicManagerTest {
       }
 
       @Test
-      public void execute_addDuplicate_notAllowed() throws Exception {
+      public void execute_add_duplicate_notAllowed() throws Exception {
           // setup expectations
           TestDataHelper helper = new TestDataHelper();
           Task toBeAdded = helper.floating1();
