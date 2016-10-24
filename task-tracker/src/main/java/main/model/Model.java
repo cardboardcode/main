@@ -11,6 +11,7 @@ import main.model.task.UniqueTaskList.TaskNotFoundException;
 import main.commons.core.UnmodifiableObservableList;
 import main.commons.exceptions.DuplicateDataException;
 
+import java.util.ArrayList;
 import java.util.Date;
 //daryl
 import java.util.Set;
@@ -43,6 +44,7 @@ public interface Model {
     void addTaskUndo(Task task) throws DuplicateTaskException;
     void deleteTaskUndo(ReadOnlyTask target) throws TaskNotFoundException;
     void editTaskUndo(int index, Task newTask) throws DuplicateTaskException;
+    void clearTaskUndo(ArrayList<Task> tasks);
 
     /** Returns the filtered person list as an {@code UnmodifiableObservableList<ReadOnlyPerson>} */
     UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList();
