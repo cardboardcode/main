@@ -16,9 +16,7 @@ import main.logic.autocomplete.SetTrie.TrieBuilder;
 import main.logic.parser.ReferenceList;
 
 public class AutoComplete {
-    
-    private static final Logger logger = LogsCenter.getLogger(AutoComplete.class);
-    
+        
     private SetTrie commandList;
     private List<String> suggestions;
     private int start_index;
@@ -55,7 +53,6 @@ public class AutoComplete {
             start_index = 0;
             end_index = input.length();
         }
-        
 
     }
     
@@ -75,8 +72,6 @@ public class AutoComplete {
         
         updateSuggestions(event.getInput());
         tabCount = 0;
-        
-
     }
     
     @Subscribe
