@@ -66,6 +66,10 @@ public class AutoComplete {
         
     }
     
+    public List<String> getSuggestions() {
+        return suggestions;
+    }
+    
     @Subscribe
     private void handleKeyPressEvent(KeyPressEvent event) {
         System.out.println(suggestions);
