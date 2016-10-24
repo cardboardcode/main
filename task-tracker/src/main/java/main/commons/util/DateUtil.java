@@ -37,11 +37,7 @@ public class DateUtil {
      */
     public static Date getToday(){
         Calendar cal = Calendar.getInstance();
-        cal.clear(Calendar.HOUR_OF_DAY);
-        cal.clear(Calendar.MINUTE);
-        cal.clear(Calendar.SECOND);
-        cal.clear(Calendar.MILLISECOND);
-        return cal.getTime();
+        return setTime(cal.getTime(), 8, true);
     }
     
     public static Date getTmr() {
@@ -98,6 +94,18 @@ public class DateUtil {
         
     }
     
+    // TODO replace above with this
+    public static String readableDate(Date date, boolean isInferred) {
+        DateFormat df;
+        if (isInferred) {
+            df = new SimpleDateFormat("dd MMM");
+        }
+        else {
+            df = new SimpleDateFormat("dd MMM h:mm a");            
+        }
+        return df.format(date);
+    }
+    
     /*
      * changes the time to the hour given (in 24 hours format) and
      * resets minutes, depending on the boolean input
@@ -114,5 +122,9 @@ public class DateUtil {
             cal.clear(Calendar.MILLISECOND);
         }
         return cal.getTime();
+    }
+    
+    public static Date defaultTime(Date date) {
+        return setTime(date, 8, true);
     }
 }
