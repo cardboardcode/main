@@ -63,12 +63,15 @@ public interface Model {
     void clearTaskUndoRedo(ArrayList<Task> tasks);
     
     //@@author A0144132W
-    /** Returns the filtered person list as an {@code UnmodifiableObservableList<ReadOnlyPerson>} */
+    /** Returns the filtered task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
     UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList();
 
-    /** Updates the filter of the filtered person list to show all persons */
-    void updateFilteredListToShowAll();
+    /** Updates the filter of the filtered task list to show all pending tasks */
+    void updateFilteredListToShowAllPending();
 
+    /** Updates the filter of the filtered task list to show all completed tasks */    
+    void updateFilteredListToShowAllDone();
+    
     /** Returns the number of tasks today **/
     int getNumToday();
 
@@ -95,6 +98,7 @@ public interface Model {
 
     /** THe default sorting done at the start **/
     void sortDefault();
+
 
 
 
