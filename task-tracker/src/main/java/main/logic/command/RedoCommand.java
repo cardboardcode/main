@@ -1,8 +1,11 @@
 package main.logic.command;
 
 import main.model.ModelManager;
+import main.model.ReadOnlyTaskTracker;
+import main.model.TaskTracker;
 import main.model.UndoHistory;
 import main.model.task.Task;
+import main.model.task.UniqueTaskList;
 import main.model.task.UniqueTaskList.DuplicateTaskException;
 import main.model.task.UniqueTaskList.TaskNotFoundException;
 
@@ -20,6 +23,7 @@ public class RedoCommand extends Command {
     public static final int DEL = 2;
     public static final int EDIT = 3;
     public static final int DONE = 4;
+    public static final int CLR = 5;
     
     private UndoHistory redoHistory;
     
@@ -54,6 +58,10 @@ public class RedoCommand extends Command {
             //logger.info(String.valueOf(ID));
             return new CommandResult(MESSAGE_SUCCESS);
         }
+        if(ID==CLR){
+            redoClear();
+            return new CommandResult(MESSAGE_SUCCESS);
+        }
 //        if(ID==DONE){
 //            undoDone(undoHistory.getTasks().get(1));
 //            return new CommandResult(MESSAGE_SUCCESS);
@@ -79,6 +87,10 @@ public class RedoCommand extends Command {
     }
     private void redoEdit(Task newTask, Task originalTask) throws DuplicateTaskException, IndexOutOfBoundsException, TaskNotFoundException{
         model.editTaskUndo(model.getIndexFromTask(originalTask), newTask);
+    }
+    
+    private void redoClear(){
+        model.resetData((ReadOnlyTaskTracker) new TaskTracker(new UniqueTaskList()));
     }
         
 }
