@@ -289,7 +289,7 @@ public class TestTask implements ReadOnlyTask {
     public String getAddCommand() {
         StringBuilder sb = new StringBuilder();
         sb.append("add " + this.getMessage());
-      
+        
         if (type == TaskType.EVENT) {
             sb.append(" " + getStartTimeString() + " ")
               .append(getEndTimeString());
@@ -298,6 +298,15 @@ public class TestTask implements ReadOnlyTask {
             sb.append(" " + getStartTimeString());
         }
         
+        String priorityInput;
+        if (getPriority()==PriorityType.HIGH)
+        	priorityInput = "-h";
+        else if (getPriority()==PriorityType.LOW)
+        	priorityInput = "-l";
+        else
+        	priorityInput = "-m";
+        
+        sb.append(" " + priorityInput + " ");
         return sb.toString();
     }
 

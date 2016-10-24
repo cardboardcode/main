@@ -27,8 +27,8 @@ public class AddCommandTest extends TaskTrackerGuiTest {
         assertAddSuccess(taskToAdd, currentList);
         currentList = TestUtil.addTasksToList(currentList, taskToAdd);
         
-        //add duplicate person
-        commandBox.runCommand(TypicalTestTasks.event2.getAddCommand());
+        //add duplicate task
+        commandBox.runCommand(TypicalTestTasks.floating2.getAddCommand());
         assertResultMessage(AddCommand.MESSAGE_DUPLICATE_TASK);
         assertTrue(taskListPanel.isListMatching(currentList));
 
