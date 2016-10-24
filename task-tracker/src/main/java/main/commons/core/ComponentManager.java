@@ -1,3 +1,4 @@
+//@@author A0142686X
 package main.commons.core;
 
 import javafx.collections.ObservableList;

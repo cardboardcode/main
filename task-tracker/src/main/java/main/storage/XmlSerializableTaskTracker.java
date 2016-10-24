@@ -1,3 +1,4 @@
+//@@author A0142686X
 package main.storage;
 
 import main.commons.exceptions.IllegalValueException;
@@ -15,19 +16,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * An Immutable AddressBook that is serializable to XML format
+ * An Immutable TaskTracker that is serializable to XML format
  */
 @XmlRootElement(name = "tasktracker")
 public class XmlSerializableTaskTracker implements ReadOnlyTaskTracker {
 
     @XmlElement
     private List<XmlAdaptedTask> tasks;
-    //@XmlElement
-    //private List<Tag> tags;
-
     {
         tasks = new ArrayList<>();
-        //tags = new ArrayList<>();
     }
 
     /**
@@ -40,19 +37,7 @@ public class XmlSerializableTaskTracker implements ReadOnlyTaskTracker {
      */
     public XmlSerializableTaskTracker(ReadOnlyTaskTracker src) {
         tasks.addAll(src.getTaskList().stream().map(XmlAdaptedTask::new).collect(Collectors.toList()));
-        //tags = src.getTagList();
     }
-
-    //@Override
-    //public UniqueTagList getUniqueTagList() {
-      //  try {
-        //    return new UniqueTagList(tags);
-        //} catch (UniqueTagList.DuplicateTagException e) {
-          //  //TODO: better error handling
-           // e.printStackTrace();
-            //return null;
-        //}
-   // }
 
     @Override
     public UniqueTaskList getUniqueTaskList() {
@@ -61,7 +46,6 @@ public class XmlSerializableTaskTracker implements ReadOnlyTaskTracker {
             try {
                 lists.add(t.toModelType());
             } catch (IllegalValueException e) {
-                //TODO: better error handling
             }
         }
         return lists;
@@ -74,15 +58,9 @@ public class XmlSerializableTaskTracker implements ReadOnlyTaskTracker {
                 return t.toModelType();
             } catch (IllegalValueException e) {
                 e.printStackTrace();
-                //TODO: better error handling
                 return null;
             }
         }).collect(Collectors.toCollection(ArrayList::new));
     }
-
-    //@Override
-    //public List<Tag> getTagList() {
-     //   return Collections.unmodifiableList(tags);
-    //}
 
 }

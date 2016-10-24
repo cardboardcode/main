@@ -1,3 +1,4 @@
+//@@author A0142686X
 package main.commons.util;
 
 import org.junit.Rule;
@@ -55,7 +56,6 @@ public class XmlUtilTest {
     public void getDataFromFile_validFile_validResult() throws Exception {
         XmlSerializableTaskTracker dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableTaskTracker.class);
         assertEquals(2, dataFromFile.getTaskList().size());
-        //assertEquals(0, dataFromFile.getTagList().size());
     }
 
     @Test
@@ -83,11 +83,9 @@ public class XmlUtilTest {
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
         XmlSerializableTaskTracker dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableTaskTracker.class);
         assertEquals((new TaskTracker(dataToWrite)).toString(),(new TaskTracker(dataFromFile)).toString());
-        //TODO: use equality instead of string comparisons
 
         TaskTrackerBuilder builder = new TaskTrackerBuilder(new TaskTracker());
         dataToWrite = new XmlSerializableTaskTracker(builder.withTask(TestUtil.generateSampleTaskData().get(0)).build());
-                //withTag("Friends").build());
 
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
         dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableTaskTracker.class);

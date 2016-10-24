@@ -1,3 +1,4 @@
+//@@author A0142686X
 package main.storage;
 
 import main.commons.exceptions.DataConversionException;
@@ -7,7 +8,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 /**
- * Represents a storage for {@link seedu.address.model.UserPrefs}.
+ * Represents a storage for UserPrefs.
  */
 public interface UserPrefsStorage {
 
@@ -20,10 +21,10 @@ public interface UserPrefsStorage {
     Optional<UserPrefs> readUserPrefs() throws DataConversionException, IOException;
 
     /**
-     * Saves the given {@link seedu.address.model.UserPrefs} to the storage.
+     * Saves the given UserPrefs to the storage.
      * @param userPrefs cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
     void saveUserPrefs(UserPrefs userPrefs) throws IOException;
-
+    
 }

@@ -1,3 +1,4 @@
+//@@author A0142686X
 package main.storage;
 
 import main.commons.util.XmlUtil;
@@ -8,11 +9,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 /**
- * Stores addressbook data in an XML file
+ * Stores tasktracker data in an XML file
  */
 public class XmlFileStorage {
     /**
-     * Saves the given addressbook data to the specified file.
+     * Saves the given tasktracker data to the specified file.
      */
     public static void saveDataToFile(File file, XmlSerializableTaskTracker taskTracker)
             throws FileNotFoundException {
@@ -24,7 +25,7 @@ public class XmlFileStorage {
     }
 
     /**
-     * Returns address book in the file or an empty address book
+     * Returns tasktracker in the file or an empty tasktracker
      */
     public static XmlSerializableTaskTracker loadDataFromSaveFile(File file) throws DataConversionException,
                                                                             FileNotFoundException {
