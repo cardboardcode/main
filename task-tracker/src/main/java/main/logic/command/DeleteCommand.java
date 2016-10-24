@@ -33,7 +33,7 @@ public class DeleteCommand extends Command {
     @Override
     public CommandResult execute() {
         try {
-            model.deleteTask(model.getTaskfromIndex(taskIndex));
+            model.deleteTask(taskIndex);
             return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS, taskIndex));
 
         } catch (IndexOutOfBoundsException ie) {

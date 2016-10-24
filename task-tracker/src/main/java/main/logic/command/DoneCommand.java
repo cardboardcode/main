@@ -29,7 +29,7 @@ public class DoneCommand extends Command{
         	//Remove comment after Model component adds a setIsDone() method which changes the value of 
         	//it isDone attribute.
 
-            model.getTaskfromIndex(taskIndex).setIsDone();
+            model.doneTask(taskIndex);
 
             return new CommandResult(String.format(MESSAGE_SUCCESS, taskIndex));
 
