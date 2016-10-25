@@ -66,18 +66,26 @@ public class UndoCommand extends Command {
                 e.printStackTrace();
             }
             return new CommandResult(MESSAGE_SUCCESS);
-        }        
+        }
+        if(ID==DONE) {
+            try {
+                undoDone(undoHistory.getTasks().get(0));
+            } catch (DuplicateTaskException | TaskNotFoundException e) {
+                e.printStackTrace();
+            }
+            return new CommandResult(MESSAGE_SUCCESS);
+        }
         return new CommandResult(MESSAGE_EMPTY_HISTORY);
     }
     
-    private void undoAdd(Task task){
+    private void undoAdd(Task task) {
         try {
             model.deleteTaskUndoRedo(task);
         } catch (TaskNotFoundException e) {
             e.printStackTrace();
         }
     }
-    private void undoDelete(Task task){
+    private void undoDelete(Task task) {
         try {
             model.addTaskUndoRedo(task);
         } catch (DuplicateTaskException e) {
@@ -88,7 +96,11 @@ public class UndoCommand extends Command {
         model.editTaskUndoRedo(model.getIndexFromTask(originalTask), newTask);
     }
     
-    private void undoClear(ArrayList<Task> tasks){
+    private void undoClear(ArrayList<Task> tasks) {
         model.clearTaskUndoRedo(tasks);
+    }
+    
+    private void undoDone(Task task) throws DuplicateTaskException, TaskNotFoundException {
+        model.doneTaskUndoRedo(task);
     }
 }

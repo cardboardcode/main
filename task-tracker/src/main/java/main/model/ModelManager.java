@@ -102,7 +102,7 @@ public class ModelManager extends ComponentManager implements Model {
         ReadOnlyTask target = getTaskfromIndex(index);
         taskTracker.doneTask(target);
         indicateTaskTrackerChanged();
-        addToUndo(UndoCommand.DONE, (Task)target);
+        addToUndo(UndoCommand.DONE,(Task)target);
     }
     
     @Override
@@ -409,6 +409,13 @@ public class ModelManager extends ComponentManager implements Model {
         TaskTracker prevTaskTracker = new TaskTracker();
         prevTaskTracker.setTasks(tasks);
         taskTracker.resetData(prevTaskTracker);
+    }
+    
+    @Override
+    public void doneTaskUndoRedo(Task task) throws DuplicateTaskException, TaskNotFoundException {
+        taskTracker.incompleteTask(task);
+        updateFilteredListToShowAllPending();
+        indicateTaskTrackerChanged();
     }
     
     /**
