@@ -61,6 +61,21 @@ public class UniqueTaskList implements Iterable<Task> {
         }
         internalList.add(toAdd);
     }
+    
+    //@@author A0142686X
+    /**
+     * 
+     * Inserting task at given index into tasktracker
+     */
+    public void add(int index, Task toAdd) throws DuplicateTaskException {
+        assert toAdd != null;
+        if (contains(toAdd)) {
+            throw new DuplicateTaskException();
+        }
+        internalList.add(index, toAdd);
+    }
+        
+    //@@author
 
     public void replace(int index, Task newtask) throws DuplicateTaskException{
         if (contains(newtask)) {

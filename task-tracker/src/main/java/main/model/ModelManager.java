@@ -100,9 +100,9 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void doneTask(int index) throws TaskNotFoundException {
         ReadOnlyTask target = getTaskfromIndex(index);
+        addToUndo(UndoCommand.DONE, index, (Task)target);
         taskTracker.doneTask(target);
         indicateTaskTrackerChanged();
-        addToUndo(UndoCommand.DONE, (Task)target);
     }
     
     @Override
@@ -370,6 +370,15 @@ public class ModelManager extends ComponentManager implements Model {
     }
     
     /**
+     * Adds task plus ID of task which was marked done
+     * 
+     */
+    private void addToUndo(int ID, int doneID, Task... tasks) {
+        UndoHistory undoHistory = new UndoHistory(ID, doneID, tasks);
+        undoStack.push(undoHistory);
+    }
+    
+    /**
      * Method used by undo and redo to add tasks into tasktracker
      */
     @Override
@@ -409,6 +418,15 @@ public class ModelManager extends ComponentManager implements Model {
         TaskTracker prevTaskTracker = new TaskTracker();
         prevTaskTracker.setTasks(tasks);
         taskTracker.resetData(prevTaskTracker);
+    }
+    
+    @Override
+    public void doneTaskUndoRedo(int doneID, Task task) throws DuplicateTaskException, TaskNotFoundException {
+        taskTracker.addTask(doneID, task);
+        Task toDelete = new Task(task);
+        deleteTaskUndoRedo(toDelete);
+        updateFilteredListToShowAllPending();
+        indicateTaskTrackerChanged();
     }
     
     /**

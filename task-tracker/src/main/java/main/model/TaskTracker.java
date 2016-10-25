@@ -74,6 +74,14 @@ public class TaskTracker implements ReadOnlyTaskTracker{
     public void addTask(Task task) throws DuplicateTaskException {
         tasks.add(task);        
     }
+    
+    //@@author A0142686X
+    /**
+     * adds task at a given index to tasktracker
+     */
+    public void addTask(int index, Task task) throws DuplicateTaskException {
+        tasks.add(index, task);        
+    }
 
     public void editTask(int index, Task newtask) throws DuplicateTaskException {
         tasks.replace(index, newtask);
