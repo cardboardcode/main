@@ -47,7 +47,7 @@ public class CommandBox extends UiPart {
 
     private Logic logic;
     private static ArrayList<String> commandHistory = new ArrayList<String>();
-    private static int historyPointer = -1;
+    private static int historyPointer = 0;
 
     @FXML
     private TextField commandTextField;
@@ -105,8 +105,19 @@ public class CommandBox extends UiPart {
         setStyleToIndicateCorrectCommand();
         mostRecentResult = logic.execute(previousCommandTest);
         ListStatistics.updateStatistics();
+        CommandBox.resetHistoryPointer();
         resultDisplay.postMessage(mostRecentResult.feedbackToUser);
         logger.info("Result: " + mostRecentResult.feedbackToUser);
+    }
+
+    private static void resetHistoryPointer() {
+        historyPointer = commandHistory.size();
+        
+    }
+
+    private static void updateHistoryPointer() {
+       ++historyPointer;
+        
     }
 
     /**
@@ -145,8 +156,11 @@ public class CommandBox extends UiPart {
 
         commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
             if (event.getCode() == KeyCode.UP) {
-                if (historyPointer > 0)
+                if (historyPointer > 0){
+                    
                     --historyPointer;
+                    System.out.println(historyPointer + " " + CommandBox.getHistory().get(historyPointer));
+                }
                 else
                     historyPointer = 0;
                 commandTextField.setText(CommandBox.getHistory().get(historyPointer));
@@ -159,8 +173,11 @@ public class CommandBox extends UiPart {
     private void handleDownEvent() {
         commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
             if (event.getCode() == KeyCode.DOWN) {
-                if (historyPointer < CommandBox.getHistory().size() - 1 )
+                if (historyPointer < CommandBox.getHistory().size() - 1 ){
+                    
                     ++historyPointer;
+                    System.out.println(historyPointer + " " + CommandBox.getHistory().get(historyPointer));
+                }
                 else 
                     historyPointer = (CommandBox.getHistory().size()) - 1;
                 commandTextField.setText(CommandBox.getHistory().get(historyPointer));
@@ -171,10 +188,6 @@ public class CommandBox extends UiPart {
 
     public static ArrayList<String> getHistory() {
         return commandHistory;
-    }
-
-    public static void updateHistoryPointer() {
-        ++historyPointer;
     }
     
     //@@author A0144132W   
