@@ -65,6 +65,14 @@ public class RedoCommand extends Command {
             redoClear();
             return new CommandResult(MESSAGE_SUCCESS);
         }
+        if(ID==DONE) {
+            try {
+                redoDone(redoHistory.getTasks().get(0));
+            } catch (IndexOutOfBoundsException | TaskNotFoundException e) {
+                e.printStackTrace();
+            }
+            return new CommandResult(MESSAGE_SUCCESS);
+        }
         return new CommandResult(MESSAGE_EMPTY_HISTORY);
     }
     
@@ -88,6 +96,10 @@ public class RedoCommand extends Command {
     
     private void redoClear() {
         model.resetData((ReadOnlyTaskTracker) new TaskTracker(new UniqueTaskList()));
+    }
+    
+    private void redoDone(Task task) throws IndexOutOfBoundsException, TaskNotFoundException {
+        model.doneTask(model.getIndexFromTask(task));
     }
         
 }
