@@ -40,6 +40,8 @@ public class TaskCard extends UiPart{
     private Label deadline;
     @FXML
     private Label endtime;
+    @FXML
+    private Label starttime;
     
     @FXML
     private Rectangle priorityTab;
@@ -74,13 +76,19 @@ public class TaskCard extends UiPart{
         id.setText(displayedIndex + ". ");
         
         if (task.getDeadline()!=null)
-        	deadline.setText(""+ task.getDeadlineString());
+        	deadline.setText("Deadline: "+ task.getDeadlineString());
         else
         	deadline.setText("");
+        
         if (task.getEndTime()!=null)
-        	endtime.setText(""+ task.getEndTime());
+        	endtime.setText("End: "+ task.getEndTimeString());
         else
         	endtime.setText("");
+        
+        if (task.getStartTime()!=null)
+            starttime.setText("Start: "+ task.getStartTimeString());
+        else
+            starttime.setText("");
 		
 	}
     
@@ -101,9 +109,10 @@ public class TaskCard extends UiPart{
 
 	private void configureLayout() {
     	
-    	cardPane.setSpacing(30.0);
+    	cardPane.setSpacing(18.0);
         deadline.setMinWidth(300);
-        endtime.setMinWidth(70);
+//        endtime.setMinWidth(300);
+        starttime.setMinWidth(300);
         cardPane.setMinWidth(450);
 
 	}
