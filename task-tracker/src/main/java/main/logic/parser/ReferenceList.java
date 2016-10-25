@@ -55,12 +55,34 @@ public class ReferenceList {
             .put("floatings", TaskType.FLOATING)
             .build();
     
+    // for autocomplete and prepare list command
     public static final Set<String> doneSet = ImmutableSet.<String>builder()
             .add("done")
             .add("complete")
-            .add("completed")
             .add("finish")
-            .add("finished")
+            .build();
+    
+    // for autocomplete
+    public static final Set<String> listSet = ImmutableSet.<String>builder()
+            .add("high")
+            .add("low")
+            .add("normal")
+            .add("medium")
+            .add("event")
+            .add("deadline")
+            .add("floating")
+            .add("january")
+            .add("february")
+            .add("march")
+            .add("april")
+            .add("may")
+            .add("june")
+            .add("july")
+            .add("august")
+            .add("september")
+            .add("october")
+            .add("november")
+            .add("december")
             .build();
             
 }
