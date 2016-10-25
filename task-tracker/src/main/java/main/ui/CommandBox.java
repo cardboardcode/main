@@ -47,7 +47,7 @@ public class CommandBox extends UiPart {
 
     private Logic logic;
     private static ArrayList<String> commandHistory = new ArrayList<String>();
-    private static int historyPointer = -1;
+    private static int historyPointer = 0;
 
     @FXML
     private TextField commandTextField;
@@ -105,8 +105,19 @@ public class CommandBox extends UiPart {
         setStyleToIndicateCorrectCommand();
         mostRecentResult = logic.execute(previousCommandTest);
         ListStatistics.updateStatistics();
+        CommandBox.resetHistoryPointer();
         resultDisplay.postMessage(mostRecentResult.feedbackToUser);
         logger.info("Result: " + mostRecentResult.feedbackToUser);
+    }
+
+    private static void resetHistoryPointer() {
+        historyPointer = commandHistory.size();
+
+    }
+
+    private static void updateHistoryPointer() {
+        ++historyPointer;
+
     }
 
     /**
@@ -120,7 +131,7 @@ public class CommandBox extends UiPart {
     @Subscribe
     private void handleIncorrectCommandAttempted(IncorrectCommandAttemptedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Invalid command: " + previousCommandTest));
-        setStyleToIndicateIncorrectCommand();
+//        setStyleToIndicateIncorrectCommand();
         commandTextField.setText("");
     }
 
@@ -145,9 +156,11 @@ public class CommandBox extends UiPart {
 
         commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
             if (event.getCode() == KeyCode.UP) {
-                if (historyPointer > 0)
+                if (historyPointer > 0) {
+
                     --historyPointer;
-                else
+                    System.out.println(historyPointer + " " + CommandBox.getHistory().get(historyPointer));
+                } else
                     historyPointer = 0;
                 commandTextField.setText(CommandBox.getHistory().get(historyPointer));
                 event.consume();
@@ -159,9 +172,11 @@ public class CommandBox extends UiPart {
     private void handleDownEvent() {
         commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
             if (event.getCode() == KeyCode.DOWN) {
-                if (historyPointer < CommandBox.getHistory().size() - 1 )
+                if (historyPointer < CommandBox.getHistory().size() - 1) {
+
                     ++historyPointer;
-                else 
+                    System.out.println(historyPointer + " " + CommandBox.getHistory().get(historyPointer));
+                } else
                     historyPointer = (CommandBox.getHistory().size()) - 1;
                 commandTextField.setText(CommandBox.getHistory().get(historyPointer));
                 event.consume();
@@ -173,18 +188,16 @@ public class CommandBox extends UiPart {
         return commandHistory;
     }
 
-    public static void updateHistoryPointer() {
-        ++historyPointer;
-    }
-    
-    //@@author A0144132W   
+    // @@author A0144132W
     @FXML
     public void handleKeyReleased(KeyEvent event) {
-        if (!event.getCode().isDigitKey() && !event.getCode().isLetterKey() && event.getCode() != KeyCode.BACK_SPACE && event.getCode() != KeyCode.DELETE) return;
+        if (!event.getCode().isDigitKey() && !event.getCode().isLetterKey() && event.getCode() != KeyCode.BACK_SPACE
+                && event.getCode() != KeyCode.DELETE)
+            return;
         String input = commandTextField.getText();
         EventsCenter.getInstance().post(new KeyPressEvent(event.getCode(), input));
     }
-    
+
     public void handleTabEvent() {
         commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
             if (event.getCode() == KeyCode.TAB) {
@@ -193,10 +206,10 @@ public class CommandBox extends UiPart {
             }
         });
     }
-    
+
     @Subscribe
     public void handleAutoComplete(AutoCompleteEvent event) {
         commandTextField.replaceText(event.getStart(), event.getEnd(), event.getSuggestion());
     }
-    
+
 }
