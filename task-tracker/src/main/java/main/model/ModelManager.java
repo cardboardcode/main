@@ -4,6 +4,7 @@
 package main.model;
 
 import main.commons.core.ComponentManager;
+import main.commons.core.EventsCenter;
 import main.commons.core.LogsCenter;
 import main.commons.core.UnmodifiableObservableList;
 
@@ -20,11 +21,13 @@ import java.util.logging.Logger;
 import org.apache.commons.lang3.tuple.Triple;
 
 import com.google.common.collect.Lists;
+import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import main.commons.events.model.TaskTrackerChangedEvent;
+import main.commons.events.model.UpdateListWithSuggestionsEvent;
 import main.commons.util.DateUtil;
 
 import main.logic.command.UndoCommand;
@@ -42,6 +45,7 @@ import main.model.task.UniqueTaskList.TaskNotFoundException;
 
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
+    EventsCenter eventsCenter;
     
     public static Stack<UndoHistory> undoStack = new Stack<UndoHistory>();
     public static Stack<UndoHistory> redoStack = new Stack<UndoHistory>();
@@ -50,7 +54,7 @@ public class ModelManager extends ComponentManager implements Model {
     UserPrefs userPref;
     private final FilteredList<Task> filteredTasks;
     private final SortedList<Task> sortedTasks;
-    Expression current;
+    Expression baseExpression;
     
     public ModelManager(TaskTracker taskTracker, UserPrefs userPref) {
         super();
@@ -58,6 +62,8 @@ public class ModelManager extends ComponentManager implements Model {
         assert userPref != null;
 
         logger.fine("Initializing with task tracker: " + taskTracker + " and user prefs " + userPref);
+        eventsCenter = EventsCenter.getInstance();
+        eventsCenter.registerHandler(this);
         
         this.taskTracker = new TaskTracker(taskTracker);
         this.userPref = userPref;
@@ -144,42 +150,42 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== User Friendly Accessors ===================================================================
     @Override
     public int getNumToday() {
-        Expression original = current;
+        Expression original = baseExpression;
         updateFilteredTaskList(Triple.of(null, DateUtil.getToday(), null), false);
         return getSizeAndReset(original);
     }
     
     @Override
     public int getNumTmr() {
-        Expression original = current;
+        Expression original = baseExpression;
         updateFilteredTaskList(Triple.of(null, DateUtil.getTmr(), null), false);
         return getSizeAndReset(original);
     }
     
     @Override
     public int getNumEvent() {
-        Expression original = current;
+        Expression original = baseExpression;
         updateFilteredTaskList(Triple.of(null, null, TaskType.EVENT), false);
         return getSizeAndReset(original);  
     }
     
     @Override
     public int getNumDeadline() {
-        Expression original = current;
+        Expression original = baseExpression;
         updateFilteredTaskList(Triple.of(null, null, TaskType.DEADLINE), false);
         return getSizeAndReset(original);         
     }
     
     @Override
     public int getNumFloating() {
-        Expression original = current;
+        Expression original = baseExpression;
         updateFilteredTaskList(Triple.of(null, null, TaskType.FLOATING), false);
         return getSizeAndReset(original); 
     }
     
     @Override 
     public int getTotalNum() {
-        Expression original = current;
+        Expression original = baseExpression;
         updateFilteredListToShowAllPending();
         return getSizeAndReset(original);
     }
@@ -205,7 +211,7 @@ public class ModelManager extends ComponentManager implements Model {
         filter.and(new DoneQualifier(false));
         
         updateFilteredTaskList(filter);
-        current = filter;
+        baseExpression = filter;
     }
     
     @Override
@@ -214,7 +220,7 @@ public class ModelManager extends ComponentManager implements Model {
         filter.and(new DoneQualifier(true));
         
         updateFilteredTaskList(filter);
-        current = filter;
+        baseExpression = filter;
     }
     
     
@@ -229,12 +235,24 @@ public class ModelManager extends ComponentManager implements Model {
         if (params.getRight() != null) filter.and(new TypeQualifier(params.getRight()));
         
         updateFilteredTaskList(filter);
-        current = filter;
+        baseExpression = filter;
     }
     
     public void updateFilteredTaskList(Expression expression) {
-        current = expression;
+        baseExpression = expression;
         filteredTasks.setPredicate(expression::satisfies);
+    }
+    
+    //============= AutoComplete Suggestions ========================================
+    
+    @Subscribe
+    public void handleUpdateSuggestionsEvent(UpdateListWithSuggestionsEvent event) {
+        List<ReadOnlyTask> suggestions = event.getSuggestions();
+
+        Expression filter = new PredicateExpression();
+        filter.and(new MatchQualifier(suggestions));
+        filter.and(new DoneQualifier(false));
+        updateFilteredTaskList(filter);
     }
     
     //========== Inner classes/interfaces used for filtering =================================================
@@ -358,6 +376,27 @@ public class ModelManager extends ComponentManager implements Model {
         }        
         
     }
+
+    private class MatchQualifier implements Qualifier {
+        private List<ReadOnlyTask> matches;
+
+        MatchQualifier(List<ReadOnlyTask> matches) {
+            this.matches = matches;
+        }
+
+        @Override
+        public boolean run(ReadOnlyTask task) {
+            return matches.stream().filter(t -> t.equals(task)).findFirst().isPresent();
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(matches);
+        }        
+        
+    }
+    
+    //================= Functions for undo and redo ==================================
 //@@author A0142686X
     
     /**
