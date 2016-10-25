@@ -27,17 +27,15 @@ public class XmlAdaptedTask {
     @XmlElement(required = false)
     private Date endTime;
     @XmlElement(required = true)
-    private boolean isFloating;    
-    @XmlElement(required = true)
-    private boolean isEvent;
-    @XmlElement(required = true)
-    private boolean isDeadline;
-    @XmlElement(required = true)
     private boolean isRecurring;
     @XmlElement(required = true)
     private PriorityType priority;
     @XmlElement(required = true)
     private TaskType type;
+    @XmlElement(required = true)
+    private boolean isDone;
+    @XmlElement(required = true)
+    private boolean isInferred;
     
     
     /**
@@ -54,14 +52,13 @@ public class XmlAdaptedTask {
     public XmlAdaptedTask(ReadOnlyTask source) {
         message = source.getMessage();
         deadline = (Date)(source.getDeadline());
-        startTime =(Date)(source.getStartTime());
+        startTime = (Date)(source.getStartTime());
         endTime = (Date)(source.getEndTime());
-        isFloating =(Boolean)(source.getIsFloating());
-        isEvent = (Boolean)(source.getIsEvent());
-        isDeadline = (Boolean)(source.getIsDeadline());
         isRecurring = (Boolean)(source.getIsRecurring());
         priority = (PriorityType)(source.getPriority());
-        type = source.getType();
+        type =(TaskType)(source.getType());
+        isDone = (Boolean)(source.getIsDone());
+        isInferred = (Boolean)(source.getIsInferred());
     }
 
     /**
