@@ -15,6 +15,7 @@ public class UndoHistory {
     
     private int ID;
     private ArrayList<Task> tasks;
+    private int doneID =0;
     
     public UndoHistory(int ID, Task... tasks) {
         this.ID = ID;
@@ -22,11 +23,23 @@ public class UndoHistory {
         this.tasks = new ArrayList<Task>(collection);       
     }
     
+    public UndoHistory(int ID, int doneID, Task... tasks) {
+        this.ID = ID;
+        this.doneID = doneID;
+        Collection<Task> collection = Arrays.asList(tasks);
+        this.tasks = new ArrayList<Task>(collection);       
+    }
+    
+    
     public int getID() {
         return ID;
     }
     
     public ArrayList<Task> getTasks() {
         return tasks;
+    }
+    
+    public int getDoneID() {
+        return doneID;
     }
 }
