@@ -78,20 +78,20 @@ public class RedoCommand extends Command {
     
     private void redoAdd(Task task) {
         try {
-            model.addTaskUndoRedo(task);
+            model.addTask(task);
         } catch (DuplicateTaskException e) {
             e.printStackTrace();
         }
     }
     private void redoDelete(Task task) {
         try {
-            model.deleteTaskUndoRedo(task);
+            model.deleteTask(model.getIndexFromTask(task));
         } catch (TaskNotFoundException e) {
             e.printStackTrace();
         }
     }
     private void redoEdit(Task newTask, Task originalTask) throws DuplicateTaskException, IndexOutOfBoundsException, TaskNotFoundException {
-        model.editTaskUndoRedo(model.getIndexFromTask(originalTask), newTask);
+        model.editTask(model.getIndexFromTask(originalTask), newTask);
     }
     
     private void redoClear() {
