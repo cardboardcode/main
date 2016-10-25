@@ -1,6 +1,7 @@
 package main.logic.autocomplete;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -46,6 +47,16 @@ public class SetTrie {
         return possibleList;
     }
     
+    @Override
+    public String toString(){
+        StringBuilder stringBuilder = new StringBuilder();
+        
+        for (String word : wordList) {
+            stringBuilder.append(word).append(" ");
+        }
+        return stringBuilder.toString().trim();
+    }
+    
     public static TrieBuilder builder() {
         return new TrieBuilder();
     }
@@ -73,8 +84,8 @@ public class SetTrie {
             return this;
         }
         
-        public TrieBuilder addKeyword(String keyword) {
-            wordList.add(keyword);
+        public TrieBuilder add(Collection<String> words) {
+            wordList.addAll(words);
             return this;
         }
         
