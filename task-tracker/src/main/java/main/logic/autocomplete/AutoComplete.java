@@ -9,27 +9,36 @@ import com.google.common.eventbus.Subscribe;
 import javafx.scene.input.KeyCode;
 import main.commons.core.EventsCenter;
 import main.commons.core.LogsCenter;
+import main.commons.events.model.TaskTrackerChangedEvent;
 import main.commons.events.ui.AutoCompleteEvent;
 import main.commons.events.ui.KeyPressEvent;
 import main.commons.events.ui.TabPressEvent;
 import main.logic.autocomplete.SetTrie.TrieBuilder;
 import main.logic.parser.ReferenceList;
+import main.model.Model;
+import main.model.ReadOnlyTaskTracker;
+import main.model.task.ReadOnlyTask;
+import main.model.task.Task;
 
 public class AutoComplete {
         
     private SetTrie commandList;
+    private SetTrie taskList;
     private List<String> suggestions;
     private int start_index;
     private int end_index;
     private int tabCount = 0;
+    private Model model;
     EventsCenter eventsCenter;
     
-    public AutoComplete() {
+    public AutoComplete(Model model) {
         this.eventsCenter = EventsCenter.getInstance().registerHandler(this);
+        this.model = model;
+        
         suggestions = new ArrayList<String>();
         buildCommandList();
         updateSuggestions("");
-
+        buildTaskList();
     }
     
     private void buildCommandList() {
@@ -38,6 +47,22 @@ public class AutoComplete {
             build.addKeyword(cmd);
         }
         commandList = build.build();
+    }
+    
+    private void buildTaskList() {
+        TrieBuilder build = SetTrie.builder().caseInsensitive();
+        for (ReadOnlyTask task: model.getTaskTracker().getTaskList()) {
+            build.addKeyword(task.getMessage());
+        }
+        taskList = build.build();
+    }
+    
+    private void updateTaskList(ReadOnlyTaskTracker data) {
+        TrieBuilder build = SetTrie.builder(this.taskList).caseInsensitive();
+        for (ReadOnlyTask task: data.getTaskList()) {
+            build.addKeyword(task.getMessage());
+        }
+        taskList = build.build();        
     }
     
     private String[] getTokens(String input) {
@@ -52,6 +77,9 @@ public class AutoComplete {
             suggestions = commandList.getSuggestions(input);
             start_index = 0;
             end_index = input.length();
+        }
+        else {
+            
         }
 
     }
@@ -83,6 +111,11 @@ public class AutoComplete {
         tabCount++;
         
         fillInSuggestions();
+    }
+    
+    @Subscribe
+    private void handleTaskTrackerChangedEvent(TaskTrackerChangedEvent event) {
+        updateTaskList(event.data);
     }
 
 }

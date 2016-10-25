@@ -11,13 +11,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import main.logic.parser.ReferenceList;
+import main.model.ModelManager;
 
 public class AutoCompleteTest {
     AutoComplete autoComplete;
     
     @Before
     public void setup() {
-        autoComplete = new AutoComplete();
+        autoComplete = new AutoComplete(new ModelManager());
     }
     
     @Test

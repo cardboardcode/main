@@ -50,6 +50,10 @@ public class SetTrie {
         return new TrieBuilder();
     }
     
+    public static TrieBuilder builder(SetTrie trie) {
+        return new TrieBuilder(trie);
+    }
+    
     public static class TrieBuilder {
         
         private TreeSet<String> wordList;
@@ -58,6 +62,11 @@ public class SetTrie {
         private TrieBuilder() {
             wordList = new TreeSet<String>();
         }
+        
+        private TrieBuilder(SetTrie trie) {
+            trie.wordList = new TreeSet<String>();
+        }
+        
         
         public TrieBuilder caseInsensitive() {
             this.caseInsensitive = true;
