@@ -100,9 +100,9 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void doneTask(int index) throws TaskNotFoundException {
         ReadOnlyTask target = getTaskfromIndex(index);
-        addToUndo(UndoCommand.DONE,(Task)target);
         taskTracker.doneTask(target);
         indicateTaskTrackerChanged();
+        addToUndo(UndoCommand.DONE,(Task)target);
     }
     
     @Override
@@ -413,9 +413,7 @@ public class ModelManager extends ComponentManager implements Model {
     
     @Override
     public void doneTaskUndoRedo(Task task) throws DuplicateTaskException, TaskNotFoundException {
-        taskTracker.addTask(task);
-        Task toDelete = new Task(task);
-        deleteTaskUndoRedo(toDelete);
+        taskTracker.incompleteTask(task);
         updateFilteredListToShowAllPending();
         indicateTaskTrackerChanged();
     }
