@@ -65,7 +65,7 @@ public interface Model {
     /** re-adds a done task upon undo 
      * @throws DuplicateTaskException 
      * @throws TaskNotFoundException **/
-    void doneTaskUndoRedo(int doneID, Task Task) throws DuplicateTaskException, TaskNotFoundException;
+    void doneTaskUndoRedo(Task Task) throws DuplicateTaskException, TaskNotFoundException;
     
     //@@author A0144132W
     /** Returns the filtered task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */

@@ -69,7 +69,7 @@ public class UndoCommand extends Command {
         }
         if(ID==DONE) {
             try {
-                undoDone(undoHistory.getDoneID(), undoHistory.getTasks().get(0));
+                undoDone(undoHistory.getTasks().get(0));
             } catch (DuplicateTaskException | TaskNotFoundException e) {
                 e.printStackTrace();
             }
@@ -100,7 +100,7 @@ public class UndoCommand extends Command {
         model.clearTaskUndoRedo(tasks);
     }
     
-    private void undoDone(int doneID, Task task) throws DuplicateTaskException, TaskNotFoundException {
-        model.doneTaskUndoRedo(doneID, task);
+    private void undoDone(Task task) throws DuplicateTaskException, TaskNotFoundException {
+        model.doneTaskUndoRedo(task);
     }
 }
