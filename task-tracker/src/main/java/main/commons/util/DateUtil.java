@@ -81,20 +81,8 @@ public class DateUtil {
     
     
     /*
-     * @returns a string with a nice format
+     * @returns a date with a nice readable format
      */
-    public static String readableDate(Date date) {
-     
-        PrettyTime p = new PrettyTime();
-        return p.format(date);
-                
-//        DateFormat df = new SimpleDateFormat("dd MMM h:mm a");
-//        String dateString = df.format(date);
-//        return dateString; 
-        
-    }
-    
-    // TODO replace above with this
     public static String readableDate(Date date, boolean isInferred) {
         DateFormat df;
         if (isInferred) {
@@ -104,6 +92,15 @@ public class DateUtil {
             df = new SimpleDateFormat("dd MMM h:mm a");            
         }
         return df.format(date);
+    }
+    
+    /*
+     * takes isInferred as true by default
+     * 
+     * @returns a a date with a nice readable format, without time
+     */
+    public static String readableDate(Date date) {
+        return readableDate(date, true);
     }
     
     /*
