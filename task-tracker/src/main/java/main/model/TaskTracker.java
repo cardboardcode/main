@@ -14,6 +14,7 @@ import main.model.task.ReadOnlyTask;
 import main.model.task.Task;
 import main.model.task.UniqueTaskList;
 import main.model.task.UniqueTaskList.DuplicateTaskException;
+import main.model.task.UniqueTaskList.TaskNotFoundException;
 
 public class TaskTracker implements ReadOnlyTaskTracker{
     private static final Logger logger = LogsCenter.getLogger(TaskTracker.class);
@@ -89,6 +90,17 @@ public class TaskTracker implements ReadOnlyTaskTracker{
     		throw new UniqueTaskList.TaskNotFoundException();
     	}
     }
+    
+    public void incompleteTask(ReadOnlyTask task) throws TaskNotFoundException {
+        if(tasks.contains(task)){
+            tasks.incomplete(task);
+            return;
+        }
+        else{
+            throw new UniqueTaskList.TaskNotFoundException();
+        }
+    }
+    
     
     public ObservableList<Task> getTasks() {
         return tasks.getInternalList();
