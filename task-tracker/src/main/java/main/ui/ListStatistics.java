@@ -1,3 +1,4 @@
+//@@author A0139422J
 package main.ui;
 
 import javafx.scene.Node;
@@ -19,7 +20,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
-//@@author A0139422J
 public class ListStatistics extends UiPart {
 
 	private static final String FXML = "ListStatistics.fxml";

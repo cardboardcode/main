@@ -1,3 +1,4 @@
+//@@author A0139422J
 package main.ui;
 
 
@@ -24,7 +25,6 @@ import java.util.logging.Logger;
  * @param ListView<ReadOnlyTask> taskListView
  * @author bey
  */
-//@@author A0139422J
 public class TaskListPanel extends UiPart {
     private final Logger logger = LogsCenter.getLogger(TaskListPanel.class);
     private static final String FXML = "TaskListPanel.fxml";
