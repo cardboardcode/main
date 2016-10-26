@@ -1,4 +1,4 @@
-//@@author A0139422J
+<!--@@author A0139422J -->
 # Developer Guide 
 
 ##Table of Contents <br>
@@ -146,9 +146,10 @@ The `Model`,
   so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
+<!--@@author A0142686X -->
 #### Storage component
 
-![Storage](images/A_Storage.png)<br>
+![Storage](images/A_storage.png)<br>
 
 **API** : [`Storage.java`](../src/main/java/main/storage/Storage.java)
 
@@ -185,7 +186,7 @@ and logging destinations.
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file 
 (default: `config.json`)
-
+<!-- @@author -->
 ## Dev Ops
 
 ### Build Automation
