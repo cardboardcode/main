@@ -1,3 +1,4 @@
+//@@author A0139422J
 package main.ui;
 
 import com.google.common.eventbus.Subscribe;
@@ -25,7 +26,6 @@ import java.util.logging.Logger;
  * "addressbook" keyword check done
  * @author bey
  */
-//@@author A0139422J
 public class UiManager extends ComponentManager implements Ui {
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
     private static final String ICON_APPLICATION = "/images/pp.png";

@@ -1,3 +1,4 @@
+//@@author A0139422J
 package main.ui;
 
 
@@ -18,7 +19,6 @@ import main.commons.util.AppUtil;
  * "addressbook" keyword check done
  *@author bey
  */
-//@@author A0139422J
 public abstract class UiPart {
 
     /**

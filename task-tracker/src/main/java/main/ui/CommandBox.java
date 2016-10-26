@@ -1,3 +1,4 @@
+//@@author A0139422J
 package main.ui;
 
 import com.google.common.eventbus.Subscribe;
@@ -36,7 +37,7 @@ import com.google.common.eventbus.Subscribe;
  *            CommandResult mostRecentResult
  * @@author A0139422J
  */
-//@@author A0139422J
+
 public class CommandBox extends UiPart {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private static final String FXML = "CommandBox.fxml";

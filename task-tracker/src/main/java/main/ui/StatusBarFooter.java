@@ -1,3 +1,4 @@
+//@@author A0139422J
 package main.ui;
 
 import javafx.fxml.FXML;
@@ -24,7 +25,6 @@ import com.google.common.eventbus.Subscribe;
  * @param AnchorPane syncStatusBarPane
  * @author bey
  */
-//@@author A0139422J
 public class StatusBarFooter extends UiPart {
     private static final Logger logger = LogsCenter.getLogger(StatusBarFooter.class);
     private StatusBar syncStatus;
