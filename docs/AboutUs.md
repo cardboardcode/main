@@ -25,7 +25,7 @@ We are a team based in the [School of Computing, National University of Singapor
 *   Other major contribution:
     -   Converted User Guide and Developer Guide to markdown format
     
-
+---
 ### [Ruth Chew](https://github.com/chewwt)<br>
 **Role**: Integration, Github Master, Code Developer  
 
