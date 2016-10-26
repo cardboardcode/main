@@ -65,7 +65,7 @@ public class ListCommand extends Command {
 	    else if (priority == PriorityType.HIGH) readable.append(prefix).append(" high priority ").append(task);
 	    else readable.append(prefix).append(" normal priority ").append(task);
 
-	    if (date != null) readable.append(" due ").append(DateUtil.readableDate(date));
+	    if (date != null) readable.append(" due ").append(DateUtil.readableDate(date, true));
 	    
 	    return readable.toString();
 	    

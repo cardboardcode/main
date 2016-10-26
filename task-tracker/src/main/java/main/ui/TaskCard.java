@@ -1,3 +1,4 @@
+//@@author A0139422J
 package main.ui;
 
 
@@ -40,6 +41,8 @@ public class TaskCard extends UiPart{
     private Label deadline;
     @FXML
     private Label endtime;
+    @FXML
+    private Label starttime;
     
     @FXML
     private Rectangle priorityTab;
@@ -74,33 +77,43 @@ public class TaskCard extends UiPart{
         id.setText(displayedIndex + ". ");
         
         if (task.getDeadline()!=null)
-        	deadline.setText(""+ task.getDeadlineString());
+        	deadline.setText("Deadline: "+ task.getDeadlineString());
         else
         	deadline.setText("");
+        
         if (task.getEndTime()!=null)
-        	endtime.setText(""+ task.getEndTime());
+        	endtime.setText("End: "+ task.getEndTimeString());
         else
         	endtime.setText("");
+        
+        if (task.getStartTime()!=null)
+            starttime.setText("Start: "+ task.getStartTimeString());
+        else
+            starttime.setText("");
 		
 	}
     
     private void setPriorityTabColour() {
 		if (task.getPriority().equals(PriorityType.HIGH)){
 			priorityTab.setFill(Color.RED);
+			cardPane.setStyle("-fx-background-color: #ff6666;");
 		}
 		else if (task.getPriority().equals(PriorityType.LOW)){
 			priorityTab.setFill(Color.YELLOWGREEN);
+			cardPane.setStyle("-fx-background-color: #ffffb3;");
 		}
 		else{
 			priorityTab.setFill(Color.ORANGE);
+			cardPane.setStyle("-fx-background-color: #ffa366;");
 		}	
 	}
 
 	private void configureLayout() {
     	
-    	cardPane.setSpacing(30.0);
+    	cardPane.setSpacing(18.0);
         deadline.setMinWidth(300);
-        endtime.setMinWidth(70);
+//        endtime.setMinWidth(300);
+        starttime.setMinWidth(300);
         cardPane.setMinWidth(450);
 
 	}

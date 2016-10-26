@@ -22,6 +22,7 @@ public class UndoHistory {
         this.tasks = new ArrayList<Task>(collection);       
     }
     
+    
     public int getID() {
         return ID;
     }
@@ -29,4 +30,5 @@ public class UndoHistory {
     public ArrayList<Task> getTasks() {
         return tasks;
     }
+    
 }

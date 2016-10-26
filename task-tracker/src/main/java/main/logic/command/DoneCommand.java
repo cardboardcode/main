@@ -1,3 +1,4 @@
+//@@author A0139422J
 package main.logic.command;
 
 import main.model.task.Task;
@@ -31,7 +32,8 @@ public class DoneCommand extends Command{
 
             model.doneTask(taskIndex);
 
-            return new CommandResult(String.format(MESSAGE_SUCCESS, taskIndex));
+            return new CommandResult(String.format(MESSAGE_SUCCESS, taskIndex+1));
+
 
         } catch (IndexOutOfBoundsException ie) {
             return new CommandResult("The task index provided is invalid");

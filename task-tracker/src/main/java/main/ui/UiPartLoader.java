@@ -1,3 +1,4 @@
+//@@author A0139422J
 package main.ui;
 
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,7 @@ import main.Main;
  * "addressbook" keyword check done
  * @author bey
  */
+
 public class UiPartLoader {
     private final static String FXML_FILE_FOLDER = "/view/";
 

@@ -27,6 +27,7 @@ import main.logic.command.DeleteCommand;
 import main.logic.command.DoneCommand;
 import main.logic.command.EditCommand;
 import main.logic.command.ExitCommand;
+import main.logic.command.FindCommand;
 import main.logic.command.HelpCommand;
 import main.logic.command.IncorrectCommand;
 import main.logic.command.ListCommand;
@@ -73,6 +74,8 @@ public class MainParser {
                 return new ExitCommand();
             case DoneCommand.COMMAND_WORD:
                 return prepareDone(task);
+            case FindCommand.COMMAND_WORD:
+                return new FindCommand();
             case ClearCommand.COMMAND_WORD:
                 return new ClearCommand();
             case UndoCommand.COMMAND_WORD:

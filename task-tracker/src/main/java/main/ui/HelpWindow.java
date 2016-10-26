@@ -1,3 +1,4 @@
+//@@author A0139422J
 package main.ui;
 
 
@@ -64,7 +65,7 @@ public class HelpWindow extends UiPart {
     public void show() {
         dialogStage.show();
     } 
-    
+//  @@author A0139422J   
     public void closeHelpWindow(){
     	dialogStage.close();
     }

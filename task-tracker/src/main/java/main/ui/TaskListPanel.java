@@ -1,3 +1,4 @@
+//@@author A0139422J
 package main.ui;
 
 
@@ -75,7 +76,9 @@ public class TaskListPanel extends UiPart {
         SplitPane.setResizableWithParent(placeHolderPane, true);
         placeHolderPane.getChildren().add(panel);
         panel.setMinWidth(450);
+        panel.setMaxWidth(450);
         placeHolderPane.setMinWidth(450);
+        placeHolderPane.setMaxWidth(450);
     }
 
     private void setEventHandlerForSelectionChangeEvent() {

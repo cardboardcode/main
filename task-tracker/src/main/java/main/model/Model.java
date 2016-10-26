@@ -62,6 +62,11 @@ public interface Model {
     /** Clears Tasks upon undo **/
     void clearTaskUndoRedo(ArrayList<Task> tasks);
     
+    /** re-adds a done task upon undo 
+     * @throws DuplicateTaskException 
+     * @throws TaskNotFoundException **/
+    void doneTaskUndoRedo(Task Task) throws DuplicateTaskException, TaskNotFoundException;
+    
     //@@author A0144132W
     /** Returns the filtered task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
     UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList();

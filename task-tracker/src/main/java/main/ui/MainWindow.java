@@ -1,3 +1,4 @@
+//@@author A0139422J
 package main.ui;
 
 import main.commons.core.Config;
@@ -9,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCombination;
@@ -64,7 +66,10 @@ public class MainWindow extends UiPart {
 	private Scene scene;
 
 	private String taskTrackerName;
-
+	
+	@FXML
+	private SplitPane splitpane;
+	
 	@FXML
 	private AnchorPane commandBoxPlaceholder;
 
@@ -133,6 +138,7 @@ public class MainWindow extends UiPart {
 		listStatistics = ListStatistics.load(primaryStage, getListStatisticsPlaceholder(), logic);
 		setInitialInputFocus();
 		FxViewUtil.applyAnchorBoundaryParameters(rootLayout, 0.0, 0.0, 0.0, 0.0);
+		splitpane.maxWidthProperty().multiply(0.5);
 	}
 
 	@FXML
@@ -181,7 +187,7 @@ public class MainWindow extends UiPart {
 	}
 
 	private void setWindowMinSize() {
-		// primaryStage.setMinHeight(MIN_HEIGHT);
+// primaryStage.setMinHeight(MIN_HEIGHT);
 //		primaryStage.setMaximized(true);
 	}
 

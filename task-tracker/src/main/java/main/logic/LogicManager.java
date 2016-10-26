@@ -2,6 +2,7 @@ package main.logic;
 
 import main.commons.core.LogsCenter;
 import main.commons.core.ComponentManager;
+import main.logic.autocomplete.AutoComplete;
 import main.logic.command.Command;
 import main.logic.command.CommandResult;
 import main.logic.parser.MainParser;
@@ -21,10 +22,12 @@ public class LogicManager extends ComponentManager implements Logic {
 
     private final Model model;
     private final MainParser parser;
+    private final AutoComplete autoComplete;
 
     public LogicManager(Model model, Storage storage) {
         this.model = model;
         this.parser = new MainParser();
+        this.autoComplete = new AutoComplete(model);
     }
 
     @Override
