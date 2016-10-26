@@ -1,4 +1,5 @@
 //@@author A0139750B
+
 package main.model;
 
 import main.commons.core.LogsCenter;
@@ -113,9 +114,6 @@ public class TaskTracker implements ReadOnlyTaskTracker{
     
     @Override
     public String toString() {
-//        return tasks.getInternalList().size() + " tasks";
-      
-//         TODO: refine later
         String str = "";
         Iterator<Task> iterate = tasks.iterator();
         while (iterate.hasNext()) {
