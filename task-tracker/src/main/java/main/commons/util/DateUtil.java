@@ -6,8 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.ocpsoft.prettytime.PrettyTime;
-
 public class DateUtil {
     
     /*
@@ -125,3 +123,4 @@ public class DateUtil {
         return setTime(date, 8, true);
     }
 }
+

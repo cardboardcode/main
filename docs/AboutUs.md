@@ -31,15 +31,24 @@ We are a team based in the [School of Computing, National University of Singapor
     -   Converted User Guide and Developer Guide to markdown format
     
 ---
-### [Ruth Chew](https://github.com/chewwt)<br>
+<!-- @@author A0144132W -->
+### Ruth Chew [@chewwt](https://github.com/chewwt)<br>
+<img src="images/ruth.jpg" height="200p" width="150p"> <br>
 **Role**: Integration, Github Master, Code Developer  
 
-* Components in charge of: Logic
+* Components in charge of: [Logic](https://github.com/CS2103AUG2016-T09-C3/main/tree/master/task-tracker/src/main/java/main/logic)
+* Features implemented:
+    * [Sorting](https://github.com/CS2103AUG2016-T09-C3/main/tree/master/task-tracker/src/main/java/main/model/filter)
+    * [AutoComplete](https://github.com/CS2103AUG2016-T09-C3/main/tree/master/task-tracker/src/main/java/main/logic/autocomplete)
+* Code written: [[functional code](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/main/A0144132W.md)] [[test code](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/test/A0144132W.md)]
 * Other major contributions: 
     * Set up Travis and Coveralls
+    * Maintain GitHub repo
 
+---
+<!-- @@author A0139750B -->    
 ### [Goh Quan Yang Daryl](https://github.com/darylgqy) <br>
-<img src="Pictures.Daryl.jpg" height="200p" width="150p"> <br>
+<img src="images/Daryl.jpg" height="200p" width="150p"> <br>
 **Role**: Documentation, Code Quality, Code Developer
 
 * Components in charge of: Model, Code Testing and Code Quality

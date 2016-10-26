@@ -107,6 +107,7 @@ being saved to the hard disk and the status bar of the UI being updated to refle
 
 The sections below give more details of each component.
 
+<!-- @@author A0144132W -->
 ####Logic
 ![Logic](images/A_Logic.png)<br>
 **API** : [`Logic.java`]()
@@ -186,7 +187,7 @@ and logging destinations.
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file 
 (default: `config.json`)
-<!-- @@author -->
+
 ## Dev Ops
 
 ### Build Automation
@@ -216,7 +217,7 @@ is better than these alternatives.<br>
     >   * Include those libraries in the repo (this bloats the repo size)<br>
     >   * Require developers to download those libraries manually (this creates extra work for developers)<br>
     
-    
+<!-- @@author A0144132W -->
 ## Appendix A : User Stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have)  - `* *`,  Low (unlikely to have) - `*`
@@ -251,6 +252,7 @@ Priority | As a ... | I want to ... | So that I
 `*` | user | be able to create aliases | can customize and enter frequently used commands easily.
 `*` | user | be able to create multiple user profiles for the software | have many people using the app on the same PC.
 
+<!-- @@author A0139750B -->    
 ## Appendix B : Use Cases
 
 (For all use cases below, the **System** is the `TaskTracker` and the **Actor** is the `user`, unless specified otherwise)

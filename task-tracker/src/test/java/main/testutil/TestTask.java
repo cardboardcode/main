@@ -1,8 +1,6 @@
+//@@author A0144132W
 package main.testutil;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -291,12 +289,12 @@ public class TestTask implements ReadOnlyTask {
         sb.append("add " + this.getMessage());
         
         if (type == TaskType.EVENT) {
-            sb.append(" " + getStartTime() + " ")
+            sb.append(" " + getStartTimeString() + " ")
               .append("to")
-              .append(" " + getEndTime() + " ");
+              .append(" " + getEndTimeString() + " ");
         }
         else if (type == TaskType.DEADLINE) {
-            sb.append(" " + getDeadline());
+            sb.append(" " + getDeadlineString());
         }
         
         String priorityInput;
