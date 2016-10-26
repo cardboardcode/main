@@ -5,13 +5,18 @@
 We are a team based in the [School of Computing, National University of Singapore](http://www.comp.nus.edu.sg), doing this project for our [CS2103](http://www.comp.nus.edu.sg/~cs2103/AY1617S1/) module. We hope this app proves to be useful for people and that this app's scope is not limited solely to our module project.
 
 ## Team
+### Bey Hao Yun [@cardboardcode](https://github.com/cardboardcode) <br>
 <img src="images/beyhaoyun.jpg" height="200p" width="150p"><br>
-### [Bey Hao Yun](https://github.com/cardboardcode) <br>
-
 **Role**: Team Lead, Documentation, Deliverables, Scheduling, Visual Expert, Code Developer
 
-* Components in charge of: UI, Commands, Main
-
+*   Components in charge of: [UI](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/DeveloperGuide.md#ui), [Commands] (https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/DeveloperGuide.md#logic), [Main](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/DeveloperGuide.md#main)
+*   Aspects/tools in charge of: Team Lead, Documentation, Deliverables, Scheduling, Visual Expert, Code Developer
+*   Features implemented:
+    -   [List Statistics](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#5-undo-a-task)
+*   Code written: [[functional code](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/main/A0139422J.md)][[test code](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/test/A0139422J.md)][[docs](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/docs/A0139422J.md)]
+*   Other major contribution:
+    -   Refined User Guide and Developer Guide, Reconfigured Task-Tracker GUI and implemented nice-to-have feature "List Statistics"
+    
 ---
 <!-- @@author A0142686X-->
 ### Chandraanshu Garg [@Chandraanshu](https://github.com/Chandraanshu)
