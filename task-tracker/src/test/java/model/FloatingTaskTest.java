@@ -1,3 +1,5 @@
+//@@author A0139750B-unused
+//FloatingTask class was unused so the test is half done and unused
 package model;
 
 import main.model.task.PriorityType;
