@@ -9,6 +9,7 @@ import java.util.Arrays;
 /**
  * Provides a handle to the main menu of the app.
  */
+//@@author A0139422J
 public class MainMenuHandle extends GuiHandle {
     public MainMenuHandle(GuiRobot guiRobot, Stage primaryStage) {
         super(guiRobot, primaryStage, TestMain.APP_TITLE);

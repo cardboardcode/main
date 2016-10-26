@@ -19,6 +19,7 @@ import javafx.fxml.FXML;
  * "addressbook" keyword check done
  * @author bey
  */
+//@@author A0139422J
 public class HelpWindow extends UiPart {
 
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
@@ -64,7 +65,7 @@ public class HelpWindow extends UiPart {
     public void show() {
         dialogStage.show();
     } 
-    
+//  @@author A0139422J   
     public void closeHelpWindow(){
     	dialogStage.close();
     }

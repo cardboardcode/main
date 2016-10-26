@@ -15,6 +15,7 @@ import main.commons.util.FxViewUtil;
  * "addressbook" keyword check done
  * @author bey
  */
+//@@author A0139422J
 public class ResultDisplay extends UiPart {
     public static final String RESULT_DISPLAY_ID = "resultDisplay";
     private static final String STATUS_BAR_STYLE_SHEET = "result-display";

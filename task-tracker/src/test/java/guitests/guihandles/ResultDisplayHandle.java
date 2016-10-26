@@ -8,6 +8,7 @@ import main.TestMain;
 /**
  * A handler for the ResultDisplay of the UI
  */
+//@@author A0139422J
 public class ResultDisplayHandle extends GuiHandle {
 
     public static final String RESULT_DISPLAY_ID = "#resultDisplay";
