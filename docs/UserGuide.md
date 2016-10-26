@@ -1,4 +1,4 @@
-//@@author A0139422J 
+<!--@@author A0139422J -->
 ![T-T](images/T-T.png)
 
 # **USER GUIDE** 
@@ -90,7 +90,7 @@ The format to edit an existing task is : <br>
 Let’s say task index “**1**” refers to the task `wash dishes monday 4pm`
 
 *   `delete 1` will delete the aforementioned `wash dishes` task.
-
+<!--@@author A0142686X -->
 ###4. LIST Tasks
 
 The format to edit an existing task is : <br>

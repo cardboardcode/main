@@ -1,4 +1,4 @@
-//@@author A0142686X
+//@@author A0142686X- reused
 package main.commons.core;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
