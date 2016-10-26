@@ -33,7 +33,7 @@ We are a team based in the [School of Computing, National University of Singapor
 ---
 <!-- @@author A0144132W -->
 ### Ruth Chew [@chewwt](https://github.com/chewwt)<br>
-<img src="images/Ruth.png" height="200p" width="150p"> <br>
+<img src="images/Ruth.png" height="200p" width="200p"> <br>
 **Role**: Integration, Github Master, Code Developer  
 
 * Components in charge of: [Logic](https://github.com/CS2103AUG2016-T09-C3/main/tree/master/task-tracker/src/main/java/main/logic)
