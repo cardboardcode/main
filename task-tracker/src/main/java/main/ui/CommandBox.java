@@ -153,7 +153,7 @@ public class CommandBox extends UiPart {
         handleDownEvent();
         handleTabEvent();
     }
-//    @@author A0139422J
+
     private void handleUpEvent() {
 
         commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
@@ -170,7 +170,7 @@ public class CommandBox extends UiPart {
             }
         });
     }
-//  @@author A0139422J
+
     private void handleDownEvent() {
         commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
             if (event.getCode() == KeyCode.DOWN) {
@@ -185,7 +185,6 @@ public class CommandBox extends UiPart {
             }
         });
     }
-//  @@author A0139422J
     public static ArrayList<String> getHistory() {
         return commandHistory;
     }
