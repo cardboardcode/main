@@ -1,3 +1,4 @@
+//@@author A0139422J
 package guitests.guihandles;
 
 import guitests.GuiRobot;
@@ -9,7 +10,6 @@ import main.model.task.ReadOnlyTask;
 /**
  * Provides a handle to a person card in the person list panel.
  */
-//@@author A0139422J
 public class TaskCardHandle extends GuiHandle {
     private static final String MESSAGE_FIELD_ID = "#message";
 

@@ -1,3 +1,4 @@
+//@@author A0139422J
 package guitests;
 
 import guitests.guihandles.*;
@@ -24,7 +25,6 @@ import static org.junit.Assert.assertTrue;
 /**
  * A GUI Test class for AddressBook.
  */
-//@@author A0139422J
 public abstract class TaskTrackerGuiTest {
 
     /* The TestName Rule makes the current test name available inside test methods */

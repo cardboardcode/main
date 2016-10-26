@@ -1,3 +1,4 @@
+//@@author A0139422J
 package guitests.guihandles;
 
 import guitests.GuiRobot;
@@ -6,7 +7,6 @@ import javafx.stage.Stage;
 /**
  * A handle to the Command Box in the GUI.
  */
-//@@author A0139422J
 public class CommandBoxHandle extends GuiHandle{
 
     private static final String COMMAND_INPUT_FIELD_ID = "#commandTextField";

@@ -1,3 +1,4 @@
+//@@author A0139422J
 package guitests.guihandles;
 
 import guitests.GuiRobot;
@@ -8,7 +9,6 @@ import main.TestMain;
 /**
  * Provides a handle for the main GUI.
  */
-//@@author A0139422J
 public class MainGuiHandle extends GuiHandle {
 
     public MainGuiHandle(GuiRobot guiRobot, Stage primaryStage) {

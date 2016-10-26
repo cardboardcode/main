@@ -1,3 +1,4 @@
+//@@author A0139422J
 package guitests;
 
 import guitests.guihandles.TaskCardHandle;
@@ -12,7 +13,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
 
-//@@author A0139422J
 public class AddCommandTest extends TaskTrackerGuiTest {
 
     @Test

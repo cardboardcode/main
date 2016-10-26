@@ -1,10 +1,10 @@
+//@@author A0139422J
 package guitests;
 
 import org.junit.Test;
 import main.testutil.TypicalTestTasks;
 import static org.junit.Assert.assertTrue;
 
-//@@author A0139422J
 public class ClearCommandTest extends TaskTrackerGuiTest {
 
     @Test
