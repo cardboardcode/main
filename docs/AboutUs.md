@@ -31,6 +31,7 @@ We are a team based in the [School of Computing, National University of Singapor
     -   Converted User Guide and Developer Guide to markdown format
     
 ---
+<!-- @@author A0144132W -->
 ### Ruth Chew [@chewwt](https://github.com/chewwt)<br>
 <img src="images/Ruth.png" height="200p" width="150p"> <br>
 **Role**: Integration, Github Master, Code Developer  
@@ -44,6 +45,8 @@ We are a team based in the [School of Computing, National University of Singapor
     * Set up Travis and Coveralls
     * Maintain GitHub repo
 
+---
+<!-- @@author -->
 ### [Goh Quan Yang Daryl](https://github.com/darylgqy) <br>
 <img src="Pictures.Daryl.jpg" height="200p" width="150p"> <br>
 **Role**: Documentation, Code Quality, Code Developer
