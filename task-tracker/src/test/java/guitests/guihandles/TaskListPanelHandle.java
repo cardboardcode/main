@@ -1,3 +1,4 @@
+//@@author A0139422J
 package guitests.guihandles;
 
 
@@ -20,7 +21,6 @@ import static org.junit.Assert.assertTrue;
 /**
  * Provides a handle for the panel containing the person list.
  */
-//@@author A0139422J
 public class TaskListPanelHandle extends GuiHandle {
 
     public static final int NOT_FOUND = -1;
