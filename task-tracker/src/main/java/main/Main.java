@@ -1,3 +1,4 @@
+//@@author A0139422J
 package main;
  
 import java.io.IOException;
@@ -35,7 +36,6 @@ import main.model.UserPrefs;
 /**
  * The main entry point to the application.
  */
-//@@author A0139422J
 public class Main extends Application {
     private static final Logger logger = LogsCenter.getLogger(Main.class);
 

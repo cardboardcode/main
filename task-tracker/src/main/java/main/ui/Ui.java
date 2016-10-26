@@ -1,3 +1,4 @@
+//@@author A0139422J
 package main.ui;
 
 import javafx.stage.Stage;
@@ -7,7 +8,6 @@ import javafx.stage.Stage;
  * All Ui classes which implements this interface must have a start and stop function
  * @author bey
  */
-//@@author A0139422J
 public interface Ui {
 
     /** Starts the UI (and the App).  */

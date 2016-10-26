@@ -1,6 +1,6 @@
+//@@author A0139422J
 package main.logic.command;
 
-//@@author A0139422J
 import main.commons.core.EventsCenter;
 
 import main.commons.events.ui.ExitAppRequestEvent;

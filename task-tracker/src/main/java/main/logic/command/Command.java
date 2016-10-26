@@ -1,3 +1,4 @@
+//@@author A0139422J
 package main.logic.command;
 
 import main.commons.core.EventsCenter;
@@ -10,7 +11,6 @@ import main.model.Model;
  * Represents a command with hidden internal logic and the ability to be executed.
  * @author bey
  */
-//@@author A0139422J
 public abstract class Command {
 	protected Model model;
 	private int targetIndex = -1;

@@ -1,3 +1,4 @@
+//@@author A0139422J
 package main.ui;
 
 
@@ -26,7 +27,6 @@ import main.model.task.ReadOnlyTask;
  * @author bey
  *
  */
-//@@author A0139422J
 public class TaskCard extends UiPart{
 
     private static final String FXML = "TaskListCard.fxml";

@@ -1,3 +1,4 @@
+//@@author A0139422J
 package main.ui;
 
 import main.commons.core.Config;
@@ -40,7 +41,7 @@ import main.model.UserPrefs;
  *            statusbarPlaceholder
  * @author bey
  */
-//@@author A0139422J
+
 public class MainWindow extends UiPart {
 
 	private static final String ICON = "/images/pp.png";

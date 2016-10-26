@@ -108,9 +108,26 @@ The format to edit an existing task is : <br>
 <br>
 ![List Screen](images/List_Command.png)
 
-###5. HELP command
+### 5. Undo a Task
 
-Enter `help` into the command line to list out all the commands available in T-T.<br> <br>
+Enter `undo` into the command line to the previous commands you have entered in the session.  
+
+### 6. Search for Tasks
+
+The format to search for certain tasks is :  
+    `search <keyword>`  
+
+*   The tasks you are looking for can be obtained by typing in any word that is contained within the tasks' messages.
+
+For example:  
+
+Let say task index **1** refers to the task `wash dishes monday 4pm`
+
+*   `search dishes` will show the existing `wash dishes` task.
+
+### 7. HELP command
+
+Enter `help` into the command line to list out all the commands available in T-T.
 
 ## **T-T List Statistics**
 
@@ -135,6 +152,8 @@ Getting the hang of it? Here’s a quick and dirty summary of all T-T commands
 | edit  | Edits an existing task  | `edit 1 review UG tuesday 10am -h`  |
 | delete  | Deletes an existing task  |  `delete 1`    |
 | list  | Sorts and displays the list of existing tasks  | `list high today` |
+| undo  | Sorts and displays the list of existing tasks  | `undo` |
+| search  | Searchs for tasks that contain a designated keyword  | `search meaning` |
 |  help | Displays the list of commands available on T-T  |  `help` |
 
 ## **FAQ**

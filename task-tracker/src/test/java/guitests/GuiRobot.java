@@ -1,3 +1,4 @@
+//@@author A0139422J
 package guitests;
 
 import javafx.scene.input.KeyCodeCombination;
@@ -8,7 +9,6 @@ import main.testutil.TestUtil;
  * Robot used to simulate user actions on the GUI.
  * Extends {@link FxRobot} by adding some customized functionality and workarounds.
  */
-//@@author A0139422J
 public class GuiRobot extends FxRobot {
 
     public GuiRobot push(KeyCodeCombination keyCodeCombination){
