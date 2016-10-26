@@ -1,3 +1,5 @@
+//@@author A0139750B-unused
+//splitting task into subclasses causes a lot of issues and bugs in other components
 package main.model.task;
 
 public class FloatingTask extends Task {
