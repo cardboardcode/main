@@ -1,3 +1,4 @@
+//@@author A0139422J
 package main.logic.command;
 /**
  * Represents the result of a command execution.

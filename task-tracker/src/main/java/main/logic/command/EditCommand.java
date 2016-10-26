@@ -1,6 +1,6 @@
+//@@author A0139422J
 package main.logic.command;
 
-//@@author A0139422J
 import java.util.Date;
 
 import main.commons.exceptions.IllegalValueException;
