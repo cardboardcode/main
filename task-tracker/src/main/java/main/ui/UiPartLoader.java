@@ -13,6 +13,7 @@ import main.Main;
  * "addressbook" keyword check done
  * @author bey
  */
+//@@author A0139422J
 public class UiPartLoader {
     private final static String FXML_FILE_FOLDER = "/view/";
 

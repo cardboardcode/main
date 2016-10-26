@@ -34,8 +34,9 @@ import com.google.common.eventbus.Subscribe;
  *            TextField commandTextField
  * @param FXML
  *            CommandResult mostRecentResult
- * @author bey
+ * @@author A0139422J
  */
+//@@author A0139422J
 public class CommandBox extends UiPart {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private static final String FXML = "CommandBox.fxml";
@@ -151,7 +152,7 @@ public class CommandBox extends UiPart {
         handleDownEvent();
         handleTabEvent();
     }
-
+//    @@author A0139422J
     private void handleUpEvent() {
 
         commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
@@ -168,7 +169,7 @@ public class CommandBox extends UiPart {
             }
         });
     }
-
+//  @@author A0139422J
     private void handleDownEvent() {
         commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
             if (event.getCode() == KeyCode.DOWN) {
@@ -183,12 +184,12 @@ public class CommandBox extends UiPart {
             }
         });
     }
-
+//  @@author A0139422J
     public static ArrayList<String> getHistory() {
         return commandHistory;
     }
 
-    // @@author A0144132W
+// @@author A0144132W
     @FXML
     public void handleKeyReleased(KeyEvent event) {
         if (!event.getCode().isDigitKey() && !event.getCode().isLetterKey() && event.getCode() != KeyCode.BACK_SPACE
