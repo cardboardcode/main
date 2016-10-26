@@ -48,7 +48,7 @@ We are a team based in the [School of Computing, National University of Singapor
 ---
 <!-- @@author A0139750B -->    
 ### [Goh Quan Yang Daryl](https://github.com/darylgqy) <br>
-<img src="Daryl.jpg" height="200p" width="150p"> <br>
+<img src="images/Daryl.jpg" height="200p" width="150p"> <br>
 **Role**: Documentation, Code Quality, Code Developer
 
 * Components in charge of: Model, Code Testing and Code Quality
