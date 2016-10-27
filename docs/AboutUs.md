@@ -27,7 +27,7 @@ We are a team based in the [School of Computing, National University of Singapor
     -   [Redo command](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#6-redo-a-task)
 *   Code written: [[functional code](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/main/A0142686X.md)][[test code](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/test/A0142686X.md)][[docs]()]
 * Other major contributions: 
-    *Converted User Guide and Developer Guide to markdown format 
+    * Converted User Guide and Developer Guide to markdown format.
 
 
 ---
