@@ -9,11 +9,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -23,6 +27,7 @@ import main.commons.events.ui.ExitAppRequestEvent;
 import main.commons.util.FxViewUtil;
 import main.logic.Logic;
 import main.model.UserPrefs;
+import main.model.task.ReadOnlyTask;
 
 /**
  * Instantiates all the individual components for the Gui and interacts with
@@ -66,10 +71,10 @@ public class MainWindow extends UiPart {
 	private Scene scene;
 
 	private String taskTrackerName;
-	
+
 	@FXML
 	private SplitPane splitpane;
-	
+
 	@FXML
 	private AnchorPane commandBoxPlaceholder;
 
@@ -84,6 +89,8 @@ public class MainWindow extends UiPart {
 
 	@FXML
 	private AnchorPane listStatisticsPlaceholder;
+
+	public static final KeyCodeCombination KEY_MINMAX = new KeyCodeCombination(KeyCode.M, KeyCodeCombination.ALT_DOWN);
 
 	public MainWindow() {
 		super();
@@ -137,6 +144,7 @@ public class MainWindow extends UiPart {
 		commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultDisplay, logic);
 		listStatistics = ListStatistics.load(primaryStage, getListStatisticsPlaceholder(), logic);
 		setInitialInputFocus();
+		handleAllEvents();
 		FxViewUtil.applyAnchorBoundaryParameters(rootLayout, 0.0, 0.0, 0.0, 0.0);
 		splitpane.maxWidthProperty().multiply(0.5);
 	}
@@ -187,8 +195,8 @@ public class MainWindow extends UiPart {
 	}
 
 	private void setWindowMinSize() {
-// primaryStage.setMinHeight(MIN_HEIGHT);
-//		primaryStage.setMaximized(true);
+		// primaryStage.setMinHeight(MIN_HEIGHT);
+		// primaryStage.setMaximized(true);
 	}
 
 	/**
@@ -203,10 +211,10 @@ public class MainWindow extends UiPart {
 		helpWindow = HelpWindow.load(primaryStage);
 		helpWindow.show();
 	}
-	
-	public void closeHelpWindow(){
-		if (helpWindow!=null)
-		   helpWindow.closeHelpWindow();
+
+	public void closeHelpWindow() {
+		if (helpWindow != null)
+			helpWindow.closeHelpWindow();
 	}
 
 	public void show() {
@@ -223,6 +231,67 @@ public class MainWindow extends UiPart {
 
 	public TaskListPanel getTaskListPanel() {
 		return this.taskListPanel;
+	}
+
+	public void handleWindowResize() {
+		rootLayout.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
+			if (KEY_MINMAX.match(event)) {
+				resizeWindow();
+			}
+		});
+	}
+
+	private void resizeWindow() {
+		if (primaryStage.isMaximized()) {
+			primaryStage.setMaximized(false);
+		} else {
+			primaryStage.setMaximized(true);
+		}
+	}
+
+	public void handleAllEvents() {
+		handleWindowResize();
+		handleTaskListScrolling();
+	}
+
+	private void handleTaskListScrolling() {
+		ListView<ReadOnlyTask> scrollList = taskListPanel.getTaskListView();
+		int maxListPointer = taskListPanel.getMaxListPointer();
+		System.out.println("This is maxListPointer:  " + maxListPointer);
+		handlePageUp(scrollList, maxListPointer);
+		handlePageDown(scrollList, maxListPointer);
+	}
+
+	public void handlePageDown(ListView<ReadOnlyTask> scrollList, int max) {
+		int listPointer = TaskListPanel.getListPointer();
+		rootLayout.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
+			if (event.getCode() == KeyCode.PAGE_DOWN) {
+//				if ((listPointer + 1) > max)
+//					TaskListPanel.setListPointer(listPointer + 1);
+//				else {
+//					System.out.println("This is listPointer: " + listPointer);
+//					TaskListPanel.setListPointer(0);
+//				}
+//				
+				scrollList.scrollTo(max);
+			}
+		});
+
+	}
+
+	public void handlePageUp(ListView<ReadOnlyTask> scrollList, int max) {
+		int listPointer = TaskListPanel.getListPointer();
+		rootLayout.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
+			if (event.getCode() == KeyCode.PAGE_UP) {
+//				if ((listPointer - 1) < 0)
+//					TaskListPanel.setListPointer(listPointer - 1);
+//				else {
+//					TaskListPanel.setListPointer(max);
+//				}
+//				System.out.println("This is listPointer: " + listPointer);
+				scrollList.scrollTo(0);
+			}
+		});
 	}
 
 }
