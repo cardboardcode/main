@@ -32,8 +32,7 @@ public class TaskListPanel extends UiPart {
 	private static final String FXML = "TaskListPanel.fxml";
 	private VBox panel;
 	private AnchorPane placeHolderPane;
-	private static int maxListPointer;
-	private static int listPointer = 0;
+	private static int currentMaxListSize;
 
 	@FXML
 	private ListView<ReadOnlyTask> taskListView;
@@ -61,7 +60,7 @@ public class TaskListPanel extends UiPart {
 			ObservableList<ReadOnlyTask> taskList) {
 		TaskListPanel taskListPanel = UiPartLoader.loadUiPart(primaryStage, taskListPlaceholder, new TaskListPanel());
 		taskListPanel.configure(taskList);
-		maxListPointer = taskList.size() - 1;
+		currentMaxListSize = taskList.size();
 		return taskListPanel;
 	}
 
@@ -123,16 +122,12 @@ public class TaskListPanel extends UiPart {
 		return taskListView;
 	}
 	
-	public int getMaxListPointer(){
-		return maxListPointer;
+	public static int getCurrentTaskListSize (){
+		return currentMaxListSize;
 	}
 	
-	public static int getListPointer(){
-		return listPointer;
-	}
-	
-	public static void setListPointer(int input){
-		listPointer = input;
+	public void updateCurrentTaskListSize (){
+		currentMaxListSize = taskListView.getChildrenUnmodifiable().size();
 	}
 
 }

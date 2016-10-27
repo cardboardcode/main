@@ -91,6 +91,7 @@ public class MainWindow extends UiPart {
 	private AnchorPane listStatisticsPlaceholder;
 
 	public static final KeyCodeCombination KEY_MINMAX = new KeyCodeCombination(KeyCode.M, KeyCodeCombination.ALT_DOWN);
+	public static int listPointer = 0;
 
 	public MainWindow() {
 		super();
@@ -256,40 +257,38 @@ public class MainWindow extends UiPart {
 
 	private void handleTaskListScrolling() {
 		ListView<ReadOnlyTask> scrollList = taskListPanel.getTaskListView();
-		int maxListPointer = taskListPanel.getMaxListPointer();
-		System.out.println("This is maxListPointer:  " + maxListPointer);
-		handlePageUp(scrollList, maxListPointer);
-		handlePageDown(scrollList, maxListPointer);
+		int max = TaskListPanel.getCurrentTaskListSize();
+		System.out.println("This is maxListPointer:  " + max);
+		handlePageUp(scrollList, max);
+		handlePageDown(scrollList, max);
 	}
 
 	public void handlePageDown(ListView<ReadOnlyTask> scrollList, int max) {
-		int listPointer = TaskListPanel.getListPointer();
+		
 		rootLayout.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
 			if (event.getCode() == KeyCode.PAGE_DOWN) {
-//				if ((listPointer + 1) > max)
-//					TaskListPanel.setListPointer(listPointer + 1);
-//				else {
-//					System.out.println("This is listPointer: " + listPointer);
-//					TaskListPanel.setListPointer(0);
-//				}
-//				
-				scrollList.scrollTo(max);
+				if ((listPointer + 1) > max)
+					listPointer++;
+				else {
+					listPointer = 0;
+				}
+
+				scrollList.scrollTo(listPointer);
 			}
 		});
 
 	}
 
 	public void handlePageUp(ListView<ReadOnlyTask> scrollList, int max) {
-		int listPointer = TaskListPanel.getListPointer();
+
 		rootLayout.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
 			if (event.getCode() == KeyCode.PAGE_UP) {
-//				if ((listPointer - 1) < 0)
-//					TaskListPanel.setListPointer(listPointer - 1);
-//				else {
-//					TaskListPanel.setListPointer(max);
-//				}
-//				System.out.println("This is listPointer: " + listPointer);
-				scrollList.scrollTo(0);
+				if ((listPointer - 1) < 0)
+					listPointer--;
+				else {
+					listPointer = max;
+				}
+				scrollList.scrollTo(listPointer);
 			}
 		});
 	}
