@@ -19,6 +19,9 @@ import main.commons.events.ui.TabPressEvent;
 import main.commons.util.FxViewUtil;
 import main.logic.Logic;
 import main.logic.command.CommandResult;
+import tray.animations.AnimationType;
+import tray.notification.NotificationType;
+import tray.notification.TrayNotification;
 import main.commons.core.EventsCenter;
 import main.commons.core.LogsCenter;
 
@@ -46,7 +49,8 @@ public class CommandBox extends UiPart {
     private AnchorPane commandPane;
     private ResultDisplay resultDisplay;
     String previousCommandTest;
-
+    TrayNotification tray = new TrayNotification();
+    
     private Logic logic;
     private static ArrayList<String> commandHistory = new ArrayList<String>();
     private static int historyPointer = 0;
@@ -108,6 +112,14 @@ public class CommandBox extends UiPart {
         mostRecentResult = logic.execute(previousCommandTest);
         ListStatistics.updateStatistics();
         CommandBox.resetHistoryPointer();
+//        String title = "MM MM MMm MM";
+//        String message = "M MM MM MM MM MM ";
+//        NotificationType notification = NotificationType.NOTICE;
+//        tray.setTitle(title);
+//        tray.setMessage(message);
+//        tray.setNotificationType(notification);
+//        tray.setAnimationType(AnimationType.FADE);
+//        tray.showAndWait(); 
         resultDisplay.postMessage(mostRecentResult.feedbackToUser);
         logger.info("Result: " + mostRecentResult.feedbackToUser);
     }
