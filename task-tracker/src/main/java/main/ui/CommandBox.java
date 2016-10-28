@@ -100,10 +100,10 @@ public class CommandBox extends UiPart {
 
     @FXML
     private void handleCommandInputChanged() {
+    	resultDisplay.clearResultDisplay();
         // Take a copy of the command text
         previousCommandTest = commandTextField.getText();
         CommandBox.getHistory().add(previousCommandTest);
-        CommandBox.updateHistoryPointer();
         /*
          * We assume the command is correct. If it is incorrect, the command box
          * will be changed accordingly in the event handling code {@link
@@ -114,22 +114,23 @@ public class CommandBox extends UiPart {
         ListStatistics.updateStatistics();
         CommandBox.resetHistoryPointer();
         
-        ttbot.setTitle(mostRecentResult.feedbackToUser);
-        ttbot.getTTbot().showAndDismiss(Duration.seconds(1.5)); 
+        if (!mostRecentResult.feedbackToUser.contains("Invalid"))
+        showNotification();
+        else 
         resultDisplay.postMessage(mostRecentResult.feedbackToUser);
+        
         logger.info("Result: " + mostRecentResult.feedbackToUser);
     }
 
-    private static void resetHistoryPointer() {
+    private void showNotification() {
+    	ttbot.setTitle(mostRecentResult.feedbackToUser);
+        ttbot.getTTbot().showAndDismiss(Duration.seconds(1.5)); 	
+	}
+
+	private static void resetHistoryPointer() {
         historyPointer = commandHistory.size();
 
     }
-
-    private static void updateHistoryPointer() {
-        ++historyPointer;
-
-    }
-
     /**
      * Sets the command box style to indicate a correct command.
      */
