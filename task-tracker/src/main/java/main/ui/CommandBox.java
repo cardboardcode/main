@@ -12,6 +12,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import main.commons.events.ui.AutoCompleteEvent;
 import main.commons.events.ui.IncorrectCommandAttemptedEvent;
 import main.commons.events.ui.KeyPressEvent;
@@ -49,8 +50,8 @@ public class CommandBox extends UiPart {
     private AnchorPane commandPane;
     private ResultDisplay resultDisplay;
     String previousCommandTest;
-    TrayNotification tray = new TrayNotification();
     
+    private TTNotification ttbot = new TTNotification();
     private Logic logic;
     private static ArrayList<String> commandHistory = new ArrayList<String>();
     private static int historyPointer = 0;
@@ -112,14 +113,9 @@ public class CommandBox extends UiPart {
         mostRecentResult = logic.execute(previousCommandTest);
         ListStatistics.updateStatistics();
         CommandBox.resetHistoryPointer();
-//        String title = "MM MM MMm MM";
-//        String message = "M MM MM MM MM MM ";
-//        NotificationType notification = NotificationType.NOTICE;
-//        tray.setTitle(title);
-//        tray.setMessage(message);
-//        tray.setNotificationType(notification);
-//        tray.setAnimationType(AnimationType.FADE);
-//        tray.showAndWait(); 
+        
+        ttbot.setTitle(mostRecentResult.feedbackToUser);
+        ttbot.getTTbot().showAndDismiss(Duration.seconds(1.5)); 
         resultDisplay.postMessage(mostRecentResult.feedbackToUser);
         logger.info("Result: " + mostRecentResult.feedbackToUser);
     }

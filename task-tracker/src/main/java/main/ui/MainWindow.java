@@ -96,7 +96,7 @@ public class MainWindow extends UiPart {
 	public static final KeyCodeCombination KEY_MINMAX = new KeyCodeCombination(KeyCode.M, KeyCodeCombination.ALT_DOWN);
 	public static final String[] colorWheel = {"-fx-background-color: derive(#008000, 20%);", "-fx-background-color: derive(#006080, 20%);", "-fx-background-color: derive(#b34700, 20%);"};
 	private static int taskPointer = 0;
-	private static int colorPointer = 0;
+	private static int colorPointer = 7;
 
 	public MainWindow() {
 		super();
@@ -135,8 +135,7 @@ public class MainWindow extends UiPart {
 		scene = new Scene(rootLayout);
 		primaryStage.setScene(scene);
 		
-		rootLayout.getStylesheets().add(getClass().getResource("/css/DarkTheme.css").toExternalForm());
-		rootLayout.getStylesheets().add(getClass().getResource("/css/Extensions.css").toExternalForm());
+		setWindowStyle();
 		// setAccelerators();
 	}
 
@@ -294,7 +293,9 @@ public class MainWindow extends UiPart {
     		
     		case 6:	rootLayout.getStylesheets().add(getClass().getResource("/css/VioletTheme.css").toExternalForm()); break;
     		
-    		default:rootLayout.getStylesheets().add(getClass().getResource("/css/RedTheme.css").toExternalForm()); break;
+    		case 7:	rootLayout.getStylesheets().add(getClass().getResource("/css/DarkTheme.css").toExternalForm()); break;
+    		
+    		default:rootLayout.getStylesheets().add(getClass().getResource("/css/DarkTheme.css").toExternalForm()); break;
     		
     	}  
     	rootLayout.getStylesheets().add(getClass().getResource("/css/Extensions.css").toExternalForm());
