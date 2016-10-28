@@ -75,6 +75,7 @@ public class TaskCard extends UiPart{
     private void setTaskCardText() {
     	
     	message.setText(task.getMessage());
+        message.setWrapText(true);
         
         id.setText(displayedIndex + ". ");
         
