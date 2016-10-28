@@ -258,7 +258,6 @@ public class MainWindow extends UiPart {
 	private void handleTaskListScrolling() {
 		ListView<ReadOnlyTask> scrollList = taskListPanel.getTaskListView();
 		int max = TaskListPanel.getCurrentTaskListSize();
-		System.out.println("This is maxListPointer:  " + max);
 		handlePageUp(scrollList, max);
 		handlePageDown(scrollList, max);
 	}
