@@ -241,6 +241,7 @@ public class MainWindow extends UiPart {
 	}
 
 	public void handleAllEvents() {
+		handleMinimizeWindow();
 	    handleChangeColourTheme();
 		handleTaskListScrolling();
 	}
@@ -249,7 +250,15 @@ public class MainWindow extends UiPart {
 	    handleF1Event();
 	    handleF2Event();
     }
-
+	
+	private void handleMinimizeWindow() {
+        rootLayout.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
+            if (event.getCode() == KeyCode.ESCAPE) {
+                primaryStage.setIconified(true);
+            }
+        }); 
+    }
+	
     private void handleF1Event() {
         rootLayout.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
             if (event.getCode() == KeyCode.F1) {
