@@ -268,9 +268,9 @@ public class MainWindow extends UiPart {
 		rootLayout.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
 			if (event.getCode() == KeyCode.PAGE_DOWN) {
 				if ((listPointer + 1) > max)
-					listPointer++;
+				    listPointer = 0;
 				else {
-					listPointer = 0;
+                    listPointer = listPointer + 1;
 				}
 
 				scrollList.scrollTo(listPointer);
@@ -284,9 +284,9 @@ public class MainWindow extends UiPart {
 		rootLayout.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
 			if (event.getCode() == KeyCode.PAGE_UP) {
 				if ((listPointer - 1) < 0)
-					listPointer--;
+	                listPointer = max;
 				else {
-					listPointer = max;
+					listPointer = listPointer - 1;
 				}
 				scrollList.scrollTo(listPointer);
 			}
