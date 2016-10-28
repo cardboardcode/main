@@ -45,12 +45,12 @@ public class ListStatistics extends UiPart {
 	@FXML
 	private ImageView image;
 	
-	private static final String TODAY_TASK_MESSAGE = "No. of Task Due Today: ";
-	private static final String TOMORROW_TASK_MESSAGE = "No. of Task Due Tomorrow: ";
-	private static final String EVENT_TASK_MESSAGE = "No. of Events: ";
-	private static final String DEADLINE_TASK_MESSAGE = "No. of Deadlines: ";
-	private static final String FLOATING_TASK_MESSAGE = "No. of Floating: ";
-	private static final String ALL_TASK_MESSAGE = "Total: ";
+	private static final String TODAY_TASK_MESSAGE = " <-: Tasks Due Today ";
+	private static final String TOMORROW_TASK_MESSAGE = " <-: Tasks Due Tomorrow ";
+	private static final String EVENT_TASK_MESSAGE = " <-: Events ";
+	private static final String DEADLINE_TASK_MESSAGE = " <-: Deadlines ";
+	private static final String FLOATING_TASK_MESSAGE = " <-: Floating ";
+	private static final String ALL_TASK_MESSAGE = " <-: Total ";
 	
 	private Model model;
 	
@@ -116,22 +116,26 @@ public class ListStatistics extends UiPart {
 	 * You would not be using logic to get the data. You will have to use the model component directly. Wait for Ruth
 	 */
 	private void initializeStringProperty() {
-		todaytaskNo.setValue(TODAY_TASK_MESSAGE + logic.getNumToday());
-		tomorrowtaskNo.setValue(TOMORROW_TASK_MESSAGE + logic.getNumTmr());
-		eventtaskNo.setValue(EVENT_TASK_MESSAGE + logic.getNumEvent());
-		deadlinetaskNo.setValue(DEADLINE_TASK_MESSAGE + logic.getNumDeadline());
-		floatingtaskNo.setValue(FLOATING_TASK_MESSAGE + logic.getNumFloating());
-		alltaskNo.setValue(ALL_TASK_MESSAGE + logic.getFilteredTaskList().size());
+		todaytaskNo.setValue(logic.getNumToday() + TODAY_TASK_MESSAGE);
+		tomorrowtaskNo.setValue(logic.getNumTmr() + TOMORROW_TASK_MESSAGE);
+		eventtaskNo.setValue(logic.getNumEvent() + EVENT_TASK_MESSAGE);
+		deadlinetaskNo.setValue(logic.getNumDeadline() +  DEADLINE_TASK_MESSAGE);
+		floatingtaskNo.setValue(logic.getNumFloating() + FLOATING_TASK_MESSAGE);
+		alltaskNo.setValue(logic.getFilteredTaskList().size() + ALL_TASK_MESSAGE);
 	}
 	
 	public static void updateStatistics(){
-		listDisplay.getTodayTaskNo().setValue(TODAY_TASK_MESSAGE+logic.getNumToday());
-		listDisplay.getTomorrowTaskNo().setValue(TOMORROW_TASK_MESSAGE+logic.getNumTmr());
-		listDisplay.getEventTaskNo().setValue(EVENT_TASK_MESSAGE+logic.getNumEvent());
-		listDisplay.getDeadlineTaskNo().setValue(DEADLINE_TASK_MESSAGE+logic.getNumDeadline());
-		listDisplay.getFloatingTaskNo().setValue(FLOATING_TASK_MESSAGE+logic.getNumFloating());
-		listDisplay.getAllTaskNo().setValue(ALL_TASK_MESSAGE+logic.getFilteredTaskList().size());
+		listDisplay.getTodayTaskNo().setValue(logic.getNumToday() + TODAY_TASK_MESSAGE);
+		listDisplay.getTomorrowTaskNo().setValue(logic.getNumTmr() + TOMORROW_TASK_MESSAGE);
+		listDisplay.getEventTaskNo().setValue(logic.getNumEvent() + EVENT_TASK_MESSAGE);
+		listDisplay.getDeadlineTaskNo().setValue(logic.getNumDeadline() +  DEADLINE_TASK_MESSAGE);
+		listDisplay.getFloatingTaskNo().setValue(logic.getNumFloating() + FLOATING_TASK_MESSAGE);
+		listDisplay.getAllTaskNo().setValue(logic.getFilteredTaskList().size() + ALL_TASK_MESSAGE);
 		
+	}
+	
+	public static void updateListImage(String command){
+//		listDisplay.getImage().setImage(AppUtil.getImage("/images/clock.png"));
 	}
 	
 	public StringProperty getTodayTaskNo(){
@@ -160,6 +164,10 @@ public class ListStatistics extends UiPart {
 	
 	public StringProperty getAllTaskNo(){
 		return alltaskNo;
+	}
+	
+	public ImageView getImage(){
+		return image;
 	}
 		
 	@Override

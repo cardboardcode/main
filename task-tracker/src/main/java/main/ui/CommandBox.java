@@ -111,15 +111,17 @@ public class CommandBox extends UiPart {
          */
         setStyleToIndicateCorrectCommand();
         mostRecentResult = logic.execute(previousCommandTest);
+        String resultMessage = mostRecentResult.feedbackToUser;
         ListStatistics.updateStatistics();
+        ListStatistics.updateListImage(resultMessage);
         CommandBox.resetHistoryPointer();
         
-        if (!mostRecentResult.feedbackToUser.contains("Invalid"))
+        if (!resultMessage.contains("Invalid"))
         showNotification();
         else 
-        resultDisplay.postMessage(mostRecentResult.feedbackToUser);
+        resultDisplay.postMessage(resultMessage);
         
-        logger.info("Result: " + mostRecentResult.feedbackToUser);
+        logger.info("Result: " + resultMessage);
     }
 
     private void showNotification() {
