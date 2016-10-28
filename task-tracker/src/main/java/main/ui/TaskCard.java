@@ -95,7 +95,7 @@ public class TaskCard extends UiPart{
             starttime.setText("");
         
         if (task.getIsRecurring())
-            recurring.setText("Recurring");
+            recurring.setText("Weekly");
         else
             recurring.setText("");
 		
