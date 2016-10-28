@@ -91,7 +91,9 @@ public class MainWindow extends UiPart {
 	private AnchorPane listStatisticsPlaceholder;
 
 	public static final KeyCodeCombination KEY_MINMAX = new KeyCodeCombination(KeyCode.M, KeyCodeCombination.ALT_DOWN);
-	public static int taskPointer = 0;
+	public static final String[] colorWheel = {"-fx-background-color: #ff6666;", "-fx-background-color: #ffffb3;", "-fx-background-color: #ffa366;"};
+	private static int taskPointer = 0;
+	private static int colorPointer = 0;
 
 	public MainWindow() {
 		super();
@@ -240,11 +242,36 @@ public class MainWindow extends UiPart {
 	}
 
 	private void handleChangeColourTheme() {
-	    rootLayout.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
+	    handleF1Event();
+	    handleF2Event();
+    }
+
+    private void handleF1Event() {
+        rootLayout.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
             if (event.getCode() == KeyCode.F1) {
-                
+                if ((colorPointer + 1) > 2)
+                    colorPointer = 0;
+                else {
+                    colorPointer = colorPointer + 1;
+                }
+                System.out.println(colorWheel[colorPointer]);
+                rootLayout.setStyle(colorWheel[colorPointer]);
             }
-        });    
+        }); 
+    }
+    
+    private void handleF2Event() {
+        rootLayout.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
+            if (event.getCode() == KeyCode.F2) {
+                if ((colorPointer - 1) < 0)
+                    colorPointer = 2;
+                else {
+                    colorPointer = colorPointer - 1;
+                }
+                System.out.println(colorWheel[colorPointer]);
+                rootLayout.setStyle(colorWheel[colorPointer]);
+            }
+        }); 
     }
 
     private void handleTaskListScrolling() {
