@@ -16,7 +16,7 @@ public class TTNotification {
 		ttbot.setTitle(title);
 		ttbot.setMessage(message);
 		ttbot.setNotificationType(NotificationType.INFORMATION);
-		ttbot.setAnimationType(AnimationType.FADE);
+		ttbot.setAnimationType(AnimationType.POPUP);
 		ttbot.setImage(AppUtil.getImage("/images/T-T.gif"));
 		ttbot.setRectangleFill(Paint.valueOf("#ff4d4d"));
 	}

@@ -120,13 +120,12 @@ public class CommandBox extends UiPart {
         showNotification();
         else 
         resultDisplay.postMessage(resultMessage);
-        
         logger.info("Result: " + resultMessage);
     }
 
     private void showNotification() {
     	ttbot.setTitle(mostRecentResult.feedbackToUser);
-        ttbot.getTTbot().showAndDismiss(Duration.seconds(1.5)); 	
+        ttbot.getTTbot().showAndDismiss(Duration.millis(500)); 	
 	}
 
 	private static void resetHistoryPointer() {
