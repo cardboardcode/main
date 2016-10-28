@@ -112,7 +112,8 @@ public class TaskCard extends UiPart{
 		else{
 			priorityTab.setFill(Color.ORANGE);
 			cardPane.setStyle("-fx-background-color: #ffa366;");
-		}	
+		}
+		priorityTab.setStroke(Color.TRANSPARENT);
 	}
 
 	private void configureLayout() {
