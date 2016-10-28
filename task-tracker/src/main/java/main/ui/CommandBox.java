@@ -116,9 +116,9 @@ public class CommandBox extends UiPart {
         ListStatistics.updateListImage(resultMessage);
         CommandBox.resetHistoryPointer();
         
-        if (!resultMessage.contains("Invalid"))
-        showNotification();
-        else 
+//        if (!resultMessage.contains("Invalid"))
+//        showNotification();
+//        else 
         resultDisplay.postMessage(resultMessage);
         logger.info("Result: " + resultMessage);
     }
