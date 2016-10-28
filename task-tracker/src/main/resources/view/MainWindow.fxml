@@ -39,7 +39,7 @@
       </AnchorPane>
    </children>
    <stylesheets>
-      <URL value="@DarkTheme.css" />
       <URL value="@Extensions.css" />
+      <URL value="@DarkTheme.css" />
    </stylesheets>
 </VBox>

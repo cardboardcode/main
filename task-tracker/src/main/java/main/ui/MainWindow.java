@@ -89,9 +89,12 @@ public class MainWindow extends UiPart {
 
 	@FXML
 	private AnchorPane listStatisticsPlaceholder;
-
+	
+//	.spiltpane{-fx-background-color: derive(#ff6666, 20%);}
+//	.spiltpane{-fx-background-color: derive(#ffffb3, 20%);}
+//	.spiltpane{-fx-background-color: derive(#ffa366, 20%);}
 	public static final KeyCodeCombination KEY_MINMAX = new KeyCodeCombination(KeyCode.M, KeyCodeCombination.ALT_DOWN);
-	public static final String[] colorWheel = {"-fx-background-color: #ff6666;", "-fx-background-color: #ffffb3;", "-fx-background-color: #ffa366;"};
+	public static final String[] colorWheel = {"-fx-background-color: derive(#ff6666, 20%);", "-fx-background-color: derive(#ffffb3, 20%);", "-fx-background-color: derive(#ffa366, 20%);"};
 	private static int taskPointer = 0;
 	private static int colorPointer = 0;
 
@@ -255,7 +258,7 @@ public class MainWindow extends UiPart {
                     colorPointer = colorPointer + 1;
                 }
                 System.out.println(colorWheel[colorPointer]);
-                rootLayout.setStyle(colorWheel[colorPointer]);
+                splitpane.setStyle(colorWheel[colorPointer]);
             }
         }); 
     }
@@ -269,7 +272,7 @@ public class MainWindow extends UiPart {
                     colorPointer = colorPointer - 1;
                 }
                 System.out.println(colorWheel[colorPointer]);
-                rootLayout.setStyle(colorWheel[colorPointer]);
+                splitpane.setStyle(colorWheel[colorPointer]);
             }
         }); 
     }
