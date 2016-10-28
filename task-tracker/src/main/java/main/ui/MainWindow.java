@@ -134,7 +134,9 @@ public class MainWindow extends UiPart {
 		setWindowDefaultSize(prefs);
 		scene = new Scene(rootLayout);
 		primaryStage.setScene(scene);
-
+		
+		rootLayout.getStylesheets().add(getClass().getResource("/view/DarkTheme.css").toExternalForm());
+		rootLayout.getStylesheets().add(getClass().getResource("/view/Extensions.css").toExternalForm());
 		// setAccelerators();
 	}
 
@@ -276,13 +278,27 @@ public class MainWindow extends UiPart {
     }
     
     private void setWindowStyle(){
-    	splitpane.setStyle(colorWheel[colorPointer]);
-    	resultDisplayPlaceholder.setStyle(colorWheel[colorPointer]);
-    	commandBoxPlaceholder.setStyle(colorWheel[colorPointer]);
-
-    	statusBarFooter.changeStyle(colorWheel[colorPointer]);
-    	listStatisticsPlaceholder.setStyle(colorWheel[colorPointer]);
-    	taskListPanelPlaceholder.setStyle(colorWheel[colorPointer]);
+    	rootLayout.getStylesheets().clear();
+    	switch(colorPointer){
+    		case 0:	rootLayout.getStylesheets().add(getClass().getResource("/view/RedTheme.css").toExternalForm());
+    		
+    		case 1:	rootLayout.getStylesheets().add(getClass().getResource("/view/OrangeTheme.css").toExternalForm());
+    		
+    		case 2:	rootLayout.getStylesheets().add(getClass().getResource("/view/YellowTheme.css").toExternalForm());
+    		
+    		case 3:	rootLayout.getStylesheets().add(getClass().getResource("/view/GreenTheme.css").toExternalForm());
+    		
+    		case 4:	rootLayout.getStylesheets().add(getClass().getResource("/view/BlueTheme.css").toExternalForm());
+    		
+    		case 5:	rootLayout.getStylesheets().add(getClass().getResource("/view/IndigoTheme.css").toExternalForm());
+    		
+    		case 6:	rootLayout.getStylesheets().add(getClass().getResource("/view/VioletTheme.css").toExternalForm());
+    		
+    		case 7:	rootLayout.getStylesheets().add(getClass().getResource("/view/DarkTheme.css").toExternalForm());
+    		
+    	}
+    	rootLayout.getStylesheets().add(getClass().getResource("/view/Extensions.css").toExternalForm());
+    	
     }
 
     private void handleTaskListScrolling() {
