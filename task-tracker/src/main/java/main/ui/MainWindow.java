@@ -279,7 +279,6 @@ public class MainWindow extends UiPart {
     
     private void setWindowStyle(){
     	rootLayout.getStylesheets().clear();
-    	System.out.println(colorPointer);
     	switch(colorPointer){
     		case 0:	rootLayout.getStylesheets().add(getClass().getResource("/css/RedTheme.css").toExternalForm()); break;
     		
