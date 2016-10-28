@@ -135,8 +135,8 @@ public class MainWindow extends UiPart {
 		scene = new Scene(rootLayout);
 		primaryStage.setScene(scene);
 		
-		rootLayout.getStylesheets().add(getClass().getResource("/view/DarkTheme.css").toExternalForm());
-		rootLayout.getStylesheets().add(getClass().getResource("/view/Extensions.css").toExternalForm());
+		rootLayout.getStylesheets().add(getClass().getResource("/css/DarkTheme.css").toExternalForm());
+		rootLayout.getStylesheets().add(getClass().getResource("/css/Extensions.css").toExternalForm());
 		// setAccelerators();
 	}
 
@@ -254,7 +254,7 @@ public class MainWindow extends UiPart {
     private void handleF1Event() {
         rootLayout.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
             if (event.getCode() == KeyCode.F1) {
-                if ((colorPointer + 1) > 2)
+                if ((colorPointer + 1) > 7)
                     colorPointer = 0;
                 else {
                     colorPointer = colorPointer + 1;
@@ -268,7 +268,7 @@ public class MainWindow extends UiPart {
         rootLayout.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
             if (event.getCode() == KeyCode.F2) {
                 if ((colorPointer - 1) < 0)
-                    colorPointer = 2;
+                    colorPointer = 7;
                 else {
                     colorPointer = colorPointer - 1;
                 }
@@ -279,25 +279,26 @@ public class MainWindow extends UiPart {
     
     private void setWindowStyle(){
     	rootLayout.getStylesheets().clear();
+    	System.out.println(colorPointer);
     	switch(colorPointer){
-    		case 0:	rootLayout.getStylesheets().add(getClass().getResource("/view/RedTheme.css").toExternalForm());
+    		case 0:	rootLayout.getStylesheets().add(getClass().getResource("/css/RedTheme.css").toExternalForm()); break;
     		
-    		case 1:	rootLayout.getStylesheets().add(getClass().getResource("/view/OrangeTheme.css").toExternalForm());
+    		case 1:	rootLayout.getStylesheets().add(getClass().getResource("/css/OrangeTheme.css").toExternalForm()); break;
     		
-    		case 2:	rootLayout.getStylesheets().add(getClass().getResource("/view/YellowTheme.css").toExternalForm());
+    		case 2:	rootLayout.getStylesheets().add(getClass().getResource("/css/YellowTheme.css").toExternalForm()); break;
     		
-    		case 3:	rootLayout.getStylesheets().add(getClass().getResource("/view/GreenTheme.css").toExternalForm());
+    		case 3:	rootLayout.getStylesheets().add(getClass().getResource("/css/GreenTheme.css").toExternalForm()); break;
     		
-    		case 4:	rootLayout.getStylesheets().add(getClass().getResource("/view/BlueTheme.css").toExternalForm());
+    		case 4:	rootLayout.getStylesheets().add(getClass().getResource("/css/BlueTheme.css").toExternalForm()); break;
     		
-    		case 5:	rootLayout.getStylesheets().add(getClass().getResource("/view/IndigoTheme.css").toExternalForm());
+    		case 5:	rootLayout.getStylesheets().add(getClass().getResource("/css/IndigoTheme.css").toExternalForm()); break;
     		
-    		case 6:	rootLayout.getStylesheets().add(getClass().getResource("/view/VioletTheme.css").toExternalForm());
+    		case 6:	rootLayout.getStylesheets().add(getClass().getResource("/css/VioletTheme.css").toExternalForm()); break;
     		
-    		case 7:	rootLayout.getStylesheets().add(getClass().getResource("/view/DarkTheme.css").toExternalForm());
+    		default:rootLayout.getStylesheets().add(getClass().getResource("/css/RedTheme.css").toExternalForm()); break;
     		
-    	}
-    	rootLayout.getStylesheets().add(getClass().getResource("/view/Extensions.css").toExternalForm());
+    	}  
+    	rootLayout.getStylesheets().add(getClass().getResource("/css/Extensions.css").toExternalForm());
     	
     }
 
