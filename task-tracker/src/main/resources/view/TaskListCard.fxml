@@ -32,6 +32,7 @@
          </children>
       </GridPane>
       <Rectangle fx:id="priorityTab" arcHeight="5.0" arcWidth="5.0" fill="#272b2f" height="117.0" stroke="BLACK" strokeType="INSIDE" translateX="40.0" width="13.0" />
+      <Rectangle fx:id="priorityTab1" arcHeight="5.0" arcWidth="5.0" fill="#272b2f" height="117.0" stroke="BLACK" strokeType="INSIDE" translateX="40.0" width="13.0" />
    </children>
    <stylesheets>
       <URL value="@DarkTheme.css" />

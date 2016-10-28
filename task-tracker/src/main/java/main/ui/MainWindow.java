@@ -91,7 +91,7 @@ public class MainWindow extends UiPart {
 	private AnchorPane listStatisticsPlaceholder;
 
 	public static final KeyCodeCombination KEY_MINMAX = new KeyCodeCombination(KeyCode.M, KeyCodeCombination.ALT_DOWN);
-	public static int listPointer = 0;
+	public static int taskPointer = 0;
 
 	public MainWindow() {
 		super();
@@ -235,10 +235,19 @@ public class MainWindow extends UiPart {
 	}
 
 	public void handleAllEvents() {
+	    handleChangeColourTheme();
 		handleTaskListScrolling();
 	}
 
-	private void handleTaskListScrolling() {
+	private void handleChangeColourTheme() {
+	    rootLayout.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
+            if (event.getCode() == KeyCode.F1) {
+                
+            }
+        });    
+    }
+
+    private void handleTaskListScrolling() {
 		ListView<ReadOnlyTask> scrollList = taskListPanel.getTaskListView();
 		int max = TaskListPanel.getCurrentTaskListSize();
 		handlePageUp(scrollList, max);
@@ -249,13 +258,13 @@ public class MainWindow extends UiPart {
 		
 		rootLayout.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
 			if (event.getCode() == KeyCode.PAGE_DOWN) {
-				if ((listPointer + 1) > max)
-				    listPointer = 0;
+				if ((taskPointer + 1) > max)
+				    taskPointer = 0;
 				else {
-                    listPointer = listPointer + 1;
+                    taskPointer = taskPointer + 1;
 				}
 
-				scrollList.scrollTo(listPointer);
+				scrollList.scrollTo(taskPointer);
 			}
 		});
 
@@ -265,12 +274,12 @@ public class MainWindow extends UiPart {
 
 		rootLayout.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
 			if (event.getCode() == KeyCode.PAGE_UP) {
-				if ((listPointer - 1) < 0)
-	                listPointer = max;
+				if ((taskPointer - 1) < 0)
+	                taskPointer = max;
 				else {
-					listPointer = listPointer - 1;
+					taskPointer = taskPointer - 1;
 				}
-				scrollList.scrollTo(listPointer);
+				scrollList.scrollTo(taskPointer);
 			}
 		});
 	}
