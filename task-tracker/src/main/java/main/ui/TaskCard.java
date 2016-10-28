@@ -43,6 +43,8 @@ public class TaskCard extends UiPart{
     private Label endtime;
     @FXML
     private Label starttime;
+    @FXML
+    private Label recurring;
     
     @FXML
     private Rectangle priorityTab;
@@ -90,6 +92,11 @@ public class TaskCard extends UiPart{
             starttime.setText("Start: "+ task.getStartTimeString());
         else
             starttime.setText("");
+        
+        if (task.getIsRecurring())
+            recurring.setText("Recurring");
+        else
+            recurring.setText("No");
 		
 	}
     

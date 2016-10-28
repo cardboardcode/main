@@ -23,13 +23,14 @@
         </rowConstraints>
          <children>
             <Label fx:id="id" text="id" translateX="10.0" GridPane.rowIndex="1" />
-            <Label fx:id="deadline" prefHeight="21.0" prefWidth="65.0" text="deadline" textAlignment="RIGHT" translateX="5.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <Label fx:id="message" minWidth="300.0" prefHeight="17.0" prefWidth="146.0" text="message" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label fx:id="endtime" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="endtime" textAlignment="RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <Label fx:id="starttime" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="starttime" GridPane.columnIndex="2" />
+            <Label fx:id="deadline" text="deadline" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label fx:id="recurring" text="recurring" translateX="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-      <Rectangle fx:id="priorityTab" arcHeight="5.0" arcWidth="5.0" fill="#272b2f" height="88.0" stroke="BLACK" strokeType="INSIDE" width="61.0" />
+      <Rectangle fx:id="priorityTab" arcHeight="5.0" arcWidth="5.0" fill="#272b2f" height="87.0" stroke="BLACK" strokeType="INSIDE" translateX="40.0" width="13.0" />
    </children>
    <stylesheets>
       <URL value="@DarkTheme.css" />
