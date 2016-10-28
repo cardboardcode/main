@@ -27,7 +27,7 @@
             <Label fx:id="endtime" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="endtime" textAlignment="RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <Label fx:id="starttime" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="starttime" GridPane.columnIndex="2" />
             <Label fx:id="deadline" text="deadline" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <Label fx:id="recurring" text="recurring" translateX="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label fx:id="recurring" text="recurring" translateX="155.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <Rectangle fx:id="priorityTab" arcHeight="5.0" arcWidth="5.0" fill="#272b2f" height="87.0" stroke="BLACK" strokeType="INSIDE" translateX="40.0" width="13.0" />

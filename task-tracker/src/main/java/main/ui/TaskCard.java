@@ -96,7 +96,7 @@ public class TaskCard extends UiPart{
         if (task.getIsRecurring())
             recurring.setText("Recurring");
         else
-            recurring.setText("No");
+            recurring.setText("");
 		
 	}
     
