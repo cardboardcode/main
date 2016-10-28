@@ -234,24 +234,7 @@ public class MainWindow extends UiPart {
 		return this.taskListPanel;
 	}
 
-	public void handleWindowResize() {
-		rootLayout.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
-			if (KEY_MINMAX.match(event)) {
-				resizeWindow();
-			}
-		});
-	}
-
-	private void resizeWindow() {
-		if (primaryStage.isMaximized()) {
-			primaryStage.setMaximized(false);
-		} else {
-			primaryStage.setMaximized(true);
-		}
-	}
-
 	public void handleAllEvents() {
-		handleWindowResize();
 		handleTaskListScrolling();
 	}
 
