@@ -94,7 +94,7 @@ public class MainWindow extends UiPart {
 //	.spiltpane{-fx-background-color: derive(#ffffb3, 20%);}
 //	.spiltpane{-fx-background-color: derive(#ffa366, 20%);}
 	public static final KeyCodeCombination KEY_MINMAX = new KeyCodeCombination(KeyCode.M, KeyCodeCombination.ALT_DOWN);
-	public static final String[] colorWheel = {"-fx-background-color: derive(#ff6666, 20%);", "-fx-background-color: derive(#ffffb3, 20%);", "-fx-background-color: derive(#ffa366, 20%);"};
+	public static final String[] colorWheel = {"-fx-background-color: derive(#008000, 20%);", "-fx-background-color: derive(#006080, 20%);", "-fx-background-color: derive(#b34700, 20%);"};
 	private static int taskPointer = 0;
 	private static int colorPointer = 0;
 
@@ -257,8 +257,7 @@ public class MainWindow extends UiPart {
                 else {
                     colorPointer = colorPointer + 1;
                 }
-                System.out.println(colorWheel[colorPointer]);
-                splitpane.setStyle(colorWheel[colorPointer]);
+                setWindowStyle();
             }
         }); 
     }
@@ -271,10 +270,19 @@ public class MainWindow extends UiPart {
                 else {
                     colorPointer = colorPointer - 1;
                 }
-                System.out.println(colorWheel[colorPointer]);
-                splitpane.setStyle(colorWheel[colorPointer]);
+                setWindowStyle();
             }
         }); 
+    }
+    
+    private void setWindowStyle(){
+    	splitpane.setStyle(colorWheel[colorPointer]);
+    	resultDisplayPlaceholder.setStyle(colorWheel[colorPointer]);
+    	commandBoxPlaceholder.setStyle(colorWheel[colorPointer]);
+
+    	statusBarFooter.changeStyle(colorWheel[colorPointer]);
+    	listStatisticsPlaceholder.setStyle(colorWheel[colorPointer]);
+    	taskListPanelPlaceholder.setStyle(colorWheel[colorPointer]);
     }
 
     private void handleTaskListScrolling() {
