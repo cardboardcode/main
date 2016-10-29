@@ -16,6 +16,7 @@ import main.commons.core.Version;
 import main.logic.Logic;
 import main.storage.Storage;
 import main.storage.StorageManager;
+import main.ui.MainWindow;
 import main.ui.Ui;
 import main.ui.UiManager;
 import main.logic.LogicManager;
@@ -47,6 +48,7 @@ public class Main extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
+    protected int colourPointer;
 
     public Main() {}
 
@@ -61,6 +63,8 @@ public class Main extends Application {
         userPrefs = initPrefs(config);
 
         initLogging(config);
+        
+        colourPointer = userPrefs.getColourPointer();
 
         model = initModelManager(storage, userPrefs);
 
@@ -170,11 +174,12 @@ public class Main extends Application {
         logger.info("Starting Task-Tracker " + Main.VERSION);
         ui.start(primaryStage);
     }
-
+    
     @Override
     public void stop() {
         logger.info("============================ [ Stopping Task-Tracker ] =============================");
         ui.stop();
+        
         try {
             storage.saveUserPrefs(userPrefs);
         } catch (IOException e) {
@@ -184,6 +189,7 @@ public class Main extends Application {
         System.exit(0);
     }
 
+  //@@author A0139422J
     @Subscribe
     public void handleExitAppRequestEvent(ExitAppRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
