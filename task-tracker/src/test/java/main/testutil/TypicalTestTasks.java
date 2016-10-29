@@ -35,14 +35,14 @@ public class TypicalTestTasks {
 
     public static void loadTaskTrackerWithSampleData(TaskTracker ab) {
         try {
-            ab.addTask(new Task(floating1));
-            ab.addTask(new Task(floating2));
-            //ab.addTask(new Task(floating3));
-            ab.addTask(new Task(deadline1));
             ab.addTask(new Task(deadline2));
-            //ab.addTask(new Task(deadline3));
+            ab.addTask(new Task(deadline1));
+            //ab.addTask(new Task(floating3));
             ab.addTask(new Task(event1));
             ab.addTask(new Task(event2));
+            //ab.addTask(new Task(deadline3));
+            ab.addTask(new Task(floating1));
+            ab.addTask(new Task(floating2));
             //ab.addTask(new Task(event3));
         } catch (UniqueTaskList.DuplicateTaskException e) {
             assert false : "not possible";
