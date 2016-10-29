@@ -35,6 +35,7 @@ import main.logic.command.HelpCommand;
 import main.logic.command.IncorrectCommand;
 import main.logic.command.ListCommand;
 import main.logic.command.RedoCommand;
+import main.logic.command.StorageCommand;
 import main.logic.command.UndoCommand;
 
 public class MainParser {
@@ -86,7 +87,7 @@ public class MainParser {
             case RedoCommand.COMMAND_WORD:
                 return prepareRedo();
             case StorageCommand.COMMAND_WORD:
-                return prepareStorage();
+                return prepareStorage(input);
             default: 
                 return commandIncorrect(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, Messages.MESSAGE_UNKNOWN_COMMAND));
         }
