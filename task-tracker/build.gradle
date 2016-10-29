@@ -65,7 +65,6 @@ allprojects {
 	    compile group: 'org.apache.commons', name: 'commons-lang3', version: "$apacheCommonsLang"
 	    
 	    testCompile files('libs/TrayNotification.jar')
-	    testCompile files('libs/jnativehook-2.0.3.jar')
 	}
 	
 	sourceSets {
