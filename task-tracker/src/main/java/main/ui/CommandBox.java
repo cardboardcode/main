@@ -3,7 +3,6 @@ package main.ui;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
@@ -12,7 +11,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import main.commons.events.ui.AutoCompleteEvent;
 import main.commons.events.ui.IncorrectCommandAttemptedEvent;
 import main.commons.events.ui.KeyPressEvent;
@@ -20,16 +18,11 @@ import main.commons.events.ui.TabPressEvent;
 import main.commons.util.FxViewUtil;
 import main.logic.Logic;
 import main.logic.command.CommandResult;
-import tray.animations.AnimationType;
-import tray.notification.NotificationType;
-import tray.notification.TrayNotification;
 import main.commons.core.EventsCenter;
 import main.commons.core.LogsCenter;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
-
-import com.google.common.eventbus.Subscribe;
 
 /**
  * Contains the main input component which would interact with Logic most.
