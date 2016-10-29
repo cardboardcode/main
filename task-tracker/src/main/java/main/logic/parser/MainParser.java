@@ -17,9 +17,12 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 
+import com.sun.glass.ui.monocle.linux.Input;
+
 import main.model.task.PriorityType;
 import main.model.task.Task;
 import main.model.task.TaskType;
+import main.storage.Storage;
 import main.logic.command.AddCommand;
 import main.logic.command.ClearCommand;
 import main.logic.command.Command;
@@ -82,6 +85,8 @@ public class MainParser {
                 return prepareUndo();
             case RedoCommand.COMMAND_WORD:
                 return prepareRedo();
+            case StorageCommand.COMMAND_WORD:
+                return prepareStorage();
             default: 
                 return commandIncorrect(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, Messages.MESSAGE_UNKNOWN_COMMAND));
         }
@@ -175,6 +180,13 @@ public class MainParser {
     
     public Command prepareRedo() {
         return new RedoCommand();
+    }
+    
+    public Command prepareStorage(String input) {
+        if(input.trim() == "") {
+            return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, StorageCommand.MESSAGE_USAGE));
+        }
+        return new StorageCommand(input);
     }
     
     //@@author A0144132W
