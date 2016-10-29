@@ -17,7 +17,6 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 
-import com.sun.glass.ui.monocle.linux.Input;
 
 import main.model.task.PriorityType;
 import main.model.task.Task;
