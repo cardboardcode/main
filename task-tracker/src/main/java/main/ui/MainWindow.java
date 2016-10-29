@@ -129,6 +129,7 @@ public class MainWindow extends UiPart {
 		this.taskTrackerName = taskTrackerName;
 		this.config = config;
 		this.userPrefs = prefs;
+		MainWindow.colorPointer = userPrefs.getColourPointer();
 
 		// Configure the UI
 		setTitle(appTitle);
@@ -269,8 +270,10 @@ public class MainWindow extends UiPart {
                     colorPointer = 0;
                 else {
                     colorPointer = colorPointer + 1;
+                    
                 }
                 setWindowStyle();
+                userPrefs.updateColourPointer(MainWindow.colorPointer);
             }
         }); 
     }
@@ -284,6 +287,7 @@ public class MainWindow extends UiPart {
                     colorPointer = colorPointer - 1;
                 }
                 setWindowStyle();
+                userPrefs.updateColourPointer(MainWindow.colorPointer);
             }
         }); 
     }
@@ -335,7 +339,13 @@ public class MainWindow extends UiPart {
 		});
 
 	}
+	
+	//@@author A0142686X   
+	public int getColourPointer() {
+	    return colorPointer;
+	}
 
+	//@@author A0139422J
 	public void handlePageUp(ListView<ReadOnlyTask> scrollList) {
 
 		rootLayout.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
