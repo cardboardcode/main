@@ -186,8 +186,8 @@ public class MainParser {
     public Command prepareStorage(String input) {
         if(input.trim() == "") {
             return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, StorageCommand.MESSAGE_USAGE));
-        }
-        return new StorageCommand(input);
+        }       
+        return new StorageCommand(input.trim());
     }
     
     //@@author A0144132W
