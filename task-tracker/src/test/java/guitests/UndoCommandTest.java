@@ -38,13 +38,19 @@ public class UndoCommandTest extends TaskTrackerGuiTest{
         commandBox.runCommand("done " + taskIndex);
         commandBox.runCommand("undo");
         assertTrue(taskListPanel.isListMatching(currentList));
+      
+        //test multiple undo
+        commandBox.runCommand(td.deadline2.getAddCommand());
+        commandBox.runCommand(td.event1.getAddCommand());
+        commandBox.runCommand("undo");
+        commandBox.runCommand("undo");
+        assertTrue(taskListPanel.isListMatching(currentList));
         
         //test to undo edit
         commandBox.runCommand("edit " + taskIndex + " buy clothes");
         commandBox.runCommand("undo");
-        assertResultMessage(UndoCommand.MESSAGE_SUCCESS);
-        
-       
+        assertResultMessage(UndoCommand.MESSAGE_SUCCESS);       
+               
     }
     
 }
