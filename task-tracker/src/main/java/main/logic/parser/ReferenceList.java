@@ -34,6 +34,7 @@ public class ReferenceList {
             .put("help", HelpCommand.COMMAND_WORD)
             .put("T.T", HelpCommand.COMMAND_WORD)
             .put("clear", ClearCommand.COMMAND_WORD)
+            .put("storage", StorageCommand.COMMAND_WORD)
             .build(); 
     
     public static final Map<String,PriorityType> priorityDictionary = ImmutableMap.<String, PriorityType>builder()

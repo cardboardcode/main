@@ -17,9 +17,11 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 
+
 import main.model.task.PriorityType;
 import main.model.task.Task;
 import main.model.task.TaskType;
+import main.storage.Storage;
 import main.logic.command.AddCommand;
 import main.logic.command.ClearCommand;
 import main.logic.command.Command;
@@ -32,6 +34,7 @@ import main.logic.command.HelpCommand;
 import main.logic.command.IncorrectCommand;
 import main.logic.command.ListCommand;
 import main.logic.command.RedoCommand;
+import main.logic.command.StorageCommand;
 import main.logic.command.UndoCommand;
 
 public class MainParser {
@@ -82,6 +85,8 @@ public class MainParser {
                 return prepareUndo();
             case RedoCommand.COMMAND_WORD:
                 return prepareRedo();
+            case StorageCommand.COMMAND_WORD:
+                return prepareStorage(input);
             default: 
                 return commandIncorrect(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, Messages.MESSAGE_UNKNOWN_COMMAND));
         }
@@ -175,6 +180,18 @@ public class MainParser {
     
     public Command prepareRedo() {
         return new RedoCommand();
+    }
+    
+    public Command prepareStorage(String input) {
+        if(input.trim() == "") {
+            return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, StorageCommand.MESSAGE_USAGE));
+        }
+        String path = extractPath(input.trim());
+        return new StorageCommand(path);
+    }
+    
+    public String extractPath(String input) {
+        return input.substring(8);
     }
     
     //@@author A0144132W
