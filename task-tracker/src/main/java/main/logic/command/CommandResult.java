@@ -1,9 +1,6 @@
 //@@author A0139422J
 package main.logic.command;
 
-import javafx.util.Duration;
-import main.ui.TTNotification;
-
 /**
  * Represents the result of a command execution.
  * @author bey
