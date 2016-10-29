@@ -39,12 +39,12 @@ public class StorageCommand extends Command {
         try {
             String defaultConfigPath = Config.DEFAULT_CONFIG_FILE; 
             Config presentConfig = ConfigUtil.readConfig(defaultConfigPath).orElse(new Config());
-            String previousPath = presentConfig.getTaskTrackerFilePath();
+            String presentPath = presentConfig.getTaskTrackerFilePath();
             
             presentConfig.setTaskTrackerFilePath(newStoragePath);
             ConfigUtil.saveConfig(presentConfig, defaultConfigPath);
             
-            StorageManager currentStorage = new StorageManager(previousPath, presentConfig.getUserPrefsFilePath());
+            StorageManager currentStorage = new StorageManager(presentPath, presentConfig.getUserPrefsFilePath());
             StorageManager newStorage = new StorageManager(newStoragePath, presentConfig.getUserPrefsFilePath());
             
             ReadOnlyTaskTracker currentTaskTracker = currentStorage.readTaskTracker().orElse(new TaskTracker());
