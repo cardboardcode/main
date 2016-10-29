@@ -125,7 +125,12 @@ public class ListStatistics extends UiPart {
 		floatingtaskNo.setValue(logic.getNumFloating() + FLOATING_TASK_MESSAGE);
 		alltaskNo.setValue(logic.getTotalNum() + ALL_TASK_MESSAGE);
 	}
-
+	
+	public static void updateAll(String command){
+		updateListImage(command);
+		updateStatistics();		
+	}
+	
 	public static void updateStatistics() {
 		listDisplay.getTodayTaskNo().setValue(logic.getNumToday() + TODAY_TASK_MESSAGE);
 		listDisplay.getTomorrowTaskNo().setValue(logic.getNumTmr() + TOMORROW_TASK_MESSAGE);

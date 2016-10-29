@@ -112,8 +112,7 @@ public class CommandBox extends UiPart {
         setStyleToIndicateCorrectCommand();
         mostRecentResult = logic.execute(previousCommandTest);
         String resultMessage = mostRecentResult.feedbackToUser;
-        ListStatistics.updateStatistics();
-        ListStatistics.updateListImage(resultMessage);
+        ListStatistics.updateAll(resultMessage);
         CommandBox.resetHistoryPointer();
         
 //        if (!resultMessage.contains("Invalid"))
