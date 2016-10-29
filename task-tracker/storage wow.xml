@@ -8,4 +8,12 @@
         <isDone>false</isDone>
         <isInferred>true</isInferred>
     </tasks>
+    <tasks>
+        <message>wowwww</message>
+        <isRecurring>false</isRecurring>
+        <priority>NORMAL</priority>
+        <type>FLOATING</type>
+        <isDone>false</isDone>
+        <isInferred>true</isInferred>
+    </tasks>
 </tasktracker>
