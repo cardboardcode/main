@@ -60,7 +60,6 @@ public class TaskListPanel extends UiPart {
 			ObservableList<ReadOnlyTask> taskList) {
 		TaskListPanel taskListPanel = UiPartLoader.loadUiPart(primaryStage, taskListPlaceholder, new TaskListPanel());
 		taskListPanel.configure(taskList);
-		currentMaxListSize = taskList.size();
 		return taskListPanel;
 	}
 
@@ -121,13 +120,4 @@ public class TaskListPanel extends UiPart {
 	public ListView<ReadOnlyTask> getTaskListView() {
 		return taskListView;
 	}
-	
-	public static int getCurrentTaskListSize (){
-		return currentMaxListSize;
-	}
-	
-	public void updateCurrentTaskListSize (){
-		currentMaxListSize = taskListView.getChildrenUnmodifiable().size();
-	}
-
 }

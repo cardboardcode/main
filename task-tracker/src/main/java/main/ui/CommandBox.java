@@ -43,183 +43,179 @@ import com.google.common.eventbus.Subscribe;
  */
 
 public class CommandBox extends UiPart {
-    private final Logger logger = LogsCenter.getLogger(CommandBox.class);
-    private static final String FXML = "CommandBox.fxml";
+	private final Logger logger = LogsCenter.getLogger(CommandBox.class);
+	private static final String FXML = "CommandBox.fxml";
 
-    private AnchorPane placeHolderPane;
-    private AnchorPane commandPane;
-    private ResultDisplay resultDisplay;
-    String previousCommandTest;
-    
-    private TTNotification ttbot = new TTNotification();
-    private Logic logic;
-    private static ArrayList<String> commandHistory = new ArrayList<String>();
-    private static int historyPointer = 0;
+	private AnchorPane placeHolderPane;
+	private AnchorPane commandPane;
+	private ResultDisplay resultDisplay;
+	String previousCommandTest;
 
-    @FXML
-    private TextField commandTextField;
-    private CommandResult mostRecentResult;
+	private Logic logic;
+	private static ArrayList<String> commandHistory = new ArrayList<String>();
+	private static int historyPointer = 0;
 
-    public static CommandBox load(Stage primaryStage, AnchorPane commandBoxPlaceholder, ResultDisplay resultDisplay,
-            Logic logic) {
-        CommandBox commandBox = UiPartLoader.loadUiPart(primaryStage, commandBoxPlaceholder, new CommandBox());
-        commandBox.configure(resultDisplay, logic);
-        commandBox.addToPlaceholder();
-        commandBox.handleAllEvents();
-        return commandBox;
-    }
+	@FXML
+	private TextField commandTextField;
+	private CommandResult mostRecentResult;
 
-    public void configure(ResultDisplay resultDisplay, Logic logic) {
-        this.resultDisplay = resultDisplay;
-        this.logic = logic;
-        registerAsAnEventHandler(this);
-    }
+	public static CommandBox load(Stage primaryStage, AnchorPane commandBoxPlaceholder, ResultDisplay resultDisplay,
+			Logic logic) {
+		CommandBox commandBox = UiPartLoader.loadUiPart(primaryStage, commandBoxPlaceholder, new CommandBox());
+		commandBox.configure(resultDisplay, logic);
+		commandBox.addToPlaceholder();
+		commandBox.handleAllEvents();
+		return commandBox;
+	}
 
-    private void addToPlaceholder() {
-        SplitPane.setResizableWithParent(placeHolderPane, false);
-        placeHolderPane.getChildren().add(commandTextField);
-        FxViewUtil.applyAnchorBoundaryParameters(commandPane, 0.0, 0.0, 0.0, 0.0);
-        FxViewUtil.applyAnchorBoundaryParameters(commandTextField, 0.0, 0.0, 0.0, 0.0);
-        placeHolderPane.setMaxHeight(50);
-    }
+	public void configure(ResultDisplay resultDisplay, Logic logic) {
+		this.resultDisplay = resultDisplay;
+		this.logic = logic;
+		registerAsAnEventHandler(this);
+	}
 
-    @Override
-    public void setNode(Node node) {
-        commandPane = (AnchorPane) node;
-    }
+	private void addToPlaceholder() {
+		SplitPane.setResizableWithParent(placeHolderPane, false);
+		placeHolderPane.getChildren().add(commandTextField);
+		FxViewUtil.applyAnchorBoundaryParameters(commandPane, 0.0, 0.0, 0.0, 0.0);
+		FxViewUtil.applyAnchorBoundaryParameters(commandTextField, 0.0, 0.0, 0.0, 0.0);
+		placeHolderPane.setMaxHeight(50);
+	}
 
-    @Override
-    public String getFxmlPath() {
-        return FXML;
-    }
+	@Override
+	public void setNode(Node node) {
+		commandPane = (AnchorPane) node;
+	}
 
-    @Override
-    public void setPlaceholder(AnchorPane pane) {
-        this.placeHolderPane = pane;
-    }
+	@Override
+	public String getFxmlPath() {
+		return FXML;
+	}
 
-    @FXML
-    private void handleCommandInputChanged() {
-    	resultDisplay.clearResultDisplay();
-        // Take a copy of the command text
-        previousCommandTest = commandTextField.getText();
-        CommandBox.getHistory().add(previousCommandTest);
-        /*
-         * We assume the command is correct. If it is incorrect, the command box
-         * will be changed accordingly in the event handling code {@link
-         * #handleIncorrectCommandAttempted}
-         */
-        setStyleToIndicateCorrectCommand();
-        mostRecentResult = logic.execute(previousCommandTest);
-        String resultMessage = mostRecentResult.feedbackToUser;
-        ListStatistics.updateAll(resultMessage);
-        CommandBox.resetHistoryPointer();
-        
-//        if (!resultMessage.contains("Invalid"))
-//        showNotification();
-//        else 
-        resultDisplay.postMessage(resultMessage);
-        logger.info("Result: " + resultMessage);
-    }
+	@Override
+	public void setPlaceholder(AnchorPane pane) {
+		this.placeHolderPane = pane;
+	}
 
-    private void showNotification() {
-    	ttbot.setTitle(mostRecentResult.feedbackToUser);
-        ttbot.getTTbot().showAndDismiss(Duration.millis(500)); 	
+	@FXML
+	private void handleCommandInputChanged() {
+		resultDisplay.clearResultDisplay();
+		// Take a copy of the command text
+		previousCommandTest = commandTextField.getText();
+		CommandBox.getHistory().add(previousCommandTest);
+		/*
+		 * We assume the command is correct. If it is incorrect, the command box
+		 * will be changed accordingly in the event handling code {@link
+		 * #handleIncorrectCommandAttempted}
+		 */
+		setStyleToIndicateCorrectCommand();
+		mostRecentResult = logic.execute(previousCommandTest);
+		String resultMessage = mostRecentResult.feedbackToUser;
+		ListStatistics.updateAll(resultMessage);
+		CommandBox.resetHistoryPointer();
+
+//		if (mostRecentResult.isCorrectCommand())
+//			mostRecentResult.showNotification();
+//		else
+			resultDisplay.postMessage(resultMessage);
+		logger.info("Result: " + resultMessage);
 	}
 
 	private static void resetHistoryPointer() {
-        historyPointer = commandHistory.size();
+		historyPointer = commandHistory.size();
 
-    }
-    /**
-     * Sets the command box style to indicate a correct command.
-     */
-    private void setStyleToIndicateCorrectCommand() {
-        commandTextField.getStyleClass().remove("error");
-        commandTextField.setText("");
-    }
+	}
 
-    @Subscribe
-    private void handleIncorrectCommandAttempted(IncorrectCommandAttemptedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Invalid command: " + previousCommandTest));
-//        setStyleToIndicateIncorrectCommand();
-        commandTextField.setText("");
-    }
+	/**
+	 * Sets the command box style to indicate a correct command.
+	 */
+	private void setStyleToIndicateCorrectCommand() {
+		commandTextField.getStyleClass().remove("error");
+		commandTextField.setText("");
+	}
 
-    /**
-     * Sets the command box style to indicate an error
-     */
-    private void setStyleToIndicateIncorrectCommand() {
-        commandTextField.getStyleClass().add("error");
-    }
+	@Subscribe
+	private void handleIncorrectCommandAttempted(IncorrectCommandAttemptedEvent event) {
+		logger.info(LogsCenter.getEventHandlingLogMessage(event, "Invalid command: " + previousCommandTest));
+		// setStyleToIndicateIncorrectCommand();
+		commandTextField.setText("");
+	}
 
-    public TextField getCommandBoxTextField() {
-        return commandTextField;
-    }
+	/**
+	 * Sets the command box style to indicate an error
+	 */
+	private void setStyleToIndicateIncorrectCommand() {
+		commandTextField.getStyleClass().add("error");
+	}
 
-    public void handleAllEvents() {
-        handleUpEvent();
-        handleDownEvent();
-        handleTabEvent();
-    }
+	public TextField getCommandBoxTextField() {
+		return commandTextField;
+	}
 
-    private void handleUpEvent() {
+	public void handleAllEvents() {
+		handleUpEvent();
+		handleDownEvent();
+		handleTabEvent();
+	}
 
-        commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
-            if (event.getCode() == KeyCode.UP) {
-                if (historyPointer > 0) {
+	private void handleUpEvent() {
 
-                    --historyPointer;
-                    System.out.println(historyPointer + " " + CommandBox.getHistory().get(historyPointer));
-                } else
-                    historyPointer = 0;
-                commandTextField.setText(CommandBox.getHistory().get(historyPointer));
-                event.consume();
+		commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
+			if (event.getCode() == KeyCode.UP) {
+				if (historyPointer > 0) {
 
-            }
-        });
-    }
+					--historyPointer;
+					System.out.println(historyPointer + " " + CommandBox.getHistory().get(historyPointer));
+				} else
+					historyPointer = 0;
+				commandTextField.setText(CommandBox.getHistory().get(historyPointer));
+				event.consume();
 
-    private void handleDownEvent() {
-        commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
-            if (event.getCode() == KeyCode.DOWN) {
-                if (historyPointer < CommandBox.getHistory().size() - 1) {
+			}
+		});
+	}
 
-                    ++historyPointer;
-                    System.out.println(historyPointer + " " + CommandBox.getHistory().get(historyPointer));
-                } else
-                    historyPointer = (CommandBox.getHistory().size()) - 1;
-                commandTextField.setText(CommandBox.getHistory().get(historyPointer));
-                event.consume();
-            }
-        });
-    }
-    public static ArrayList<String> getHistory() {
-        return commandHistory;
-    }
+	private void handleDownEvent() {
+		commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
+			if (event.getCode() == KeyCode.DOWN) {
+				if (historyPointer < CommandBox.getHistory().size() - 1) {
 
-// @@author A0144132W
-    @FXML
-    public void handleKeyReleased(KeyEvent event) {
-        if (!event.getCode().isDigitKey() && !event.getCode().isLetterKey() && event.getCode() != KeyCode.BACK_SPACE
-                && event.getCode() != KeyCode.DELETE)
-            return;
-        String input = commandTextField.getText();
-        EventsCenter.getInstance().post(new KeyPressEvent(event.getCode(), input));
-    }
+					++historyPointer;
+					System.out.println(historyPointer + " " + CommandBox.getHistory().get(historyPointer));
+				} else
+					historyPointer = (CommandBox.getHistory().size()) - 1;
+				commandTextField.setText(CommandBox.getHistory().get(historyPointer));
+				event.consume();
+			}
+		});
+	}
 
-    public void handleTabEvent() {
-        commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
-            if (event.getCode() == KeyCode.TAB) {
-                EventsCenter.getInstance().post(new TabPressEvent(event.getCode()));
-                event.consume();
-            }
-        });
-    }
+	public static ArrayList<String> getHistory() {
+		return commandHistory;
+	}
 
-    @Subscribe
-    public void handleAutoComplete(AutoCompleteEvent event) {
-        commandTextField.replaceText(event.getStart(), event.getEnd(), event.getSuggestion());
-    }
+	// @@author A0144132W
+	@FXML
+	public void handleKeyReleased(KeyEvent event) {
+		if (!event.getCode().isDigitKey() && !event.getCode().isLetterKey() && event.getCode() != KeyCode.BACK_SPACE
+				&& event.getCode() != KeyCode.DELETE)
+			return;
+		String input = commandTextField.getText();
+		EventsCenter.getInstance().post(new KeyPressEvent(event.getCode(), input));
+	}
+
+	public void handleTabEvent() {
+		commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
+			if (event.getCode() == KeyCode.TAB) {
+				EventsCenter.getInstance().post(new TabPressEvent(event.getCode()));
+				event.consume();
+			}
+		});
+	}
+
+	@Subscribe
+	public void handleAutoComplete(AutoCompleteEvent event) {
+		commandTextField.replaceText(event.getStart(), event.getEnd(), event.getSuggestion());
+	}
 
 }

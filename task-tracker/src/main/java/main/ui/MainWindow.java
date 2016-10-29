@@ -21,6 +21,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import main.commons.core.Config;
 import main.commons.core.GuiSettings;
 import main.commons.events.ui.ExitAppRequestEvent;
@@ -116,6 +117,8 @@ public class MainWindow extends UiPart {
 
 		MainWindow mainWindow = UiPartLoader.loadUiPart(primaryStage, new MainWindow());
 		mainWindow.configure(config.getAppTitle(), config.getTaskTrackerName(), config, prefs, logic);
+//		primaryStage.initStyle(StageStyle.TRANSPARENT);
+		primaryStage.setAlwaysOnTop(true);
 		return mainWindow;
 	}
 
@@ -313,36 +316,36 @@ public class MainWindow extends UiPart {
 
     private void handleTaskListScrolling() {
 		ListView<ReadOnlyTask> scrollList = taskListPanel.getTaskListView();
-		int max = TaskListPanel.getCurrentTaskListSize();
-		handlePageUp(scrollList, max);
-		handlePageDown(scrollList, max);
+		handlePageUp(scrollList);
+		handlePageDown(scrollList);
 	}
 
-	public void handlePageDown(ListView<ReadOnlyTask> scrollList, int max) {
-		
+	public void handlePageDown(ListView<ReadOnlyTask> scrollList) {
+
 		rootLayout.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
 			if (event.getCode() == KeyCode.PAGE_DOWN) {
-				if ((taskPointer + 1) > max)
+				if ((taskPointer + 1) > logic.getFilteredTaskList().size() - 1)
 				    taskPointer = 0;
 				else {
                     taskPointer = taskPointer + 1;
 				}
-
+				System.out.println(taskPointer);
 				scrollList.scrollTo(taskPointer);
 			}
 		});
 
 	}
 
-	public void handlePageUp(ListView<ReadOnlyTask> scrollList, int max) {
+	public void handlePageUp(ListView<ReadOnlyTask> scrollList) {
 
 		rootLayout.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
 			if (event.getCode() == KeyCode.PAGE_UP) {
 				if ((taskPointer - 1) < 0)
-	                taskPointer = max;
+	                taskPointer = logic.getFilteredTaskList().size() - 1;
 				else {
 					taskPointer = taskPointer - 1;
 				}
+				System.out.println(taskPointer);
 				scrollList.scrollTo(taskPointer);
 			}
 		});
