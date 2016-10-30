@@ -311,4 +311,24 @@ public class TestTask implements ReadOnlyTask {
         return sb.toString();
     }
 
+    @Override
+    public boolean getEndTimeOverdue(){
+ 	   return DateUtil.checkDateOverdue(endTime);
+    }
+    
+    @Override
+    public boolean getDeadlineOverdue(){
+    		return DateUtil.checkDateOverdue(deadline);
+    }
+    //without time
+    @Override
+    public boolean getEndTimeWithoutOverdue(){
+ 	   return DateUtil.checkDateWithoutTimeOverdue(endTime);
+    }
+    //without time
+    @Override
+    public boolean getDeadlineWithoutOverdue(){
+ 	   return DateUtil.checkDateWithoutTimeOverdue(deadline);
+    }
+
 }
