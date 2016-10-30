@@ -29,7 +29,7 @@ public class DeleteCommandTest extends TaskTrackerGuiTest {
 
         //invalid index
         commandBox.runCommand("delete " + currentList.length + 1);
-        assertResultMessage("Task does not exist in task-tracker");
+        assertResultMessage("Task does not exist in Task-Tracker");
 
     }
 
