@@ -154,7 +154,25 @@ public class Task implements ReadOnlyTask {
 	   return this.isInferred;
    }
   
-    
+   @Override
+   public boolean getEndTimeOverdue(){
+	   return DateUtil.checkDateOverdue(endTime);
+   }
+   
+   @Override
+   public boolean getDeadlineOverdue(){
+   		return DateUtil.checkDateOverdue(deadline);
+   }
+   //without time
+   @Override
+   public boolean getEndTimeWithoutOverdue(){
+	   return DateUtil.checkDateWithoutTimeOverdue(endTime);
+   }
+   //without time
+   @Override
+   public boolean getDeadlineWithoutOverdue(){
+	   return DateUtil.checkDateWithoutTimeOverdue(deadline);
+   }
     //setters
     public void setMessage(String message){
     	this.message = message;

@@ -119,6 +119,45 @@ public class DateUtil {
         return cal.getTime();
     }
     
+    //method to return a date with no time
+    public static Date removeTime(Date date){
+    	Calendar cal = Calendar.getInstance();
+    	cal.setTime(date);
+    	cal.clear(Calendar.HOUR_OF_DAY);
+    	cal.clear(Calendar.MINUTE);
+    	cal.clear(Calendar.SECOND);
+    	cal.clear(Calendar.MILLISECOND);
+    	return cal.getTime();
+    }
+    
+    //Checks if the task date with time is overdue
+    public static boolean checkDateOverdue(Date taskDate){
+    	Date current = new Date();
+    	boolean before = taskDate.before(current);
+    	
+    	if(taskDate == null || before || taskDate == current){
+    		return false;
+    	}
+    	else{
+    		return true;
+    	}    	
+    }
+    
+    //Checks if the task date without time is overdue
+    public static boolean checkDateWithoutTimeOverdue(Date taskDate){
+    	Date current = new Date();
+    	removeTime(taskDate);
+    	removeTime(current);
+    	boolean before = taskDate.before(current);
+    	
+    	if(taskDate == null || before || taskDate == current){
+    		return false;
+    	}
+    	else{
+    		return true;
+    	}    	
+    }
+    
     public static Date defaultTime(Date date) {
         return setTime(date, 8, true);
     }
