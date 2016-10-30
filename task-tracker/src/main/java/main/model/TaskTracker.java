@@ -82,6 +82,16 @@ public class TaskTracker implements ReadOnlyTaskTracker{
         tasks.replace(index, newtask);
     } 
     
+    public boolean overdueTask(ReadOnlyTask task) throws UniqueTaskList.TaskNotFoundException{
+		if(tasks.contains(task)){
+			tasks.overdue(task);
+			return true;
+		}
+		else{
+    		throw new UniqueTaskList.TaskNotFoundException();
+    	}
+	}
+    
     public boolean completeTask(ReadOnlyTask task)  throws UniqueTaskList.TaskNotFoundException{
     	if(tasks.contains(task)){
     		tasks.complete(task);
@@ -134,5 +144,7 @@ public class TaskTracker implements ReadOnlyTaskTracker{
         else if (((TaskTracker)obj).tasks.equals(this.tasks)) return true;
         else return false;
     }
+
+	
    
 }
