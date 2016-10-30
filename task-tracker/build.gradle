@@ -64,7 +64,6 @@ allprojects {
 	    compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
 	    compile group: 'org.apache.commons', name: 'commons-lang3', version: "$apacheCommonsLang"
 	    
-	    compile fileTree(dir: 'libs', include: ['*.jar'])
 	}
 	
 	sourceSets {
