@@ -3,6 +3,7 @@
 
 [![Build Status](https://travis-ci.org/CS2103AUG2016-T09-C3/main.svg?branch=master)](https://travis-ci.org/CS2103AUG2016-T09-C3/main)
 [![Coverage Status](https://coveralls.io/repos/github/CS2103AUG2016-T09-C3/main/badge.svg?branch=master)](https://coveralls.io/github/CS2103AUG2016-T09-C3/main?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/adb2cda827ef44ef80bd10c90663936c)](https://www.codacy.com/app/CS2103T_TASKTRACKER/main?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CS2103AUG2016-T09-C3/main&amp;utm_campaign=Badge_Grade)
 
 <img src="docs/images/T-T.png" width="200p" height="200p">
 
