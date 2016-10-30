@@ -87,6 +87,41 @@ public class UniqueTaskList implements Iterable<Task> {
     }
     /**
      * 
+     * Marks task as overdue
+     * 
+     * @throws TaskNotFoundException
+     */
+    public boolean overdue(ReadOnlyTask overdue) throws TaskNotFoundException {
+		assert overdue !=null;
+		  if (!internalList.contains(overdue)) {
+	            throw new TaskNotFoundException();
+	        }
+	        Task taskFoundAndOverdue = internalList.get(internalList.indexOf(overdue));
+	        
+	        if(taskFoundAndOverdue.getType() == TaskType.DEADLINE){
+	        	if(taskFoundAndOverdue.getIsInferred() == true){
+	        		return taskFoundAndOverdue.getDeadlineWithoutOverdue();
+	        	}
+	        	else{
+	        		return taskFoundAndOverdue.getDeadlineOverdue();
+	        	}
+	        }
+	        //Event
+	        else{
+	        	if(taskFoundAndOverdue.getIsInferred() == true){
+	        		return taskFoundAndOverdue.getEndTimeWithoutOverdue();
+	        	}
+	        	else{
+	        		return taskFoundAndOverdue.getEndTimeOverdue();
+	        	}
+	        }
+    }
+		
+		
+		
+	//}
+    /**
+     * 
      * Marks the equivalent task as done/completed
      * @return
      * @throws TaskNotFoundException 
@@ -136,5 +171,7 @@ public class UniqueTaskList implements Iterable<Task> {
     public int hashCode() {
         return internalList.hashCode();
     }
+
+	
 
 }
