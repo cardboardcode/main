@@ -5,7 +5,7 @@ package main.ui;
 //import tray.animations.AnimationType;
 //import tray.notification.NotificationType;
 //import tray.notification.TrayNotification;
-//
+
 public class TTNotification {
 //	private TrayNotification ttbot;
 //	private String title = "How can I help you today?";
