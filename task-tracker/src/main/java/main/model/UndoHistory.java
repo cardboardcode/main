@@ -29,6 +29,6 @@ public class UndoHistory {
     
     public ArrayList<Task> getTasks() {
         return tasks;
-    }
+    }   
     
 }

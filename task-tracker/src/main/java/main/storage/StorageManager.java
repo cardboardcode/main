@@ -89,4 +89,9 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    @Override
+    public void setTaskTrackerFilePath(String filepath) {
+        taskTrackerStorage.setTaskTrackerFilePath(filepath);        
+    }
+
 }

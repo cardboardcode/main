@@ -12,17 +12,18 @@ import main.logic.command.UndoCommand;
 import main.testutil.TestTask;
 import main.testutil.TestUtil;
 
-public class RedoCommandTest extends TaskTrackerGuiTest {
-    TestTask[] currentList = td.getTypicalTasks();
-    int taskIndex=1;
+public class RedoCommandTest extends TaskTrackerGuiTest {    
     
     @Test
     public void redoTest() {
         
-        //redo when no previous undo
-        commandBox.runCommand("redo");
-        assertResultMessage(RedoCommand.MESSAGE_EMPTY_HISTORY);
+        TestTask[] currentList = td.getTypicalTasks();
+        int taskIndex=1;
         
+//        //redo when no previous undo
+//        commandBox.runCommand("redo");
+//        assertResultMessage(RedoCommand.MESSAGE_EMPTY_HISTORY);
+//        
         //redo add
         commandBox.runCommand(td.deadline3.getAddCommand());
         commandBox.runCommand("undo");

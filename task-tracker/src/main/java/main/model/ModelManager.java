@@ -490,5 +490,15 @@ public class ModelManager extends ComponentManager implements Model {
         index=temp.lastIndexOf(task);
         return index;
     }
+//    
+//    @Override
+//    public void emptyUndoStack() {
+//        undoStack.clear();
+//    }
+//    
+//    @Override
+//    public void emptyRedoStack() {
+//        redoStack.clear();
+//    }
 }
 

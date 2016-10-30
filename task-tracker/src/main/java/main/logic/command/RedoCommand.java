@@ -101,5 +101,8 @@ public class RedoCommand extends Command {
     private void redoDone(Task task) throws IndexOutOfBoundsException, TaskNotFoundException {
         model.doneTask(model.getIndexFromTask(task));
     }
-        
+//        
+//    public void clearRedo() {
+//        model.emptyRedoStack();
+//    }
 }

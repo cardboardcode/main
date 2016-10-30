@@ -6,6 +6,7 @@ import main.commons.core.Messages;
 
 import main.commons.events.ui.IncorrectCommandAttemptedEvent;
 import main.model.Model;
+import main.storage.Storage;
 
 /**
  * Represents a command with hidden internal logic and the ability to be executed.
@@ -13,6 +14,7 @@ import main.model.Model;
  */
 public abstract class Command {
 	protected Model model;
+	protected Storage storage;
 	private int targetIndex = -1;
 //	/**
 //     * @param targetIndex last visible listing index of the target task
@@ -50,6 +52,11 @@ public abstract class Command {
      */
     public void setData(Model model) {
         this.model = model;
+    }
+    
+    //@@author A0142686X
+    public void setStorage(Storage storage) {
+        this.storage = storage;
     }
 
     /**

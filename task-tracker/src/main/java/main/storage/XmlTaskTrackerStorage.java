@@ -71,4 +71,10 @@ public class XmlTaskTrackerStorage implements TaskTrackerStorage {
     public void saveTaskTracker(ReadOnlyTaskTracker taskTracker) throws IOException {
         saveTaskTracker(taskTracker, filePath);
     }
+    
+    //@@author A0142686X
+    @Override
+    public void setTaskTrackerFilePath(String filepath) {
+        this.filePath = filepath;
+    }
 }
