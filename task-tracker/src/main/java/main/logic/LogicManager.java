@@ -24,22 +24,27 @@ public class LogicManager extends ComponentManager implements Logic {
     private final Model model;
     private final MainParser parser;
     private final AutoComplete autoComplete;
+    private final Storage storage;
 
     public LogicManager(Model model, Storage storage) {
         this.model = model;
         this.parser = new MainParser();
         this.autoComplete = new AutoComplete(model);
+        this.storage = storage;
     }
 
+    //@@author A0142686X
     @Override
     public CommandResult execute(String commandText) {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         Command command = parser.parse(commandText);
         command.setData(model);
+        command.setStorage(storage);
         return command.execute();
 
     }
-
+    
+    //@@author A0144132W
     @Override
     public ObservableList<ReadOnlyTask> getFilteredTaskList() {
         return model.getFilteredTaskList();

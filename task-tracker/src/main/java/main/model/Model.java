@@ -67,6 +67,10 @@ public interface Model {
      * @throws DuplicateTaskException 
      * @throws TaskNotFoundException **/
     void doneTaskUndoRedo(Task Task) throws DuplicateTaskException, TaskNotFoundException;
+//    
+//    void emptyUndoStack();
+//    
+//    void emptyRedoStack();
     
     //@@author A0144132W
     /** Returns the filtered task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */

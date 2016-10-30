@@ -7,6 +7,8 @@ import main.model.ReadOnlyTaskTracker;
 import java.io.IOException;
 import java.util.Optional;
 
+import com.sun.javafx.runtime.VersionInfo;
+
 /**
  * Represents a storage for TaskTracker.
  */
@@ -35,5 +37,7 @@ public interface TaskTrackerStorage {
     void saveTaskTracker(ReadOnlyTaskTracker taskTracker) throws IOException;
     
     void saveTaskTracker(ReadOnlyTaskTracker taskTracker, String filePath) throws IOException;
+    
+    void setTaskTrackerFilePath(String filepath);
 
 }

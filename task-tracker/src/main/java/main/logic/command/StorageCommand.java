@@ -32,30 +32,8 @@ public class StorageCommand extends Command {
     public CommandResult execute() {
         if((newStoragePath.substring((newStoragePath.length() - 4))).equals(".xml") == false) {
             return new CommandResult(MESSAGE_NO_XML); 
-        }
-        
-        try {
-            String defaultConfigPath = Config.DEFAULT_CONFIG_FILE; 
-            Config presentConfig = ConfigUtil.readConfig(defaultConfigPath).orElse(new Config());
-            String presentPath = presentConfig.getTaskTrackerFilePath();
-            
-            presentConfig.setTaskTrackerFilePath(newStoragePath);
-            ConfigUtil.saveConfig(presentConfig, defaultConfigPath);
-            
-            StorageManager currentStorage = new StorageManager(presentPath, presentConfig.getUserPrefsFilePath());
-            StorageManager newStorage = new StorageManager(newStoragePath, presentConfig.getUserPrefsFilePath());
-            
-            ReadOnlyTaskTracker currentTaskTracker = currentStorage.readTaskTracker().orElse(new TaskTracker());
-            newStorage.saveTaskTracker(currentTaskTracker);
-            
-
-            return new CommandResult(MESSAGE_SUCCESS);            
-        } catch (DataConversionException e) {
-            e.printStackTrace();
-            return new CommandResult(MESSAGE_CONVERT_FAILIURE);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new CommandResult(MESSAGE_SAVE_FAILIURE);                        
         }        
+        storage.setTaskTrackerFilePath(newStoragePath);
+        return new CommandResult(MESSAGE_SUCCESS);   
     }
 }

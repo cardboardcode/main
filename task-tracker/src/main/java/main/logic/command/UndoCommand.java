@@ -103,4 +103,8 @@ public class UndoCommand extends Command {
     private void undoDone(Task task) throws DuplicateTaskException, TaskNotFoundException {
         model.doneTaskUndoRedo(task);
     }
+//    
+//    public void clearUndo() {
+//        model.emptyUndoStack();
+//    }
 }

@@ -8,17 +8,17 @@ import org.junit.Test;
 import main.logic.command.UndoCommand;
 import main.testutil.TestTask;
 
-public class UndoCommandTest extends TaskTrackerGuiTest {
-
-    TestTask[] currentList = td.getTypicalTasks();
-    int taskIndex=1;
+public class UndoCommandTest extends TaskTrackerGuiTest {   
     
     @Test
     public void undoTest() {
-       
-        //when no previous undo
-        commandBox.runCommand("undo");
-        assertResultMessage(UndoCommand.MESSAGE_EMPTY_HISTORY);
+        TestTask[] currentList = td.getTypicalTasks();
+        int taskIndex=1;
+        
+        
+//        //when no previous undo
+//        commandBox.runCommand("undo");
+//        assertResultMessage(UndoCommand.MESSAGE_EMPTY_HISTORY);
         
         //test to undo add
         commandBox.runCommand(td.deadline3.getAddCommand());
