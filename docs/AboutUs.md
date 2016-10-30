@@ -58,4 +58,6 @@ We are a team based in the [School of Computing, National University of Singapor
 *    Components in charge of: [Model](https://github.com/CS2103AUG2016-T09-C3/main/tree/master/task-tracker/src/main/java/main/logic)
 *    Aspects/tools in charge of: Documentation, Code Quality, Code Developer
 * Code written: [[functional code](https://github.com/CS2103AUG2016-T09-C3/main/blob/v0.4/collated/main/A0139750B.md)] [[test code](https://github.com/CS2103AUG2016-T09-C3/main/blob/v0.4/collated/test/A0139750Bunused.md)][[docs](https://github.com/CS2103AUG2016-T09-C3/main/blob/v0.4/collated/docs/A0139750B.md)]
+* Other major contributions: 
+    * Set up Codacy
 
