@@ -1,6 +1,5 @@
 //@@author A0144132W
 // adapted from addressbook level 4
-
 package main.model;
 
 import main.commons.core.ComponentManager;

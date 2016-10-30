@@ -10,6 +10,7 @@ import java.util.Objects;
 public class UserPrefs {
 
     public GuiSettings guiSettings;
+    public int colourPointer;
 
     public GuiSettings getGuiSettings() {
         return guiSettings == null ? new GuiSettings() : guiSettings;
@@ -26,7 +27,17 @@ public class UserPrefs {
     public void setGuiSettings(double width, double height, int x, int y) {
         guiSettings = new GuiSettings(width, height, x, y);
     }
-
+    
+    //@@author A0142686X
+    public void updateColourPointer(int value) {
+        this.colourPointer = value;
+    }
+    
+    public int getColourPointer() {
+        return colourPointer;
+    }
+    
+  //@@author A0139750B
     @Override
     public boolean equals(Object other) {
         if (other == this){

@@ -26,8 +26,13 @@ We are a team based in the [School of Computing, National University of Singapor
     -   [Undo command](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#5-undo-a-task)
     -   [Redo command](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#6-redo-a-task)
 *   Code written: [[functional code](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/main/A0142686X.md)][[test code](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/test/A0142686X.md)][[docs]()]
+<<<<<<< HEAD
 * Other major contributions: 
     * Converted User Guide and Developer Guide to markdown format.
+=======
+*   Other major contribution:
+    -   Converted User Guide and Developer Guide to markdown format
+>>>>>>> f3dd1dd2cc0838ca254774ff9fb7a0a50722411a
 
 
 ---

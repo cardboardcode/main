@@ -40,7 +40,7 @@ In order to install T-T,
 The format for adding a new task is: <br>
 &nbsp; &nbsp;   `add <task> [date1] [date2] [-h | -m | -l]` <br>
 
-
+<!-- @@author A0144132W -->
 *  T-T can accept flexible date formats. Examples are:
     *  `today`
     *  `monday`(to set the date as next monday)
@@ -90,6 +90,7 @@ The format to edit an existing task is : <br>
 Let’s say task index “**1**” refers to the task `wash dishes monday 4pm`
 
 *   `delete 1` will delete the aforementioned `wash dishes` task.
+
 <!--@@author A0142686X -->
 ###4. LIST Tasks
 
@@ -143,6 +144,8 @@ T-T's list statistics provides data on all the different types of tasks availabl
 <br>
 ![List Screen](images/List_Statistics.png)
 <br>
+
+<!-- @@author A0139750B -->
 ## **Cheat Sheet**
 Getting the hang of it? Here’s a quick and dirty summary of all T-T commands
 

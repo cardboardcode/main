@@ -1,3 +1,4 @@
+//@@author A0144132W
 package main.logic;
 
 import main.commons.core.EventsCenter;
@@ -27,6 +28,7 @@ import main.storage.StorageManager;
 
 import static main.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,7 +53,6 @@ public class LogicManagerTest {
     //These are for checking the correctness of the events raised
     private ReadOnlyTaskTracker latestSavedTaskTracker;
     private boolean helpShown;
-    private int targetedJumpIndex;
 
     @Subscribe
     private void handleLocalModelChangedEvent(TaskTrackerChangedEvent ttce) {
@@ -104,7 +105,7 @@ public class LogicManagerTest {
     @Test
     public void execute_help() throws Exception {
         assertCommandBehavior("help", new HelpCommand().execute().feedbackToUser);
-//        assertTrue(helpShown);
+        assertTrue(helpShown);
     }
     
     @Test
