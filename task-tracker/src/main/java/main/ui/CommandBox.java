@@ -106,9 +106,17 @@ public class CommandBox extends UiPart {
         String resultMessage = mostRecentResult.feedbackToUser;
         ListStatistics.updateAll(resultMessage);
         CommandBox.resetHistoryPointer();
-
+        
+        if (saveLocationIsChanged(previousCommandTest, resultMessage)){
+            StatusBarFooter.updateSaveLocation(previousCommandTest);
+        }
+        
         resultDisplay.postMessage(resultMessage);
         logger.info("Result: " + resultMessage);
+    }
+
+    private boolean saveLocationIsChanged(String command, String resultMessage) {   
+        return ((command.contains("storage")) && (!resultMessage.contains("XML file not found at the specified location."))&& (!command.contains("invalid")));
     }
 
     private static void resetHistoryPointer() {
