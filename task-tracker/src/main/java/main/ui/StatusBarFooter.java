@@ -96,6 +96,7 @@ public class StatusBarFooter extends UiPart {
         this.saveLocationStatus = new StatusBar();
         FxViewUtil.applyAnchorBoundaryParameters(saveLocationStatus, 0.0, 0.0, 0.0, 0.0);
         saveLocStatusBarPane.getChildren().add(saveLocationStatus);
+        saveLocStatusBarPane.setMinWidth(150);
     }
 
     private void setSyncStatus(String status) {
