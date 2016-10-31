@@ -134,12 +134,12 @@ public class ModelManager extends ComponentManager implements Model {
         addToUndo(UndoCommand.ADD, task);
     }
     
-    @Override
-    public synchronized void overdueTask(int index) throws TaskNotFoundException, DuplicateTaskException {
-    	ReadOnlyTask target = getTaskfromIndex(index);
-        taskTracker.overdueTask(target);
-        indicateTaskTrackerChanged();
-    }
+  //  @Override
+  //  public synchronized void overdueTask(int index) throws TaskNotFoundException, DuplicateTaskException {
+  // 	ReadOnlyTask target = getTaskfromIndex(index);
+  //      taskTracker.overdueTask(target);
+  //      indicateTaskTrackerChanged();
+  //  }
     
     //=========== Sorting ===================================================================
     @Override

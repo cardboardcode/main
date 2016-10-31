@@ -91,7 +91,7 @@ public class UniqueTaskList implements Iterable<Task> {
      * 
      * @throws TaskNotFoundException
      */
-    public boolean overdue(ReadOnlyTask overdue) throws TaskNotFoundException {
+ /*   public boolean overdue(ReadOnlyTask overdue) throws TaskNotFoundException {
 		assert overdue !=null;
 		  if (!internalList.contains(overdue)) {
 	            throw new TaskNotFoundException();
@@ -115,7 +115,7 @@ public class UniqueTaskList implements Iterable<Task> {
 	        		return taskFoundAndOverdue.getEndTimeOverdue();
 	        	}
 	        }
-    }
+    }*/
 		
 		
 		
