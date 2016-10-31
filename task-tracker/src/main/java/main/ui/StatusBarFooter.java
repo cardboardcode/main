@@ -78,7 +78,6 @@ public class StatusBarFooter extends UiPart {
     private void setSaveLocation(String location) {
         this.saveLocation = location;
         String tidyPath = tidyNewSavePath(location);
-        System.out.println(tidyPath);
         this.saveLocationStatus.setText(tidyPath);
     }
     
@@ -90,7 +89,6 @@ public class StatusBarFooter extends UiPart {
      }
     
     public static void updateSaveLocation(String newSaveLocation){
-        System.out.println("updated save location");
         statusBarFooter.setSaveLocation(newSaveLocation);
     }
     
