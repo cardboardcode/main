@@ -59,6 +59,11 @@ public class MainParser {
             return commandIncorrect(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, Messages.MESSAGE_UNKNOWN_COMMAND));
         }
 
+        return getCommand(input, commandWord, task);
+           
+    }
+
+    private Command getCommand(String input, String commandWord, String task) {
         switch (ReferenceList.commandsDictionary.get(commandWord.toLowerCase())) {
             case AddCommand.COMMAND_WORD:
                 return prepareAdd(task);
@@ -87,7 +92,6 @@ public class MainParser {
             default: 
                 return commandIncorrect(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, Messages.MESSAGE_UNKNOWN_COMMAND));
         }
-           
     }
 
     private Command commandIncorrect(String message) {
@@ -118,7 +122,6 @@ public class MainParser {
             return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
         
-        // TODO let index start from 1
         int index = Integer.valueOf(edit_matcher.group("index")) - 1;
                 
         String task = edit_matcher.group("task");
@@ -240,17 +243,17 @@ public class MainParser {
         }
         
         if (dates.isEmpty()) {
-            return (new Task(description, priority)).setIsInferred(isInferred);
+            return (new Task(description, priority)).setIsInferred(isInferred).setIsRecurring(isRecurring);
         }
         else if (dates.size() == 1) { 
-            return new Task(description,dates.get(0), priority).setIsInferred(isInferred);
+            return new Task(description,dates.get(0), priority).setIsInferred(isInferred).setIsRecurring(isRecurring);
         }
         // compare dates if there are 2 dates
         else {
             if (dates.get(0).before(dates.get(1)))
-                return new Task(description,dates.get(0),dates.get(1), priority).setIsInferred(isInferred);
+                return new Task(description,dates.get(0),dates.get(1), priority).setIsInferred(isInferred).setIsRecurring(isRecurring);
             else 
-                return new Task(description,dates.get(1),dates.get(0), priority).setIsInferred(isInferred);
+                return new Task(description,dates.get(1),dates.get(0), priority).setIsInferred(isInferred).setIsRecurring(isRecurring));
         }
     }
     
@@ -275,13 +278,21 @@ public class MainParser {
             }
         }
 
-        if (priority == 0) priority = 2;
+        if (priority == 0) {
+            priority = 2;
+        }
         
         PriorityType priority_enum;
         
-        if (priority == 1) priority_enum = PriorityType.HIGH;
-        else if (priority == 2) priority_enum = PriorityType.NORMAL;
-        else priority_enum = PriorityType.LOW;
+        if (priority == 1) {
+            priority_enum = PriorityType.HIGH;
+        }
+        else if (priority == 2) {
+            priority_enum = PriorityType.NORMAL;
+        }
+        else {
+            priority_enum = PriorityType.LOW;
+        }
         
         input = input.substring(0, index);
         logger.info(input + " priority " + priority_enum);
