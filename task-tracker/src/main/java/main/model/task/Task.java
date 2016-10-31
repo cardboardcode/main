@@ -1,6 +1,7 @@
 //@@author A0139750B
 package main.model.task;
 
+
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -75,6 +76,34 @@ public class Task implements ReadOnlyTask {
         this.type = src.getType();
         this.isDone = src.getIsDone();
         this.isInferred = src.getIsInferred();
+    }
+    
+    //method to check if task is overdue
+    @Override
+    public boolean isOverdue(Task task){
+    	assert task != null;
+    	
+    	if(task.getType() == TaskType.FLOATING){
+    		return false;
+    	}
+    	//Deadline
+    	else if(task.getType() == TaskType.DEADLINE){
+    		if(DateUtil.IsDateWithTime(task.getDeadline())){
+    			return DateUtil.checkDateOverdue(task.getDeadline());
+    		}
+    		else{
+    			return DateUtil.checkDateWithoutTimeOverdue(task.getDeadline());
+    		}
+    	}
+    	//Event
+    	else{
+    		if(DateUtil.IsDateWithTime(task.getEndTime())){
+    			return DateUtil.checkDateOverdue(task.getEndTime());
+    		}
+    		else{
+    			return DateUtil.checkDateWithoutTimeOverdue(task.getEndTime());
+    		}
+    	}
     }
     //getters
     @Override
@@ -154,25 +183,7 @@ public class Task implements ReadOnlyTask {
 	   return this.isInferred;
    }
   
-   @Override
-   public boolean getEndTimeOverdue(){
-	   return DateUtil.checkDateOverdue(endTime);
-   }
-   
-   @Override
-   public boolean getDeadlineOverdue(){
-   		return DateUtil.checkDateOverdue(deadline);
-   }
-   //without time
-   @Override
-   public boolean getEndTimeWithoutOverdue(){
-	   return DateUtil.checkDateWithoutTimeOverdue(endTime);
-   }
-   //without time
-   @Override
-   public boolean getDeadlineWithoutOverdue(){
-	   return DateUtil.checkDateWithoutTimeOverdue(deadline);
-   }
+  
     //setters
     public void setMessage(String message){
     	this.message = message;
@@ -242,18 +253,32 @@ public class Task implements ReadOnlyTask {
      */
     public int compareTime(Task other) {
         if (this.type == TaskType.FLOATING) {
-            if (other.type == TaskType.FLOATING) return 0;
-            else return 1;
+            if (other.type == TaskType.FLOATING){
+            	return 0;
+            }
+            else{
+            	return 1;
+            }
         }
         else {
             Date time;
         
-            if (this.type == TaskType.DEADLINE) time = this.deadline;
-            else time = this.endTime;
+            if (this.type == TaskType.DEADLINE){
+            	time = this.deadline;
+            }
+            else{
+            	time = this.endTime;
+            }
         
-            if (other.type == TaskType.FLOATING) return -1;
-            else if (other.type == TaskType.DEADLINE) return time.compareTo(other.deadline);
-            else return time.compareTo(other.endTime);
+            if (other.type == TaskType.FLOATING){
+            	return -1;
+            }
+            else if (other.type == TaskType.DEADLINE){
+            	return time.compareTo(other.deadline);
+            }
+            else{
+            	return time.compareTo(other.endTime);
+            }
         }        
     }
      

@@ -129,7 +129,15 @@ public class DateUtil {
     	cal.clear(Calendar.MILLISECOND);
     	return cal.getTime();
     }
-    
+    //method to check if task date has a date with no time
+    public static boolean IsDateWithTime(Date date){
+    	Calendar cal = Calendar.getInstance();
+    	cal.setTime(date);
+    	if(cal.get(Calendar.HOUR_OF_DAY) == 0){
+    		return false;
+    	}
+    	return true;
+    }
     //Checks if the task date with time is overdue
     public static boolean checkDateOverdue(Date taskDate){
     	Date current = new Date();

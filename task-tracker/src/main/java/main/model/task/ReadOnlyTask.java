@@ -3,6 +3,8 @@ package main.model.task;
 
 import java.util.Date;
 
+import main.testutil.TestTask;
+
 /**
  * A read-only immutable interface for a Person in the addressbook.
  * Implementations should guarantee: details are present and not null, field values are validated.
@@ -24,10 +26,8 @@ public interface ReadOnlyTask {
     String getDeadlineString();
     String getStartTimeString();
     String getEndTimeString();
-    boolean getEndTimeOverdue();
-    boolean getDeadlineOverdue();
-    boolean getEndTimeWithoutOverdue();
-    boolean getDeadlineWithoutOverdue();
+    boolean isOverdue(Task task);
+    boolean isOverdue(TestTask task);
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
      */
@@ -44,11 +44,8 @@ public interface ReadOnlyTask {
 				&& other.getIsRecurring() == this.getIsRecurring()
 				&& other.getPriority() == this.getPriority()
                 && other.getIsDone() == this.getIsDone()
-                && other.getIsInferred() == this.getIsInferred()
-                && other.getEndTimeOverdue() == this.getEndTimeOverdue()
-                && other.getEndTimeOverdue() == this.getEndTimeWithoutOverdue()
-                && other.getDeadlineOverdue() == this.getDeadlineOverdue()
-                && other.getDeadlineWithoutOverdue() == this.getDeadlineWithoutOverdue());
+                && other.getIsInferred() == this.getIsInferred());
+               
                 
     }
 
@@ -67,15 +64,12 @@ public interface ReadOnlyTask {
         		.append(getIsRecurring())
         		.append(getPriority())
         		.append(getIsDone())
-        		.append(getIsInferred())
-        		.append(getEndTimeOverdue())
-        		.append(getEndTimeWithoutOverdue())
-        		.append(getDeadlineOverdue())
-        		.append(getDeadlineWithoutOverdue());
+        		.append(getIsInferred());
                 
                 
         return builder.toString();
     }
+	
 	
 	
   
