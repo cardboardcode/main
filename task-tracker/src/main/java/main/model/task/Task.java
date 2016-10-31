@@ -201,8 +201,9 @@ public class Task implements ReadOnlyTask {
     	this.type = TaskType.DEADLINE;
     }
     
-    public void setIsRecurring(boolean isRecurring){
+    public Task setIsRecurring(boolean isRecurring){
     	this.isRecurring = isRecurring;
+    	return this;
     }
     
     public void setPriority(PriorityType priority){
@@ -211,6 +212,11 @@ public class Task implements ReadOnlyTask {
     
     public void setType(TaskType type){
     	this.type = type;
+    }
+    
+    public Task setDone(boolean isDone) {
+        this.isDone = isDone;
+        return this;
     }
     
     public boolean setIsDone(){

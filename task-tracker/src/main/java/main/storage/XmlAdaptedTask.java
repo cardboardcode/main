@@ -68,9 +68,9 @@ public class XmlAdaptedTask {
      */
     public Task toModelType() throws IllegalValueException {
             
-        if (type == TaskType.FLOATING) return new Task(message, priority);
-        else if (type == TaskType.EVENT) return new Task(message, startTime, endTime, priority);
-        else return new Task(message, deadline, priority);
+        if (type == TaskType.FLOATING) return new Task(message, priority).setIsInferred(isInferred).setIsRecurring(isRecurring).setDone(isDone);
+        else if (type == TaskType.EVENT) return new Task(message, startTime, endTime, priority).setIsInferred(isInferred).setIsRecurring(isRecurring).setDone(isDone);
+        else return new Task(message, deadline, priority).setIsInferred(isInferred).setIsRecurring(isRecurring).setDone(isDone);
         
     }
 }
