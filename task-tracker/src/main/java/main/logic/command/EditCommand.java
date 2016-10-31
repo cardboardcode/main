@@ -45,8 +45,7 @@ public static final String COMMAND_WORD = "edit";
             return new CommandResult("Task does not exist in task-tracker");
 		}catch (IndexOutOfBoundsException ie) {
 			return new CommandResult("The task index provided is invalid");
-		}
-			catch (DuplicateTaskException e) {
+		}catch (DuplicateTaskException e) {
             return new CommandResult(AddCommand.MESSAGE_DUPLICATE_TASK);
 		}
 	}
