@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 
+import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -49,15 +50,24 @@ public class TaskCard extends UiPart{
 
     private ReadOnlyTask task;
     private int displayedIndex;
-
+    
+    private static ReadOnlyDoubleProperty listWidthProperty;
+    private static ReadOnlyDoubleProperty listHeightProperty;
+    
     public TaskCard(){
 
+    }
+    
+    public static void setProperty(ReadOnlyDoubleProperty widthProperty, ReadOnlyDoubleProperty heightProperty) {
+        listWidthProperty = widthProperty;
+        listHeightProperty = heightProperty;
     }
 
     public static TaskCard load(ReadOnlyTask task, int displayedIndex){
         TaskCard card = new TaskCard();
         card.task = task;
         card.displayedIndex = displayedIndex;
+
         return UiPartLoader.loadUiPart(card);
     }
 
@@ -126,6 +136,8 @@ public class TaskCard extends UiPart{
     @Override
     public void setNode(Node node) {
         cardPane = (HBox)node;
+        cardPane.prefWidthProperty().bind(listWidthProperty);
+        cardPane.prefHeightProperty().bind(listHeightProperty);
     }
 
     @Override
