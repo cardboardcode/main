@@ -272,8 +272,16 @@ background {
     -fx-padding: 8 1 8 1;
 }
 
+.split-pane-card {
+    -fx-background-color: transparent;	
+}
+
+.split-pane-divider {
+   -fx-background-color: transparent;
+}
+
 #cardPane {
-    -fx-background-color: transparent;
+    -fx-background-color: -fx-control-inner-background;
     -fx-border-color: #d6d6d6;
     -fx-border-width: 1 1 1 1;
 }
