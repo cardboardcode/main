@@ -67,7 +67,6 @@ public class TaskCard extends UiPart{
         TaskCard card = new TaskCard();
         card.task = task;
         card.displayedIndex = displayedIndex;
-
         return UiPartLoader.loadUiPart(card);
     }
 
@@ -94,11 +93,10 @@ public class TaskCard extends UiPart{
         else
             deadline.setText("");
         
-//        if (task.getIsRecurring())
+        if (task.getIsRecurring())
             recurring.setText("Weekly");
-//        else
-//            recurring.setText("");
-		
+        else
+            recurring.setText("");
 	}
     
     private void setPriorityTabColour() {
