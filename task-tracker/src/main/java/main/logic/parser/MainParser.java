@@ -6,8 +6,6 @@ import main.commons.core.Messages;
 import main.commons.exceptions.IllegalValueException;
 import main.commons.exceptions.MultiplePriorityException;
 
-import static main.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -21,7 +19,6 @@ import org.apache.commons.lang3.tuple.Triple;
 import main.model.task.PriorityType;
 import main.model.task.Task;
 import main.model.task.TaskType;
-import main.storage.Storage;
 import main.logic.command.AddCommand;
 import main.logic.command.ClearCommand;
 import main.logic.command.Command;
