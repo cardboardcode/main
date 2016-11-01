@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.eventbus.Subscribe;
 
+import org.apache.commons.lang3.tuple.Pair;
 import main.commons.core.EventsCenter;
 import main.commons.events.model.TaskTrackerChangedEvent;
 import main.commons.events.model.UpdateListWithSuggestionsEvent;
@@ -27,12 +28,13 @@ import main.logic.parser.ReferenceList;
 import main.model.Model;
 import main.model.ReadOnlyTaskTracker;
 import main.model.task.ReadOnlyTask;
+import main.model.task.Task;
 
 public class AutoComplete {
         
     private SetTrie commandList;
     private SetTrie listList;
-    private List<SetTrie> taskList;
+    private List<Pair<ReadOnlyTask,SetTrie>> taskList;
     private List<String> suggestions;
     private int start_index;
     private int end_index;
@@ -51,7 +53,7 @@ public class AutoComplete {
         buildCommandList();
         buildListList();
         updateSuggestions("");
-        taskList = new ArrayList<SetTrie>();
+        taskList = new ArrayList<Pair<ReadOnlyTask,SetTrie>>();
         updateTaskList(model.getTaskTracker());
     }
     
@@ -78,7 +80,7 @@ public class AutoComplete {
             SetTrie trie = SetTrie.builder().caseInsensitive()
                                   .add(Arrays.stream(getTokens(task.getMessage())).collect(Collectors.toSet()))
                                   .build();
-            taskList.add(trie);
+            taskList.add(Pair.of(task,trie));
         }
     }
     
@@ -150,7 +152,7 @@ public class AutoComplete {
      * @returns the size of the updated filtered list
      */
     public int updateFilteredListWithSuggestions(String[] tokens) {
-        taskList = taskList.stream().filter(trie -> containPrefixInTask(trie, tokens)).collect(Collectors.toList());
+        taskList = taskList.stream().filter(pair -> containPrefixInTask(pair.getValue(), tokens)).collect(Collectors.toList());
         List<ReadOnlyTask> matchedTasks = getListOfMatchedTasks();
         eventsCenter.post(new UpdateListWithSuggestionsEvent(matchedTasks));
         return matchedTasks.size();
@@ -170,8 +172,8 @@ public class AutoComplete {
         List<ReadOnlyTask> matchedTasks = new ArrayList<ReadOnlyTask>();
         
         for (ReadOnlyTask task : tasktracker.getTaskList()) {
-            for (SetTrie trie : taskList) {
-                if (task.getMessage().equals(trie.toString())){
+            for (Pair<ReadOnlyTask,SetTrie> pair : taskList) {
+                if (task.equals(pair.getClass())){
                     matchedTasks.add(task);
                     break;
                 }
