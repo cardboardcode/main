@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 
+import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -14,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import main.model.task.PriorityType;
 import main.model.task.ReadOnlyTask;
+import main.model.task.TaskType;
 
 /**
  * Display individual panels within TaskListPanel with the details of eacch specific task
@@ -39,10 +41,7 @@ public class TaskCard extends UiPart{
     private Label message;
     @FXML
     private Label deadline;
-    @FXML
-    private Label endtime;
-    @FXML
-    private Label starttime;
+
     @FXML
     private Label recurring;
     
@@ -51,9 +50,17 @@ public class TaskCard extends UiPart{
 
     private ReadOnlyTask task;
     private int displayedIndex;
-
+    
+    private static ReadOnlyDoubleProperty listWidthProperty;
+    private static ReadOnlyDoubleProperty listHeightProperty;
+    
     public TaskCard(){
 
+    }
+    
+    public static void setProperty(ReadOnlyDoubleProperty widthProperty, ReadOnlyDoubleProperty heightProperty) {
+        listWidthProperty = widthProperty;
+        listHeightProperty = heightProperty;
     }
 
     public static TaskCard load(ReadOnlyTask task, int displayedIndex){
@@ -79,26 +86,17 @@ public class TaskCard extends UiPart{
         
         id.setText(displayedIndex + ". ");
         
-        if (task.getDeadline()!=null)
-        	deadline.setText("Deadline: "+ task.getDeadlineString());
+        if (task.getType() == TaskType.EVENT)
+        	deadline.setText("Start: "+ task.getStartTimeString() + "\nEnd: "+ task.getEndTimeString());
+        else if (task.getType() == TaskType.DEADLINE)
+            deadline.setText("Deadline: "+ task.getDeadlineString());
         else
-        	deadline.setText("");
-        
-        if (task.getEndTime()!=null)
-        	endtime.setText("End: "+ task.getEndTimeString());
-        else
-        	endtime.setText("");
-        
-        if (task.getStartTime()!=null)
-            starttime.setText("Start: "+ task.getStartTimeString());
-        else
-            starttime.setText("");
+            deadline.setText("");
         
         if (task.getIsRecurring())
             recurring.setText("Weekly");
         else
             recurring.setText("");
-		
 	}
     
     private void setPriorityTabColour() {
@@ -125,8 +123,6 @@ public class TaskCard extends UiPart{
     	
     	cardPane.setSpacing(18.0);
         deadline.setMinWidth(300);
-//        endtime.setMinWidth(300);
-        starttime.setMinWidth(300);
         cardPane.setMinWidth(450);
 
 	}
@@ -138,6 +134,8 @@ public class TaskCard extends UiPart{
     @Override
     public void setNode(Node node) {
         cardPane = (HBox)node;
+        cardPane.prefWidthProperty().bind(listWidthProperty);
+        cardPane.prefHeightProperty().bind(listHeightProperty);
     }
 
     @Override

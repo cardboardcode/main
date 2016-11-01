@@ -77,10 +77,10 @@ public class TaskListPanel extends UiPart {
 	private void addToPlaceholder() {
 		SplitPane.setResizableWithParent(placeHolderPane, true);
 		placeHolderPane.getChildren().add(panel);
-		panel.setMinWidth(450);
-		panel.setMaxWidth(450);
-		placeHolderPane.setMinWidth(450);
-		placeHolderPane.setMaxWidth(450);
+//		panel.setMinWidth(450);
+//		panel.setMaxWidth(450);
+//		placeHolderPane.setMinWidth(450);
+//		placeHolderPane.setMaxWidth(450);
 	}
 
 	private void setEventHandlerForSelectionChangeEvent() {
@@ -102,6 +102,7 @@ public class TaskListPanel extends UiPart {
 	class TaskListViewCell extends ListCell<ReadOnlyTask> {
 
 		public TaskListViewCell() {
+		    TaskCard.setProperty(taskListView.widthProperty(), taskListView.heightProperty());
 		}
 
 		@Override
