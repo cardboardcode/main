@@ -139,18 +139,18 @@ The format to edit an existing task is : <br>
 <br>
 ![List Screen](images/List_Command.png)
 
-### 5. **UNDO**
+### 6. **UNDO**
 
 Enter `undo` into the command line to undo the previous commands you have entered in the session.  
 
 <br> For example : <br>
 Entering `undo` after executing `delete 2` will bring back the deleted task.
 
-### 6. **REDO**
+### 7. **REDO**
 
 Enter `redo` into the command line to redo the previous undo you have executed in the session.  
 
-### 7. **SEARCH** for Tasks
+### 8. **SEARCH** for Tasks
 
 The format to search for certain tasks is :  
     `search <keyword>`  
@@ -163,7 +163,7 @@ Let say task index **1** refers to the task `wash dishes monday 4pm`
 
 *   `search dishes` will show the existing `wash dishes` task.
 
-### 8. **STORAGE** 
+### 9. **STORAGE** 
 The storage command can be used to change the storage location of tasks. Tasks are stored on the PC in an XML file.
 
 The format to change storage location is :
@@ -178,10 +178,11 @@ Entering `storage C://users/JohnDoe/NewFile.xml` will change the storage locatio
 >   *  All data of the pre-existing tasks will be copied to the new XML file.
 
 
-### 9. HELP command
+### 10. **HELP**
 
 Enter `help` into the command line to list out all the commands available in T-T.
-
+<br>
+<br>
 <!-- @@author A0139422J -->
 ## **Unique Features**
 
