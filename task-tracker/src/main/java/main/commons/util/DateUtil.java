@@ -118,7 +118,7 @@ public class DateUtil {
         }
         return cal.getTime();
     }
-    
+    //@@author A0139750B
     //method to return a date with no time
     public static Date removeTime(Date date){
     	Calendar cal = Calendar.getInstance();
@@ -129,43 +129,23 @@ public class DateUtil {
     	cal.clear(Calendar.MILLISECOND);
     	return cal.getTime();
     }
-    //method to check if task date has a date with no time
-    public static boolean IsDateWithTime(Date date){
-    	Calendar cal = Calendar.getInstance();
-    	cal.setTime(date);
-    	if(cal.get(Calendar.HOUR_OF_DAY) == 0){
-    		return false;
-    	}
-    	return true;
-    }
-    //Checks if the task date with time is overdue
-    public static boolean checkDateOverdue(Date taskDate){
+    
+    //Check if the task date is overdue
+    public static boolean checkOverdue(Date taskDate, boolean hasNoTime){
     	Date current = new Date();
-    	boolean before = taskDate.before(current);
     	
-    	if(taskDate == null || before || taskDate == current){
-    		return false;
+    	if(hasNoTime){
+    		removeTime(taskDate);
+    		removeTime(current);
+    	}
+    	if(taskDate.before(current)){
+    		return true;
     	}
     	else{
-    		return true;
-    	}    	
-    }
-    
-    //Checks if the task date without time is overdue
-    public static boolean checkDateWithoutTimeOverdue(Date taskDate){
-    	Date current = new Date();
-    	removeTime(taskDate);
-    	removeTime(current);
-    	boolean before = taskDate.before(current);
-    	
-    	if(taskDate == null || before || taskDate == current){
     		return false;
     	}
-    	else{
-    		return true;
-    	}    	
     }
-    
+    //@@author A0144132W
     public static Date defaultTime(Date date) {
         return setTime(date, 8, true);
     }

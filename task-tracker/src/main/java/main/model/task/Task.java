@@ -83,28 +83,21 @@ public class Task implements ReadOnlyTask {
     @Override
     public boolean isOverdue(){
     	
-    	
-    	if(this.type == TaskType.FLOATING){
-    		return false;
+    	//Event
+    	if(this.type == TaskType.EVENT){
+    		DateUtil.checkOverdue(this.getEndTime(), this.isInferred);
     	}
     	//Deadline
     	else if(this.type == TaskType.DEADLINE){
-    		if(DateUtil.IsDateWithTime(this.getDeadline())){
-    			return DateUtil.checkDateOverdue(this.getDeadline());
-    		}
-    		else{
-    			return DateUtil.checkDateWithoutTimeOverdue(this.getDeadline());
-    		}
+    		DateUtil.checkOverdue(this.getDeadline(), this.isInferred);
     	}
-    	//Event
+    	//Floating
     	else{
-    		if(DateUtil.IsDateWithTime(this.getEndTime())){
-    			return DateUtil.checkDateOverdue(this.getEndTime());
-    		}
-    		else{
-    			return DateUtil.checkDateWithoutTimeOverdue(this.getEndTime());
-    		}
+    		return false;
     	}
+    	
+    	return false;
+    	
     }
     //getters
     @Override
