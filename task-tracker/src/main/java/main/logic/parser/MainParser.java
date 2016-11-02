@@ -1,8 +1,10 @@
 //@@author A0144132W
 package main.logic.parser;
 
+import main.commons.core.EventsCenter;
 import main.commons.core.LogsCenter;
 import main.commons.core.Messages;
+import main.commons.events.ui.updateListStatisticsPictureEvent;
 import main.commons.exceptions.IllegalValueException;
 import main.commons.exceptions.MultiplePriorityException;
 
@@ -15,6 +17,8 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableList.Builder;
 
 import main.model.task.PriorityType;
 import main.model.task.Task;
@@ -220,10 +224,18 @@ public class MainParser {
             else if (!param.trim().equals("")) {
                 return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_PARAMETERS,"ListCommand", ListCommand.MESSAGE_USAGE));
             }           
-        }    
+        }  
         
-        if (dates.size() > 0) return new ListCommand(Triple.of(priority, dates.get(0), type), isDone);
-        else return new ListCommand(Triple.of(priority, null, type), isDone);
+        Date date;
+        if (dates.size() > 0) {
+            date = dates.get(0);
+        }
+        else {
+            date = null;
+        }
+
+        indicateListParamsChanged(Triple.of(priority, date, type));
+        return new ListCommand(Triple.of(priority, date, type), isDone);
     }
 
     private Task extractTask(String raw) throws MultiplePriorityException, IllegalArgumentException {
@@ -253,7 +265,7 @@ public class MainParser {
             if (dates.get(0).before(dates.get(1)))
                 return new Task(description,dates.get(0),dates.get(1), priority).setIsInferred(isInferred).setIsRecurring(isRecurring);
             else 
-                return new Task(description,dates.get(1),dates.get(0), priority).setIsInferred(isInferred).setIsRecurring(isRecurring));
+                return new Task(description,dates.get(1),dates.get(0), priority).setIsInferred(isInferred).setIsRecurring(isRecurring);
         }
     }
     
@@ -302,6 +314,28 @@ public class MainParser {
     
     private int argumentIndexInString(String str, String arg) {
         return (str.toLowerCase().lastIndexOf(arg.toLowerCase()));
+    }
+    
+    /*
+     * processes the list parameters and chooses one to be shown in the list statistics
+     * by posting an event
+     */
+    private void indicateListParamsChanged(Triple<PriorityType, Date, TaskType> params) {
+        String paramToShow = "";
+        if (params.getLeft() != null) {
+            paramToShow = params.getLeft().name();
+        }
+        else if (params.getMiddle() != null) {
+            paramToShow = "date";
+        }
+        else if (params.getRight() != null) {
+            paramToShow = params.getRight().name();
+        }
+        else {
+            paramToShow = "list";
+        }
+            
+        EventsCenter.getInstance().post(new updateListStatisticsPictureEvent(paramToShow));
     }
     
 }
