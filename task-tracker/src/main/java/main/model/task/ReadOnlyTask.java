@@ -26,8 +26,7 @@ public interface ReadOnlyTask {
     String getDeadlineString();
     String getStartTimeString();
     String getEndTimeString();
-    boolean isOverdue(Task task);
-    boolean isOverdue(TestTask task);
+    boolean isOverdue();
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
      */
@@ -44,7 +43,8 @@ public interface ReadOnlyTask {
 				&& other.getIsRecurring() == this.getIsRecurring()
 				&& other.getPriority() == this.getPriority()
                 && other.getIsDone() == this.getIsDone()
-                && other.getIsInferred() == this.getIsInferred());
+                && other.getIsInferred() == this.getIsInferred()
+        		&& other.isOverdue() == this.isOverdue());
                
                 
     }
@@ -64,7 +64,8 @@ public interface ReadOnlyTask {
         		.append(getIsRecurring())
         		.append(getPriority())
         		.append(getIsDone())
-        		.append(getIsInferred());
+        		.append(getIsInferred())
+        		.append(isOverdue());
                 
                 
         return builder.toString();

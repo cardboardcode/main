@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 import main.commons.util.DateUtil;
+import main.testutil.TestTask;
 
 public class Task implements ReadOnlyTask {
     private String message;
@@ -80,28 +81,28 @@ public class Task implements ReadOnlyTask {
     
     //method to check if task is overdue
     @Override
-    public boolean isOverdue(Task task){
-    	assert task != null;
+    public boolean isOverdue(){
     	
-    	if(task.getType() == TaskType.FLOATING){
+    	
+    	if(this.type == TaskType.FLOATING){
     		return false;
     	}
     	//Deadline
-    	else if(task.getType() == TaskType.DEADLINE){
-    		if(DateUtil.IsDateWithTime(task.getDeadline())){
-    			return DateUtil.checkDateOverdue(task.getDeadline());
+    	else if(this.type == TaskType.DEADLINE){
+    		if(DateUtil.IsDateWithTime(this.getDeadline())){
+    			return DateUtil.checkDateOverdue(this.getDeadline());
     		}
     		else{
-    			return DateUtil.checkDateWithoutTimeOverdue(task.getDeadline());
+    			return DateUtil.checkDateWithoutTimeOverdue(this.getDeadline());
     		}
     	}
     	//Event
     	else{
-    		if(DateUtil.IsDateWithTime(task.getEndTime())){
-    			return DateUtil.checkDateOverdue(task.getEndTime());
+    		if(DateUtil.IsDateWithTime(this.getEndTime())){
+    			return DateUtil.checkDateOverdue(this.getEndTime());
     		}
     		else{
-    			return DateUtil.checkDateWithoutTimeOverdue(task.getEndTime());
+    			return DateUtil.checkDateWithoutTimeOverdue(this.getEndTime());
     		}
     	}
     }
@@ -326,6 +327,8 @@ public class Task implements ReadOnlyTask {
     		return  getMessage() + " due " + getDeadlineString();
     	}
     }
+
+	
     
 
 
