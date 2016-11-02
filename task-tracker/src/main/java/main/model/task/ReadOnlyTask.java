@@ -3,8 +3,6 @@ package main.model.task;
 
 import java.util.Date;
 
-import main.testutil.TestTask;
-
 /**
  * A read-only immutable interface for a Person in the addressbook.
  * Implementations should guarantee: details are present and not null, field values are validated.

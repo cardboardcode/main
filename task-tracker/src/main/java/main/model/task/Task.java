@@ -3,12 +3,9 @@ package main.model.task;
 
 
 import java.util.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 import main.commons.util.DateUtil;
-import main.testutil.TestTask;
 
 public class Task implements ReadOnlyTask {
     private String message;

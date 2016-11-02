@@ -316,21 +316,16 @@ public class TestTask implements ReadOnlyTask {
     	
     	//Event
     	if(this.type == TaskType.EVENT){
-    		DateUtil.checkOverdue(this.getEndTime(), this.isInferred);
+    		return DateUtil.checkOverdue(this.getEndTime(), this.isInferred);
     	}
     	//Deadline
     	else if(this.type == TaskType.DEADLINE){
-    		DateUtil.checkOverdue(this.getDeadline(), this.isInferred);
+    		return DateUtil.checkOverdue(this.getDeadline(), this.isInferred);
     	}
     	//Floating
     	else{
     		return false;
     	}
-    	
-    	return false;
-    	
     }
-
-  
 
 }
