@@ -82,32 +82,7 @@ public class TestTask implements ReadOnlyTask {
         this.isDone = src.getIsDone();
         this.isInferred = src.getIsInferred();
     }
-    @Override
-    public boolean isOverdue(TestTask task){
-    	assert task != null;
-    	
-    	if(task.getType() == TaskType.FLOATING){
-    		return false;
-    	}
-    	//Deadline
-    	else if(task.getType() == TaskType.DEADLINE){
-    		if(DateUtil.IsDateWithTime(task.getDeadline())){
-    			return DateUtil.checkDateOverdue(task.getDeadline());
-    		}
-    		else{
-    			return DateUtil.checkDateWithoutTimeOverdue(task.getDeadline());
-    		}
-    	}
-    	//Event
-    	else{
-    		if(DateUtil.IsDateWithTime(task.getEndTime())){
-    			return DateUtil.checkDateOverdue(task.getEndTime());
-    		}
-    		else{
-    			return DateUtil.checkDateWithoutTimeOverdue(task.getEndTime());
-    		}
-    	}
-    }
+    
     //getters
     @Override
     public String getMessage(){
@@ -335,11 +310,32 @@ public class TestTask implements ReadOnlyTask {
         return sb.toString();
     }
 
-	@Override
-	public boolean isOverdue(Task task) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public boolean isOverdue(){
+    	
+    	
+    	if(this.type == TaskType.FLOATING){
+    		return false;
+    	}
+    	//Deadline
+    	else if(this.type == TaskType.DEADLINE){
+    		if(DateUtil.IsDateWithTime(this.getDeadline())){
+    			return DateUtil.checkDateOverdue(this.getDeadline());
+    		}
+    		else{
+    			return DateUtil.checkDateWithoutTimeOverdue(this.getDeadline());
+    		}
+    	}
+    	//Event
+    	else{
+    		if(DateUtil.IsDateWithTime(this.getEndTime())){
+    			return DateUtil.checkDateOverdue(this.getEndTime());
+    		}
+    		else{
+    			return DateUtil.checkDateWithoutTimeOverdue(this.getEndTime());
+    		}
+    	}
+    }
 
   
 
