@@ -13,8 +13,8 @@
 * [Implementation](#implementation)
 * [Testing](#testing)
 * [Dev Ops](#dev-ops)
-* [Appendix A: User Stories](#appendix-a-:-user-stories)
-* [Appendix B: Use Cases](#appendix-b-:-use-cases)
+* [Appendix A: User Stories](#appendix-a--user-stories)
+* [Appendix B: Use Cases](#appendix-b--use-cases)
 * [Appendix C: Non Functional Requirements](#appendix-c--non-functional-requirements)
 * [Appendix D: Glossary](#appendix-d--glossary)
 * [Appendix E : Product Survey](#appendix-e--product-survey)
@@ -276,11 +276,11 @@ Use case ends
 2a. The task description is null.
 > 2a1. TaskTracker shows an error message
 > 2a2. User re-enters the task description
-  Use case resumes at step 2
+> Use case resumes at step 2
   
 2b. User creates a task with a priority
 > 2b1. TaskTracker creates a floating task with the given priority
-  Use case ends
+> Use case ends
 
 
 #### Use case: Add Deadline Task
@@ -295,11 +295,11 @@ Use case ends
 
 2a. The deadline only has a date (without a specific time)
 > 2a1. TaskTracker creates a task with only a date without the time.
-  Use case ends
+> Use case ends
 
 2b. User creates a task with a priority
 > 2b1. TaskTracker creates a floating task with the given priority
-  Use case ends
+> Use case ends
 
 
 #### Use case: Add Event Task
@@ -314,11 +314,11 @@ Use case ends
 
 2a. The end time only has a date (without a specific time)
 > 2a1. TaskTracker creates a task with only an end date without the time.
-  Use case ends
+> Use case ends
 
 2b. User creates a task with a priority
 > 2b1. TaskTracker creates a floating task with the given priority
-  Use case ends
+> Use case ends
 
 #### Use case: Edit
 
