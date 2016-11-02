@@ -39,7 +39,7 @@ We are a team based in the [School of Computing, National University of Singapor
 *    Features implemented:
     * [Sorting](https://github.com/CS2103AUG2016-T09-C3/main/tree/master/task-tracker/src/main/java/main/model/filter)
     * [AutoComplete](https://github.com/CS2103AUG2016-T09-C3/main/tree/master/task-tracker/src/main/java/main/logic/autocomplete)
-* Code written: [[functional code](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/main/A0144132W.md)] [[test code](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/test/A0144132W.md)]
+* Code written: [[functional code](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/main/A0144132W.md)] [[test code](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/test/A0144132W.md)] [[docs](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/docs/A0144132W.md)]
 * Other major contributions: 
     * Set up Travis and Coveralls
     * Maintain GitHub repo
