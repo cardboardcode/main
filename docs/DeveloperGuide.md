@@ -204,7 +204,7 @@ See [UsingTravis.md](https://github.com/se-edu/addressbook-level4/blob/master/do
 
 Here are the steps to create a new release.
  
- 1. Generate a JAR file [using Gradle](UsingGradle.md#creating-the-jar-file).
+ 1. Generate a JAR file [using Gradle](https://github.com/se-edu/addressbook-level4/blob/master/docs/UsingGradle.md#creating-the-jar-file).
  2. Tag the repo with the version number. e.g. `v0.1`
  2. [Crete a new release using GitHub](https://help.github.com/articles/creating-releases/) 
     and upload the JAR file your created.
