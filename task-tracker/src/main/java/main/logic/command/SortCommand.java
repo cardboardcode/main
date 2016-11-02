@@ -1,7 +1,9 @@
 //@@author A0144132W
 package main.logic.command;
 
+import main.commons.core.EventsCenter;
 import main.commons.core.Messages;
+import main.commons.events.model.ChangeSortFilterEvent;
 
 public class SortCommand extends Command {
     
@@ -19,12 +21,10 @@ public class SortCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        if (!param.equals("date") && !param.equals("name")) {
-            return (new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_PARAMETERS, "sort", MEESAGE_USAGE)).execute();
-        }
-        else {
-            return new CommandResult(String.format(MESSAGE_SUCCESS, param));
-        }
+        assert (param.equals("date") || param.equals("name"));
+
+        EventsCenter.getInstance().post(new ChangeSortFilterEvent(param));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, param));
     }
     
 
