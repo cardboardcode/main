@@ -4,7 +4,9 @@ package main.logic.parser;
 import java.util.Map;
 import java.util.Set;
 
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+
 import main.logic.command.*;
 import main.model.task.PriorityType;
 import main.model.task.TaskType;

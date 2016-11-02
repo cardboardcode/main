@@ -4,6 +4,7 @@ package main.logic.autocomplete;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -11,7 +12,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.eventbus.Subscribe;
 
+import org.apache.commons.lang3.tuple.Pair;
 import main.commons.core.EventsCenter;
+import main.commons.core.LogsCenter;
 import main.commons.events.model.TaskTrackerChangedEvent;
 import main.commons.events.model.UpdateListWithSuggestionsEvent;
 import main.commons.events.ui.AutoCompleteEvent;
@@ -27,12 +30,15 @@ import main.logic.parser.ReferenceList;
 import main.model.Model;
 import main.model.ReadOnlyTaskTracker;
 import main.model.task.ReadOnlyTask;
+import main.ui.UiManager;
 
 public class AutoComplete {
         
+    private static final Logger logger = LogsCenter.getLogger(AutoComplete.class);
+
     private SetTrie commandList;
     private SetTrie listList;
-    private List<SetTrie> taskList;
+    private List<Pair<ReadOnlyTask,SetTrie>> taskList;
     private List<String> suggestions;
     private int start_index;
     private int end_index;
@@ -51,7 +57,7 @@ public class AutoComplete {
         buildCommandList();
         buildListList();
         updateSuggestions("");
-        taskList = new ArrayList<SetTrie>();
+        taskList = new ArrayList<Pair<ReadOnlyTask,SetTrie>>();
         updateTaskList(model.getTaskTracker());
     }
     
@@ -78,7 +84,7 @@ public class AutoComplete {
             SetTrie trie = SetTrie.builder().caseInsensitive()
                                   .add(Arrays.stream(getTokens(task.getMessage())).collect(Collectors.toSet()))
                                   .build();
-            taskList.add(trie);
+            taskList.add(Pair.of(task,trie));
         }
     }
     
@@ -150,7 +156,7 @@ public class AutoComplete {
      * @returns the size of the updated filtered list
      */
     public int updateFilteredListWithSuggestions(String[] tokens) {
-        taskList = taskList.stream().filter(trie -> containPrefixInTask(trie, tokens)).collect(Collectors.toList());
+        taskList = taskList.stream().filter(pair -> containPrefixInTask(pair.getValue(), tokens)).collect(Collectors.toList());
         List<ReadOnlyTask> matchedTasks = getListOfMatchedTasks();
         eventsCenter.post(new UpdateListWithSuggestionsEvent(matchedTasks));
         return matchedTasks.size();
@@ -170,8 +176,8 @@ public class AutoComplete {
         List<ReadOnlyTask> matchedTasks = new ArrayList<ReadOnlyTask>();
         
         for (ReadOnlyTask task : tasktracker.getTaskList()) {
-            for (SetTrie trie : taskList) {
-                if (task.getMessage().equals(trie.toString())){
+            for (Pair<ReadOnlyTask,SetTrie> pair : taskList) {
+                if (task.equals(pair.getKey())){
                     matchedTasks.add(task);
                     break;
                 }
@@ -201,22 +207,35 @@ public class AutoComplete {
         
     }
     
+    /*
+     * @returns suggestions
+     */
     public List<String> getSuggestions() {
         return suggestions;
     }
     
+    /*
+     * updates suggestions when key press is detected
+     */
     @Subscribe
     private void handleKeyPressEvent(KeyPressEvent event) {
         updateSuggestions(event.getInput());
         tabCount = 0;
     }
     
+    /*
+     * toggles the suggestions to fill in commandBox
+     */
     @Subscribe
     private void handleTabPressEvent(TabPressEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         fillInSuggestions();
         tabCount++;
     }
     
+    /*
+     * updates taskList when tasks are changed
+     */
     @Subscribe
     private void handleTaskTrackerChangedEvent(TaskTrackerChangedEvent event) {
         updateTaskList(event.data);
