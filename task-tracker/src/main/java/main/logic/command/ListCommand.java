@@ -21,11 +21,11 @@ public class ListCommand extends Command {
             + "Eg: " + COMMAND_WORD + " high today";
     public static final String MESSAGE_SUCCESS = "Listed all %1$s";
     
-    PriorityType priority;
-    Date date;
-    TaskType type;
-    boolean isDefault = false;
-    boolean isDone = false;
+    private PriorityType priority;
+    private Date date;
+    private TaskType type;
+    private boolean isDefault = false;
+    private boolean isDone = false;
     
     public ListCommand() {
         isDefault = true;
