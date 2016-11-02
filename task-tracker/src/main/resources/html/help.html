@@ -8,10 +8,100 @@ code {background-color: #d1d1e0; font-family:Verdana;}
 </head>
 <body>
 
-<p><img src="images/T-T.png" alt="T-T" /></p>
+<p><img src="images/T-T.png" alt="T-T" height="200p" width="200p" align="middle"/></p>
 
 <h2 id="userguide"><strong>HELP GUIDE</strong> </h2>
 <h3>Press "Alt + F4" to close this window. </h3>
+
+<h2 id="cheatsheet"><strong>Cheat Sheet</strong></h2>
+
+<p>Getting the hang of it? Here's a quick and dirty summary of all T-T commands</p>
+
+<table class="tg">
+  <tr>
+    <th class="tg-031e">Commands</th>
+    <th class="tg-031e">Function</th>
+    <th class="tg-031e">Usage</th>
+  </tr>
+  <tr>
+    <td class="tg-031e">add</td>
+    <td class="tg-031e">Adds a new task to the list</td>
+    <td class="tg-031e"><code>add question life 14 Oct 1045 -l</code></td>
+  </tr>
+  <tr>
+    <td class="tg-031e">edit</td>
+    <td class="tg-031e">Edits an existing task</td>
+    <td class="tg-031e"><code>edit 1 review UG tuesday 10am -h</code></td>
+  </tr>
+  <tr>
+    <td class="tg-031e">delete</td>
+    <td class="tg-031e">Deletes an existing task </td>
+    <td class="tg-031e"><code>delete 1</code></td>
+  </tr>
+  <tr>
+    <td class="tg-031e">list</td>
+    <td class="tg-031e">Sorts and displays the list of existing tasks </td>
+    <td class="tg-031e"><code>list high today</code></td>
+  </tr>
+  <tr>
+    <td class="tg-031e">undo</td>
+    <td class="tg-031e">Undoes the previous command </td>
+    <td class="tg-031e"><code>undo</code></td>
+  </tr>
+  <tr>
+    <td class="tg-031e">redo</td>
+    <td class="tg-031e">Redoes the previous undo</td>
+    <td class="tg-031e"><code>redo</code></td>
+  </tr>
+  <tr>
+    <td class="tg-031e">search</td>
+    <td class="tg-031e">Searchs for tasks that contain a designated keyword</td>
+    <td class="tg-031e"><code>search meaning</code></td>
+  </tr>
+  <tr>
+    <td class="tg-031e">storage</td>
+    <td class="tg-031e">Changes the location of the XML file in which tasks are stored</td>
+    <td class="tg-031e"><code>storage C://Users/Desktop/newfile.xml</code></td>
+  </tr>
+  <tr>
+    <td class="tg-031e">help</td>
+    <td class="tg-031e">Displays the list of commands available in a new window on T-T</td>
+    <td class="tg-031e"><code>help</code></td>
+  </tr>
+</table>
+<br>
+<br>
+<br>
+<br>
+<table>
+  <tr>
+    <th class="tg-031e">Keyboard Shortcuts</th>
+    <th class="tg-031e">Function</th>
+  </tr>
+  <tr>
+    <td class="tg-031e"><code>UP</code>/<code>DOWN</code></td>
+    <td class="tg-031e">Toggles history of recent commands</td>
+  </tr>
+   <tr>
+    <td class="tg-031e"><code>F1</code>/<code>F2</code></td>
+    <td class="tg-031e">Toggles <strong>T-T</strong> color themes</td>
+  </tr>
+   <tr>
+    <td class="tg-031e"><code>PgUp</code>/<code>PgDn</code></td>
+    <td class="tg-031e">Navigates the list of tasks</td>
+  </tr>
+   <tr>
+    <td class="tg-031e"><code>Tab</code></td>
+    <td class="tg-031e">Autocompletes user input</td>
+  </tr>
+   <tr>
+    <td class="tg-031e"><code>Esc</code></td>
+    <td class="tg-031e">Minimizes app</td>
+  </tr>
+</table>
+
+<br><br><br>
+
 <h2 id="commands"><strong>Commands</strong></h2>
 
 <p><code>&lt;&gt;</code> <em>indicates that field is compulsory</em> and <code>[]</code> <em>indicates that field is optional.</em> </p>
@@ -110,7 +200,28 @@ code {background-color: #d1d1e0; font-family:Verdana;}
 <li><code>delete 1</code> will delete the aforementioned <code>wash dishes</code> task.</li>
 </ul>
 
-<h3 id="4listtasks">4. LIST Tasks</h3>
+<h3 id="4donetask">4. <strong>DONE</strong> TASK</h3>
+
+<p>Tasks can be marked done after they have been completed. Tasks marked as done will not appear in the main list, but can be viewed by the list command (see LIST).<br></p>
+
+<p>The format to mark a task as done is : <br>
+&nbsp; &nbsp; <code>done &lt;task index&gt;</code> <br></p>
+
+<blockquote>
+  <ul>
+  <li><code>&lt;task index&gt;</code> can be obtained from the list panel, or by using the list </li>
+  </ul>
+</blockquote>
+
+<p><br> For example: <br></p>
+
+<p>Let's say task index  "<strong>1</strong>" refers to the task <code>do laundry monday 4pm</code></p>
+
+<ul>
+<li><code>done 1</code> will mark the <code>do laundry</code> task as done.</li>
+</ul>
+
+<h3 id="4listtasks">5. LIST Tasks</h3>
 
 <p>The format to edit an existing task is : <br>
 &nbsp; &nbsp; <code>list [date | priority]</code><br></p>
@@ -134,89 +245,114 @@ code {background-color: #d1d1e0; font-family:Verdana;}
 <p><br>
 <img src="images/List_Command.png" alt="List Screen" /></p>
 
-<h3 id="4listtasks">5. Undo a Task</h3>
+<h3 id="6undo">6. <strong>UNDO</strong></h3>
 
-<p>Enter <code>undo</code> into the command line to the previous commands you have entered in the session.<br> <br></p>
+<p>Enter <code>undo</code> into the command line to undo the previous commands you have entered in the session.  </p>
 
-<h3 id="4listtasks">6. Search for Tasks</h3>
+<p>
+For example : <br>
+<br>
+Entering <code>undo</code> after executing <code>delete 2</code> will bring back the deleted task.</p>
 
-<p>The format to search for certain tasks is : <br>
-&nbsp; &nbsp; <code>search &lt;keyword&gt; </code> <br></p>
+<h3 id="7redo">7. <strong>REDO</strong></h3>
+
+<p>Enter <code>redo</code> into the command line to redo the previous undo you have executed in the session.  </p>
+
+<h3 id="8searchfortasks">8. <strong>SEARCH</strong> for Tasks</h3>
+
+<p>The format to search for certain tasks is : <br /> <code>search &lt;keyword&gt;</code>  </p>
 
 <ul>
 <li>The tasks you are looking for can be obtained by typing in any word that is contained within the tasks' messages.</li>
 </ul>
 
-<p><br> For example: <br></p>
+<p>For example:  </p>
 
 <p>Let say task index <strong>1</strong> refers to the task <code>wash dishes monday 4pm</code></p>
 
 <ul>
-<li><code>search dishes</code> will show the existing <code>wash dishes</code> task. </li>
+<li><code>search dishes</code> will show the existing <code>wash dishes</code> task.</li>
 </ul>
 
-<h3 id="5helpcommand">7. HELP command</h3>
+<h3 id="9storage">9. <strong>STORAGE</strong></h3>
 
-<p>Enter <code>help</code> into the command line to list out all the commands available in T-T.<br> <br></p>
+<p>The storage command can be used to change the storage location of tasks. Tasks are stored on the PC in an XML file.</p>
 
-<h2 id="ttliststatistics"><strong>T-T List Statistics</strong></h2>
+<p>The format to change storage location is : <br />
+    <code>storage &lt;filepath&gt;</code></p>
 
-<p>T-T also provides an intuitive listing the number of tasks stored, giving you a clearer idea on how to better deal with them. As seen in <strong>the example below</strong>, the numbers are displayed on the right of the task list. </p>
+<p><br> For example : <br></p>
 
-<p>T-T's list statistics provides data on all the different types of tasks available in storage:</p>
-<ul>
-     <li> Today's Tasks </li>
-     <li> Tomorrow's Tasks  </li>
-     <li> Event Tasks (Tasks with parameters all filled.) </li>
-     <li> Deadline Tasks (Tasks which are much due much later) </li>
-     <li> Floating Tasks (Tasks with incomplete parameters) </li> 
-</ul>
+<p>Entering <code>storage C://users/JohnDoe/NewFile.xml</code> will change the storage location to NewFile.xml.</p>
+
+<blockquote>
+  <ul>
+  <li>Filepath must be of an XML file.</li>
+  
+  <li>If the XML file mentioned at the filepath does not exist, a new XML file will be created by TaskTracker at the specified location.</li>
+  
+  <li>All data of the pre-existing tasks will be copied to the new XML file.</li>
+  </ul>
+</blockquote>
+
+<h3 id="10help">10. <strong>HELP</strong></h3>
+
+<p>Enter <code>help</code> into the command line to list out all the commands available in T-T.</p>
+
+<h2 id="uniquefeatures"><strong>Unique Features</strong></h2>
+
+<h3 id="1liststatistics">1. List Statistics</h3>
+
+<p><strong>T-T</strong> also provides an intuitive listing the number of tasks stored, giving you a clearer idea on how to better deal with them. As seen in <strong>the example below</strong>, the numbers are displayed on the right of the task list. </p>
+
+<p><strong>T-T</strong>'s list statistics provides data on all the different types of tasks available in storage:</p>
+
+<pre><code>-      Today's Tasks 
+-      Tomorrow's Tasks
+-      Event Tasks (Tasks with parameters all filled.)
+-      Deadline Tasks (Tasks which are much due much later)
+-      Floating Tasks (Tasks with incomplete parameters)  
+</code></pre>
 
 <p><br>
 <img src="images/List_Statistics.png" alt="List Screen" />
 <br></p>
 
-<h2 id="cheatsheet"><strong>Cheat Sheet</strong></h2>
+<h3 id="2overduedetection">2. Overdue Detection</h3>
 
-<p>Getting the hang of it? Here's a quick and dirty summary of all T-T commands</p>
+<p>Apart from the three basic colors shown earlier to indicate different priorities, T-T also indicates to users which tasks have become overdued. If the current time has overshot an event task's endtime or a deadline task's deadline, the corresponding task will be shown with a black tab, as shown below. </p>
 
-<table class="tg">
-  <tr>
-    <th class="tg-031e">Commands</th>
-    <th class="tg-031e">Function</th>
-    <th class="tg-031e">Usage</th>
-  </tr>
-  <tr>
-    <td class="tg-031e">add</td>
-    <td class="tg-031e">Adds a new task to the list</td>
-    <td class="tg-031e"><code>add question life 14 Oct 1045 -l</code></td>
-  </tr>
-  <tr>
-    <td class="tg-031e">edit</td>
-    <td class="tg-031e">Edits an existing task</td>
-    <td class="tg-031e"><code>edit 1 review UG tuesday 10am -h</code></td>
-  </tr>
-  <tr>
-    <td class="tg-031e">delete</td>
-    <td class="tg-031e">Deletes an existing task </td>
-    <td class="tg-031e"><code>delete 1</code></td>
-  </tr>
-  <tr>
-    <td class="tg-031e">list</td>
-    <td class="tg-031e">Sorts and displays the list of existing tasks </td>
-    <td class="tg-031e"><code>list high today</code></td>
-  </tr>
-  <tr>
-    <td class="tg-031e">undo</td>
-    <td class="tg-031e">Reverts the previous command you entered </td>
-    <td class="tg-031e"><code>undo</code></td>
-  </tr>
-  <tr>
-    <td class="tg-031e">help</td>
-    <td class="tg-031e">Displays the list of commands available in a new window on T-T</td>
-    <td class="tg-031e"><code>help</code></td>
-  </tr>
-</table>
+<h3 id="3autocompletion">3. Autocompletion</h3>
+
+<p>Users who find typing in the many commands <strong>T-T</strong> provides too tedious may opt to use the autocompletion function the app has as well. Simply press the <code>Tab</code> key and you will be able to cycle through all the different command. </p>
+
+<p>If you already have a command in mind, the function will be able to know simply from the first few letter you enter. </p>
+
+<p>For example:  </p>
+
+<p>Let say you were to enter a letter <code>d</code> in the <strong>T-T</strong> command box, by pressing <code>Tab</code>, the following commands can be toggled to easily.</p>
+
+<ul>
+<li><code>delete</code></li>
+
+<li><code>done</code></li>
+</ul>
+
+<p>However, the autocompletion does not stop there. Sometimes users do need to reenter past commands. By pressing the <code>UP</code> and <code>DOWN</code> arrow keys, you can also access your most recent commands without having to tediously type it out again. </p>
+
+<h3 id="4colortoggling">4. Color Toggling</h3>
+
+<p>The user interface is not just limited to just one color. <strong>T-T</strong> offers you a variety of seven color themes to choose from. </p>
+
+<p>By pressing <code>F1</code> and <code>F2</code>, you can toggle between the different themes and choose any which suit your preference. </p>
+
+<h3 id="5minimizewindow">5. Minimize Window</h3>
+
+<p>Once you are done with what you need to do in <strong>T-T</strong>, you can simply press <code>Esc</code> to minimize the window.</p>
+
+<br>
+<br>
+
 <h2 id="faq"><strong>FAQ</strong></h2>
 
 <p><strong>Q</strong>: <strong>How do I transfer my data to another Computer?</strong></p>
