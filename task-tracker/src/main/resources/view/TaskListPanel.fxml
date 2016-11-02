@@ -11,7 +11,7 @@
         <URL value="@Extensions.css" />
     </stylesheets>
     <children>
-        <ListView fx:id="taskListView" cacheShape="false" editable="true" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="750.0" minWidth="400.0" scaleShape="false" VBox.vgrow="ALWAYS">
+        <ListView fx:id="taskListView" editable="true" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="750.0" minWidth="400.0" VBox.vgrow="ALWAYS">
          <stylesheets>
             <URL value="@DarkTheme.css" />
             <URL value="@Extensions.css" />
