@@ -249,6 +249,7 @@ Getting the hang of it? Here’s a quick and dirty summary of all **T-T** comman
 |---|---|
 | `UP`/`DOWN`   |  Toggles history of recent commands  |
 | `F1`/`F2`  | Toggles **T-T** color theme |
+| `PgUp`/`PgDn`  | Navigates the list of tasks |
 | `Tab`  | Autocompletes user input |
 | `Esc`  | Minimizes app |
 
