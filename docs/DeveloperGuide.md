@@ -274,12 +274,12 @@ Use case ends
 **Extensions**
 
 2a. The task description is null.
-> 2a1. TaskTracker shows an error message
-> 2a2. User re-enters the task description
+> 2a1. TaskTracker shows an error message<br>
+> 2a2. User re-enters the task description<br>
 > Use case resumes at step 2
   
 2b. User creates a task with a priority
-> 2b1. TaskTracker creates a floating task with the given priority
+> 2b1. TaskTracker creates a floating task with the given priority<br>
 > Use case ends
 
 
@@ -294,11 +294,11 @@ Use case ends
 **Extensions**
 
 2a. The deadline only has a date (without a specific time)
-> 2a1. TaskTracker creates a task with only a date without the time.
+> 2a1. TaskTracker creates a task with only a date without the time.<br>
 > Use case ends
 
 2b. User creates a task with a priority
-> 2b1. TaskTracker creates a floating task with the given priority
+> 2b1. TaskTracker creates a floating task with the given priority<br>
 > Use case ends
 
 
@@ -313,11 +313,11 @@ Use case ends
 **Extensions**
 
 2a. The end time only has a date (without a specific time)
-> 2a1. TaskTracker creates a task with only an end date without the time.
+> 2a1. TaskTracker creates a task with only an end date without the time.<br>
 > Use case ends
 
 2b. User creates a task with a priority
-> 2b1. TaskTracker creates a floating task with the given priority
+> 2b1. TaskTracker creates a floating task with the given priority<br>
 > Use case ends
 
 #### Use case: Edit
@@ -362,7 +362,7 @@ Use case ends
 ** Extensions **
 
 2a. The task does not exist
-> 2a1. TaskTracker shows an error message
+> 2a1. TaskTracker shows an error message<br>
 > Use case ends 
 
 #### Use case: Done Task
