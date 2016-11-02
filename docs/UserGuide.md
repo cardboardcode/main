@@ -10,7 +10,12 @@
     -   [Add a Task](https://github.com/CS2103AUG2016-T09-C3/main/blob/documents/docs/UserGuide.md#1-add-a-task)
     -   [Edit a Task](https://github.com/CS2103AUG2016-T09-C3/main/blob/documents/docs/UserGuide.md#2-edit-a-task)
     -   [Delete a Task](https://github.com/CS2103AUG2016-T09-C3/main/blob/documents/docs/UserGuide.md#3-delete-a-task)
+    -   [Done Task]
     -   [List Tasks](https://github.com/CS2103AUG2016-T09-C3/main/blob/documents/docs/UserGuide.md#4-list-tasks)
+    -   [Undo]
+    -   [Redo]
+    -   [Search for Tasks]
+    -   [Storage]
     -   [Help Command](https://github.com/CS2103AUG2016-T09-C3/main/blob/documents/docs/UserGuide.md#5-help-command)
 *   [List Statistics](#liststatistics)
 *   [Cheat Sheet](https://github.com/CS2103AUG2016-T09-C3/main/blob/documents/docs/UserGuide.md#liststatistics)
@@ -79,7 +84,7 @@ Let’s say task index “**1**” refers to the task `wash dishes monday 4pm`
 
 ###3. DELETE a Task
 
-The format to edit an existing task is : <br>
+The format to delete an existing task is : <br>
 &nbsp; &nbsp; `delete <task index>` <br>
 
 >   *  `<task index>` can be obtained from the list panel, or by using the list 
@@ -92,12 +97,33 @@ Let’s say task index “**1**” refers to the task `wash dishes monday 4pm`
 *   `delete 1` will delete the aforementioned `wash dishes` task.
 
 <!--@@author A0142686X -->
+
+###4. DONE TASK
+
+Tasks can be marked done after they have been completed. Tasks marked as done will not appear in the main list, but can be viewed by the list command (see LIST).<br>
+
+The format to mark a task as done is : <br>
+&nbsp; &nbsp; `done <task index>` <br>
+
+>   *  `<task index>` can be obtained from the list panel, or by using the list 
+
+<br> For example: <br>
+
+Let’s say task index “**1**” refers to the task `do laundry monday 4pm`
+
+*   `done 1` will mark the `do laundry` task as done.
+
+
+
+
 ###4. LIST Tasks
 
+Tasks can be listed according to their priority, date when they are due or if they are marked done.
 The format to edit an existing task is : <br>
-&nbsp; &nbsp; `list [date | priority]`<br>
+&nbsp; &nbsp; `list [date | priority | done]`<br>
 
 >   *   The tasks will be shown based on the parameters specified. If no parameters given, the tasks are organized by date.
+>   *   done parameter will list all the tasks marked done.
 >   *   Both date and priority can be specified at the same time.
 
 <br> For example : <br>
@@ -105,15 +131,24 @@ The format to edit an existing task is : <br>
 `list high` will display all tasks of high priority.
 `list` will display all tasks organised by date.
 `list high today` will display all tasks of high priority due today.
+`list done` will display all the tasks marked done.
+`list done today` will display all the done tasks which were due today.
 
 <br>
 ![List Screen](images/List_Command.png)
 
-### 5. Undo a Task
+### 5. UNDO
 
-Enter `undo` into the command line to the previous commands you have entered in the session.  
+Enter `undo` into the command line to undo the previous commands you have entered in the session.  
 
-### 6. Search for Tasks
+<br> For example : <br>
+Entering `undo` after executing `delete 2` will bring back the deleted task.
+
+### 5. REDO
+
+Enter `redo` into the command line to redo the previous undo you have executed in the session.  
+
+### 6. SEARCH for Tasks
 
 The format to search for certain tasks is :  
     `search <keyword>`  
@@ -125,6 +160,21 @@ For example:
 Let say task index **1** refers to the task `wash dishes monday 4pm`
 
 *   `search dishes` will show the existing `wash dishes` task.
+
+### 6. STORAGE 
+The storage command can be used to change the storage location of tasks. Tasks are stored on the PC in an XML file.
+
+The format to change storage location is :
+    `storage <filepath>`
+
+<br> For example : <br>
+
+Entering `storage C://users/JohnDoe/NewFile.xml` will change the storage location to NewFile.xml.
+
+>   *  Filepath must be of an XML file.
+>   *  If the XML file mentioned at the filepath does not exist, a new XML file will be created by TaskTracker at the specified location.
+>   *  All data of the pre-existing tasks will be copied to the new XML file.
+
 
 ### 7. HELP command
 
@@ -154,9 +204,12 @@ Getting the hang of it? Here’s a quick and dirty summary of all T-T commands
 | add  |  Adds a new task to the list | `add question life 14 Oct 1045 -l` |
 | edit  | Edits an existing task  | `edit 1 review UG tuesday 10am -h`  |
 | delete  | Deletes an existing task  |  `delete 1`    |
+| done  | Marks a task as done | `done 1` |
 | list  | Sorts and displays the list of existing tasks  | `list high today` |
-| undo  | Sorts and displays the list of existing tasks  | `undo` |
+| undo  | Undoes the previous command  | `undo` |
+| redo  | Redoes the previous undo | `redo` |
 | search  | Searchs for tasks that contain a designated keyword  | `search meaning` |
+| storage | Changes the location of the XML file in which tasks are stored |`storage C://Users/Desktop/newfile.xml` |
 |  help | Displays the list of commands available on T-T  |  `help` |
 
 ## **FAQ**
