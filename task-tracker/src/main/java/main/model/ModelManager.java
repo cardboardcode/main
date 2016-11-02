@@ -25,6 +25,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import main.commons.events.model.ChangeSortFilterEvent;
 import main.commons.events.model.TaskTrackerChangedEvent;
 import main.commons.events.model.UpdateListWithSuggestionsEvent;
 import main.commons.util.DateUtil;
@@ -46,8 +47,8 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
     EventsCenter eventsCenter;
     
-    public static Stack<UndoHistory> undoStack = new Stack<UndoHistory>();
-    public static Stack<UndoHistory> redoStack = new Stack<UndoHistory>();
+    public static Stack<UndoHistory> undoStack;
+    public static Stack<UndoHistory> redoStack;
     
     TaskTracker taskTracker;
     UserPrefs userPref;
@@ -69,11 +70,14 @@ public class ModelManager extends ComponentManager implements Model {
         filteredTasks = new FilteredList<>(this.taskTracker.getTasks());
         sortedTasks = new SortedList<>(this.filteredTasks);
         sortDefault();
+        
+        undoStack = new Stack<UndoHistory>();
+        redoStack = new Stack<UndoHistory>();
     }
     
     public ModelManager() {
         this(new TaskTracker(), new UserPrefs());
-}
+    }
 
     @Override
     public void resetData(ReadOnlyTaskTracker newData) {
@@ -144,13 +148,17 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== Sorting ===================================================================
     @Override
     public void sortBy(SortCriteria criteria) {
-        SortFilter sortFilter = new SortFilter(criteria);
-        sortedTasks.setComparator(sortFilter.getComparator());
+        sortedTasks.setComparator(new SortFilter(criteria).getComparator());
     }
     
     @Override
     public void sortDefault() {
-        sortedTasks.setComparator(new SortFilter(SortCriteria.TIME).getComparator());
+        sortBy(SortCriteria.TIME);
+    }
+    
+    @Subscribe
+    public void handleChangeSortFilterEvent(ChangeSortFilterEvent event) {
+        sortBy(event.getSortCriteria());
     }
     
     //=========== User Friendly Accessors ===================================================================
