@@ -108,6 +108,7 @@ public class TaskCard extends UiPart{
             priorityTab.setFill(Color.YELLOWGREEN);
             cardPane.setStyle("-fx-background-color: #ffffb3;");
 		}
+
         else{
             priorityTab.setFill(Color.rgb(255, 117, 26));
             cardPane.setStyle("-fx-background-color: #ffa366;");
@@ -122,7 +123,7 @@ public class TaskCard extends UiPart{
     
     private void configureLayout() {
     	
-        cardPane.setSpacing(18.0);
+//        cardPane.setSpacing(18.0);
         deadline.setMinWidth(300);
 //        cardPane.setMinWidth(450);
 		id.setMinWidth(50);
