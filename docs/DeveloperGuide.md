@@ -4,12 +4,12 @@
 ##Table of Contents <br>
 * [Setting Up](#setting-up)
 * [Design](#design)
-      * [Main](#Main)
-      * [Common](#Common)
-      * [Logic](#Logic)
-      * [UI](#UI)
-      * [Model](#Model)
-      * [Storage](#Storage)
+      * [Main](#main)
+      * [Common](#commons)
+      * [Logic](#logic)
+      * [UI](#ui)
+      * [Model](#model)
+      * [Storage](#storage)
 * [Implementation](#implementation)
 * [Testing](#testing)
 * [Dev Ops](#dev-ops)
@@ -84,7 +84,7 @@ Two of those classes play important roles at the architecture level:
 * `LogsCenter` : This class is used by many classes to write log messages to the App's log file.
 <br><br>
 The rest of the App consists four components.
-* [**`UI`**](#ui-component) : The UI of tha App.
+* [**`UI`**](#ui-component) : The UI of the App.
 * [**`Logic`**](#logic-component) : The command executor.
 * [**`Model`**](#model-component) : Holds the data of the App in-memory.
 * [**`Storage`**](#storage-component) : Reads data from, and writes data to, the hard disk.
@@ -200,6 +200,10 @@ See [UsingGradle.md](https://github.com/se-edu/addressbook-level4/blob/master/do
 We use [Travis CI](https://travis-ci.org/) to perform _Continuous Integration_ on our projects.
 See [UsingTravis.md](https://github.com/se-edu/addressbook-level4/blob/master/docs/UsingTravis.md) for more details.
 
+### Code Quality Evaluation
+
+We use [Codacy](https://www.codacy.com/) to perform testing and evaluation on the code quality and report issues on our projects.
+
 ### Making a Release
 
 Here are the steps to create a new release.
@@ -259,85 +263,125 @@ Priority | As a ... | I want to ... | So that I
 (For all use cases below, the **System** is the `TaskTracker` and the **Actor** is the `user`, unless specified otherwise)
 
 
-#### Use case: Delete Task
+#### Use case: Add Floating Task
 
 **MSS**
 
-1a. User inputs "delete" + <task>/<task> <deadline>/<task> <startTime> <endTime>
- b. TaskTracker deletes the selected task in the task list
-  Use case ends
+1. User creates new task with no date and time
+2. TaskTracker creates a floating task
+Use case ends
 
 **Extensions**
 
-2a. The list is empty
+2a. The task description is null.
+> 2a1. TaskTracker shows an error message<br>
+> 2a2. User re-enters the task description<br>
+> Use case resumes at step 2
+  
+2b. User creates a task with a priority
+> 2b1. TaskTracker creates a floating task with the given priority<br>
 > Use case ends
 
-3a. The given index is invalid
 
-> 3a1. TaskTracker shows an error message 
-  Use case resumes at step 2
-
-
-#### Use case: Access Trash Bin
+#### Use case: Add Deadline Task
 
 **MSS**
 
-1a. User inputs "trashbin" into the command line interface
- b. User will then be directed to the trash bin window
-  Use case ends
+1. User creates new task with a deadline
+2. TaskTracker creates a deadline task with the given deadline
+Use case ends
  
+**Extensions**
 
-#### Use case: Add Task
+2a. The deadline only has a date (without a specific time)
+> 2a1. TaskTracker creates a task with only a date without the time.<br>
+> Use case ends
+
+2b. User creates a task with a priority
+> 2b1. TaskTracker creates a floating task with the given priority<br>
+> Use case ends
+
+
+#### Use case: Add Event Task
 
 **MSS**
 
-1a. User inputs "add" + <task>/<task> <deadline>/<task> <startTime> <endTime>
- b. TaskTracker add the task to the task list
-  Use case ends
+1. User creates new task with a start time and an end time
+2. TaskTracker creates a event task with the given start time and end time
+Use case ends
 
 **Extensions**
 
-2a. The input parameters are invalid
-> 2a1. TaskTracker shows an error message to prompt user to insert correct inputs
-  Use case resumes at step 2
+2a. The end time only has a date (without a specific time)
+> 2a1. TaskTracker creates a task with only an end date without the time.<br>
+> Use case ends
 
+2b. User creates a task with a priority
+> 2b1. TaskTracker creates a floating task with the given priority<br>
+> Use case ends
 
 #### Use case: Edit
+
 **MSS**
 
-1a. User inputs "edit" + <task>/<task> <deadline>/<task> <startTime> <endTime>
- b. TaskTracker edit the selected task in the task list
-  Use case ends
+1. User enters the edited details of an existing task
+2. TaskTracker edits the selected task in the task list
+3. The task will be sorted in the task list, order by date 
+Use case ends
 
 
 **Extensions**
 
 2a. The list is empty
 > Use case ends
-
-
 
 #### Use case: Undo Task
 
 **MSS**
 
-1a. You will be able to undo tasks by pressing Ctrl+Z (at the same time)
- b. Alternatively, you can also input "undo" to perform undo operations
-  Use case ends
- 
-**Extensions**
+1. User requests to undo the previous actions
+2. TaskTracker undo the previous actions
+Use case ends
 
-2a. No changes made in the app since the opening the app
-> Use case ends
-
-
-#### Use case: Check Schedule
+#### Use case: Redo Task
 
 **MSS**
 
-1a. User inputs "check" + <date>
- b. TaskTracker checks the task list of selected date
-  Use case ends
+1. User requests to redo the previous undo commands
+2. TaskTracker redo the previous undos
+Use case ends
+
+#### Use case: Delete Task
+
+**MSS**
+
+1. User requests to delete a specific task on the task list
+2. TaskTracker deletes the specific task off the task list
+Use case ends
+
+** Extensions **
+
+2a. The task does not exist
+> 2a1. TaskTracker shows an error message<br>
+> Use case ends 
+
+#### Use case: Done Task
+
+**MSS**
+
+1. User requests to mark a specific task as done
+2. TaskTracker marks the task as done
+3. Task gets transferred to a separate list of completed tasks
+Use case ends
+
+#### Use case: Find Task
+
+**MSS**
+
+1. User requests to find tasks by alphabets
+2. TaskTracker checks the task list of the character inputs
+3. TaskTracker returns all relevant tasks
+Use case ends
 
 
 **Extensions**
@@ -345,13 +389,13 @@ Priority | As a ... | I want to ... | So that I
 2a. The list is empty
 > Use case ends
 
-#### Use case: List Task List
+#### Use case: List 
 
 **MSS**
 
-1a. User inputs "list" into the command line interface
- b. TaskTracker list all the tasks
-  Use case ends
+1. User list tasks by different key terms (e.g priority, date or completed)
+2. TaskTracker list all the relevant tasks
+Use case ends
 
 
 **Extensions**
@@ -364,9 +408,9 @@ Priority | As a ... | I want to ... | So that I
 
 **MSS**
 
-1a. User inputs "clear" 
- b. TaskTracker clears the task list
-  Use case ends
+1. User clears the task list
+2. TaskTracker clears the task list
+Use case ends
 
 
 **Extensions**
@@ -379,15 +423,10 @@ Priority | As a ... | I want to ... | So that I
 
 **MSS**
 
-1a. User inputs "help" into the command line interface
- b. TaskTracker displays all the available commands and examples
-  Use case ends
+1. User uses help command
+2. TaskTracker opens a help window to task all available commands
+Use case ends 
 
-
-**Extensions**
-
-2a. The list is empty
-> Use case ends
 ## Appendix C : Non-Functional Requirements
 
   * The user must like the GUI appearance.
