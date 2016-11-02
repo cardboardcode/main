@@ -1,0 +1,25 @@
+//@@author A0144132W
+package main.logic.command;
+
+public class SortCommand extends Command {
+    
+    public static final String COMMAND_WORD = "sort";
+    public static final String MESSAGE_USAGE = COMMAND_WORD 
+            + "Parameters: <date | name> \n"
+            + "Parameter can only be 'date' or 'name' \n"
+            + "Eg: " + COMMAND_WORD + " date";
+    public static final String MESSAGE_SUCCESS = "Sorting by %1$s";
+    
+    private String param;
+    public SortCommand(String param) {
+        this.param = param;
+    }
+
+    @Override
+    public CommandResult execute() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+    
+
+}
