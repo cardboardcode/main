@@ -47,16 +47,8 @@ public class TaskCard extends UiPart{
     private ReadOnlyTask task;
     private int displayedIndex;
     
-    private static ReadOnlyDoubleProperty listWidthProperty;
-    private static ReadOnlyDoubleProperty listHeightProperty;
-    
     public TaskCard(){
 
-    }
-    
-    public static void setProperty(ReadOnlyDoubleProperty widthProperty, ReadOnlyDoubleProperty heightProperty) {
-        listWidthProperty = widthProperty;
-        listHeightProperty = heightProperty;
     }
 
     public static TaskCard load(ReadOnlyTask task, int displayedIndex){
@@ -120,8 +112,8 @@ public class TaskCard extends UiPart{
     private void configureLayout() {
     	
 //        cardPane.setSpacing(18.0);
-        deadline.setMinWidth(300);
-        cardPane.setMinWidth(450);
+//        deadline.setMinWidth(300);
+//        cardPane.setMinWidth(450);
 
     }
 
@@ -132,8 +124,6 @@ public class TaskCard extends UiPart{
     @Override
     public void setNode(Node node) {
         cardPane = (HBox)node;
-        cardPane.prefWidthProperty().bind(listWidthProperty);
-        cardPane.prefHeightProperty().bind(listHeightProperty);
     }
 
     @Override

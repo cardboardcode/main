@@ -8,8 +8,6 @@ import javafx.scene.Node;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -101,9 +99,7 @@ public class TaskListPanel extends UiPart {
 
 	class TaskListViewCell extends ListCell<ReadOnlyTask> {
 
-		public TaskListViewCell() {
-		    TaskCard.setProperty(taskListView.widthProperty(), taskListView.heightProperty());
-		}
+		public TaskListViewCell() {}
 
 		@Override
 		protected void updateItem(ReadOnlyTask task, boolean empty) {
