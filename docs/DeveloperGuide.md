@@ -13,8 +13,8 @@
 * [Implementation](#implementation)
 * [Testing](#testing)
 * [Dev Ops](#dev-ops)
-* [Appendix A: User Stories](#appendix-a--user-stories)
-* [Appendix B: Use Cases](#appendix-b--use-cases)
+* [Appendix A: User Stories](#appendix-a-:-user-stories)
+* [Appendix B: Use Cases](#appendix-b-:-use-cases)
 * [Appendix C: Non Functional Requirements](#appendix-c--non-functional-requirements)
 * [Appendix D: Glossary](#appendix-d--glossary)
 * [Appendix E : Product Survey](#appendix-e--product-survey)
@@ -199,6 +199,10 @@ See [UsingGradle.md](https://github.com/se-edu/addressbook-level4/blob/master/do
 
 We use [Travis CI](https://travis-ci.org/) to perform _Continuous Integration_ on our projects.
 See [UsingTravis.md](https://github.com/se-edu/addressbook-level4/blob/master/docs/UsingTravis.md) for more details.
+
+### Code Quality Evaluation
+
+We use [Codacy](https://www.codacy.com/) to perform testing and evaluation on the code quality and report issues on our projects.
 
 ### Making a Release
 
