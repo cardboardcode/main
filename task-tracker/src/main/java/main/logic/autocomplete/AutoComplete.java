@@ -173,7 +173,7 @@ public class AutoComplete {
         
         for (ReadOnlyTask task : tasktracker.getTaskList()) {
             for (Pair<ReadOnlyTask,SetTrie> pair : taskList) {
-                if (task.equals(pair.getClass())){
+                if (task.equals(pair.getKey())){
                     matchedTasks.add(task);
                     break;
                 }
@@ -203,22 +203,34 @@ public class AutoComplete {
         
     }
     
+    /*
+     * @returns suggestions
+     */
     public List<String> getSuggestions() {
         return suggestions;
     }
     
+    /*
+     * updates suggestions when key press is detected
+     */
     @Subscribe
     private void handleKeyPressEvent(KeyPressEvent event) {
         updateSuggestions(event.getInput());
         tabCount = 0;
     }
     
+    /*
+     * toggles the suggestions to fill in commandBox
+     */
     @Subscribe
     private void handleTabPressEvent(TabPressEvent event) {
         fillInSuggestions();
         tabCount++;
     }
     
+    /*
+     * updates taskList when tasks are changed
+     */
     @Subscribe
     private void handleTaskTrackerChangedEvent(TaskTrackerChangedEvent event) {
         updateTaskList(event.data);
