@@ -331,17 +331,12 @@ public class MainWindow extends UiPart {
 				else {
                     taskPointer = taskPointer + 1;
 				}
-				System.out.println(taskPointer);
 				scrollList.scrollTo(taskPointer);
 			}
 		});
 
 	}
 	
-	//@@author A0142686X   
-	public int getColourPointer() {
-	    return colorPointer;
-	}
 
 	//@@author A0139422J
 	public void handlePageUp(ListView<ReadOnlyTask> scrollList) {
@@ -353,10 +348,15 @@ public class MainWindow extends UiPart {
 				else {
 					taskPointer = taskPointer - 1;
 				}
-				System.out.println(taskPointer);
 				scrollList.scrollTo(taskPointer);
 			}
 		});
 	}
+	
+	//@@author A0142686X   
+	public int getColourPointer() {
+	    return colorPointer;
+	}
+
 
 }
