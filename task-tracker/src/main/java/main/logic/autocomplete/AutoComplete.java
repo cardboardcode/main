@@ -28,7 +28,6 @@ import main.logic.parser.ReferenceList;
 import main.model.Model;
 import main.model.ReadOnlyTaskTracker;
 import main.model.task.ReadOnlyTask;
-import main.model.task.Task;
 
 public class AutoComplete {
         
