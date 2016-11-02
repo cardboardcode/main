@@ -10,21 +10,21 @@
     -   [Add a Task](https://github.com/CS2103AUG2016-T09-C3/main/blob/documents/docs/UserGuide.md#1-add-a-task)
     -   [Edit a Task](https://github.com/CS2103AUG2016-T09-C3/main/blob/documents/docs/UserGuide.md#2-edit-a-task)
     -   [Delete a Task](https://github.com/CS2103AUG2016-T09-C3/main/blob/documents/docs/UserGuide.md#3-delete-a-task)
-    -   [Done Task]
+    -   [Done Task](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#4-done-task)
     -   [List Tasks](https://github.com/CS2103AUG2016-T09-C3/main/blob/documents/docs/UserGuide.md#4-list-tasks)
-    -   [Undo]
-    -   [Redo]
-    -   [Search for Tasks]
-    -   [Storage]
+    -   [Undo](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#6-undo)
+    -   [Redo](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#7-redo)
+    -   [Search for Tasks](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#8-search-for-tasks)
+    -   [Storage](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#9-storage)
     -   [Help Command](https://github.com/CS2103AUG2016-T09-C3/main/blob/documents/docs/UserGuide.md#5-help-command)
-*   [Unique Features]
-    -   [List Statistics]
-    -   [Overdue Detection]
-    -  [Autocompletion]
-    -   [Color Toggling]
-    -   [Minimize window]
-*   [Cheat Sheet](https://github.com/CS2103AUG2016-T09-C3/main/blob/documents/docs/UserGuide.md#liststatistics)
-*   [FAQ](https://github.com/CS2103AUG2016-T09-C3/main/blob/documents/docs/UserGuide.md#liststatistics)
+*   [Unique Features](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#unique-features)
+    -   [List Statistics](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#1-list-statistics)
+    -   [Overdue Detection](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#2-overdue-detection)
+    -  [Autocompletion](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#3-autocompletion)
+    -   [Color Toggling](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#4-color-toggling)
+    -   [Minimize window](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#5-minimize-window)
+*   [Cheat Sheet](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#cheat-sheet)
+*   [FAQ](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#faq)
 
 ## **About**
 
@@ -227,7 +227,7 @@ Once you are done with what you need to do in **T-T**, you can simply press `Esc
 
 <!-- @@author A0139750B -->
 ## **Cheat Sheet**
-Getting the hang of it? Here’s a quick and dirty summary of all **T-T** commands
+Getting the hang of it? Here’s a quick and dirty summary of all **T-T** commands and keyboard shortcuts.
 
 | Commands  | Function  | Usage  |
 |---|---|---|
