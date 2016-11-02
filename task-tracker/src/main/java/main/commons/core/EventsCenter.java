@@ -4,6 +4,7 @@ package main.commons.core;
 import com.google.common.eventbus.EventBus;
 
 import main.commons.events.BaseEvent;
+import main.commons.events.ui.KeyPressEvent;
 
 import java.util.logging.Logger;
 
@@ -39,7 +40,9 @@ public class EventsCenter {
      * Posts an event to the event bus.
      */
     public <E extends BaseEvent> EventsCenter post(E event) {
-        logger.info("------[Event Posted] " + event.getClass().getCanonicalName() + ": " + event.toString());
+        if (!(event instanceof KeyPressEvent)) {
+            logger.info("------[Event Posted] " + event.getClass().getCanonicalName() + ": " + event.toString());
+        }
         eventBus.post(event);
         return this;
     }
