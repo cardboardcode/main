@@ -4,6 +4,7 @@ package main.logic.autocomplete;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -13,6 +14,7 @@ import com.google.common.eventbus.Subscribe;
 
 import org.apache.commons.lang3.tuple.Pair;
 import main.commons.core.EventsCenter;
+import main.commons.core.LogsCenter;
 import main.commons.events.model.TaskTrackerChangedEvent;
 import main.commons.events.model.UpdateListWithSuggestionsEvent;
 import main.commons.events.ui.AutoCompleteEvent;
@@ -28,9 +30,12 @@ import main.logic.parser.ReferenceList;
 import main.model.Model;
 import main.model.ReadOnlyTaskTracker;
 import main.model.task.ReadOnlyTask;
+import main.ui.UiManager;
 
 public class AutoComplete {
         
+    private static final Logger logger = LogsCenter.getLogger(AutoComplete.class);
+
     private SetTrie commandList;
     private SetTrie listList;
     private List<Pair<ReadOnlyTask,SetTrie>> taskList;
@@ -223,6 +228,7 @@ public class AutoComplete {
      */
     @Subscribe
     private void handleTabPressEvent(TabPressEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         fillInSuggestions();
         tabCount++;
     }
