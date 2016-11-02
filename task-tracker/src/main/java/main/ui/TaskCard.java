@@ -2,10 +2,6 @@
 package main.ui;
 
 
-import java.text.DateFormat;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -120,8 +116,6 @@ public class TaskCard extends UiPart{
 			cardPane.setStyle("-fx-background-color: #ffa366;");
 		}
 		priorityTab.setStroke(Color.TRANSPARENT);
-//		priorityTab.widthProperty().bind(cardPane.widthProperty().subtract(1000));
-//		splitpane.setStyle("-fx-box-border: transparent;");
 	}
 
 	private void configureLayout() {  	
