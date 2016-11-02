@@ -35,6 +35,7 @@ import main.logic.command.HelpCommand;
 import main.logic.command.IncorrectCommand;
 import main.logic.command.ListCommand;
 import main.logic.command.RedoCommand;
+import main.logic.command.SortCommand;
 import main.logic.command.StorageCommand;
 import main.logic.command.UndoCommand;
 
@@ -93,6 +94,8 @@ public class MainParser {
                 return prepareRedo();
             case StorageCommand.COMMAND_WORD:
                 return prepareStorage(input);
+            case SortCommand.COMMAND_WORD:
+                return prepareSort(task);
             default: 
                 return commandIncorrect(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, Messages.MESSAGE_UNKNOWN_COMMAND));
         }
@@ -236,6 +239,17 @@ public class MainParser {
 
         indicateListParamsChanged(Triple.of(priority, date, type));
         return new ListCommand(Triple.of(priority, date, type), isDone);
+    }
+    
+    public Command prepareSort(String input) {
+        input = input.trim().toLowerCase();
+        
+        if (input.equals("date") || input.equals("name")) {
+            return new SortCommand(input);
+        }
+        else {
+            return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_PARAMETERS, "sort", SortCommand.MESSAGE_USAGE));
+        }
     }
 
     private Task extractTask(String raw) throws MultiplePriorityException, IllegalArgumentException {
