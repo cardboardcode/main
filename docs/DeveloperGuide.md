@@ -109,13 +109,14 @@ The sections below give more details of each component.
 
 <!-- @@author A0144132W -->
 ####Logic
-![Logic](images/A_Logic.png)<br>
+![Logic](images/Logic.png)<br>
 **API** : [`Logic.java`]()
 
-1. `Logic` uses the `Parser` class to parse the user command.
-2. This results in a `Command` object which is executed by the `LogicManager`.
-3. The command execution can affect the `Model` (e.g. adding a task) and/or raise events.
-4. The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `UI`.
+1. `Logic` uses the `MainParser` class to parse the user command.
+2. 'MainParser' class in turn uses 'TimeParser' to parse part of the input.
+3. This results in a `Command` object which is executed by the `LogicManager`.
+4. The command execution can affect the `Model` (e.g. adding a task) and/or raise events.
+5. The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `UI`.
 
 
 ####UI
@@ -192,12 +193,12 @@ Certain properties of the application can be controlled (e.g App name, logging l
 
 ### Build Automation
 
-See [UsingGradle.md](UsingGradle.md) to learn how to use Gradle for build automation.
+See [UsingGradle.md](https://github.com/se-edu/addressbook-level4/blob/master/docs/UsingGradle.md) to learn how to use Gradle for build automation.
 
 ### Continuous Integration
 
 We use [Travis CI](https://travis-ci.org/) to perform _Continuous Integration_ on our projects.
-See [UsingTravis.md](UsingTravis.md) for more details.
+See [UsingTravis.md](https://github.com/se-edu/addressbook-level4/blob/master/docs/UsingTravis.md) for more details.
 
 ### Making a Release
 
@@ -247,7 +248,7 @@ Priority | As a ... | I want to ... | So that I
 `* *` | user | get suggestions on available time slots when I am making plans | can schedule my events more easily.
 `* *` | user | have similar commands to be displayed if I input a command incorrectly | can recognize what command I actually wanted to type.
 `*` | user | change the colour of my text in the GUI | can have a more personal touch on the interface I am using.
-`*` | user | refer to an in-built bot for instructions on how to use the task manager | won’t be lost. 
+`*` | user | refer to an in-built bot for instructions on how to use the task manager | wonÂ’t be lost. 
 `*` | user | always see the current time and date on the screen | can manage the tasks I need to do today effectively.
 `*` | user | be able to create aliases | can customize and enter frequently used commands easily.
 `*` | user | be able to create multiple user profiles for the software | have many people using the app on the same PC.
@@ -408,9 +409,9 @@ We did a market survey in order to study the existing products out there for the
 
 `Taskwarrior` is a free and open source software that uses the command line. Its biggest strength is its simple user interface and lightweight design. However, it does not support reminders and is only available for Linux and OSX.
 
-`Calendar.vim` is another software we studied. It is an only-Linux software which runs via the vim text editor. It too is lightweight and utilises a CLI to perform its operations. But it does not support subtasks, has no possibility of syncing with other calendars such as Google Calendar, and has no reminders. It is very basic in its operations. Gcalcli is also Linux and OSX based, and supports reminders also, but it doesn’t work offline.
+`Calendar.vim` is another software we studied. It is an only-Linux software which runs via the vim text editor. It too is lightweight and utilises a CLI to perform its operations. But it does not support subtasks, has no possibility of syncing with other calendars such as Google Calendar, and has no reminders. It is very basic in its operations. Gcalcli is also Linux and OSX based, and supports reminders also, but it doesnÂ’t work offline.
 
-Moving on to **GUI** task managers. `Wunderlist` is a popular task manager software. It has Google integration,  supports integration, has reminders and is available on multiple platforms such as Windows, OSX, Linux, Android and iOS. But it doesn’t support subtasks.
+Moving on to **GUI** task managers. `Wunderlist` is a popular task manager software. It has Google integration,  supports integration, has reminders and is available on multiple platforms such as Windows, OSX, Linux, Android and iOS. But it doesnÂ’t support subtasks.
 
 `Todo.txt` is another GUI task manager which is available on many platforms and is free. Its drawbacks are that it has no reminders or support for subtasks.
 `Evernote` was the most popular task manager we studied. It supports Google integration and subtasks, is available across multiple platforms and has reminders. The only big drawback of Evernote is that it is not completely free and some features are available only after payment.
