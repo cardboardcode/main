@@ -146,11 +146,11 @@ Enter `undo` into the command line to undo the previous commands you have entere
 <br> For example : <br>
 Entering `undo` after executing `delete 2` will bring back the deleted task.
 
-### 5. **REDO**
+### 6. **REDO**
 
 Enter `redo` into the command line to redo the previous undo you have executed in the session.  
 
-### 6. **SEARCH** for Tasks
+### 7. **SEARCH** for Tasks
 
 The format to search for certain tasks is :  
     `search <keyword>`  
@@ -163,7 +163,7 @@ Let say task index **1** refers to the task `wash dishes monday 4pm`
 
 *   `search dishes` will show the existing `wash dishes` task.
 
-### 6. **STORAGE** 
+### 8. **STORAGE** 
 The storage command can be used to change the storage location of tasks. Tasks are stored on the PC in an XML file.
 
 The format to change storage location is :
@@ -178,7 +178,7 @@ Entering `storage C://users/JohnDoe/NewFile.xml` will change the storage locatio
 >   *  All data of the pre-existing tasks will be copied to the new XML file.
 
 
-### 7. HELP command
+### 9. HELP command
 
 Enter `help` into the command line to list out all the commands available in T-T.
 
@@ -186,9 +186,9 @@ Enter `help` into the command line to list out all the commands available in T-T
 ## **Unique Features**
 
 ### 1. List Statistics
-T-T also provides an intuitive listing the number of tasks stored, giving you a clearer idea on how to better deal with them. As seen in **the example below**, the numbers are displayed on the right of the task list. 
+**T-T** also provides an intuitive listing the number of tasks stored, giving you a clearer idea on how to better deal with them. As seen in **the example below**, the numbers are displayed on the right of the task list. 
 
-T-T's list statistics provides data on all the different types of tasks available in storage:
+**T-T**'s list statistics provides data on all the different types of tasks available in storage:
 
     -      Today's Tasks 
     -      Tomorrow's Tasks
@@ -203,7 +203,7 @@ T-T's list statistics provides data on all the different types of tasks availabl
 Apart from the three basic colors shown earlier to indicate different priorities, T-T also indicates to users which tasks have become overdued. If the current time has overshot an event task's endtime or a deadline task's deadline, the corresponding task will be shown with a black tab, as shown below. 
 
 ### 3. Autocompletion
-Users who find typing in the many commands **T-T** provides too tedious may opt to use the autocompletion function the app has as well. Simply press the `tab` key and you will be able to cycle through all the different command. 
+Users who find typing in the many commands **T-T** provides too tedious may opt to use the autocompletion function the app has as well. Simply press the `Tab` key and you will be able to cycle through all the different command. 
 
 If you already have a command in mind, the function will be able to know simply from the first few letter you enter. 
 
@@ -214,10 +214,10 @@ Let say you were to enter a letter `d` in the **T-T** command box, by pressing `
 *   `delete`
 *   `done`
 
-However, the autocompletion does not stop there. Sometimes users do need to reenter past commands. By pressing the `up` and `down` arrow keys, you can also access your most recent commands without having to tediously type it out again. 
+However, the autocompletion does not stop there. Sometimes users do need to reenter past commands. By pressing the `UP` and `DOWN` arrow keys, you can also access your most recent commands without having to tediously type it out again. 
 
 ### 4. Color Toggling
-The user interface is not just limited to just one color. T-T offers you a variety of seven color themes to choose from. 
+The user interface is not just limited to just one color. **T-T** offers you a variety of seven color themes to choose from. 
 
 By pressing `F1` and `F2`, you can toggle between the different themes and choose any which suit your preference. 
 
@@ -226,7 +226,7 @@ Once you are done with what you need to do in **T-T**, you can simply press `Esc
 
 <!-- @@author A0139750B -->
 ## **Cheat Sheet**
-Getting the hang of it? Here’s a quick and dirty summary of all T-T commands
+Getting the hang of it? Here’s a quick and dirty summary of all **T-T** commands
 
 | Commands  | Function  | Usage  |
 |---|---|---|
@@ -241,7 +241,8 @@ Getting the hang of it? Here’s a quick and dirty summary of all T-T commands
 | storage | Changes the location of the XML file in which tasks are stored |`storage C://Users/Desktop/newfile.xml` |
 |  help | Displays the list of commands available on T-T  |  `help` |
 
-
+<br>
+<br>
 <!-- @@author A0139422J -->
 | Keyboard Shortcuts  | Function  |
 |---|---|
