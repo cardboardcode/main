@@ -10,6 +10,7 @@ import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -47,6 +48,9 @@ public class TaskCard extends UiPart{
     
     @FXML
     private Rectangle priorityTab;
+    
+    @FXML
+    private SplitPane splitpane;
 
     private ReadOnlyTask task;
     private int displayedIndex;
@@ -72,7 +76,6 @@ public class TaskCard extends UiPart{
 
     @FXML
     public void initialize() {
-     
         configureLayout();     
         setTaskCardText();
         setPriorityTabColour();
@@ -117,13 +120,15 @@ public class TaskCard extends UiPart{
 			cardPane.setStyle("-fx-background-color: #ffa366;");
 		}
 		priorityTab.setStroke(Color.TRANSPARENT);
+//		priorityTab.widthProperty().bind(cardPane.widthProperty().subtract(1000));
+//		splitpane.setStyle("-fx-box-border: transparent;");
 	}
 
-	private void configureLayout() {
-    	
-    	cardPane.setSpacing(18.0);
+	private void configureLayout() {  	
+//    	cardPane.setSpacing(18.0);
         deadline.setMinWidth(300);
-        cardPane.setMinWidth(450);
+//        cardPane.setMinWidth(450);
+		id.setMinWidth(50);
 
 	}
 
