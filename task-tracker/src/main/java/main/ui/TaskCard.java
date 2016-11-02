@@ -2,14 +2,11 @@
 package main.ui;
 
 
-import java.text.DateFormat;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -47,6 +44,9 @@ public class TaskCard extends UiPart{
     
     @FXML
     private Rectangle priorityTab;
+    
+    @FXML
+    private SplitPane splitpane;
 
     private ReadOnlyTask task;
     private int displayedIndex;
@@ -72,7 +72,6 @@ public class TaskCard extends UiPart{
 
     @FXML
     public void initialize() {
-     
         configureLayout();     
         setTaskCardText();
         setPriorityTabColour();
@@ -109,6 +108,7 @@ public class TaskCard extends UiPart{
             priorityTab.setFill(Color.YELLOWGREEN);
             cardPane.setStyle("-fx-background-color: #ffffb3;");
 		}
+
         else{
             priorityTab.setFill(Color.rgb(255, 117, 26));
             cardPane.setStyle("-fx-background-color: #ffa366;");
@@ -123,9 +123,10 @@ public class TaskCard extends UiPart{
     
     private void configureLayout() {
     	
-        cardPane.setSpacing(18.0);
+//        cardPane.setSpacing(18.0);
         deadline.setMinWidth(300);
-        cardPane.setMinWidth(450);
+//        cardPane.setMinWidth(450);
+		id.setMinWidth(50);
 
     }
 

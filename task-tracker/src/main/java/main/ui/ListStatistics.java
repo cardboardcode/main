@@ -160,6 +160,12 @@ public class ListStatistics extends UiPart {
 			listDisplay.getImage().setImage(AppUtil.getImage("/images/deadlines.png"));
 		else if (command.contains("floating"))
 			listDisplay.getImage().setImage(AppUtil.getImage("/images/floating.png"));
+		else if (command.contains("high"))
+            listDisplay.getImage().setImage(AppUtil.getImage("/images/high.png"));
+		else if (command.contains("low"))
+            listDisplay.getImage().setImage(AppUtil.getImage("/images/low.png"));
+		else if (command.contains("normal"))
+            listDisplay.getImage().setImage(AppUtil.getImage("/images/normal.png"));
 		else 
 			listDisplay.getImage().setImage(AppUtil.getImage("/images/statistics.png"));
 	}

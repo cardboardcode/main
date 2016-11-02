@@ -17,7 +17,12 @@
     -   [Search for Tasks]
     -   [Storage]
     -   [Help Command](https://github.com/CS2103AUG2016-T09-C3/main/blob/documents/docs/UserGuide.md#5-help-command)
-*   [List Statistics](#liststatistics)
+*   [Unique Features]
+    -   [List Statistics]
+    -   [Overdue Detection]
+    -  [Autocompletion]
+    -   [Color Toggling]
+    -   [Minimize window]
 *   [Cheat Sheet](https://github.com/CS2103AUG2016-T09-C3/main/blob/documents/docs/UserGuide.md#liststatistics)
 *   [FAQ](https://github.com/CS2103AUG2016-T09-C3/main/blob/documents/docs/UserGuide.md#liststatistics)
 
@@ -40,7 +45,7 @@ In order to install T-T,
 
 `<>` _indicates that field is compulsory_ and `[]` _indicates that field is optional._ 
 
-###1. **ADD** a Task
+### 1. **ADD** a Task
 
 The format for adding a new task is: <br>
 &nbsp; &nbsp;   `add <task> [date1] [date2] [-h | -m | -l]` <br>
@@ -69,7 +74,7 @@ The format for adding a new task is: <br>
 <br>
 ![Add Screen](images/Add_Command.png)
 
-###2. EDIT a Task
+### 2. **EDIT** a Task
 
 The format to edit an existing task is : <br>
 &nbsp; &nbsp; `edit <task index> <new task> [new date1] [new date2] [-h | -m | -l] ` <br>
@@ -82,7 +87,7 @@ Let’s say task index “**1**” refers to the task `wash dishes monday 4pm`
 
 *  `edit 1 wash dishes tuesday 6pm -h` will edit the existing `wash dishes` task to `use dishes` and change the date from **monday** to **tuesday** , time from **4pm** to **6pm** and priority from **medium** to **high**.
 
-###3. DELETE a Task
+### 3. **DELETE** a Task
 
 The format to delete an existing task is : <br>
 &nbsp; &nbsp; `delete <task index>` <br>
@@ -98,7 +103,7 @@ Let’s say task index “**1**” refers to the task `wash dishes monday 4pm`
 
 <!--@@author A0142686X -->
 
-###4. DONE TASK
+### 4. **DONE** TASK
 
 Tasks can be marked done after they have been completed. Tasks marked as done will not appear in the main list, but can be viewed by the list command (see LIST).<br>
 
@@ -113,10 +118,7 @@ Let’s say task index “**1**” refers to the task `do laundry monday 4pm`
 
 *   `done 1` will mark the `do laundry` task as done.
 
-
-
-
-###4. LIST Tasks
+### 5. **LIST** Tasks
 
 Tasks can be listed according to their priority, date when they are due or if they are marked done.
 The format to edit an existing task is : <br>
@@ -137,18 +139,18 @@ The format to edit an existing task is : <br>
 <br>
 ![List Screen](images/List_Command.png)
 
-### 5. UNDO
+### 6. **UNDO**
 
 Enter `undo` into the command line to undo the previous commands you have entered in the session.  
 
 <br> For example : <br>
 Entering `undo` after executing `delete 2` will bring back the deleted task.
 
-### 5. REDO
+### 7. **REDO**
 
 Enter `redo` into the command line to redo the previous undo you have executed in the session.  
 
-### 6. SEARCH for Tasks
+### 8. **SEARCH** for Tasks
 
 The format to search for certain tasks is :  
     `search <keyword>`  
@@ -161,7 +163,7 @@ Let say task index **1** refers to the task `wash dishes monday 4pm`
 
 *   `search dishes` will show the existing `wash dishes` task.
 
-### 6. STORAGE 
+### 9. **STORAGE** 
 The storage command can be used to change the storage location of tasks. Tasks are stored on the PC in an XML file.
 
 The format to change storage location is :
@@ -176,15 +178,18 @@ Entering `storage C://users/JohnDoe/NewFile.xml` will change the storage locatio
 >   *  All data of the pre-existing tasks will be copied to the new XML file.
 
 
-### 7. HELP command
+### 10. **HELP**
 
 Enter `help` into the command line to list out all the commands available in T-T.
+<br>
+<br>
+<!-- @@author A0139422J -->
+## **Unique Features**
 
-## **T-T List Statistics**
+### 1. List Statistics
+**T-T** also provides an intuitive listing the number of tasks stored, giving you a clearer idea on how to better deal with them. As seen in **the example below**, the numbers are displayed on the right of the task list. 
 
-T-T also provides an intuitive listing the number of tasks stored, giving you a clearer idea on how to better deal with them. As seen in **the example below**, the numbers are displayed on the right of the task list. 
-
-T-T's list statistics provides data on all the different types of tasks available in storage:
+**T-T**'s list statistics provides data on all the different types of tasks available in storage:
 
     -      Today's Tasks 
     -      Tomorrow's Tasks
@@ -195,9 +200,34 @@ T-T's list statistics provides data on all the different types of tasks availabl
 ![List Screen](images/List_Statistics.png)
 <br>
 
+### 2. Overdue Detection
+Apart from the three basic colors shown earlier to indicate different priorities, T-T also indicates to users which tasks have become overdued. If the current time has overshot an event task's endtime or a deadline task's deadline, the corresponding task will be shown with a black tab, as shown below. 
+
+### 3. Autocompletion
+Users who find typing in the many commands **T-T** provides too tedious may opt to use the autocompletion function the app has as well. Simply press the `Tab` key and you will be able to cycle through all the different command. 
+
+If you already have a command in mind, the function will be able to know simply from the first few letter you enter. 
+
+For example:  
+
+Let say you were to enter a letter `d` in the **T-T** command box, by pressing `Tab`, the following commands can be toggled to easily.
+
+*   `delete`
+*   `done`
+
+However, the autocompletion does not stop there. Sometimes users do need to reenter past commands. By pressing the `UP` and `DOWN` arrow keys, you can also access your most recent commands without having to tediously type it out again. 
+
+### 4. Color Toggling
+The user interface is not just limited to just one color. **T-T** offers you a variety of seven color themes to choose from. 
+
+By pressing `F1` and `F2`, you can toggle between the different themes and choose any which suit your preference. 
+
+### 5. Minimize Window
+Once you are done with what you need to do in **T-T**, you can simply press `Esc` to minimize the window.
+
 <!-- @@author A0139750B -->
 ## **Cheat Sheet**
-Getting the hang of it? Here’s a quick and dirty summary of all T-T commands
+Getting the hang of it? Here’s a quick and dirty summary of all **T-T** commands
 
 | Commands  | Function  | Usage  |
 |---|---|---|
@@ -211,6 +241,17 @@ Getting the hang of it? Here’s a quick and dirty summary of all T-T commands
 | search  | Searchs for tasks that contain a designated keyword  | `search meaning` |
 | storage | Changes the location of the XML file in which tasks are stored |`storage C://Users/Desktop/newfile.xml` |
 |  help | Displays the list of commands available on T-T  |  `help` |
+
+<br>
+<br>
+<!-- @@author A0139422J -->
+| Keyboard Shortcuts  | Function  |
+|---|---|
+| `UP`/`DOWN`   |  Toggles history of recent commands  |
+| `F1`/`F2`  | Toggles **T-T** color theme |
+| `PgUp`/`PgDn`  | Navigates the list of tasks |
+| `Tab`  | Autocompletes user input |
+| `Esc`  | Minimizes app |
 
 ## **FAQ**
 
@@ -231,3 +272,4 @@ Getting the hang of it? Here’s a quick and dirty summary of all T-T commands
 
 If you encounter any further issues using T-T, please contact us at:
     **tasktrackerT-T@gmail.com**
+
