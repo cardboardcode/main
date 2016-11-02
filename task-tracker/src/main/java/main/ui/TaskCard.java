@@ -80,8 +80,8 @@ public class TaskCard extends UiPart{
     }
     
     private void setTaskCardText() {
-    	
-    	message.setText(task.getMessage());
+        
+        message.setText(task.getMessage());
         message.setWrapText(true);
         
         id.setText(displayedIndex + ". ");
@@ -97,37 +97,39 @@ public class TaskCard extends UiPart{
             recurring.setText("Weekly");
         else
             recurring.setText("");
-	}
+    }
     
     private void setPriorityTabColour() {
-		if (task.getPriority().equals(PriorityType.HIGH)){
-			priorityTab.setFill(Color.RED);
-			cardPane.setStyle("-fx-background-color: #ff6666;");
+        
+        if (task.getPriority() == PriorityType.HIGH){
+            priorityTab.setFill(Color.RED);
+            cardPane.setStyle("-fx-background-color: #ff6666;");
+        }
+        else if (task.getPriority() == PriorityType.LOW){
+            priorityTab.setFill(Color.YELLOWGREEN);
+            cardPane.setStyle("-fx-background-color: #ffffb3;");
 		}
-		else if (task.getPriority().equals(PriorityType.LOW)){
-			priorityTab.setFill(Color.YELLOWGREEN);
-			cardPane.setStyle("-fx-background-color: #ffffb3;");
-		}
-//		else if (task.isOverdue()){
-//            priorityTab.setFill(Color.BLACK);
-//            cardPane.setStyle("-fx-background-color: #ff6666;");
-//        }
-		else{
-			priorityTab.setFill(Color.rgb(255, 117, 26));
-			cardPane.setStyle("-fx-background-color: #ffa366;");
-		}
-		priorityTab.setStroke(Color.TRANSPARENT);
-	}
+        else{
+            priorityTab.setFill(Color.rgb(255, 117, 26));
+            cardPane.setStyle("-fx-background-color: #ffa366;");
+       }
+		
+        if (task.isOverdue()) {
+            priorityTab.setFill(Color.BLACK);           
+        }		
 
-	private void configureLayout() {
+        priorityTab.setStroke(Color.TRANSPARENT);
+    }
+    
+    private void configureLayout() {
     	
-    	cardPane.setSpacing(18.0);
+        cardPane.setSpacing(18.0);
         deadline.setMinWidth(300);
         cardPane.setMinWidth(450);
 
-	}
+    }
 
-	public HBox getLayout() {
+    public HBox getLayout() {
         return cardPane;
     }
 

@@ -82,6 +82,7 @@ public class TestTask implements ReadOnlyTask {
         this.isDone = src.getIsDone();
         this.isInferred = src.getIsInferred();
     }
+    
     //getters
     @Override
     public String getMessage(){
@@ -309,24 +310,22 @@ public class TestTask implements ReadOnlyTask {
         return sb.toString();
     }
 
+  //method to check if task is overdue
     @Override
-    public boolean getEndTimeOverdue(){
- 	   return DateUtil.checkDateOverdue(endTime);
-    }
-    
-    @Override
-    public boolean getDeadlineOverdue(){
-    		return DateUtil.checkDateOverdue(deadline);
-    }
-    //without time
-    @Override
-    public boolean getEndTimeWithoutOverdue(){
- 	   return DateUtil.checkDateWithoutTimeOverdue(endTime);
-    }
-    //without time
-    @Override
-    public boolean getDeadlineWithoutOverdue(){
- 	   return DateUtil.checkDateWithoutTimeOverdue(deadline);
+    public boolean isOverdue(){
+    	
+    	//Event
+    	if(this.type == TaskType.EVENT){
+    		return DateUtil.checkOverdue(this.getEndTime(), this.isInferred);
+    	}
+    	//Deadline
+    	else if(this.type == TaskType.DEADLINE){
+    		return DateUtil.checkOverdue(this.getDeadline(), this.isInferred);
+    	}
+    	//Floating
+    	else{
+    		return false;
+    	}
     }
 
 }

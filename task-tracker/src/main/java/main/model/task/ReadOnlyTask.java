@@ -24,10 +24,7 @@ public interface ReadOnlyTask {
     String getDeadlineString();
     String getStartTimeString();
     String getEndTimeString();
-    boolean getEndTimeOverdue();
-    boolean getDeadlineOverdue();
-    boolean getEndTimeWithoutOverdue();
-    boolean getDeadlineWithoutOverdue();
+    boolean isOverdue();
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
      */
@@ -45,10 +42,8 @@ public interface ReadOnlyTask {
 				&& other.getPriority() == this.getPriority()
                 && other.getIsDone() == this.getIsDone()
                 && other.getIsInferred() == this.getIsInferred()
-                && other.getEndTimeOverdue() == this.getEndTimeOverdue()
-                && other.getEndTimeOverdue() == this.getEndTimeWithoutOverdue()
-                && other.getDeadlineOverdue() == this.getDeadlineOverdue()
-                && other.getDeadlineWithoutOverdue() == this.getDeadlineWithoutOverdue());
+        		&& other.isOverdue() == this.isOverdue());
+               
                 
     }
 
@@ -68,14 +63,12 @@ public interface ReadOnlyTask {
         		.append(getPriority())
         		.append(getIsDone())
         		.append(getIsInferred())
-        		.append(getEndTimeOverdue())
-        		.append(getEndTimeWithoutOverdue())
-        		.append(getDeadlineOverdue())
-        		.append(getDeadlineWithoutOverdue());
+        		.append(isOverdue());
                 
                 
         return builder.toString();
     }
+	
 	
 	
   

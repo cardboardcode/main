@@ -42,8 +42,8 @@ public interface Model {
     /** Replaces the task information at the specific index */
     void editTask(int index, Task newTask) throws TaskNotFoundException, UniqueTaskList.DuplicateTaskException;
     
-    /** Checks if the task is overdue or not */
-    void overdueTask(int index) throws TaskNotFoundException, UniqueTaskList.DuplicateTaskException;
+   // /** Checks if the task is overdue or not */
+   // void overdueTask(int index) throws TaskNotFoundException, UniqueTaskList.DuplicateTaskException;
     
     //@@author A0142686X
     /** Returns the Task at a specific index number inside TaskTracker **/
