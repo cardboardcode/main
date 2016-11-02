@@ -100,11 +100,11 @@ public class TaskCard extends UiPart{
 	}
     
     private void setPriorityTabColour() {
-		if (task.getPriority().equals(PriorityType.HIGH)){
+		if (task.getPriority() == PriorityType.HIGH){
 			priorityTab.setFill(Color.RED);
 			cardPane.setStyle("-fx-background-color: #ff6666;");
 		}
-		else if (task.getPriority().equals(PriorityType.LOW)){
+		else if (task.getPriority() == PriorityType.LOW){
 			priorityTab.setFill(Color.YELLOWGREEN);
 			cardPane.setStyle("-fx-background-color: #ffffb3;");
 		}
