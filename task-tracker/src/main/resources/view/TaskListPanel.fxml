@@ -5,13 +5,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="450.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.ui.TaskListPanel">
+<VBox cacheShape="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="500.0" minWidth="350.0" scaleShape="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.ui.TaskListPanel">
     <stylesheets>
         <URL value="@DarkTheme.css" />
         <URL value="@Extensions.css" />
     </stylesheets>
     <children>
-        <ListView fx:id="taskListView" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="500.0" minWidth="450.0" VBox.vgrow="ALWAYS">
+        <ListView fx:id="taskListView" cacheShape="false" editable="true" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="750.0" minWidth="400.0" scaleShape="false" VBox.vgrow="ALWAYS">
          <stylesheets>
             <URL value="@DarkTheme.css" />
             <URL value="@Extensions.css" />

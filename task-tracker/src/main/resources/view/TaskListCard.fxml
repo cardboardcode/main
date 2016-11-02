@@ -10,26 +10,28 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Rectangle?>
 
-<HBox id="cardPane" fx:id="cardPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="400.0" prefHeight="128.0" scaleShape="false" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<HBox id="cardPane" fx:id="cardPane" cacheShape="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="300.0" prefHeight="128.0" scaleShape="false" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <SplitPane dividerPositions="0.5" focusTraversable="false" minWidth="400.0" prefHeight="126.0" scaleShape="false" HBox.hgrow="SOMETIMES">
+      <SplitPane cacheShape="false" dividerPositions="0.5" focusTraversable="false" minWidth="300.0" scaleShape="false" HBox.hgrow="SOMETIMES">
          <items>
-            <GridPane maxHeight="1.7976931348623157E308" minWidth="350.0" prefHeight="120.0" scaleShape="false">
+            <GridPane gridLinesVisible="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="150.0" prefHeight="120.0" scaleShape="false">
               <columnConstraints>
-                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="3.0" />
-                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="60.0" />
-                  <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="30.0" />
-                  <ColumnConstraints hgrow="ALWAYS" minWidth="0.0" percentWidth="7.0" />
+                <ColumnConstraints fillWidth="false" hgrow="ALWAYS" percentWidth="3.0" />
+                <ColumnConstraints fillWidth="false" hgrow="ALWAYS" percentWidth="60.0" />
+                  <ColumnConstraints fillWidth="false" hgrow="ALWAYS" percentWidth="30.0" />
+                  <ColumnConstraints fillWidth="false" hgrow="ALWAYS" percentWidth="7.0" />
                   <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
                   <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints />
-                  <RowConstraints maxHeight="91.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="91.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="86.0" minHeight="72.0" prefHeight="82.0" />
+                  <RowConstraints />
               </rowConstraints>
                <children>
-                  <Label fx:id="id" text="id" translateX="10.0" GridPane.rowIndex="2" />
-                  <Label fx:id="message" prefHeight="77.0" text="message" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="2" />
+                  <Label fx:id="id" text="id" translateX="8.0" GridPane.rowIndex="2" />
+                  <Label fx:id="message" prefHeight="77.0" text="message" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="2" />
                   <Label fx:id="deadline" text="deadline" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                   <Label fx:id="recurring" text="recurring" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                </children>
