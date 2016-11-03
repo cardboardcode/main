@@ -291,7 +291,7 @@ public class TestUtil {
 	public static TestTask[] removeTasksFromList(final TestTask[] tasks, TestTask... tasksToRemove) {
 		List<TestTask> listOfTasks = asList(tasks);
 		listOfTasks.removeAll(asList(tasksToRemove));
-		listOfTasks = sortList(listOfTasks);
+		listOfTasks = sortList(listOfTasks,0);
 		return listOfTasks.toArray(new TestTask[listOfTasks.size()]);
 	}
 
@@ -336,33 +336,38 @@ public class TestUtil {
 	public static TestTask[] addTasksToList(final TestTask[] tasks, TestTask... tasksToAdd) {
 		List<TestTask> listOfTasks = asList(tasks);
 		listOfTasks.addAll(asList(tasksToAdd));
-		listOfTasks = sortList(listOfTasks);
+		listOfTasks = sortList(listOfTasks,0);
 		return listOfTasks.toArray(new TestTask[listOfTasks.size()]);
 	}
 	
-	private static List<TestTask> sortList(List<TestTask> tasks){
-		
-
+	private static List<TestTask> sortList(List<TestTask> tasks, int indicator){
 		
 		Comparator<TestTask> byTime = (t1, t2) -> t1.compareTime(t2);
 		
 		Comparator<TestTask> byName = (t1, t2) -> t1.getMessage().toLowerCase().compareTo(t2.getMessage().toLowerCase());
 		
-		Collections.sort(tasks, byTime.thenComparing(byName));
+		switch(indicator){
+			case 0: Collections.sort(tasks, byTime.thenComparing(byName)); break;
+			
+			case 1: Collections.sort(tasks,byName); break;
+			
+			case 2: Collections.sort(tasks,byTime);break;
 		
-//		for (int i=0; i<tasks.size(); i++){
-//			TestTask previous = tasks.get(i);
-//			for (int j=0; j<temp.size(); j++){
-//				if (temp.size()==0){
-//					temp.add(previous);
-//				}
-//				else if ((byTime.thenComparing(byName))==){
-//					
-//				}
-//			}
-//		}
+		}
 		return tasks;
 		
+	}
+	
+	public static TestTask[] sortTasksByName(final TestTask[] tasks) {
+		List<TestTask> listOfTasks = asList(tasks);
+		listOfTasks = sortList(listOfTasks,1);
+		return listOfTasks.toArray(new TestTask[listOfTasks.size()]);
+	}
+	
+	public static TestTask[] sortTasksByDate(final TestTask[] tasks) {
+		List<TestTask> listOfTasks = asList(tasks);
+		listOfTasks = sortList(listOfTasks,2);
+		return listOfTasks.toArray(new TestTask[listOfTasks.size()]);
 	}
 
     private static <T> List<T> asList(T[] objs) {
