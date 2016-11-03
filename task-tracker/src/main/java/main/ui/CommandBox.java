@@ -164,7 +164,6 @@ public class CommandBox extends UiPart {
                 try{
             	if (historyPointer > 0) {
                     --historyPointer;
-                    System.out.println(historyPointer + " " + CommandBox.getHistory().get(historyPointer));
                 } else
                     historyPointer = 0;
                 commandTextField.setText(CommandBox.getHistory().get(historyPointer));
@@ -185,7 +184,6 @@ public class CommandBox extends UiPart {
             	try{
             	if (historyPointer < CommandBox.getHistory().size() - 1) {
                     ++historyPointer;
-                    System.out.println(historyPointer + " " + CommandBox.getHistory().get(historyPointer));
                 } else
                     historyPointer = (CommandBox.getHistory().size()) - 1;
                 commandTextField.setText(CommandBox.getHistory().get(historyPointer));
