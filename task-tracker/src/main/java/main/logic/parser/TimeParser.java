@@ -63,6 +63,9 @@ public class TimeParser {
         return Triple.of(processed.trim(),dates,ImmutableList.of(isInferred,group.isRecurring()));
     }
 
+    /*
+     * @returns the last DateGroup if there are multiple DateGroups
+     */
     private static DateGroup getLastGroup(List<DateGroup> groups) {
         DateGroup group;
         if (groups.size() > 1) {
@@ -73,7 +76,15 @@ public class TimeParser {
         }
         return group;
     }
-
+    
+    /*
+     * checks whether a date is valid
+     * 
+     * date becomes invalid if suffix of date is not a whitespace, as this means
+     * the date is likely to be part of another word.
+     * 
+     * @returns a boolean indicating the date's validity 
+     */
     private static boolean isValidDate(String raw_input, DateGroup group) {
         System.out.println("POS " + group.getPosition());
         System.out.println(group.getSuffix(1));
@@ -104,14 +115,12 @@ public class TimeParser {
     }
     
     /*
-     * corrects odd timings and takes the dates nearing to 
+     * corrects the time if need.
      * 
-     * natty parser defaults unannotated numbers to morning
-     * e.g 4 is 4am by default
+     * if time has no postfix (i.e pm or am), a reasonable time will be set,
+     * i.e 4pm instead of 4am
      * 
-     * if time has no postfix (i.e pm or am), set a reasonable time, i.e 4pm instead of 4am
-     * 
-     * @returns a DateGroup object with only the relevant dates
+     * @returns a DateGroup object with logical time
      * 
      */
     private static DateGroup correctTime(DateGroup group) {
@@ -131,7 +140,6 @@ public class TimeParser {
         System.out.println("group" + group.getDates());
         return group;
     }
-
     /*
      * replaces the original odd date with one that makes more logical sense
      */
@@ -142,20 +150,16 @@ public class TimeParser {
         dates.set(i, DateUtil.setTime(dates.get(i), hour, false));
     }
 
-    private static Pair<Integer, Integer> getValidDateIndex(List<Date> dates) {
-        int numDates = dates.size();
-        if (numDates > 2) {
-            return Pair.of(numDates - 2, numDates);
-        }
-        else {
-            return Pair.of(0, numDates);
-        }
-    }
-
     private static boolean hasTimeWithoutMerdianIndicator(Map<String, List<ParseLocation>> parse_locations) {
         return parse_locations.containsKey("int_00_to_23_optional_prefix") && !parse_locations.containsKey("simple_meridian_indicator");
     }
 
+    /*
+     * corrects odd timings, which appears because natty parser defaults 
+     * unannotated numbers to morning. e.g 4 is 4am by default
+     * 
+     * @returns the new hour of the day
+     */
     private static int correctHour(int hour) {
         if (hour < 7) {
             hour += 12;
