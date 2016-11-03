@@ -14,11 +14,6 @@
             <URL value="@Extensions.css" />
          </stylesheets>
       </Label>
-      <Label fx:id="eventtasks" styleClass="label-bright" text="event" />
-      <Label fx:id="tomorrowtasks" styleClass="label-bright" text="[tomorrow]" />
-      <Label fx:id="deadlinetasks" styleClass="label-bright" text="[deadline]" />
-      <Label fx:id="floatingtasks" styleClass="label-bright" stylesheets="@DarkTheme.css" text="[floating]" />
-      <Label fx:id="alltasks" styleClass="label-bright" text="all" />
    </children>
    <stylesheets>
       <URL value="@DarkTheme.css" />

@@ -24,21 +24,6 @@ public class ListStatistics extends UiPart {
 	private static final String FXML = "ListStatistics.fxml";
 
 	@FXML
-	private Label floatingtasks;
-
-	@FXML
-	private Label alltasks;
-
-	@FXML
-	private Label eventtasks;
-
-	@FXML
-	private Label tomorrowtasks;
-
-	@FXML
-	private Label deadlinetasks;
-
-	@FXML
 	private Label todaytasks;
 
 	ArrayList<Label> labelList = new ArrayList<Label>(6);
@@ -81,11 +66,6 @@ public class ListStatistics extends UiPart {
 
 	public ListStatistics() {
 		todaytasks = new Label();
-		tomorrowtasks = new Label();
-		eventtasks = new Label();
-		deadlinetasks = new Label();
-		floatingtasks = new Label();
-		alltasks = new Label();
 	}
 	
 	public void configure() {
@@ -94,8 +74,7 @@ public class ListStatistics extends UiPart {
 		bindingAllStringProperty();
 		initializeStringProperty();
 		setListIcon();
-		mainPane.getChildren().addAll(image, todaytasks, tomorrowtasks, eventtasks, deadlinetasks, floatingtasks,
-				alltasks);
+		mainPane.getChildren().addAll(image, todaytasks);
 		mainPane.setSpacing(10.0);
 		mainPane.setPadding(new Insets(30.0, 0.0, 0.0, 30.0));
 		placeHolder.getChildren().add(mainPane);
@@ -107,20 +86,10 @@ public class ListStatistics extends UiPart {
 	 */
 	private void convertToLabelList() {
 		labelList.add(todaytasks);
-		labelList.add(tomorrowtasks);
-		labelList.add(eventtasks);
-		labelList.add(deadlinetasks);
-		labelList.add(floatingtasks);
-		labelList.add(alltasks);
 	}
 
 	private void bindingAllStringProperty() {
 		todaytasks.textProperty().bind(todaytaskNo);
-		tomorrowtasks.textProperty().bind(tomorrowtaskNo);
-		eventtasks.textProperty().bind(eventtaskNo);
-		deadlinetasks.textProperty().bind(deadlinetaskNo);
-		floatingtasks.textProperty().bind(floatingtaskNo);
-		alltasks.textProperty().bind(alltaskNo);
 	}
 
 	private void setListIcon() {
@@ -157,10 +126,6 @@ public class ListStatistics extends UiPart {
 
 	public StringProperty getFloatingTaskNo() {
 		return floatingtaskNo;
-	}
-
-	public Label getAllTasksLabel() {
-		return alltasks;
 	}
 
 	public StringProperty getAllTaskNo() {
