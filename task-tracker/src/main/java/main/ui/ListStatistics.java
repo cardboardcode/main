@@ -136,11 +136,6 @@ public class ListStatistics extends UiPart {
 		alltaskNo.setValue(logic.getTotalNum() + ALL_TASK_MESSAGE);
 	}
 	
-	public static void updateAll(String command){
-		updateListImage(command);
-		updateStatistics();		
-	}
-	
 	public static void updateStatistics() {
 		listDisplay.getTodayTaskNo().setValue(logic.getNumToday() + TODAY_TASK_MESSAGE);
 		listDisplay.getTomorrowTaskNo().setValue(logic.getNumTmr() + TOMORROW_TASK_MESSAGE);
@@ -151,23 +146,8 @@ public class ListStatistics extends UiPart {
 
 	}
 
-	public static void updateListImage(String command) {
-		if (command.matches("[a-zA-Z ]*\\d+.*"))
-			listDisplay.getImage().setImage(AppUtil.getImage("/images/calendar.png"));
-		else if (command.contains("events"))
-			listDisplay.getImage().setImage(AppUtil.getImage("/images/events.png"));
-		else if (command.contains("deadlines"))
-			listDisplay.getImage().setImage(AppUtil.getImage("/images/deadlines.png"));
-		else if (command.contains("floating"))
-			listDisplay.getImage().setImage(AppUtil.getImage("/images/floating.png"));
-		else if (command.contains("high"))
-            listDisplay.getImage().setImage(AppUtil.getImage("/images/high.png"));
-		else if (command.contains("low"))
-            listDisplay.getImage().setImage(AppUtil.getImage("/images/low.png"));
-		else if (command.contains("normal"))
-            listDisplay.getImage().setImage(AppUtil.getImage("/images/normal.png"));
-		else 
-			listDisplay.getImage().setImage(AppUtil.getImage("/images/statistics.png"));
+	public static void updateListImage(String filePath) {
+		listDisplay.getImage().setImage(AppUtil.getImage(filePath));
 	}
 
 	public StringProperty getTodayTaskNo() {
