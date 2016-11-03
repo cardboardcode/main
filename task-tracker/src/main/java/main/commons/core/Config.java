@@ -1,8 +1,11 @@
 //@@author A0142686X- reused
 package main.commons.core;
 
+import java.io.IOException;
 import java.util.Objects;
 import java.util.logging.Level;
+
+import main.commons.util.ConfigUtil;
 
 /**
  * Config values used by the app
@@ -49,11 +52,19 @@ public class Config {
     public String getTaskTrackerFilePath() {
         return taskTrackerFilePath;
     }
-
+    
+    //@@author A0142686X
     public void setTaskTrackerFilePath(String taskTrackerFilePath) {
         this.taskTrackerFilePath = taskTrackerFilePath;
+        try {
+            ConfigUtil.saveConfig(this, DEFAULT_CONFIG_FILE);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
-
+    //@@author A0142686X- reused
+    
     public String getTaskTrackerName() {
         return taskTrackerName;
     }
@@ -96,5 +107,4 @@ public class Config {
         sb.append("\nTaskTracker name : " + taskTrackerName);
         return sb.toString();
     }
-
 }
