@@ -96,8 +96,8 @@ public class ListStatistics extends UiPart {
 		setListIcon();
 		mainPane.getChildren().addAll(image, todaytasks, tomorrowtasks, eventtasks, deadlinetasks, floatingtasks,
 				alltasks);
-		mainPane.setSpacing(30.0);
-		mainPane.setPadding(new Insets(30.0, 0.0, 30.0, 30.0));
+		mainPane.setSpacing(10.0);
+		mainPane.setPadding(new Insets(30.0, 0.0, 0.0, 30.0));
 		placeHolder.getChildren().add(mainPane);
 		FxViewUtil.applyAnchorBoundaryParameters(mainPane, 0.0, 0.0, 0.0, 0.0);
 		placeHolder.setMaxWidth(400);
@@ -128,16 +128,16 @@ public class ListStatistics extends UiPart {
 	}
 
 	private void initializeStringProperty() {
-		todaytaskNo.setValue(logic.getNumToday() + TODAY_TASK_MESSAGE);
-		tomorrowtaskNo.setValue(logic.getNumTmr() + TOMORROW_TASK_MESSAGE);
-		eventtaskNo.setValue(logic.getNumEvent() + EVENT_TASK_MESSAGE);
-		deadlinetaskNo.setValue(logic.getNumDeadline() + DEADLINE_TASK_MESSAGE);
-		floatingtaskNo.setValue(logic.getNumFloating() + FLOATING_TASK_MESSAGE);
-		alltaskNo.setValue(logic.getTotalNum() + ALL_TASK_MESSAGE);
+		todaytaskNo.setValue(logic.getNumToday() + TODAY_TASK_MESSAGE +"\n\n" + 
+				logic.getNumTmr() + TOMORROW_TASK_MESSAGE + "\n\n" +
+				logic.getNumEvent() + EVENT_TASK_MESSAGE + "\n\n" +
+				logic.getNumDeadline() + DEADLINE_TASK_MESSAGE + "\n\n" +
+				logic.getNumFloating() + FLOATING_TASK_MESSAGE + "\n\n" +
+				logic.getTotalNum() + ALL_TASK_MESSAGE);
 	}
 	
 	public static void updateStatistics() {
-		listDisplay.getTodayTaskNo().setValue(logic.getNumToday() + TODAY_TASK_MESSAGE);
+		listDisplay.getTodayTaskNo().setValue(logic.getNumToday() + TODAY_TASK_MESSAGE + "\n" + "Testing");
 		listDisplay.getTomorrowTaskNo().setValue(logic.getNumTmr() + TOMORROW_TASK_MESSAGE);
 		listDisplay.getEventTaskNo().setValue(logic.getNumEvent() + EVENT_TASK_MESSAGE);
 		listDisplay.getDeadlineTaskNo().setValue(logic.getNumDeadline() + DEADLINE_TASK_MESSAGE);
