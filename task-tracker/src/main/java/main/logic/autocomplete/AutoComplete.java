@@ -63,13 +63,13 @@ public class AutoComplete {
     
     private void buildCommandList() {
         TrieBuilder build = SetTrie.builder().caseInsensitive();
-        build.add(ReferenceList.commandsDictionary.keySet());
+        build.add(ReferenceList.CommandsSetWithRelevantSpaces);
         commandList = build.build();
     }
  
     private void buildListList() {
         TrieBuilder build = SetTrie.builder().caseInsensitive();
-        build.add(ReferenceList.listSet).add(ReferenceList.doneSet);
+        build.add(ReferenceList.listSet);
         listList = build.build();
     }
     
@@ -114,24 +114,36 @@ public class AutoComplete {
             
             if (ReferenceList.commandsDictionary.containsKey(commandInput)) {
                 String commandWord = ReferenceList.commandsDictionary.get(commandInput);
-                start_index = commandInput.length() + 1;
                 
                 if (isFindEditDoneDelete(commandWord) && !isToNotDisturb(tokens, commandWord)) {
+                    start_index = commandInput.length() + 1;
                     getTaskSuggestions(tokens, commandInput);
                 }
                 else if(commandWord.equals(ListCommand.COMMAND_WORD)) {
-                    getListSuggestions(tokens);
+                    start_index = getListSuggestions(tokens);
                 }
+            }
+            else {
+                suggestions = new ArrayList<String>();
             }
         }
         resetTaskList();
     }
     
     /*
-     * returns suggestions for list parameters
+     * gets suggestions for last list parameter
+     * 
+     * @returns the start index of the command input to be replaced
      */
-    private void getListSuggestions(String[] tokens) {
+    private int getListSuggestions(String[] tokens) {
         suggestions = listList.getSuggestions(tokens[tokens.length-1]);
+       
+        int index = 0;
+        for (int i = 0; i < tokens.length - 1; i++) {
+            index += tokens[i].length() + 1;
+        }
+        
+        return index;
     }
 
     /*
