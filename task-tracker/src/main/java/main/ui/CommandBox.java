@@ -225,7 +225,7 @@ public class CommandBox extends UiPart {
     public void handleAutoComplete(AutoCompleteEvent event) {
         commandTextField.replaceText(event.getStart(), event.getEnd(), event.getSuggestion());
     }
-    
+    // @@author A0139422J
     @Subscribe
     public void handleUpdateListStatisticsPicture(updateListStatisticsPictureEvent event){
     	ListStatistics.updateListImage(event.getImageFilePath());
