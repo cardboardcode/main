@@ -52,24 +52,76 @@ public class ListCommand extends Command {
 	private String getReadableCriteria() {
 	    StringBuilder readable = new StringBuilder();
 	 
-	    String prefix;
-	    if (isDone) prefix = "completed";
-	    else prefix = "pending";
+	    String prefix = getPrefix();
+	    String task = getReadableTaskType();
+	    String priority_str = getPriority();
+	    String date_str = getReadableDate();
 	    
-	    String task;
-	    if (type == null) task = "tasks";
-	    else if (type == TaskType.EVENT) task = "events";
-        else if (type == TaskType.DEADLINE) task = "tasks with deadlines";
-        else task = "floating tasks";
-	    
-	    if (priority == null) readable.append(prefix).append(" ").append(task);
-	    else if (priority == PriorityType.LOW) readable.append(prefix).append(" low priority ").append(task);
-	    else if (priority == PriorityType.HIGH) readable.append(prefix).append(" high priority ").append(task);
-	    else readable.append(prefix).append(" normal priority ").append(task);
-
-	    if (date != null) readable.append(" due ").append(DateUtil.readableDate(date, true));
+	    readable.append(prefix).append(priority_str).append(task).append(date_str);
 	    
 	    return readable.toString();
 	    
 	}
+	
+	private String getReadableDate() {
+	    String date_str;
+	    
+	    if (date != null) {
+	        date_str = " due " + DateUtil.readableDate(date, true);
+	    }
+	    else {
+	        date_str = "";
+	    }
+	    return date_str;
+	}
+
+    private String getPriority() {
+        String priority_str;
+        
+        if (priority == null) {
+	        priority_str = " ";
+	    }
+	    else if (priority == PriorityType.LOW) {
+	        priority_str = " low priority ";
+	    }
+	    else if (priority == PriorityType.HIGH) {
+	        priority_str = " high priority ";
+	    }
+	    else {
+	        priority_str = " normal priority ";
+	    }
+        
+        return priority_str;
+    }
+
+    private String getPrefix() {
+        String prefix;
+        if (isDone) {
+	        prefix = "completed";
+	    }
+	    else if (onlyOverdue) {
+	        prefix = "overdue";
+	    }
+	    else {
+	        prefix = "pending";
+	    }
+        return prefix;
+    }
+
+    private String getReadableTaskType() {
+        String task;
+        if (type == null) {
+	        task = "tasks";
+	    }
+	    else if (type == TaskType.EVENT) {
+	        task = "events";
+	    }
+        else if (type == TaskType.DEADLINE) {
+            task = "tasks with deadlines";
+        }
+        else {
+            task = "floating tasks";
+        }
+        return task;
+    }
 }
