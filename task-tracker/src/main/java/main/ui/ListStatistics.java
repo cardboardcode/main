@@ -24,7 +24,7 @@ public class ListStatistics extends UiPart {
 	private static final String FXML = "ListStatistics.fxml";
 
 	@FXML
-	private Label todaytasks;
+	private Label listdata;
 	
 	@FXML
 	private ImageView image;
@@ -46,7 +46,7 @@ public class ListStatistics extends UiPart {
 
 	private static ListStatistics listDisplay;
 
-	private StringProperty todaytaskNo = new SimpleStringProperty("");
+	private StringProperty taskDataNo = new SimpleStringProperty("");
 	
 	public static ListStatistics load(Stage primaryStage, AnchorPane placeHolder, Logic logic) {
 		listDisplay = UiPartLoader.loadUiPart(primaryStage, placeHolder, new ListStatistics());
@@ -56,31 +56,23 @@ public class ListStatistics extends UiPart {
 	}
 
 	public ListStatistics() {
-		todaytasks = new Label();
+		listdata = new Label();
 	}
 	
 	public void configure() {
 		mainPane = new VBox();
-		convertToLabelList();
 		bindingAllStringProperty();
 		initializeStringProperty();
 		setListIcon();
-		mainPane.getChildren().addAll(image, todaytasks);
+		mainPane.getChildren().addAll(image, listdata);
 		mainPane.setSpacing(10.0);
 		mainPane.setPadding(new Insets(30.0, 0.0, 0.0, 30.0));
 		placeHolder.getChildren().add(mainPane);
 		FxViewUtil.applyAnchorBoundaryParameters(mainPane, 0.0, 0.0, 0.0, 0.0);
 		placeHolder.setMaxWidth(400);
 	}
-	/**
-	 * Adds all six labels in a Arraylist for easy processing in later stages
-	 */
-	private void convertToLabelList() {
-		labelList.add(todaytasks);
-	}
-
 	private void bindingAllStringProperty() {
-		todaytasks.textProperty().bind(todaytaskNo);
+		listdata.textProperty().bind(taskDataNo);
 	}
 
 	private void setListIcon() {
@@ -88,7 +80,7 @@ public class ListStatistics extends UiPart {
 	}
 
 	private void initializeStringProperty() {
-		todaytaskNo.setValue(buildListDataString());
+		taskDataNo.setValue(buildListDataString());
 	}
 	
 	public static void updateStatistics() {
@@ -100,27 +92,7 @@ public class ListStatistics extends UiPart {
 	}
 
 	public StringProperty getTodayTaskNo() {
-		return todaytaskNo;
-	}
-
-	public StringProperty getTomorrowTaskNo() {
-		return tomorrowtaskNo;
-	}
-
-	public StringProperty getEventTaskNo() {
-		return eventtaskNo;
-	}
-
-	public StringProperty getDeadlineTaskNo() {
-		return deadlinetaskNo;
-	}
-
-	public StringProperty getFloatingTaskNo() {
-		return floatingtaskNo;
-	}
-
-	public StringProperty getAllTaskNo() {
-		return alltaskNo;
+		return taskDataNo;
 	}
 
 	public ImageView getImage() {
