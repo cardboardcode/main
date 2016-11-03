@@ -214,7 +214,7 @@ public class CommandBox extends UiPart {
     public void handleTabEvent() {
         commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
             if (event.getCode() == KeyCode.TAB) {
-                EventsCenter.getInstance().post(new TabPressEvent(event.getCode()));
+                EventsCenter.getInstance().post(new TabPressEvent());
                 event.consume();
             }
         });

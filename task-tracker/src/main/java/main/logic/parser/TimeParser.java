@@ -4,11 +4,13 @@ package main.logic.parser;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 
 import com.google.common.collect.ImmutableList;
@@ -40,14 +42,15 @@ public class TimeParser {
             return Triple.of(raw_input,new ArrayList<Date>(),ImmutableList.of(true,false));
         }
 
-        DateGroup group = groups.get(0);
+        DateGroup group = getLastGroup(groups);
         
-        if(!isValidDate(raw_input, group)) return Triple.of(raw_input, new ArrayList<Date>(), ImmutableList.of(true, false));
+        if(!isValidDate(raw_input, group)) {
+            return Triple.of(raw_input, new ArrayList<Date>(), ImmutableList.of(true, false));
+        }
                 
         correctTime(group);
 
         List<Date> dates = group.getDates();
-        
         boolean isInferred = group.isTimeInferred();
         
         if (isInferred) {
@@ -55,57 +58,116 @@ public class TimeParser {
                 dates.set(i, setDefaultTime(dates.get(i)));
             }
         }
-        
-        String processed = getProcessedString(raw_input, group);
-        
+        //TODO add recurring until
+        String processed = getProcessedString(raw_input, group);      
         return Triple.of(processed.trim(),dates,ImmutableList.of(isInferred,group.isRecurring()));
     }
 
-    private static boolean isValidDate(String raw_input, DateGroup group) {
-        // if suffix of date is not a whitespace. Most likely incorrectly parsed
-        try {
-            if (!Character.isWhitespace(group.getSuffix(1).charAt(0))) {
-                logger.info("invalid date");
-                return false;
-            }
-        } catch (StringIndexOutOfBoundsException e) {
-            return true; // happens when the date is at the start of the string
-        } 
-        return true;
+    /*
+     * @returns the last DateGroup if there are multiple DateGroups
+     */
+    private static DateGroup getLastGroup(List<DateGroup> groups) {
+        DateGroup group;
+        if (groups.size() > 1) {
+            group = groups.get(groups.size() - 1);
+        }
+        else {
+            group = groups.get(0);
+        }
+        return group;
     }
     
     /*
-     * corrects odd timings
+     * checks whether a date is valid
      * 
-     * natty parser defaults unannotated numbers to morning
-     * e.g 4 is 4am by default
+     * date becomes invalid if suffix of date is not a whitespace, as this means
+     * the date is likely to be part of another word.
      * 
-     * if time has no postfix (i.e pm or am), set a reasonable time, i.e 4pm instead of 4am
+     * @returns a boolean indicating the date's validity 
+     */
+    private static boolean isValidDate(String raw_input, DateGroup group) {
+        System.out.println("POS " + group.getPosition());
+        System.out.println(group.getSuffix(1));
+        if (dateAtExtremesOfInput(raw_input, group)) {
+            return true;
+        }
+        else if (suffixOrPrefixNotWhitespace(group)) {
+            logger.info("invalid date");
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    /*
+     * checks if the immediate suffix or prefix are both not whitespaces 
+     */
+    private static boolean suffixOrPrefixNotWhitespace(DateGroup group) {
+        return !Character.isWhitespace(group.getSuffix(1).charAt(0)) || !Character.isWhitespace(group.getPrefix(1).charAt(0));
+    }
+
+    /*
+     * checks if group is at the start or end of the raw_input
+     */
+    private static boolean dateAtExtremesOfInput(String raw_input, DateGroup group) {
+        return group.getPosition() == 1 || group.getPosition() + group.getText().length() - 1 == raw_input.length();
+    }
+    
+    /*
+     * corrects the time if need.
+     * 
+     * if time has no postfix (i.e pm or am), a reasonable time will be set,
+     * i.e 4pm instead of 4am
+     * 
+     * @returns a DateGroup object with logical time
      * 
      */
-    private static void correctTime(DateGroup group) {
+    private static DateGroup correctTime(DateGroup group) {
         List<Date> dates = group.getDates();
         Map<String, List<ParseLocation>> parse_locations = group.getParseLocations();
         
-        // maximum number of dates is 2
-        if (dates.size() > 2) dates = dates.subList(0, 2);
-        
-        if (parse_locations.containsKey("int_00_to_23_optional_prefix") && !parse_locations.containsKey("simple_meridian_indicator")) {
+        if (hasTimeWithoutMerdianIndicator(parse_locations)) {
             List<ParseLocation> hours = parse_locations.get("int_00_to_23_optional_prefix");
             
             for (int i = 0; i < hours.size() ; i++) {
                 ParseLocation next = hours.get(i); 
                 if (StringUtils.isNumeric(next.getText())) {
-                    logger.info("correcting time");
-                    
-                    int hour = Integer.valueOf(next.getText());
-                    if (hour < 7) hour += 12;
-                    else if (hour > 22) hour -= 12;
-                    
-                    dates.set(i, DateUtil.setTime(dates.get(i), hour, false));
+                    editDate(dates, i, next);
                 }
             }
         }
+        System.out.println("group" + group.getDates());
+        return group;
+    }
+    /*
+     * replaces the original odd date with one that makes more logical sense
+     */
+    private static void editDate(List<Date> dates, int i, ParseLocation next) {
+        logger.info("correcting time");                    
+        int hour = Integer.valueOf(next.getText());
+        hour = correctHour(hour);
+        dates.set(i, DateUtil.setTime(dates.get(i), hour, false));
+    }
+
+    private static boolean hasTimeWithoutMerdianIndicator(Map<String, List<ParseLocation>> parse_locations) {
+        return parse_locations.containsKey("int_00_to_23_optional_prefix") && !parse_locations.containsKey("simple_meridian_indicator");
+    }
+
+    /*
+     * corrects odd timings, which appears because natty parser defaults 
+     * unannotated numbers to morning. e.g 4 is 4am by default
+     * 
+     * @returns the new hour of the day
+     */
+    private static int correctHour(int hour) {
+        if (hour < 7) {
+            hour += 12;
+        }
+        else if (hour > 22) {
+            hour -= 12;
+        }
+        return hour;
     }
     
     private static Date setDefaultTime(Date date) {
@@ -114,10 +176,13 @@ public class TimeParser {
     }
 
 
-    
+    /*
+     * @returns string without the date inside
+     */
     private static String getProcessedString(String input, DateGroup group) {
 
         StringBuilder builder = new StringBuilder();
+        System.out.println("position " + group.getPosition());
         
         // natty indexing starts from 1
         builder.append(input.substring(0, group.getPosition() - 1).trim())

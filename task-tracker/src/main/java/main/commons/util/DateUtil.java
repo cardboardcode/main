@@ -51,9 +51,15 @@ public class DateUtil {
      * @returns true if the given date is within the start and end date
      */
     public static boolean dateWithin(Date start, Date end, Date date) {
-        if (start == null || end == null || date == null) return false;
-        if (start.before(date) && end.after(date)) return true;
-        else return false;
+        if (start == null || end == null || date == null) {
+            return false;
+        }
+        if (start.before(date) && end.after(date)) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
     
     /*
@@ -62,7 +68,9 @@ public class DateUtil {
      * @returns true if both dates are on the same day
      */
     public static boolean areSameDay(Date date1, Date date2) {
-        if (date1 == null | date2 == null) return false;
+        if (date1 == null | date2 == null) {
+            return false;
+        }
         Calendar cal1 = Calendar.getInstance();
         cal1.setTime(date1);
         

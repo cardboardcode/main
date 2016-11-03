@@ -102,13 +102,15 @@ public interface Model {
     int getTotalNum();
 
     /** Updates the FilteredList based on criterias given **/
-    void updateFilteredTaskList(Triple<PriorityType, Date, TaskType> params, boolean isDone);
+    void updateFilteredTaskList(Triple<PriorityType, Date, TaskType> params, boolean isDone, boolean onlyOverdue);
 
     /** Sorts the list based on criterias given **/
     void sortBy(SortCriteria criteria);
 
     /** THe default sorting done at the start **/
     void sortDefault();
+
+    int getNumOverdue();
 
 
 
