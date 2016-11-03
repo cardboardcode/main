@@ -137,7 +137,6 @@ public class CommandBox extends UiPart {
     @Subscribe
     private void handleIncorrectCommandAttempted(IncorrectCommandAttemptedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Invalid command: " + previousCommandTest));
-        // setStyleToIndicateIncorrectCommand();
         commandTextField.setText("");
     }
 
