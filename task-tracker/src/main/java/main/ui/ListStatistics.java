@@ -25,8 +25,6 @@ public class ListStatistics extends UiPart {
 
 	@FXML
 	private Label todaytasks;
-
-	ArrayList<Label> labelList = new ArrayList<Label>(6);
 	
 	@FXML
 	private ImageView image;
@@ -49,13 +47,6 @@ public class ListStatistics extends UiPart {
 	private static ListStatistics listDisplay;
 
 	private StringProperty todaytaskNo = new SimpleStringProperty("");
-	private StringProperty tomorrowtaskNo = new SimpleStringProperty("");
-	private StringProperty eventtaskNo = new SimpleStringProperty("");
-	private StringProperty deadlinetaskNo = new SimpleStringProperty("");
-	private StringProperty floatingtaskNo = new SimpleStringProperty("");
-	private StringProperty alltaskNo = new SimpleStringProperty("");
-	
-	ArrayList<StringProperty> labelContent = new ArrayList<StringProperty>(6);
 	
 	public static ListStatistics load(Stage primaryStage, AnchorPane placeHolder, Logic logic) {
 		listDisplay = UiPartLoader.loadUiPart(primaryStage, placeHolder, new ListStatistics());
