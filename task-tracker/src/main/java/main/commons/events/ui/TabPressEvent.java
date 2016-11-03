@@ -1,20 +1,9 @@
 //@@author A0144132W
 package main.commons.events.ui;
 
-import javafx.scene.input.KeyCode;
 import main.commons.events.BaseEvent;
 
-public class TabPressEvent extends BaseEvent{
-    
-    private KeyCode button;
-    
-    public TabPressEvent(KeyCode button) {
-        this.button = button;
-    }
-
-    public KeyCode getKey() {
-        return button;
-    }
+public class TabPressEvent extends BaseEvent{  
     
     @Override
     public String toString() {
