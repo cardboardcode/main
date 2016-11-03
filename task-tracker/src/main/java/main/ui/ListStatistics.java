@@ -128,22 +128,11 @@ public class ListStatistics extends UiPart {
 	}
 
 	private void initializeStringProperty() {
-		todaytaskNo.setValue(logic.getNumToday() + TODAY_TASK_MESSAGE +"\n\n" + 
-				logic.getNumTmr() + TOMORROW_TASK_MESSAGE + "\n\n" +
-				logic.getNumEvent() + EVENT_TASK_MESSAGE + "\n\n" +
-				logic.getNumDeadline() + DEADLINE_TASK_MESSAGE + "\n\n" +
-				logic.getNumFloating() + FLOATING_TASK_MESSAGE + "\n\n" +
-				logic.getTotalNum() + ALL_TASK_MESSAGE);
+		todaytaskNo.setValue(buildListDataString());
 	}
 	
 	public static void updateStatistics() {
-		listDisplay.getTodayTaskNo().setValue(logic.getNumToday() + TODAY_TASK_MESSAGE + "\n" + "Testing");
-		listDisplay.getTomorrowTaskNo().setValue(logic.getNumTmr() + TOMORROW_TASK_MESSAGE);
-		listDisplay.getEventTaskNo().setValue(logic.getNumEvent() + EVENT_TASK_MESSAGE);
-		listDisplay.getDeadlineTaskNo().setValue(logic.getNumDeadline() + DEADLINE_TASK_MESSAGE);
-		listDisplay.getFloatingTaskNo().setValue(logic.getNumFloating() + FLOATING_TASK_MESSAGE);
-		listDisplay.getAllTaskNo().setValue(logic.getTotalNum() + ALL_TASK_MESSAGE);
-
+		listDisplay.getTodayTaskNo().setValue(buildListDataString());
 	}
 
 	public static void updateListImage(String filePath) {
@@ -195,5 +184,14 @@ public class ListStatistics extends UiPart {
 	@Override
 	public String getFxmlPath() {
 		return FXML;
+	}
+	
+	private static String buildListDataString(){
+		return logic.getNumToday() + TODAY_TASK_MESSAGE +"\n\n" + 
+				logic.getNumTmr() + TOMORROW_TASK_MESSAGE + "\n\n" +
+				logic.getNumEvent() + EVENT_TASK_MESSAGE + "\n\n" +
+				logic.getNumDeadline() + DEADLINE_TASK_MESSAGE + "\n\n" +
+				logic.getNumFloating() + FLOATING_TASK_MESSAGE + "\n\n" +
+				logic.getTotalNum() + ALL_TASK_MESSAGE;
 	}
 }
