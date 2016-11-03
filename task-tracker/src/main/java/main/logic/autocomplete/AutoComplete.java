@@ -100,6 +100,7 @@ public class AutoComplete {
         return input.trim().split(" ");
     }
     
+    //TODO slap this
     public void updateSuggestions(String input) {
         String[] tokens = getTokens(input);
         end_index = input.length();
