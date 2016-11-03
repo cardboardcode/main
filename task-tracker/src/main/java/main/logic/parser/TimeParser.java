@@ -47,23 +47,16 @@ public class TimeParser {
             System.out.println(groups.get(i).getDates());
         }
 
-        DateGroup group;
-        if (groups.size() > 1) {
-            group = groups.get(groups.size() - 1);
-        }
-        else {
-            group = groups.get(0);
-        }
+        DateGroup group = getLastGroup(groups);
         
         if(!isValidDate(raw_input, group)) {
             return Triple.of(raw_input, new ArrayList<Date>(), ImmutableList.of(true, false));
         }
                 
-        DateGroup new_group = extractValidInfo(group);
+        correctTime(group);
 
-        List<Date> dates = new_group.getDates();
-        boolean isInferred = new_group.isTimeInferred();
-        System.out.println(dates);
+        List<Date> dates = group.getDates();
+        boolean isInferred = group.isTimeInferred();
         
         if (isInferred) {
             for (int i = 0; i < dates.size(); i++) {
@@ -74,6 +67,17 @@ public class TimeParser {
         String processed = getProcessedString(raw_input, group);
         
         return Triple.of(processed.trim(),dates,ImmutableList.of(isInferred,group.isRecurring()));
+    }
+
+    private static DateGroup getLastGroup(List<DateGroup> groups) {
+        DateGroup group;
+        if (groups.size() > 1) {
+            group = groups.get(groups.size() - 1);
+        }
+        else {
+            group = groups.get(0);
+        }
+        return group;
     }
 
     private static boolean isValidDate(String raw_input, DateGroup group) {
@@ -100,15 +104,9 @@ public class TimeParser {
      * @returns a DateGroup object with only the relevant dates
      * 
      */
-    private static DateGroup extractValidInfo(DateGroup group) {
-        Pair<Integer, Integer> validRange = getValidDateIndex(group.getDates());
-        int start_index = validRange.getLeft();
-        int end_index = validRange.getRight();
-
-        DateGroup new_group = formNewDateGroup(group, start_index, end_index);
-        
-        List<Date> dates = new_group.getDates();
-        Map<String, List<ParseLocation>> parse_locations = new_group.getParseLocations();
+    private static DateGroup correctTime(DateGroup group) {
+        List<Date> dates = group.getDates();
+        Map<String, List<ParseLocation>> parse_locations = group.getParseLocations();
         
         if (hasTimeWithoutMerdianIndicator(parse_locations)) {
             List<ParseLocation> hours = parse_locations.get("int_00_to_23_optional_prefix");
@@ -120,10 +118,11 @@ public class TimeParser {
                 }
             }
         }
-        System.out.println("group" + new_group.getDates());
-        return new_group;
+        System.out.println("group" + group.getDates());
+        return group;
     }
 
+    /*
     private static DateGroup formNewDateGroup(DateGroup group, int start_index, int end_index) {
         DateGroup new_group = new DateGroup();
         group.getDates().subList(start_index, end_index).stream().forEach(date -> new_group.addDate(date));
@@ -149,7 +148,7 @@ public class TimeParser {
         
         return new_group;
     }
-
+*/
     private static void editDate(List<Date> dates, int i, ParseLocation next) {
         logger.info("correcting time");                    
         int hour = Integer.valueOf(next.getText());
