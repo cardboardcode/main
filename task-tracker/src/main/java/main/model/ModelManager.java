@@ -428,7 +428,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addTaskUndoRedo(Task task) throws DuplicateTaskException {
         taskTracker.addTask(task);
-        updateFilteredListToShowAllPending();
+        //updateFilteredListToShowAllPending();
         indicateTaskTrackerChanged();
         
     }
@@ -449,7 +449,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void editTaskUndoRedo(int index, Task newTask) throws DuplicateTaskException {
         taskTracker.editTask(index, newTask);
-        updateFilteredListToShowAllPending();
+        //updateFilteredListToShowAllPending();
         indicateTaskTrackerChanged();
         
     }
@@ -467,7 +467,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void doneTaskUndoRedo(Task task) throws DuplicateTaskException, TaskNotFoundException {
         taskTracker.incompleteTask(task);
-        updateFilteredListToShowAllPending();
+        //updateFilteredListToShowAllPending();
         indicateTaskTrackerChanged();
     }
     
@@ -493,9 +493,9 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public int getIndexFromTask(ReadOnlyTask task) throws TaskNotFoundException {
         int index;
-        List<ReadOnlyTask> temp = new LinkedList<ReadOnlyTask>();
-        temp=taskTracker.getTaskList();
-        index=temp.lastIndexOf(task);
+//        List<ReadOnlyTask> temp = new LinkedList<ReadOnlyTask>();
+//        temp=taskTracker.getTaskList();
+        index=sortedTasks.lastIndexOf(task);
         return index;
     }
 //    
