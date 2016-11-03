@@ -26,23 +26,25 @@ public class ListCommand extends Command {
     private TaskType type;
     private boolean isDefault = false;
     private boolean isDone = false;
+    private boolean onlyOverdue = false;
     
     public ListCommand() {
         isDefault = true;
     }
       
-    public ListCommand(Triple<PriorityType, Date, TaskType> parameters, boolean isDone) {
+    public ListCommand(Triple<PriorityType, Date, TaskType> parameters, boolean isDone, boolean onlyOverdue) {
         priority = parameters.getLeft();
         date = parameters.getMiddle();
         type = parameters.getRight();
         this.isDone = isDone;
+        this.onlyOverdue = onlyOverdue;
     }
 
 	@Override
 	public CommandResult execute() {
 
 	    if (isDefault) model.updateFilteredListToShowAllPending();
-	    else model.updateFilteredTaskList(Triple.of(priority, date, type), isDone);
+	    else model.updateFilteredTaskList(Triple.of(priority, date, type), isDone, onlyOverdue);
 	    
 	    return new CommandResult(String.format(MESSAGE_SUCCESS, getReadableCriteria()));    
 	}

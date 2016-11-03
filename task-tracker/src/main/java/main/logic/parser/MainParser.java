@@ -212,6 +212,7 @@ public class MainParser {
         PriorityType priority = null;
         TaskType type = null;
         boolean isDone = false;
+        boolean onlyOverdue = false;
      
         for (String param: left.trim().split(" ")) {
             if (ReferenceList.priorityDictionary.containsKey(param) && priority == null) {
@@ -223,12 +224,22 @@ public class MainParser {
             else if (ReferenceList.doneSet.contains(param)) {
                 isDone = true;
             }
-            
+            else if (param.equals(ReferenceList.overdue)) {
+                onlyOverdue = true;
+            }
             else if (!param.trim().equals("")) {
                 return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_PARAMETERS,"ListCommand", ListCommand.MESSAGE_USAGE));
             }           
         }  
         
+        Date date;
+        date = getDate(dates);
+
+        indicateListParamsChanged(Triple.of(priority, date, type));
+        return new ListCommand(Triple.of(priority, date, type), isDone, onlyOverdue);
+    }
+
+    private Date getDate(List<Date> dates) {
         Date date;
         if (dates.size() > 0) {
             date = dates.get(0);
@@ -236,9 +247,7 @@ public class MainParser {
         else {
             date = null;
         }
-
-        indicateListParamsChanged(Triple.of(priority, date, type));
-        return new ListCommand(Triple.of(priority, date, type), isDone);
+        return date;
     }
     
     public Command prepareSort(String input) {

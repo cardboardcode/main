@@ -162,38 +162,46 @@ public class ModelManager extends ComponentManager implements Model {
     }
     
     //=========== User Friendly Accessors ===================================================================
+    
+    @Override
+    public int getNumOverdue() {
+        Expression original = baseExpression;
+        updateFilteredTaskList(Triple.of(null, null, null), false, true);
+        return getSizeAndReset(original);
+    }
+    
     @Override
     public int getNumToday() {
         Expression original = baseExpression;
-        updateFilteredTaskList(Triple.of(null, DateUtil.getToday(), null), false);
+        updateFilteredTaskList(Triple.of(null, DateUtil.getToday(), null), false, false);
         return getSizeAndReset(original);
     }
     
     @Override
     public int getNumTmr() {
         Expression original = baseExpression;
-        updateFilteredTaskList(Triple.of(null, DateUtil.getTmr(), null), false);
+        updateFilteredTaskList(Triple.of(null, DateUtil.getTmr(), null), false, false);
         return getSizeAndReset(original);
     }
     
     @Override
     public int getNumEvent() {
         Expression original = baseExpression;
-        updateFilteredTaskList(Triple.of(null, null, TaskType.EVENT), false);
+        updateFilteredTaskList(Triple.of(null, null, TaskType.EVENT), false, false);
         return getSizeAndReset(original);  
     }
     
     @Override
     public int getNumDeadline() {
         Expression original = baseExpression;
-        updateFilteredTaskList(Triple.of(null, null, TaskType.DEADLINE), false);
+        updateFilteredTaskList(Triple.of(null, null, TaskType.DEADLINE), false, false);
         return getSizeAndReset(original);         
     }
     
     @Override
     public int getNumFloating() {
         Expression original = baseExpression;
-        updateFilteredTaskList(Triple.of(null, null, TaskType.FLOATING), false);
+        updateFilteredTaskList(Triple.of(null, null, TaskType.FLOATING), false, false);
         return getSizeAndReset(original); 
     }
     
@@ -239,14 +247,24 @@ public class ModelManager extends ComponentManager implements Model {
     
     
     @Override
-    public void updateFilteredTaskList(Triple<PriorityType, Date, TaskType> params, boolean isDone) {
+    public void updateFilteredTaskList(Triple<PriorityType, Date, TaskType> params, boolean isDone, boolean onlyOverdue) {
         Expression filter = new PredicateExpression();
         
         filter.and(new DoneQualifier(isDone));
         
-        if (params.getLeft() != null) filter.and(new PriorityQualifier(params.getLeft()));
-        if (params.getMiddle() != null) filter.and(new DateQualifier(params.getMiddle()));        
-        if (params.getRight() != null) filter.and(new TypeQualifier(params.getRight()));
+        if (params.getLeft() != null) {
+            filter.and(new PriorityQualifier(params.getLeft()));
+        }
+        if (params.getMiddle() != null) {
+            filter.and(new DateQualifier(params.getMiddle()));        
+        }
+        if (params.getRight() != null) {
+            filter.and(new TypeQualifier(params.getRight()));
+        }
+        
+        if (onlyOverdue) {
+            filter.and(new OverdueQualifier());
+        }
         
         updateFilteredTaskList(filter);
         baseExpression = filter;
@@ -388,7 +406,19 @@ public class ModelManager extends ComponentManager implements Model {
         public String toString() {
             return String.valueOf(isDone);
         }        
-        
+    }
+    
+    private class OverdueQualifier implements Qualifier {
+
+        @Override
+        public boolean run(ReadOnlyTask task) {
+            return task.isOverdue();
+        }
+
+        @Override
+        public String toString() {
+            return "true";
+        }        
     }
 
     private class MatchQualifier implements Qualifier {
