@@ -53,7 +53,7 @@ public class MainWindow extends UiPart {
 	private static final String ICON = "/images/pp.png";
 	private static final String FXML = "MainWindow.fxml";
 	public static final int MIN_HEIGHT = 800;
-	public static final int MIN_WIDTH = 600;
+	public static final int MIN_WIDTH = 775;
 
 	private Logic logic;
 
@@ -91,9 +91,6 @@ public class MainWindow extends UiPart {
 	@FXML
 	private AnchorPane listStatisticsPlaceholder;
 	
-//	.spiltpane{-fx-background-color: derive(#ff6666, 20%);}
-//	.spiltpane{-fx-background-color: derive(#ffffb3, 20%);}
-//	.spiltpane{-fx-background-color: derive(#ffa366, 20%);}
 	public static final KeyCodeCombination KEY_MINMAX = new KeyCodeCombination(KeyCode.M, KeyCodeCombination.ALT_DOWN);
 	public static final String[] colorWheel = {"-fx-background-color: derive(#008000, 20%);", "-fx-background-color: derive(#006080, 20%);", "-fx-background-color: derive(#b34700, 20%);"};
 	private static int taskPointer = 0;
@@ -204,7 +201,7 @@ public class MainWindow extends UiPart {
 	}
 
 	private void setWindowMinSize() {
-		 primaryStage.setMinHeight(MIN_HEIGHT);
+//		 primaryStage.setMinHeight(MIN_HEIGHT);
 		 primaryStage.setMinWidth(MIN_WIDTH);
 //		 primaryStage.setMaximized(true);
 	}

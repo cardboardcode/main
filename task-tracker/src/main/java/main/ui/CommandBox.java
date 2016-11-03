@@ -47,7 +47,8 @@ public class CommandBox extends UiPart {
     private Logic logic;
     private static ArrayList<String> commandHistory = new ArrayList<String>();
     private static int historyPointer = 0;
-
+    private static final String EMPTY_COMMAND_HISTORY = "You have not input any commands yet";
+    
     @FXML
     private TextField commandTextField;
     private CommandResult mostRecentResult;
@@ -160,13 +161,17 @@ public class CommandBox extends UiPart {
 
         commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
             if (event.getCode() == KeyCode.UP) {
-                if (historyPointer > 0) {
-
+                try{
+            	if (historyPointer > 0) {
                     --historyPointer;
-                    System.out.println(historyPointer + " " + CommandBox.getHistory().get(historyPointer));
                 } else
                     historyPointer = 0;
                 commandTextField.setText(CommandBox.getHistory().get(historyPointer));
+                }
+                catch (IndexOutOfBoundsException e){
+            		resultDisplay.postMessage(EMPTY_COMMAND_HISTORY);
+            		commandTextField.setText("");
+            	}
                 event.consume();
 
             }
@@ -176,13 +181,17 @@ public class CommandBox extends UiPart {
     private void handleDownEvent() {
         commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
             if (event.getCode() == KeyCode.DOWN) {
-                if (historyPointer < CommandBox.getHistory().size() - 1) {
-
+            	try{
+            	if (historyPointer < CommandBox.getHistory().size() - 1) {
                     ++historyPointer;
-                    System.out.println(historyPointer + " " + CommandBox.getHistory().get(historyPointer));
                 } else
                     historyPointer = (CommandBox.getHistory().size()) - 1;
                 commandTextField.setText(CommandBox.getHistory().get(historyPointer));
+            	}
+            	catch (IndexOutOfBoundsException e){
+            		resultDisplay.postMessage(EMPTY_COMMAND_HISTORY);
+            		commandTextField.setText("");
+            	}
                 event.consume();
             }
         });

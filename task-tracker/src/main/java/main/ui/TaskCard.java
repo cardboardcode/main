@@ -110,7 +110,7 @@ public class TaskCard extends UiPart{
     }
     
     private void configureLayout() {
-    	
+    	  cardPane.setMinWidth(0);
 //        cardPane.setSpacing(18.0);
 //        deadline.setMinWidth(300);
 //        cardPane.setMinWidth(450);

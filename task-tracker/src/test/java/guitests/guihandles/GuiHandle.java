@@ -55,7 +55,7 @@ public class GuiHandle {
     }
 
     protected void setTextField(String textFieldId, String newText) {
-        guiRobot.clickOn(textFieldId);
+//        guiRobot.clickOn(textFieldId);
         ((TextField)guiRobot.lookup(textFieldId).tryQuery().get()).setText(newText);
         guiRobot.sleep(1000); // so that the texts stays visible on the GUI for a short period
     }
