@@ -42,11 +42,6 @@ public class TimeParser {
             return Triple.of(raw_input,new ArrayList<Date>(),ImmutableList.of(true,false));
         }
 
-        
-        for (int i=0; i<groups.size(); i++) {
-            System.out.println(groups.get(i).getDates());
-        }
-
         DateGroup group = getLastGroup(groups);
         
         if(!isValidDate(raw_input, group)) {
@@ -63,9 +58,8 @@ public class TimeParser {
                 dates.set(i, setDefaultTime(dates.get(i)));
             }
         }
-        
-        String processed = getProcessedString(raw_input, group);
-        
+        //TODO add recurring until
+        String processed = getProcessedString(raw_input, group);      
         return Triple.of(processed.trim(),dates,ImmutableList.of(isInferred,group.isRecurring()));
     }
 
@@ -81,16 +75,32 @@ public class TimeParser {
     }
 
     private static boolean isValidDate(String raw_input, DateGroup group) {
-        // if suffix of date is not a whitespace. Most likely incorrectly parsed
-        try {
-            if (!Character.isWhitespace(group.getSuffix(1).charAt(0))) {
-                logger.info("invalid date");
-                return false;
-            }
-        } catch (StringIndexOutOfBoundsException e) {
-            return true; // happens when the date is at the start of the string
-        } 
-        return true;
+        System.out.println("POS " + group.getPosition());
+        System.out.println(group.getSuffix(1));
+        if (dateAtExtremesOfInput(raw_input, group)) {
+            return true;
+        }
+        else if (suffixOrPrefixNotWhitespace(group)) {
+            logger.info("invalid date");
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    /*
+     * checks if the immediate suffix or prefix are both not whitespaces 
+     */
+    private static boolean suffixOrPrefixNotWhitespace(DateGroup group) {
+        return !Character.isWhitespace(group.getSuffix(1).charAt(0)) || !Character.isWhitespace(group.getPrefix(1).charAt(0));
+    }
+
+    /*
+     * checks if group is at the start or end of the raw_input
+     */
+    private static boolean dateAtExtremesOfInput(String raw_input, DateGroup group) {
+        return group.getPosition() == 1 || group.getPosition() + group.getText().length() - 1 == raw_input.length();
     }
     
     /*
@@ -123,32 +133,8 @@ public class TimeParser {
     }
 
     /*
-    private static DateGroup formNewDateGroup(DateGroup group, int start_index, int end_index) {
-        DateGroup new_group = new DateGroup();
-        group.getDates().subList(start_index, end_index).stream().forEach(date -> new_group.addDate(date));
-        System.out.println("sublist " + group.getDates().subList(start_index, end_index));
-        System.out.println("dates saved " + new_group.getDates());
-        new_group.setDateInferred(group.isDateInferred());
-        new_group.setRecurring(group.isRecurring());
-        new_group.setRecurringUntil(group.getRecursUntil());
-        
-        Map<String, List<ParseLocation>> parse_locations = group.getParseLocations();
-        Map<String, List<ParseLocation>> new_parse_locations = new HashMap<String, List<ParseLocation>>();
-
-        System.out.println("old parser " + group.getParseLocations());
-
-//        for (String param : parse_locations.keySet()) {
-//            new_parse_locations.put(param, parse_locations.get(param).subList(start_index, end_index));
-//        }
-        
-//        new_group.setParseLocations(new_parse_locations);
-        new_group.setParseLocations(parse_locations);
-        
-        System.out.println("new parser " + new_group.getParseLocations());
-        
-        return new_group;
-    }
-*/
+     * replaces the original odd date with one that makes more logical sense
+     */
     private static void editDate(List<Date> dates, int i, ParseLocation next) {
         logger.info("correcting time");                    
         int hour = Integer.valueOf(next.getText());
