@@ -26,6 +26,7 @@ import main.logic.command.DoneCommand;
 import main.logic.command.EditCommand;
 import main.logic.command.FindCommand;
 import main.logic.command.ListCommand;
+import main.logic.command.SortCommand;
 import main.logic.parser.ReferenceList;
 import main.model.Model;
 import main.model.ReadOnlyTaskTracker;
@@ -38,6 +39,7 @@ public class AutoComplete {
 
     private SetTrie commandList;
     private SetTrie listList;
+    private SetTrie sortList;
     private List<Pair<ReadOnlyTask,SetTrie>> taskList;
     private List<String> suggestions;
     private int start_index;
@@ -56,6 +58,7 @@ public class AutoComplete {
     private void buildAllLists(Model model) {
         buildCommandList();
         buildListList();
+        buildSortList();
         updateSuggestions("");
         taskList = new ArrayList<Pair<ReadOnlyTask,SetTrie>>();
         updateTaskList(model.getTaskTracker());
@@ -71,6 +74,12 @@ public class AutoComplete {
         TrieBuilder build = SetTrie.builder().caseInsensitive();
         build.add(ReferenceList.listSet);
         listList = build.build();
+    }
+    
+    private void buildSortList() {
+        TrieBuilder build = SetTrie.builder().caseInsensitive();
+        build.add(ReferenceList.sortSet);
+        sortList = build.build();
     }
     
     /*
@@ -120,8 +129,13 @@ public class AutoComplete {
                     start_index = commandInput.length() + 1;
                     getTaskSuggestions(tokens, commandInput);
                 }
-                else if(commandWord.equals(ListCommand.COMMAND_WORD)) {
+                else if (commandWord.equals(ListCommand.COMMAND_WORD)) {
                     start_index = getListSuggestions(tokens);
+                }
+                else if (commandWord.equals(SortCommand.COMMAND_WORD) && tokens.length == 2) {
+                    getSortSuggestions(tokens[1]);
+                    start_index = commandInput.length() + 1;
+
                 }
             }
             else {
@@ -129,6 +143,10 @@ public class AutoComplete {
             }
         }
         resetTaskList();
+    }
+    
+    private void getSortSuggestions(String token) {
+        suggestions = sortList.getSuggestions(token);
     }
     
     /*
