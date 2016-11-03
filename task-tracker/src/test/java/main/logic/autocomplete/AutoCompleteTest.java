@@ -14,6 +14,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.emory.mathcs.backport.java.util.Arrays;
+import main.commons.core.EventsCenter;
+import main.commons.events.ui.TabPressEvent;
 import main.logic.parser.ReferenceList;
 import main.model.Model;
 import main.model.ModelManager;
@@ -45,21 +47,36 @@ public class AutoCompleteTest {
     @Test
     public void updateSuggestions_commands_allMatch() {
         autoComplete.updateSuggestions("");
-        assertEquals(ReferenceList.commandsDictionary.keySet().stream().sorted((k1, k2) -> k1.compareTo(k2)).collect(Collectors.toList()), autoComplete.getSuggestions());
+        assertEquals(ReferenceList.CommandsSetWithRelevantSpaces.stream().sorted((k1, k2) -> k1.compareTo(k2)).collect(Collectors.toList()), autoComplete.getSuggestions());
     }
     
     @Test
-    public void updateSuggestions_commands_match_d() {
+    public void updateSuggestions_commands_matchdLowerCase() {
         String input = "d"; 
         autoComplete.updateSuggestions(input);
-        assertEquals(setToSortedListMatchingInput(ReferenceList.commandsDictionary.keySet(), input), autoComplete.getSuggestions());
+        assertEquals(setToSortedListMatchingInput(ReferenceList.CommandsSetWithRelevantSpaces, input), autoComplete.getSuggestions());
     }
     
     @Test
-    public void updateSuggestions_list_matchHigh() {
+    public void updateSuggestions_commands_matchdUpperCase() {
+        String input = "D"; 
+        autoComplete.updateSuggestions(input);
+        assertEquals(setToSortedListMatchingInput(ReferenceList.CommandsSetWithRelevantSpaces, input), autoComplete.getSuggestions());
+    }
+    
+    @Test
+    public void updateSuggestions_list_matchFirstParam() {
         String input = "list hig";
         autoComplete.updateSuggestions(input);
-        assertEquals(Collections.singletonList("high"), autoComplete.getSuggestions()) ;
+        assertEquals(Collections.singletonList("high"), autoComplete.getSuggestions());
+        
+    }
+    
+    @Test
+    public void updateSuggestions_list_matchSecondParam() {
+        String input = "list high flo";
+        autoComplete.updateSuggestions(input);
+        assertEquals(Collections.singletonList("floating"), autoComplete.getSuggestions());
     }
     
     @Test
