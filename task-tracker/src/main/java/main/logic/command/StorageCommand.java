@@ -34,6 +34,8 @@ public class StorageCommand extends Command {
             return new CommandResult(MESSAGE_NO_XML); 
         }        
         storage.setTaskTrackerFilePath(newStoragePath);
+        Config newconfig = new Config();
+        newconfig.setTaskTrackerFilePath(newStoragePath);
         return new CommandResult(MESSAGE_SUCCESS);   
     }
 }
