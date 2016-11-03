@@ -90,37 +90,95 @@ public class TimeParser {
     }
     
     /*
-     * corrects odd timings
+     * corrects odd timings and takes the dates nearing to 
      * 
      * natty parser defaults unannotated numbers to morning
      * e.g 4 is 4am by default
      * 
      * if time has no postfix (i.e pm or am), set a reasonable time, i.e 4pm instead of 4am
      * 
+     * @returns a DateGroup object with only the relevant dates
+     * 
      */
-    private static void correctTime(DateGroup group) {
-        List<Date> dates = group.getDates();
-        Map<String, List<ParseLocation>> parse_locations = group.getParseLocations();
+    private static DateGroup extractValidInfo(DateGroup group) {
+        Pair<Integer, Integer> validRange = getValidDateIndex(group.getDates());
+        int start_index = validRange.getLeft();
+        int end_index = validRange.getRight();
+
+        DateGroup new_group = formNewDateGroup(group, start_index, end_index);
         
-        // maximum number of dates is 2
-        if (dates.size() > 2) dates = dates.subList(0, 2);
+        List<Date> dates = new_group.getDates();
+        Map<String, List<ParseLocation>> parse_locations = new_group.getParseLocations();
         
-        if (parse_locations.containsKey("int_00_to_23_optional_prefix") && !parse_locations.containsKey("simple_meridian_indicator")) {
+        if (hasTimeWithoutMerdianIndicator(parse_locations)) {
             List<ParseLocation> hours = parse_locations.get("int_00_to_23_optional_prefix");
             
             for (int i = 0; i < hours.size() ; i++) {
                 ParseLocation next = hours.get(i); 
                 if (StringUtils.isNumeric(next.getText())) {
-                    logger.info("correcting time");
-                    
-                    int hour = Integer.valueOf(next.getText());
-                    if (hour < 7) hour += 12;
-                    else if (hour > 22) hour -= 12;
-                    
-                    dates.set(i, DateUtil.setTime(dates.get(i), hour, false));
+                    editDate(dates, i, next);
                 }
             }
         }
+        System.out.println("group" + new_group.getDates());
+        return new_group;
+    }
+
+    private static DateGroup formNewDateGroup(DateGroup group, int start_index, int end_index) {
+        DateGroup new_group = new DateGroup();
+        group.getDates().subList(start_index, end_index).stream().forEach(date -> new_group.addDate(date));
+        System.out.println("sublist " + group.getDates().subList(start_index, end_index));
+        System.out.println("dates saved " + new_group.getDates());
+        new_group.setDateInferred(group.isDateInferred());
+        new_group.setRecurring(group.isRecurring());
+        new_group.setRecurringUntil(group.getRecursUntil());
+        
+        Map<String, List<ParseLocation>> parse_locations = group.getParseLocations();
+        Map<String, List<ParseLocation>> new_parse_locations = new HashMap<String, List<ParseLocation>>();
+
+        System.out.println("old parser " + group.getParseLocations());
+
+//        for (String param : parse_locations.keySet()) {
+//            new_parse_locations.put(param, parse_locations.get(param).subList(start_index, end_index));
+//        }
+        
+//        new_group.setParseLocations(new_parse_locations);
+        new_group.setParseLocations(parse_locations);
+        
+        System.out.println("new parser " + new_group.getParseLocations());
+        
+        return new_group;
+    }
+
+    private static void editDate(List<Date> dates, int i, ParseLocation next) {
+        logger.info("correcting time");                    
+        int hour = Integer.valueOf(next.getText());
+        hour = correctHour(hour);
+        dates.set(i, DateUtil.setTime(dates.get(i), hour, false));
+    }
+
+    private static Pair<Integer, Integer> getValidDateIndex(List<Date> dates) {
+        int numDates = dates.size();
+        if (numDates > 2) {
+            return Pair.of(numDates - 2, numDates);
+        }
+        else {
+            return Pair.of(0, numDates);
+        }
+    }
+
+    private static boolean hasTimeWithoutMerdianIndicator(Map<String, List<ParseLocation>> parse_locations) {
+        return parse_locations.containsKey("int_00_to_23_optional_prefix") && !parse_locations.containsKey("simple_meridian_indicator");
+    }
+
+    private static int correctHour(int hour) {
+        if (hour < 7) {
+            hour += 12;
+        }
+        else if (hour > 22) {
+            hour -= 12;
+        }
+        return hour;
     }
     
     private static Date setDefaultTime(Date date) {
@@ -129,10 +187,13 @@ public class TimeParser {
     }
 
 
-    
+    /*
+     * @returns string without the date inside
+     */
     private static String getProcessedString(String input, DateGroup group) {
 
         StringBuilder builder = new StringBuilder();
+        System.out.println("position " + group.getPosition());
         
         // natty indexing starts from 1
         builder.append(input.substring(0, group.getPosition() - 1).trim())
