@@ -11,11 +11,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Rectangle?>
 
-<HBox id="cardPane" fx:id="cardPane" cacheShape="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="200.0" prefHeight="90.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<HBox id="cardPane" fx:id="cardPane" cacheShape="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="0.0" prefHeight="90.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <SplitPane cacheShape="false" dividerPositions="0.5" focusTraversable="false" minWidth="200.0" prefHeight="90.0" HBox.hgrow="SOMETIMES">
+      <SplitPane cacheShape="false" dividerPositions="0.5" focusTraversable="false" minWidth="0.0" prefHeight="90.0" HBox.hgrow="SOMETIMES">
          <items>
-            <GridPane fx:id="gridPane" cacheShape="false" hgap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="90.0" minWidth="170.0" prefHeight="90.0">
+            <GridPane fx:id="gridPane" cacheShape="false" hgap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="90.0" minWidth="0.0" prefHeight="90.0">
               <columnConstraints>
                 <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" minWidth="9.0" percentWidth="5.0" />
                 <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" minWidth="120.0" percentWidth="60.0" />
@@ -26,7 +26,7 @@
                   <RowConstraints minHeight="20.0" percentHeight="20.0" />
               </rowConstraints>
                <children>
-                  <Label fx:id="message" minWidth="60.0" prefHeight="85.0" styleClass="message-text" text="message" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="LEFT">
+                  <Label fx:id="message" minWidth="0.0" prefHeight="85.0" styleClass="message-text" text="message" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="LEFT">
                      <padding>
                         <Insets left="1.0" right="1.0" />
                      </padding>
