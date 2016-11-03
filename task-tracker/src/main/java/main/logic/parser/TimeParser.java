@@ -4,11 +4,13 @@ package main.logic.parser;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 
 import com.google.common.collect.ImmutableList;
@@ -40,15 +42,28 @@ public class TimeParser {
             return Triple.of(raw_input,new ArrayList<Date>(),ImmutableList.of(true,false));
         }
 
-        DateGroup group = groups.get(0);
         
-        if(!isValidDate(raw_input, group)) return Triple.of(raw_input, new ArrayList<Date>(), ImmutableList.of(true, false));
-                
-        correctTime(group);
+        for (int i=0; i<groups.size(); i++) {
+            System.out.println(groups.get(i).getDates());
+        }
 
-        List<Date> dates = group.getDates();
+        DateGroup group;
+        if (groups.size() > 1) {
+            group = groups.get(groups.size() - 1);
+        }
+        else {
+            group = groups.get(0);
+        }
         
-        boolean isInferred = group.isTimeInferred();
+        if(!isValidDate(raw_input, group)) {
+            return Triple.of(raw_input, new ArrayList<Date>(), ImmutableList.of(true, false));
+        }
+                
+        DateGroup new_group = extractValidInfo(group);
+
+        List<Date> dates = new_group.getDates();
+        boolean isInferred = new_group.isTimeInferred();
+        System.out.println(dates);
         
         if (isInferred) {
             for (int i = 0; i < dates.size(); i++) {
