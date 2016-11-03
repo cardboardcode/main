@@ -29,8 +29,8 @@ public class ReferenceList {
             .put("redo", RedoCommand.COMMAND_WORD)
             .put("exit", ExitCommand.COMMAND_WORD)
             .put("close", ExitCommand.COMMAND_WORD)
-            .put("find","find")
-            .put("search","find")
+            .put("find", FindCommand.COMMAND_WORD)
+            .put("search", FindCommand.COMMAND_WORD)
             .put("list", ListCommand.COMMAND_WORD)
             .put("show", ListCommand.COMMAND_WORD)
             .put("help", HelpCommand.COMMAND_WORD)
@@ -59,7 +59,9 @@ public class ReferenceList {
             .put("floatings", TaskType.FLOATING)
             .build();
     
-    // for autocomplete and prepare list command
+    public static final String overdue = "overdue";
+    
+    //prepare list command
     public static final Set<String> doneSet = ImmutableSet.<String>builder()
             .add("done")
             .add("complete")
@@ -68,25 +70,43 @@ public class ReferenceList {
     
     // for autocomplete
     public static final Set<String> listSet = ImmutableSet.<String>builder()
-            .add("high")
-            .add("low")
-            .add("normal")
-            .add("medium")
-            .add("event")
-            .add("deadline")
-            .add("floating")
-            .add("january")
-            .add("february")
-            .add("march")
-            .add("april")
-            .add("may")
-            .add("june")
-            .add("july")
-            .add("august")
-            .add("september")
-            .add("october")
-            .add("november")
-            .add("december")
+            .add("high ")
+            .add("low ")
+            .add("normal ")
+            .add("medium ")
+            .add("event ")
+            .add("deadline ")
+            .add("floating ")
+            .add("done ")
+            .add("overdue ")
+            .add("january ")
+            .add("february ")
+            .add("march ")
+            .add("april ")
+            .add("may ")
+            .add("june ")
+            .add("july ")
+            .add("august ")
+            .add("september ")
+            .add("october ")
+            .add("november ")
+            .add("december ")
             .build();
-            
+    
+    // for autocomplete
+    public static final Set<String> CommandsSetWithRelevantSpaces = ImmutableSet.<String>builder()
+            .add(AddCommand.COMMAND_WORD + " ")
+            .add(EditCommand.COMMAND_WORD + " ")
+            .add(DeleteCommand.COMMAND_WORD + " ")
+            .add(DoneCommand.COMMAND_WORD + " ")
+            .add(UndoCommand.COMMAND_WORD)
+            .add(RedoCommand.COMMAND_WORD)
+            .add(ExitCommand.COMMAND_WORD)
+            .add(FindCommand.COMMAND_WORD + " ")
+            .add(ListCommand.COMMAND_WORD + " ")
+            .add(HelpCommand.COMMAND_WORD)
+            .add(ClearCommand.COMMAND_WORD)
+            .add(StorageCommand.COMMAND_WORD + " ")
+            .add(SortCommand.COMMAND_WORD + " ")
+            .build();
 }
