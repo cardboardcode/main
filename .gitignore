@@ -7,4 +7,5 @@ task-tracker/config.json
 task-tracker/data/
 task-tracker/tasktracker.log.*
 task-tracker/src/test/data/sandbox/
-
+*.log
+*.xml
