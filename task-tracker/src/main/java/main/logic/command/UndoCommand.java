@@ -93,7 +93,7 @@ public class UndoCommand extends Command {
         }
     }
     private void undoEdit(Task newTask, Task originalTask) throws DuplicateTaskException, IndexOutOfBoundsException, TaskNotFoundException{
-        model.editTaskUndoRedo(model.getIndexFromTask(originalTask), newTask);
+        model.editTaskUndoRedo(originalTask, newTask);
     }
     
     private void undoClear(ArrayList<Task> tasks) {
