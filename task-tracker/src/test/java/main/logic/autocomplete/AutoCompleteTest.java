@@ -22,6 +22,7 @@ import main.model.ModelManager;
 import main.model.TaskTracker;
 import main.model.UserPrefs;
 import main.model.task.PriorityType;
+import main.model.task.ReadOnlyTask;
 import main.model.task.Task;
 import main.model.task.UniqueTaskList.DuplicateTaskException;
 import main.testutil.TestUtil;
@@ -30,13 +31,15 @@ import main.testutil.TypicalTestTasks;
 public class AutoCompleteTest {
     AutoComplete autoComplete;
     TaskTracker taskTracker;
+    Model model;
     
     @Before
     public void setup() {
         TypicalTestTasks typical = new TypicalTestTasks();
         taskTracker = typical.getTypicalTaskTracker();
-        autoComplete = new AutoComplete(new ModelManager(taskTracker, new UserPrefs()));
-        EventsCenter.clearSubscribers();
+        model = new ModelManager(taskTracker, new UserPrefs());
+        autoComplete = new AutoComplete(model);
+//        EventsCenter.clearSubscribers();
 
     }
     
@@ -82,32 +85,76 @@ public class AutoCompleteTest {
     }
     
     @Test
-    public void updateSuggestions_list_params_noMatch() {
+    public void updateSuggestions_list_paramsNoMatch() {
         autoComplete.updateSuggestions("list asdgsvfc");
         assertEquals(new ArrayList<String>(), autoComplete.getSuggestions());
+    }
+    
+    @Test
+    public void updateSuggestions_list_upperMatch() {
+        autoComplete.updateSuggestions("list EV");
+        assertEquals(Collections.singletonList("event "), autoComplete.getSuggestions());
     }
     
     @Test
     public void updateSuggestions_editDoneDelete_matchFirstToken() {
         autoComplete.updateSuggestions("delete clea");
         assertEquals(Collections.singletonList("1"), autoComplete.getSuggestions());
+        assertShownListEquals(model.getFilteredTaskList(), Arrays.asList(TypicalTestTasks.floating1));
     }
     
     @Test
     public void updateSuggestions_editDoneDelete_matchMiddleToken() {
         autoComplete.updateSuggestions("done with");
         assertEquals(Collections.singletonList("1"), autoComplete.getSuggestions());
+        assertShownListEquals(model.getFilteredTaskList(), Arrays.asList(TypicalTestTasks.event1));
     }
     
     @Test
     public void updateSuggestions_editDoneDelete_matchMultiple() {
         autoComplete.updateSuggestions("delete clea with");
-        EventsCenter.getInstance().post(new TabPressEvent());
         assertEquals(Arrays.asList("1", "2"), autoComplete.getSuggestions());
+        assertShownListEquals(model.getFilteredTaskList(), Arrays.asList(TypicalTestTasks.floating1, TypicalTestTasks.event1));
     }
+    
+    @Test
+    public void updateSuggestions_find_lowerCase() {
+        autoComplete.updateSuggestions("find clea ");
+        assertEquals(Arrays.asList("1"), autoComplete.getSuggestions());
+        assertShownListEquals(model.getFilteredTaskList(), Arrays.asList(TypicalTestTasks.floating1));
+    }
+    
+    @Test
+    public void updateSuggestions_find_upperCase() {
+        autoComplete.updateSuggestions("find CLEA ");
+        assertEquals(Arrays.asList("1"), autoComplete.getSuggestions());
+        assertShownListEquals(model.getFilteredTaskList(), Arrays.asList(TypicalTestTasks.floating1));
+    }
+    
+    @Test
+    public void updateSuggestions_sort_paramsNoMatch() {
+        autoComplete.updateSuggestions("sort efad");
+        assertEquals(new ArrayList<String>(), autoComplete.getSuggestions());
+    }
+    
+    @Test
+    public void updateSuggestions_sort_lowerMatch() {
+        autoComplete.updateSuggestions("sort da");
+        assertEquals(Arrays.asList("date"), autoComplete.getSuggestions());
+    }
+    
+    @Test
+    public void updateSuggestions_sort_upperMatch() {
+        autoComplete.updateSuggestions("sort DA");
+        assertEquals(Arrays.asList("date"), autoComplete.getSuggestions());
+    }    
     
     private List<String> setToSortedListMatchingInput(Set<String> set, String input) {
         return set.stream().filter(k -> k.substring(0,input.length()).equals(input)).sorted((k1, k2) -> k1.compareTo(k2)).collect(Collectors.toList());
+    }
+    
+    private boolean assertShownListEquals(List<ReadOnlyTask> actual, List<ReadOnlyTask> expected) {
+        return actual.equals(expected);
     }
     
 }

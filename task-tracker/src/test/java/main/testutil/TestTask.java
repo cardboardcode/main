@@ -147,10 +147,6 @@ public class TestTask implements ReadOnlyTask {
     	return this.priority;
     }
     
-   // public TaskType getType(){
-   //	return this.type;
-   // }
-    
    @Override
     public boolean getIsDone(){
 	   return this.isDone;
