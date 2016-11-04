@@ -59,7 +59,7 @@ public interface Model {
     void deleteTaskUndoRedo(ReadOnlyTask target) throws TaskNotFoundException;
     
     /** Edits task upon undo **/
-    void editTaskUndoRedo(int index, Task newTask) throws DuplicateTaskException;
+    void editTaskUndoRedo(Task originalTask, Task newTask) throws DuplicateTaskException;
     
     /** Clears Tasks upon undo **/
     void clearTaskUndoRedo(ArrayList<Task> tasks);

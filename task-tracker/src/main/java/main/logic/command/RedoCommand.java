@@ -52,7 +52,7 @@ public class RedoCommand extends Command {
         if(ID==EDIT) {
             try {
                 try {
-                    redoEdit(redoHistory.getTasks().get(0), redoHistory.getTasks().get(1));
+                    redoEdit(redoHistory.getTasks().get(1), redoHistory.getTasks().get(0));
                 } catch (DuplicateTaskException | TaskNotFoundException e) {
                     e.printStackTrace();
                 }

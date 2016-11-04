@@ -74,7 +74,7 @@ public class ModelManager extends ComponentManager implements Model {
         undoStack = new Stack<UndoHistory>();
         redoStack = new Stack<UndoHistory>();
     }
-    
+        
     public ModelManager() {
         this(new TaskTracker(), new UserPrefs());
     }
@@ -117,7 +117,9 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void editTask(int index, Task newtask) throws TaskNotFoundException, DuplicateTaskException {
         addToUndo(UndoCommand.EDIT, getTaskfromIndex(index), newtask);  //NEED TO CHECK ORDER
-        taskTracker.editTask(index, newtask);
+        //taskTracker.editTask(index, newtask);
+        deleteTaskUndoRedo(getTaskfromIndex(index));
+        addTaskUndoRedo(newtask);
         updateFilteredListToShowAllPending();
         indicateTaskTrackerChanged();
         
@@ -477,9 +479,19 @@ public class ModelManager extends ComponentManager implements Model {
      * Method used by undo and redo to edit tasks in tasktracker
      */
     @Override
-    public void editTaskUndoRedo(int index, Task newTask) throws DuplicateTaskException {
-        taskTracker.editTask(index, newTask);
+    public void editTaskUndoRedo(Task originalTask, Task newTask) throws DuplicateTaskException {
+//        List<ReadOnlyTask> temp = new LinkedList<ReadOnlyTask>();
+//        temp=taskTracker.getTaskList();
+//        int Index = temp.lastIndexOf(originalTask);
+//        taskTracker.editTask(Index, newTask);
         //updateFilteredListToShowAllPending();
+        try {
+            deleteTaskUndoRedo(originalTask);
+        } catch (TaskNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        addTaskUndoRedo(newTask);
         indicateTaskTrackerChanged();
         
     }
