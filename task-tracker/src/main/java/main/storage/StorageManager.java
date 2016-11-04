@@ -119,22 +119,30 @@ public class StorageManager extends ComponentManager implements Storage {
             taskTracker = originalData;
         }
         else {
-            saveChanges(filePath, taskTracker);
+            saveTaskTracker(filePath, taskTracker);
         }      
-
+        
         logger.info(taskTracker.getTaskList().size() + "");
+        saveConfig(filePath);
         
         EventsCenter.getInstance().post(new LoadTaskTrackerEvent(taskTracker));
         
     }
 
-    private void saveChanges(String filePath, ReadOnlyTaskTracker taskTracker) {
+    private void saveTaskTracker(String filePath, ReadOnlyTaskTracker taskTracker) {
         try {
             saveTaskTracker(taskTracker);
+        } catch (IOException e) {
+            logger.warning("Problem writing to file");
+        }
+    }
+    
+    private void saveConfig(String filePath) {
+        try {
             ConfigUtil.saveConfig(new Config(filePath), Config.DEFAULT_CONFIG_FILE);
         } catch (IOException e) {
             logger.warning("Failed to save config file : " + StringUtil.getDetails(e));
-        }
+        }        
     }
     
     private ReadOnlyTaskTracker originalData(String filePath) {
