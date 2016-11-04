@@ -34,6 +34,7 @@ public class ListStatistics extends UiPart {
 	private static final String EVENT_TASK_MESSAGE = " <-: Events ";
 	private static final String DEADLINE_TASK_MESSAGE = " <-: Deadlines ";
 	private static final String FLOATING_TASK_MESSAGE = " <-: Floating ";
+	private static final String OVERDUE_TASK_MESSAGE = " <-: Overdue ";
 	private static final String ALL_TASK_MESSAGE = " <-: Total ";
 	
 	private Model model;
@@ -114,13 +115,14 @@ public class ListStatistics extends UiPart {
 	public String getFxmlPath() {
 		return FXML;
 	}
-	
+	// todo: Remember to add the image filepath to the updateListStatisticsPictureEvent.java HashMap
 	private static String buildListDataString(){
 		return logic.getNumToday() + TODAY_TASK_MESSAGE +"\n\n" + 
 				logic.getNumTmr() + TOMORROW_TASK_MESSAGE + "\n\n" +
 				logic.getNumEvent() + EVENT_TASK_MESSAGE + "\n\n" +
 				logic.getNumDeadline() + DEADLINE_TASK_MESSAGE + "\n\n" +
 				logic.getNumFloating() + FLOATING_TASK_MESSAGE + "\n\n" +
+				//logic.getNumOverdue() + OVERDUE_TASK_MESSAGE + "\n\n" +
 				logic.getTotalNum() + ALL_TASK_MESSAGE;
 	}
 }
