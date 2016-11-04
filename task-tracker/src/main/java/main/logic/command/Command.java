@@ -53,11 +53,6 @@ public abstract class Command {
     public void setData(Model model) {
         this.model = model;
     }
-    
-    //@@author A0142686X
-    public void setStorage(Storage storage) {
-        this.storage = storage;
-    }
 
     /**
      * Raises an event to indicate an attempt to execute an incorrect command

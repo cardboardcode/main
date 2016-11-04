@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 // Referenced from http://sujitpal.blogspot.sg/2007/02/three-autocomplete-implementations.html
 public class SetTrie {
@@ -17,11 +18,16 @@ public class SetTrie {
     public SetTrie(TreeSet<String> wordList, boolean caseInsensitive) {
         this.wordList = wordList;
         this.caseInsensitive = caseInsensitive;
-        if (caseInsensitive) this.wordList.stream().map(String::toLowerCase); 
+        if (caseInsensitive) {
+            this.wordList = this.wordList.stream().map(String::toLowerCase).collect(Collectors.toCollection(TreeSet::new));
+        }
+        
     }
    
     public boolean matchPrefix(String prefix) {
-        if (caseInsensitive) prefix = prefix.toLowerCase();
+        if (caseInsensitive) {
+            prefix = prefix.toLowerCase();
+        }
 
         Set<String> tailSet = wordList.tailSet(prefix);
         for (String tail : tailSet) {
@@ -33,7 +39,9 @@ public class SetTrie {
     }
     
     public List<String> getSuggestions(String prefix) {
-        if (caseInsensitive) prefix = prefix.toLowerCase();
+        if (caseInsensitive) {
+            prefix = prefix.toLowerCase();
+        }
 
         List<String> possibleList = new ArrayList<String>();
         Set<String> tailSet = wordList.tailSet(prefix);

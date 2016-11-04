@@ -1,11 +1,8 @@
 //@@author A0142686X- reused
 package main.commons.core;
 
-import java.io.IOException;
 import java.util.Objects;
 import java.util.logging.Level;
-
-import main.commons.util.ConfigUtil;
 
 /**
  * Config values used by the app
@@ -21,10 +18,14 @@ public class Config {
     private String taskTrackerFilePath = "data/tasktracker.xml";
     private String taskTrackerName = "T-T";
 
-
-    public Config() {
+    public Config() {}
+    
+    //@@author A0144132W
+    public Config(String taskTrackerFilePath) {
+        this.taskTrackerFilePath = taskTrackerFilePath;
     }
-
+    
+    //@@author A0142686X- reused
     public String getAppTitle() {
         return appTitle;
     }
@@ -56,13 +57,8 @@ public class Config {
     //@@author A0142686X
     public void setTaskTrackerFilePath(String taskTrackerFilePath) {
         this.taskTrackerFilePath = taskTrackerFilePath;
-        try {
-            ConfigUtil.saveConfig(this, DEFAULT_CONFIG_FILE);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
     }
+    
     //@@author A0142686X- reused
     
     public String getTaskTrackerName() {

@@ -4,8 +4,11 @@ package main.logic.command;
 import java.io.IOException;
 
 import main.commons.core.Config;
+import main.commons.core.EventsCenter;
+import main.commons.events.storage.FilePathChangedEvent;
 import main.commons.exceptions.DataConversionException;
 import main.commons.util.ConfigUtil;
+import main.commons.util.FileUtil;
 import main.model.ReadOnlyTaskTracker;
 import main.model.TaskTracker;
 import main.storage.StorageManager;
@@ -21,6 +24,7 @@ public class StorageCommand extends Command {
     public static final String MESSAGE_CONVERT_FAILIURE = "Could not read from config file.";
     public static final String MESSAGE_SAVE_FAILIURE = "Could not save tasks to the specified location.";
     public static final String MESSAGE_NO_XML = "XML file not found at the specified location.";
+    public static final String MESSAGE_INVALID_PATH = "File path given cannot be resolved";
     
     public String newStoragePath;
     
@@ -30,18 +34,16 @@ public class StorageCommand extends Command {
     
     @Override
     public CommandResult execute() {
-        if((newStoragePath.substring((newStoragePath.length() - 4))).equals(".xml") == false) {
+
+        if (!FileUtil.isValidPath(newStoragePath)) {
+            return new CommandResult(MESSAGE_INVALID_PATH);
+        }
+        else if((newStoragePath.substring((newStoragePath.length() - 4))).equals(".xml") == false) {
             return new CommandResult(MESSAGE_NO_XML); 
+        }
+        else {
+            EventsCenter.getInstance().post(new FilePathChangedEvent(newStoragePath, model.getTaskTracker()));            
+            return new CommandResult(MESSAGE_SUCCESS);
         }        
-        storage.setTaskTrackerFilePath(newStoragePath);
-        Config newconfig = new Config();
-        newconfig.setTaskTrackerFilePath(newStoragePath);
-        ReadOnlyTaskTracker presentTaskTracker = model.getTaskTracker();
-        try {
-            storage.saveTaskTracker(presentTaskTracker);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }        
-        return new CommandResult(MESSAGE_SUCCESS);   
     }
 }
