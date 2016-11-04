@@ -330,7 +330,6 @@ public class MainParser {
         }
         
         input = input.substring(0, index);
-        logger.info(input + " priority " + priority_enum);
         
         return Pair.of(priority_enum,input);
     }
