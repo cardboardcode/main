@@ -125,7 +125,7 @@ public class AutoComplete {
             if (ReferenceList.commandsDictionary.containsKey(commandInput)) {
                 String commandWord = ReferenceList.commandsDictionary.get(commandInput);
                 
-                if (isFindEditDoneDelete(commandWord) && !isToNotDisturb(tokens, commandWord)) {
+                if (needTaskSuggestions(tokens, commandWord)) {
                     start_index = commandInput.length() + 1;
                     getTaskSuggestions(tokens, commandInput);
                 }
@@ -172,8 +172,15 @@ public class AutoComplete {
         int size = updateFilteredListWithSuggestions(ArrayUtils.subarray(tokens, 1, tokens.length));
         suggestions = getStringArrayFromIndex(size);
     }
+    
+    private boolean needTaskSuggestions(String[] tokens, String commandWord) {
+        return isFindEditDoneDelete(commandWord) && !dontInterrupt(tokens, commandWord); 
+    }
 
-    private boolean isToNotDisturb(String[] tokens, String commandWord) {
+    /*
+     * makes sure suggestions are not given when the user doesn't want it
+     */
+    private boolean dontInterrupt(String[] tokens, String commandWord) {
         return !commandWord.equals(FindCommand.COMMAND_WORD) && StringUtils.isNumeric(tokens[1]);
     }
 
