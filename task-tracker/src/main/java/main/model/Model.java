@@ -11,6 +11,8 @@ import main.model.task.UniqueTaskList;
 import main.model.task.UniqueTaskList.DuplicateTaskException;
 import main.model.task.UniqueTaskList.TaskNotFoundException;
 import main.commons.core.UnmodifiableObservableList;
+import main.commons.events.model.LoadTaskTrackerEvent;
+import main.commons.events.model.UpdateListWithSuggestionsEvent;
 import main.commons.exceptions.DuplicateDataException;
 
 import java.util.ArrayList;
@@ -115,6 +117,10 @@ public interface Model {
     void saveFilter();
     
     void revertFilter();
+
+    void handleLoadTaskTrackerEvent(LoadTaskTrackerEvent event);
+
+    void handleUpdateSuggestionsEvent(UpdateListWithSuggestionsEvent event);
 
 
 

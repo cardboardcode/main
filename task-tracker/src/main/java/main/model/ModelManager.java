@@ -26,6 +26,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import main.commons.events.model.ChangeSortFilterEvent;
+import main.commons.events.model.LoadTaskTrackerEvent;
 import main.commons.events.model.TaskTrackerChangedEvent;
 import main.commons.events.model.UpdateListWithSuggestionsEvent;
 import main.commons.util.DateUtil;
@@ -140,13 +141,13 @@ public class ModelManager extends ComponentManager implements Model {
         indicateTaskTrackerChanged();
         addToUndo(UndoCommand.ADD, task);
     }
-    
-  //  @Override
-  //  public synchronized void overdueTask(int index) throws TaskNotFoundException, DuplicateTaskException {
-  // 	ReadOnlyTask target = getTaskfromIndex(index);
-  //      taskTracker.overdueTask(target);
-  //      indicateTaskTrackerChanged();
-  //  }
+
+    //================== Loading from storage =============================================
+    @Override
+    @Subscribe
+    public void handleLoadTaskTrackerEvent(LoadTaskTrackerEvent event) {
+        resetData(event.getTaskTracker());
+    }
     
     //=========== Sorting ===================================================================
     @Override
@@ -304,6 +305,7 @@ public class ModelManager extends ComponentManager implements Model {
     
     //============= AutoComplete Suggestions ========================================
     
+    @Override
     @Subscribe
     public void handleUpdateSuggestionsEvent(UpdateListWithSuggestionsEvent event) {
         List<ReadOnlyTask> suggestions = event.getSuggestions();
