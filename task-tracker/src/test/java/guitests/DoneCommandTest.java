@@ -20,8 +20,8 @@ public class DoneCommandTest extends TaskTrackerGuiTest {
         commandBox.runCommand("done " + (currentList.length + 1));
         assertResultMessage("Task does not exist in task-tracker");
         
-//        ReadOnlyTask doneTask = taskListPanel.getTask(targetIndex - 1);
-//        commandBox.runCommand("done " + targetIndex );        
-//        assertTrue(doneTask.getIsDone());
+        ReadOnlyTask doneTask = taskListPanel.getTask(targetIndex - 1);
+        commandBox.runCommand("done " + targetIndex );   
+        assertTrue(doneTask.getIsDone());
     }
 }
