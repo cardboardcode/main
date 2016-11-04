@@ -143,12 +143,7 @@ public class StorageManager extends ComponentManager implements Storage {
         try {
             taskTrackerOptional = readTaskTracker();
             
-            if (taskTrackerOptional.isPresent()) {
-                logger.info("File already has data. Loading original data");
-            }
-            else {
-                logger.info("Saving to new file path");
-            }
+            logFileDetails(taskTrackerOptional);
             
             return taskTrackerOptional.orElse(null);
         } catch (DataConversionException e) {
@@ -157,6 +152,15 @@ public class StorageManager extends ComponentManager implements Storage {
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Prompt for new location");
             return null;
+        }
+    }
+
+    private void logFileDetails(Optional<ReadOnlyTaskTracker> taskTrackerOptional) {
+        if (taskTrackerOptional.isPresent()) {
+            logger.info("File already has data. Loading original data");
+        }
+        else {
+            logger.info("Saving to new file path");
         }
     }
 
