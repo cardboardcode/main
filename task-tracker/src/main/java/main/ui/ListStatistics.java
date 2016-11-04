@@ -69,7 +69,8 @@ public class ListStatistics extends UiPart {
 		mainPane.setPadding(new Insets(30.0, 0.0, 0.0, 30.0));
 		placeHolder.getChildren().add(mainPane);
 		FxViewUtil.applyAnchorBoundaryParameters(mainPane, 0.0, 0.0, 0.0, 0.0);
-		placeHolder.setMaxWidth(400);
+		placeHolder.setMaxWidth(235);
+		placeHolder.setMinWidth(235);
 	}
 	private void bindingAllStringProperty() {
 		listdata.textProperty().bind(taskDataNo);
