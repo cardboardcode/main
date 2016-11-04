@@ -112,6 +112,10 @@ public interface Model {
 
     int getNumOverdue();
 
+    void saveFilter();
+    
+    void revertFilter();
+
 
 
 	

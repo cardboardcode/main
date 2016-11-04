@@ -35,4 +35,6 @@ public interface Logic {
 
     int getTotalNum();
 
+    int getNumOverdue();
+
 }

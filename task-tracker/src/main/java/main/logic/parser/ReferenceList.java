@@ -94,6 +94,12 @@ public class ReferenceList {
             .build();
     
     // for autocomplete
+    public static final Set<String> sortSet = ImmutableSet.<String>builder()
+            .add("name")
+            .add("date")
+            .build();
+    
+    // for autocomplete
     public static final Set<String> CommandsSetWithRelevantSpaces = ImmutableSet.<String>builder()
             .add(AddCommand.COMMAND_WORD + " ")
             .add(EditCommand.COMMAND_WORD + " ")
