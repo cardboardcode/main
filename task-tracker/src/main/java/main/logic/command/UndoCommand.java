@@ -25,6 +25,7 @@ public class UndoCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Reverted last command. ";
     public static final String MESSAGE_EMPTY_HISTORY = "There are no more inputs before this.";
+    public static final String MESSAGE_ERROR = "Could not undo last command.";
 
     public static final int ADD = 1;
     public static final int DEL = 2;
@@ -58,20 +59,19 @@ public class UndoCommand extends Command {
         if(ID==EDIT) {
             try {
                 undoEdit(undoHistory.getTasks().get(0), undoHistory.getTasks().get(1));
-            } catch (DuplicateTaskException e) {
+            } catch (DuplicateTaskException | IndexOutOfBoundsException | TaskNotFoundException e) {
                 e.printStackTrace();
-            } catch (IndexOutOfBoundsException e) {
-                e.printStackTrace();
-            } catch (TaskNotFoundException e) {
-                e.printStackTrace();
+                return new CommandResult(MESSAGE_ERROR);
             }
             return new CommandResult(MESSAGE_SUCCESS);
         }
+        
         if(ID==DONE) {
             try {
                 undoDone(undoHistory.getTasks().get(0));
             } catch (DuplicateTaskException | TaskNotFoundException e) {
                 e.printStackTrace();
+                return new CommandResult(MESSAGE_ERROR);
             }
             return new CommandResult(MESSAGE_SUCCESS);
         }
