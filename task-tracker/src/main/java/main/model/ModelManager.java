@@ -55,6 +55,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Task> filteredTasks;
     private final SortedList<Task> sortedTasks;
     Expression baseExpression;
+    Expression save;
     
     public ModelManager(TaskTracker taskTracker, UserPrefs userPref) {
         super();
@@ -275,6 +276,30 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredTaskList(Expression expression) {
         baseExpression = expression;
         filteredTasks.setPredicate(expression::satisfies);
+    }
+    
+    /*
+     * saves a copy of the current filter. This filter is applied 
+     * back when revertFilter() is called
+     */
+    @Override
+    public void saveFilter() {
+        save = baseExpression;
+        logger.info("saved current filter");
+    }
+    
+    /*
+     * reverts filter to the one saved previous. If no copy was 
+     * saved, the list is unchanged
+     */
+    @Override
+    public void revertFilter() {
+        if (save == null) {
+            return;
+        }
+        baseExpression = save;
+        updateFilteredTaskList(baseExpression);
+        logger.info("reverted to saved filter");
     }
     
     //============= AutoComplete Suggestions ========================================

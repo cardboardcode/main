@@ -46,11 +46,16 @@ public class AutoComplete {
     private int end_index;
     private int tabCount = 0;
     EventsCenter eventsCenter;
-    ReadOnlyTaskTracker tasktracker;
+    Model model;
+    
+    // to return to original list (when showing matching tasks in real time)
+    private boolean save = false;
+    private boolean revert = false;
     
     public AutoComplete(Model model) {
         this.eventsCenter = EventsCenter.getInstance().registerHandler(this);
         this.suggestions = new ArrayList<String>();
+        this.model = model;
         
         buildAllLists(model);
     }
@@ -59,9 +64,8 @@ public class AutoComplete {
         buildCommandList();
         buildListList();
         buildSortList();
-        updateSuggestions("");
         taskList = new ArrayList<Pair<ReadOnlyTask,SetTrie>>();
-        updateTaskList(model.getTaskTracker());
+        updateTaskList();
     }
     
     private void buildCommandList() {
@@ -86,25 +90,17 @@ public class AutoComplete {
      * updates the taskList by iterating all tasks and storing
      * them into an array of SetTrie.
      */
-    private void updateTaskList(ReadOnlyTaskTracker data) {
-        tasktracker = data;
+    private void updateTaskList() {
 
-        for (ReadOnlyTask task: data.getTaskList()) {
+        for (ReadOnlyTask task: model.getTaskTracker().getTaskList()) {
             SetTrie trie = SetTrie.builder().caseInsensitive()
                                   .add(Arrays.stream(getTokens(task.getMessage())).collect(Collectors.toSet()))
                                   .build();
+
             taskList.add(Pair.of(task,trie));
         }
     }
     
-    /*
-     * resets the taskList using the tasktracker's data
-     */
-    private void resetTaskList(){
-        if (tasktracker == null) return;
-        updateTaskList(tasktracker);
-    }
-
     private String[] getTokens(String input) {
         return input.trim().split(" ");
     }
@@ -118,6 +114,9 @@ public class AutoComplete {
         if (tokens.length == 1) {
             suggestions = commandList.getSuggestions(input);
             start_index = 0;
+            
+            revertIfNeeded();
+            save = true;
         }
         else {
             String commandInput = tokens[0];
@@ -127,6 +126,7 @@ public class AutoComplete {
                 
                 if (needTaskSuggestions(tokens, commandWord)) {
                     start_index = commandInput.length() + 1;
+                    saveIfNeeded();
                     getTaskSuggestions(tokens, commandInput);
                 }
                 else if (commandWord.equals(ListCommand.COMMAND_WORD)) {
@@ -135,14 +135,28 @@ public class AutoComplete {
                 else if (commandWord.equals(SortCommand.COMMAND_WORD) && tokens.length == 2) {
                     getSortSuggestions(tokens[1]);
                     start_index = commandInput.length() + 1;
-
                 }
             }
             else {
                 suggestions = new ArrayList<String>();
             }
         }
-        resetTaskList();
+        updateTaskList();
+    }
+
+    private void saveIfNeeded() {
+        if (save) {
+            model.saveFilter();
+            save = false;
+            revert = true;
+        }
+    }
+
+    private void revertIfNeeded() {
+        if (revert) {
+            model.revertFilter();
+            revert = false;
+        }
     }
     
     private void getSortSuggestions(String token) {
@@ -213,7 +227,7 @@ public class AutoComplete {
     private List<ReadOnlyTask> getListOfMatchedTasks() {
         List<ReadOnlyTask> matchedTasks = new ArrayList<ReadOnlyTask>();
         
-        for (ReadOnlyTask task : tasktracker.getTaskList()) {
+        for (ReadOnlyTask task : model.getTaskTracker().getTaskList()) {
             for (Pair<ReadOnlyTask,SetTrie> pair : taskList) {
                 if (task.equals(pair.getKey())){
                     matchedTasks.add(task);
@@ -276,7 +290,8 @@ public class AutoComplete {
      */
     @Subscribe
     private void handleTaskTrackerChangedEvent(TaskTrackerChangedEvent event) {
-        updateTaskList(event.data);
+//       updateModel(event.data);
+        updateTaskList();
     }
 
 }
