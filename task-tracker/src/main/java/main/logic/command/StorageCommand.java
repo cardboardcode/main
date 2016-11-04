@@ -36,6 +36,12 @@ public class StorageCommand extends Command {
         storage.setTaskTrackerFilePath(newStoragePath);
         Config newconfig = new Config();
         newconfig.setTaskTrackerFilePath(newStoragePath);
+        ReadOnlyTaskTracker presentTaskTracker = model.getTaskTracker();
+        try {
+            storage.saveTaskTracker(presentTaskTracker);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }        
         return new CommandResult(MESSAGE_SUCCESS);   
     }
 }
