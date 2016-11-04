@@ -26,6 +26,7 @@ import main.logic.command.DoneCommand;
 import main.logic.command.EditCommand;
 import main.logic.command.FindCommand;
 import main.logic.command.ListCommand;
+import main.logic.command.SortCommand;
 import main.logic.parser.ReferenceList;
 import main.model.Model;
 import main.model.ReadOnlyTaskTracker;
@@ -38,17 +39,23 @@ public class AutoComplete {
 
     private SetTrie commandList;
     private SetTrie listList;
+    private SetTrie sortList;
     private List<Pair<ReadOnlyTask,SetTrie>> taskList;
     private List<String> suggestions;
     private int start_index;
     private int end_index;
     private int tabCount = 0;
     EventsCenter eventsCenter;
-    ReadOnlyTaskTracker tasktracker;
+    Model model;
+    
+    // to return to original list (when showing matching tasks in real time)
+    private boolean save = false;
+    private boolean revert = false;
     
     public AutoComplete(Model model) {
         this.eventsCenter = EventsCenter.getInstance().registerHandler(this);
         this.suggestions = new ArrayList<String>();
+        this.model = model;
         
         buildAllLists(model);
     }
@@ -56,9 +63,9 @@ public class AutoComplete {
     private void buildAllLists(Model model) {
         buildCommandList();
         buildListList();
-        updateSuggestions("");
+        buildSortList();
         taskList = new ArrayList<Pair<ReadOnlyTask,SetTrie>>();
-        updateTaskList(model.getTaskTracker());
+        updateTaskList();
     }
     
     private void buildCommandList() {
@@ -73,29 +80,27 @@ public class AutoComplete {
         listList = build.build();
     }
     
+    private void buildSortList() {
+        TrieBuilder build = SetTrie.builder().caseInsensitive();
+        build.add(ReferenceList.sortSet);
+        sortList = build.build();
+    }
+    
     /*
      * updates the taskList by iterating all tasks and storing
      * them into an array of SetTrie.
      */
-    private void updateTaskList(ReadOnlyTaskTracker data) {
-        tasktracker = data;
+    private void updateTaskList() {
 
-        for (ReadOnlyTask task: data.getTaskList()) {
+        for (ReadOnlyTask task: model.getTaskTracker().getTaskList()) {
             SetTrie trie = SetTrie.builder().caseInsensitive()
                                   .add(Arrays.stream(getTokens(task.getMessage())).collect(Collectors.toSet()))
                                   .build();
+
             taskList.add(Pair.of(task,trie));
         }
     }
     
-    /*
-     * resets the taskList using the tasktracker's data
-     */
-    private void resetTaskList(){
-        if (tasktracker == null) return;
-        updateTaskList(tasktracker);
-    }
-
     private String[] getTokens(String input) {
         return input.trim().split(" ");
     }
@@ -109,6 +114,9 @@ public class AutoComplete {
         if (tokens.length == 1) {
             suggestions = commandList.getSuggestions(input);
             start_index = 0;
+            
+            revertIfNeeded();
+            save = true;
         }
         else {
             String commandInput = tokens[0];
@@ -116,19 +124,43 @@ public class AutoComplete {
             if (ReferenceList.commandsDictionary.containsKey(commandInput)) {
                 String commandWord = ReferenceList.commandsDictionary.get(commandInput);
                 
-                if (isFindEditDoneDelete(commandWord) && !isToNotDisturb(tokens, commandWord)) {
+                if (needTaskSuggestions(tokens, commandWord)) {
                     start_index = commandInput.length() + 1;
+                    saveIfNeeded();
                     getTaskSuggestions(tokens, commandInput);
                 }
-                else if(commandWord.equals(ListCommand.COMMAND_WORD)) {
+                else if (commandWord.equals(ListCommand.COMMAND_WORD)) {
                     start_index = getListSuggestions(tokens);
+                }
+                else if (commandWord.equals(SortCommand.COMMAND_WORD) && tokens.length == 2) {
+                    getSortSuggestions(tokens[1]);
+                    start_index = commandInput.length() + 1;
                 }
             }
             else {
                 suggestions = new ArrayList<String>();
             }
         }
-        resetTaskList();
+        updateTaskList();
+    }
+
+    private void saveIfNeeded() {
+        if (save) {
+            model.saveFilter();
+            save = false;
+            revert = true;
+        }
+    }
+
+    private void revertIfNeeded() {
+        if (revert) {
+            model.revertFilter();
+            revert = false;
+        }
+    }
+    
+    private void getSortSuggestions(String token) {
+        suggestions = sortList.getSuggestions(token);
     }
     
     /*
@@ -154,8 +186,15 @@ public class AutoComplete {
         int size = updateFilteredListWithSuggestions(ArrayUtils.subarray(tokens, 1, tokens.length));
         suggestions = getStringArrayFromIndex(size);
     }
+    
+    private boolean needTaskSuggestions(String[] tokens, String commandWord) {
+        return isFindEditDoneDelete(commandWord) && !dontInterrupt(tokens, commandWord); 
+    }
 
-    private boolean isToNotDisturb(String[] tokens, String commandWord) {
+    /*
+     * makes sure suggestions are not given when the user doesn't want it
+     */
+    private boolean dontInterrupt(String[] tokens, String commandWord) {
         return !commandWord.equals(FindCommand.COMMAND_WORD) && StringUtils.isNumeric(tokens[1]);
     }
 
@@ -188,7 +227,7 @@ public class AutoComplete {
     private List<ReadOnlyTask> getListOfMatchedTasks() {
         List<ReadOnlyTask> matchedTasks = new ArrayList<ReadOnlyTask>();
         
-        for (ReadOnlyTask task : tasktracker.getTaskList()) {
+        for (ReadOnlyTask task : model.getTaskTracker().getTaskList()) {
             for (Pair<ReadOnlyTask,SetTrie> pair : taskList) {
                 if (task.equals(pair.getKey())){
                     matchedTasks.add(task);
@@ -251,7 +290,8 @@ public class AutoComplete {
      */
     @Subscribe
     private void handleTaskTrackerChangedEvent(TaskTrackerChangedEvent event) {
-        updateTaskList(event.data);
+//       updateModel(event.data);
+        updateTaskList();
     }
 
 }

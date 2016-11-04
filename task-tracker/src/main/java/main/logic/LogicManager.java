@@ -79,4 +79,9 @@ public class LogicManager extends ComponentManager implements Logic {
     public int getTotalNum(){
         return model.getTotalNum();
     }
+    
+    @Override
+    public int getNumOverdue() {
+        return model.getNumOverdue();
+    }
 }
