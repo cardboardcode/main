@@ -93,4 +93,21 @@ public class FileUtil {
             throws IOException {
         return JsonUtil.fromJsonString(FileUtil.readFromFile(jsonFile), classOfObjectToDeserialize);
     }
+    
+    //@@author A0144132W
+    /*
+     * checks if path given is valid.
+     * @param path cannot be null.
+     */
+    public static boolean isValidPath(String path) {
+        assert path != null;
+        try {
+            File file = new File(path);
+            FileUtil.createIfMissing(file);
+        } catch (IOException e) {
+            return false;
+        }
+        
+        return true;
+    }
 }
