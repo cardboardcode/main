@@ -3,6 +3,7 @@ package main.storage;
 
 import main.commons.events.model.TaskTrackerChangedEvent;
 import main.commons.events.storage.DataSavingExceptionEvent;
+import main.commons.events.storage.FilePathChangedEvent;
 import main.commons.exceptions.DataConversionException;
 import main.model.ReadOnlyTaskTracker;
 import main.model.UserPrefs;
@@ -37,4 +38,6 @@ public interface Storage extends TaskTrackerStorage, UserPrefsStorage {
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
     void handleTaskTrackerChangedEvent(TaskTrackerChangedEvent abce);
+
+    void handleFilePathChangedEvent(FilePathChangedEvent event);
 }
