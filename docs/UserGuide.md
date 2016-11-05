@@ -95,7 +95,7 @@ Tasks can be listed according to their priority, date when they are due or if th
 * `list done today` will display all the done tasks which were due today.
 
 <br>
-<img src="images/list_command.png" height="600p" width="750p"><br>
+<img src="images/List_Command.png" height="600p" width="750p"><br>
 
 ### 3. **DELETE** a Task
 
