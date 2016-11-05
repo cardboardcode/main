@@ -112,41 +112,35 @@ The sections below give more details of each component.
 ![Logic](images/Logic.png)<br>
 **API** : [`Logic.java`]()
 
-1. `Logic` uses the `MainParser` class to parse the user command.
-2. 'MainParser' class in turn uses 'TimeParser' to parse part of the input.
-3. This results in a `Command` object which is executed by the `LogicManager`.
-4. The command execution can affect the `Model` (e.g. adding a task) and/or raise events.
-5. The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `UI`.
-
+* `Logic` uses the `MainParser` class to parse the user command.
+* `MainParser` class uses `TimeParser` to parse part of the input.
+* `MainParser` returns a `Command` object which is executed by the `LogicManager`.
+* Execution of `Command` object can affect the `Model` (e.g. adding a task) and/or raise events.
+* The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `UI`.
+* `AutoComplete` class is initialised by `Logic`, and reacts to certain events like when <kbd>tab</kbd> is pressed.
+* `AutoComplete` uses 'SetTrie' class to provide suggestions quickly.
 
 ####UI
 ![UI](images/A_UI.png)<br>
 
 **API** : [`Ui.java`]()
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `TaskListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class
-and they can be loaded using the `UiPartLoader`.
-
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files
- that are in the `src/main/resources/view` folder.<br>
- For example, the layout of the [`MainWindow`]() is specified in[`MainWindow.fxml`]()
-
-The `UI` component,
-  - Executes user commands using the `Logic` component.
-  - Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
-  - Responds to events raised from various parts of the App and updates the UI accordingly.
+* `MainWindow` class is made up of parts e.g.`CommandBox`, `ResultDisplay`, `TaskListPanel`, `StatusBarFooter`, `ListStatistics` etc.
+* All individal UI sub components, including the `MainWindow`, inherit from the abstract `UiPart` class and they can be loaded using the `UiPartLoader`.
+* JavaFx UI framework is used. 
+* The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder.<br> For example, the layout of the [`MainWindow`]() is specified in[`MainWindow.fxml`]()
+* User commands are exceuted using the `Logic` component.
+* UI auto-updates when data in the `Model` change.
+* UI responds to events raised from various parts of the App and updates itself accordingly.
 
 ####Model
 ![Model](images/A_Model.png)<br>
 
 **API** : [`Model.java`]()
 
-The `Model`,
-* stores a `UserPref` object that represents the user's preferences.
-* stores the task data.
-* exposes a `UnmodifiableObservableList<ReadOnlyTask>` that can be 'observed' e.g. the UI can be bound to this list
-  so that the UI automatically updates when the data in the list change.
-* does not depend on any of the other three components.
+* `UserPref` object represents the user's preferences.
+* Task data is stored in `TaskTracker` class.
+* `UnmodifiableObservableList<ReadOnlyTask>` is 'exposed', so list of tasks can be observed, for example by the UI, without being changed.
 
 <!--@@author A0142686X -->
 #### Storage component
@@ -155,9 +149,7 @@ The `Model`,
 
 **API** : [`Storage.java`](../src/main/java/main/storage/Storage.java)
 
-The `Storage` component,
-  - can save `UserPref` objects in json format and read it back.
-  - can save the Task-Tracker data in xml format and read it back.
+* UserPref` objects and TaskTracker data are saved in json format and can be read back.
 
 #### Common classes
 
