@@ -15,7 +15,7 @@
     -   [Undo](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#6-undo)
     -   [Redo](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#7-redo)
     -   [Search for Tasks](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#8-search-for-tasks)
-    -   [Sort]()
+    -   [Sort](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#9-sort-tasks)
     -   [Storage](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#9-storage)
     -   [Help Command](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#10-help)
 *   [Unique Features](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#unique-features)
