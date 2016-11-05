@@ -48,7 +48,7 @@ public class TypicalTestTasks {
             assert false : "not possible";
         }
     }
-
+  //@@author A0139422J
     public TestTask[] getTypicalTasks() {
         return new TestTask[]{deadline2, deadline1, event1, event2, floating1, floating2};
     }
