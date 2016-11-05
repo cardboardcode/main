@@ -33,13 +33,13 @@
 
 ## **Quick Start**
 
-T-T is a lightweight app which does not require much time to install and run. 
+**T-T** is a lightweight app which does not require much time to install and run. 
 
 > Ensure you have Java version `1.8.0_60` or later installed on your PC.
 
-In order to install T-T, 
+In order to install **T-T**, 
 
-1. Download the T-T files from https://github.com/t09-c3/task-tracker
+1. Download the **T-T** files from https://github.com/t09-c3/task-tracker
 2. Double-click on the T-T.jar file to start the app.<br>
 
 ## **Commands**
@@ -204,7 +204,7 @@ Entering `storage C://users/JohnDoe/NewFile.xml` will change the storage locatio
 >   *  If the XML file mentioned at the filepath does not exist, a new XML file will be created by TaskTracker at the specified location.
 >   *  All data of the pre-existing tasks will be copied to the new XML file.
 
-
+<!-- @@author A0139422J -->
 ### 10. **HELP**
 
 The `help` command will open a window which lists all the available commands in T-T.
