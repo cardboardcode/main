@@ -122,7 +122,7 @@ public class ListStatistics extends UiPart {
 				logic.getNumEvent() + EVENT_TASK_MESSAGE + "\n\n" +
 				logic.getNumDeadline() + DEADLINE_TASK_MESSAGE + "\n\n" +
 				logic.getNumFloating() + FLOATING_TASK_MESSAGE + "\n\n" +
-				//logic.getNumOverdue() + OVERDUE_TASK_MESSAGE + "\n\n" +
+				logic.getNumOverdue() + OVERDUE_TASK_MESSAGE + "\n\n" +
 				logic.getTotalNum() + ALL_TASK_MESSAGE;
 	}
 }
