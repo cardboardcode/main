@@ -73,7 +73,7 @@ The format for adding a new task is: <br>
 *   ` add call mum tmr ` will create a task named `call mum` to be done anytime on **the next day** with **normal** priority.<br>
 <img src="images/add_command1.png" height="600p" width="750p"><br>
 <br>
-!<img src="images/add_command2.png" height="600p" width="750p"><br>
+<img src="images/add_command2.png" height="600p" width="750p"><br>
 
 ### 2. **LIST** Tasks
 
@@ -141,9 +141,10 @@ Let’s say task index “**1**” refers to the task `wash dishes monday 4pm`
 
 *  `edit 1 wash dishes tuesday 6pm -h` will edit the existing `wash dishes` task to `use dishes` and change the date from **monday** to **tuesday** , time from **4pm** to **6pm** and priority from **medium** to **high**.
 <br>
+<br>
 <img src="images/edit_command1.png" height="600p" width="750p"><br>
 
-<img src="images/edit_command2.png" height="550p" width="650p"><br>
+<img src="images/edit_command2.png" height="600p" width="750p"><br>
 <br>
 ### 6. **UNDO**
 
