@@ -24,6 +24,7 @@ public class HotKeysTest extends TaskTrackerGuiTest {
 	    commandBox.runCommand("add");
 	    assertCommandToggledDown(commandBox.navigateCommandHistory());
 	    
+	    //change color themes of T-T
 	    commandBox.changeColorTheme();
 	}
 
