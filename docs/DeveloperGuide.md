@@ -118,7 +118,11 @@ The sections below give more details of each component.
 * Execution of `Command` object can affect the `Model` (e.g. adding a task) and/or raise events.
 * The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `UI`.
 * `AutoComplete` class is initialised by `Logic`, and reacts to certain events like when <kbd>tab</kbd> is pressed.
-* `AutoComplete` uses 'SetTrie' class to provide suggestions quickly.
+* `AutoComplete` uses `SetTrie` class to provide suggestions quickly.
+
+Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")`
+ API call.<br>
+<img src="images/LogicComponentSequenceDiagram.png" width="800"><br>
 
 ####UI
 ![UI](images/A_UI.png)<br>
