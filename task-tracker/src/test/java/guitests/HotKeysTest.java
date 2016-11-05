@@ -12,9 +12,6 @@ public class HotKeysTest extends TaskTrackerGuiTest {
 	public void pressHotKeys() {
 		//minimizes window when Esc key is pressed
 	    assertWindowIsMinimized(commandBox.minimizeWindow());
-	    System.out.println(stage.getStyle());
-//		commandBox.runStaticCommand("f");
-//		assertEquals(commandBox.getCommandInput(), "T.T");
 
 	}
 
@@ -22,7 +19,5 @@ public class HotKeysTest extends TaskTrackerGuiTest {
 		assertTrue(stage.isIconified());
 		
 	}
-//	private void assertCorrectAutoComplete(CommandBoxHandle commandBox){
-//		assertEquals(commandBox.getCommandInput(), "find");
-//	}
+
 }
