@@ -48,14 +48,53 @@ public class CommandBoxHandle extends GuiHandle{
         return new HelpWindowHandle(guiRobot, primaryStage);
     }
     
+    public CommandBoxHandle navigateCommandHistory(){
+    	useUpKey();
+    	useUpKey();
+    	useUpKey();
+    	useDownKey();
+    	return new CommandBoxHandle(guiRobot, primaryStage, TestMain.APP_TITLE);
+    }
+    
+    public CommandBoxHandle scrollUpCommandHistory(){
+    	useUpKey();
+    	return new CommandBoxHandle(guiRobot, primaryStage, TestMain.APP_TITLE);
+    }
+    
     public CommandBoxHandle minimizeWindow(){
     	useEscKey();
     	return new CommandBoxHandle(guiRobot, primaryStage, TestMain.APP_TITLE);
     }
+    
+    public CommandBoxHandle changeColorTheme(){
+    	
+    	for (int i = 0; i<8; i++)
+    	useF1Key();
+    	
+    	return new CommandBoxHandle(guiRobot, primaryStage, TestMain.APP_TITLE);
+    }
+
+	private void useF1Key() {
+		guiRobot.push(KeyCode.F1);
+		guiRobot.sleep(500);
+		
+	}
 
 	private void useEscKey() {
 		guiRobot.push(KeyCode.ESCAPE);
-		guiRobot.sleep(5000);
+		guiRobot.sleep(200);
+		
+	}
+	
+	private void useUpKey() {
+		guiRobot.push(KeyCode.UP);
+		guiRobot.sleep(200);
+		
+	}
+	
+	private void useDownKey() {
+		guiRobot.push(KeyCode.DOWN);
+		guiRobot.sleep(200);
 		
 	}
 
