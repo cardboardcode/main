@@ -16,7 +16,7 @@ We are a team based in the [School of Computing, National University of Singapor
     -   [Minimize Window]()
 *   Code written: [[functional code](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/main/A0139422J.md)][[test code](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/test/A0139422J.md)][[docs](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/docs/A0139422J.md)]
 *   Other major contribution:
-    -   Refined User Guide and Developer Guide, Reconfigured Task-Tracker GUI and implemented nice-to-have feature "List Statistics"
+    -   Refined User Guide and Developer Guide and reconfigured Task-Tracker GUI 
     
 ---
 <!-- @@author A0142686X-->
