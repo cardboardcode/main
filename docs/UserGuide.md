@@ -73,7 +73,7 @@ The format for adding a new task is: <br>
 *   ` add call mum tmr ` will create a task named `call mum` to be done anytime on **the next day** with **normal** priority.<br>
 <img src="images/add_command1.png" height="600p" width="750p"><br>
 <br>
-<img src="images/add_command2.png" height="600p" width="750p"><br>
+<img src="images/Add_Command2.png" height="600p" width="750p"><br>
 
 ### 2. **LIST** Tasks
 
@@ -231,7 +231,7 @@ The `help` command will open a window which lists all the available commands in 
 * Overdue Tasks (Tasks whose date has passed)
 * Total Tasks 
 
-<img src="images/list_statistics.png" height="600p" width="750p"><br>
+<img src="images/List_Statistics.png" height="600p" width="750p"><br>
 <br>
 
 
