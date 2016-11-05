@@ -12,9 +12,11 @@ We are a team based in the [School of Computing, National University of Singapor
 *   Aspects/tools in charge of: Team Lead, Documentation, Deliverables, Scheduling, Visual Expert, Code Developer
 *   Features implemented:
     -   [List Statistics](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#5-undo-a-task)
+    -   [Color Toggling]()
+    -   [Minimize Window]()
 *   Code written: [[functional code](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/main/A0139422J.md)][[test code](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/test/A0139422J.md)][[docs](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/docs/A0139422J.md)]
 *   Other major contribution:
-    -   Refined User Guide and Developer Guide, Reconfigured Task-Tracker GUI and implemented nice-to-have feature "List Statistics"
+    -   Refined User Guide and Developer Guide and reconfigured Task-Tracker GUI 
     
 ---
 <!-- @@author A0142686X-->
@@ -25,6 +27,7 @@ We are a team based in the [School of Computing, National University of Singapor
 *   Features implemented:
     -   [Undo command](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#5-undo-a-task)
     -   [Redo command](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#6-redo-a-task)
+    -   [Storage command]()
 *   Code written: [[functional code](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/main/A0142686X.md)][[test code](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/test/A0142686X.md)][[docs]()]
 * Other major contributions: 
     * Converted User Guide and Developer Guide to markdown format.
@@ -51,6 +54,8 @@ We are a team based in the [School of Computing, National University of Singapor
 
 *    Components in charge of: [Model](https://github.com/CS2103AUG2016-T09-C3/main/tree/master/task-tracker/src/main/java/main/logic)
 *    Aspects/tools in charge of: Documentation, Code Quality, Code Developer
+*    Features implemented:
+    * [Overdue Detection]()
 * Code written: [[functional code](https://github.com/CS2103AUG2016-T09-C3/main/blob/v0.4/collated/main/A0139750B.md)] [[test code](https://github.com/CS2103AUG2016-T09-C3/main/blob/v0.4/collated/test/A0139750Bunused.md)][[docs](https://github.com/CS2103AUG2016-T09-C3/main/blob/v0.4/collated/docs/A0139750B.md)]
 * Other major contributions: 
     * Set up Codacy

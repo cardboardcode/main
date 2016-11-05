@@ -436,7 +436,7 @@ Use case ends
 
 
 ## Appendix D : Glossary
-![Development In Progress](images/underconstruction.png)
+
 
 ## Appendix E : Product Survey
 

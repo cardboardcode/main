@@ -8,13 +8,14 @@
 *   [Quick Start](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#quick-start)
 *   [Commands](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#commands)
     -   [Add a Task](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#1-add-a-task)
-    -   [Edit a Task](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#2-edit-a-task)
+    -   [List Tasks](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#5-list-tasks)
     -   [Delete a Task](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#3-delete-a-task)
     -   [Done Task](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#4-done-task)
-    -   [List Tasks](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#5-list-tasks)
+    -   [Edit a Task](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#2-edit-a-task)
     -   [Undo](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#6-undo)
     -   [Redo](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#7-redo)
     -   [Search for Tasks](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#8-search-for-tasks)
+    -   [Sort]()
     -   [Storage](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#9-storage)
     -   [Help Command](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#10-help)
 *   [Unique Features](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#unique-features)
@@ -32,18 +33,18 @@
 
 ## **Quick Start**
 
-T-T is a lightweight app which does not require much time to install and run. 
+**T-T** is a lightweight app which does not require much time to install and run. 
 
 > Ensure you have Java version `1.8.0_60` or later installed on your PC.
 
-In order to install T-T, 
+In order to install **T-T**, 
 
-1. Download the T-T files from https://github.com/t09-c3/task-tracker
+1. Download the **T-T** files from https://github.com/t09-c3/task-tracker
 2. Double-click on the T-T.jar file to start the app.<br>
 
 ## **Commands**
 
-`<>` _indicates that field is compulsory_ and `[]` _indicates that field is optional._ 
+##### `<>` _indicates that field is compulsory_ and `[]` _indicates that field is optional._ 
 
 ### 1. **ADD** a Task
 
@@ -68,31 +69,40 @@ The format for adding a new task is: <br>
     *   Except for `<task>`, the other parameters can be inputed in any order.
 
 <br>For example:<br>
-*   `•  add wash dishes monday 4pm -h ` will create a high priority `wash dishes` task to be done on the **next Monday**.
-*   `•  add call mum tmr ` will create a task named `call mum` to be done anytime on **the next day** with **normal** priority.<br>
-![Add Screen](images/Add_Command2.png)
+*   ` add wash dishes monday 4pm -h ` will create a high priority `wash dishes` task to be done on the **next Monday**.
+*   ` add call mum tmr ` will create a task named `call mum` to be done anytime on **the next day** with **normal** priority.<br>
+<img src="images/add_command1.png" height="600p" width="750p"><br>
 <br>
-![Add Screen](images/Add_Command.png)
+<img src="images/Add_Command2.png" height="600p" width="750p"><br>
 
-### 2. **EDIT** a Task
+### 2. **LIST** Tasks
 
-The format to edit an existing task is : <br>
-&nbsp; &nbsp; `edit <task index> <new task> [new date1] [new date2] [-h | -m | -l] ` <br>
+The format to list tasks is : <br>
+&nbsp; &nbsp; `list [date | priority | done]`<br>
 
-  * `<task index>` can be obtained from the list panel, or by using the list command (See **List** command).
+>   *   The tasks will be shown based on the parameters specified. If no parameters given, the tasks are organized by date.
+>   *   done parameter will list all the tasks marked done.
+>   *   Both date and priority can be specified at the same time.
 
-<br> For example: <br>
+Tasks can be listed according to their priority, date when they are due or if they are marked as done.
 
-Let’s say task index “**1**” refers to the task `wash dishes monday 4pm`
+<br> For example : <br>
+* `list` will display all tasks organised by date.
+* `list 9 Oct`  will display all tasks due on 9th October.
+* `list high` will display all tasks of high priority.
+* `list high today` will display all tasks of high priority due today.
+* `list done` will display all the tasks marked done.
+* `list done today` will display all the done tasks which were due today.
 
-*  `edit 1 wash dishes tuesday 6pm -h` will edit the existing `wash dishes` task to `use dishes` and change the date from **monday** to **tuesday** , time from **4pm** to **6pm** and priority from **medium** to **high**.
+<br>
+<img src="images/List_Command.png" height="600p" width="750p"><br>
 
 ### 3. **DELETE** a Task
 
 The format to delete an existing task is : <br>
 &nbsp; &nbsp; `delete <task index>` <br>
 
->   *  `<task index>` can be obtained from the list panel, or by using the list 
+>   *  `<task index>` can be obtained from the list panel.
 
 
 <br> For example: <br>
@@ -105,12 +115,12 @@ Let’s say task index “**1**” refers to the task `wash dishes monday 4pm`
 
 ### 4. **DONE** TASK
 
-Tasks can be marked done after they have been completed. Tasks marked as done will not appear in the main list, but can be viewed by the list command (see LIST).<br>
-
 The format to mark a task as done is : <br>
 &nbsp; &nbsp; `done <task index>` <br>
 
->   *  `<task index>` can be obtained from the list panel, or by using the list 
+>   *  `<task index>` can be obtained from the list panel.
+
+Tasks can be marked done after they have been completed. Tasks marked as done will not appear in the main list, but can be viewed by the **LIST** command.<br>
 
 <br> For example: <br>
 
@@ -118,37 +128,34 @@ Let’s say task index “**1**” refers to the task `do laundry monday 4pm`
 
 *   `done 1` will mark the `do laundry` task as done.
 
-### 5. **LIST** Tasks
+### 5. **EDIT** a Task
 
-Tasks can be listed according to their priority, date when they are due or if they are marked done.
 The format to edit an existing task is : <br>
-&nbsp; &nbsp; `list [date | priority | done]`<br>
+&nbsp; &nbsp; `edit <task index> <new task> [new date1] [new date2] [-h | -m | -l] ` <br>
 
->   *   The tasks will be shown based on the parameters specified. If no parameters given, the tasks are organized by date.
->   *   done parameter will list all the tasks marked done.
->   *   Both date and priority can be specified at the same time.
+  * `<task index>` can be obtained from the list panel.
 
-<br> For example : <br>
-`list 9 Oct`  will display all tasks due on 9th October.
-`list high` will display all tasks of high priority.
-`list` will display all tasks organised by date.
-`list high today` will display all tasks of high priority due today.
-`list done` will display all the tasks marked done.
-`list done today` will display all the done tasks which were due today.
+<br> For example: <br>
 
+Let’s say task index “**1**” refers to the task `wash dishes monday 4pm`
+
+*  `edit 1 wash dishes tuesday 6pm -h` will edit the existing `wash dishes` task to `use dishes` and change the date from **monday** to **tuesday** , time from **4pm** to **6pm** and priority from **medium** to **high**.
 <br>
-![List Screen](images/List_Command.png)
+<br>
+<img src="images/edit_command1.png" height="600p" width="750p"><br>
 
+<img src="images/edit_command2.png" height="600p" width="750p"><br>
+<br>
 ### 6. **UNDO**
 
-Enter `undo` into the command line to undo the previous commands you have entered in the session.  
+The `undo` command will undo the previous commands you have entered in the session.  
 
 <br> For example : <br>
 Entering `undo` after executing `delete 2` will bring back the deleted task.
 
 ### 7. **REDO**
 
-Enter `redo` into the command line to redo the previous undo you have executed in the session.  
+The `redo` command will redo the previous `undo` you have executed in the session.  
 
 ### 8. **SEARCH** for Tasks
 
@@ -159,15 +166,36 @@ The format to search for certain tasks is :
 
 For example:  
 
-Let say task index **1** refers to the task `wash dishes monday 4pm`
+Let say there is a task `wash dishes monday 4pm`
 
 *   `search dishes` will show the existing `wash dishes` task.
 
-### 9. **STORAGE** 
-The storage command can be used to change the storage location of tasks. Tasks are stored on the PC in an XML file.
+<br>
+<img src="images/search_command1.png" height="600p" width="750p"><br>
+<br>
+<br>
+<img src="images/search_command2.png" height="600p" width="750p"><br>
+<br>
+
+### 9. **SORT** Tasks
+
+The format to sort a list of tasks is : <br>
+&nbsp; &nbsp; `sort < date | name >`<br>
+
+>   *   The tasks will be shown based on the parameters specified.
+
+For example:
+>   *   `sort date` will sort the list of tasks based on their dates, displaying the closest deadlines at the top.
+>   *   `sort name` will sort the list lexicographically. 
+
+<br>
+
+### 10. **STORAGE** 
 
 The format to change storage location is :
-    `storage <filepath>`
+  <br>  `storage <filepath>` <br>
+
+The storage command can be used to change the storage location of tasks. Tasks are stored on your computer in an XML file.
 
 <br> For example : <br>
 
@@ -177,31 +205,43 @@ Entering `storage C://users/JohnDoe/NewFile.xml` will change the storage locatio
 >   *  If the XML file mentioned at the filepath does not exist, a new XML file will be created by TaskTracker at the specified location.
 >   *  All data of the pre-existing tasks will be copied to the new XML file.
 
-
+<!-- @@author A0139422J -->
 ### 10. **HELP**
 
-Enter `help` into the command line to list out all the commands available in T-T.
+The `help` command will open a window which lists all the available commands in T-T.
+
+<br>
+<img src="images/help_command.png" height="600p" width="750p"><br>
 <br>
 <br>
-<!-- @@author A0139422J -->
+<br>
+
 ## **Unique Features**
 
 ### 1. List Statistics
-**T-T** also provides an intuitive listing the number of tasks stored, giving you a clearer idea on how to better deal with them. As seen in **the example below**, the numbers are displayed on the right of the task list. 
+**T-T**  provides an intuitive listing of the number of tasks stored, giving you a clearer idea on how to better deal with them. As seen in **the example below**, the numbers are displayed on the right of the task list. 
 
 **T-T**'s list statistics provides data on all the different types of tasks available in storage:
 
-    -      Today's Tasks 
-    -      Tomorrow's Tasks
-    -      Event Tasks (Tasks with parameters all filled.)
-    -      Deadline Tasks (Tasks which are much due much later)
-    -      Floating Tasks (Tasks with incomplete parameters)  
+* Today's Tasks 
+* Tomorrow's Tasks
+* Event Tasks (Tasks with two dates specified)
+* Deadline Tasks (Tasks only one date specified)
+* Floating Tasks (Tasks with no date specified)  
+* Overdue Tasks (Tasks whose date has passed)
+* Total Tasks 
+
+<img src="images/List_Statistics.png" height="600p" width="750p"><br>
 <br>
-![List Screen](images/List_Statistics.png)
-<br>
+
+
 
 ### 2. Overdue Detection
 Apart from the three basic colors shown earlier to indicate different priorities, T-T also indicates to users which tasks have become overdued. If the current time has overshot an event task's endtime or a deadline task's deadline, the corresponding task will be shown with a black tab, as shown below. 
+
+<br>
+<img src="images/overdue_detection.png" height="600p" width="750p"><br>
+<br>
 
 ### 3. Autocompletion
 Users who find typing in the many commands **T-T** provides too tedious may opt to use the autocompletion function the app has as well. Simply press the `Tab` key and you will be able to cycle through all the different command. 
@@ -222,6 +262,10 @@ The user interface is not just limited to just one color. **T-T** offers you a v
 
 By pressing `F1` and `F2`, you can toggle between the different themes and choose any which suit your preference. 
 
+<br>
+<img src="images/color_toggle.png" height="600p" width="750p"><br>
+<br>
+
 ### 5. Minimize Window
 Once you are done with what you need to do in **T-T**, you can simply press `Esc` to minimize the window.
 
@@ -239,12 +283,13 @@ Getting the hang of it? Here’s a quick and dirty summary of all **T-T** comman
 | undo  | Undoes the previous command  | `undo` |
 | redo  | Redoes the previous undo | `redo` |
 | search  | Searchs for tasks that contain a designated keyword  | `search meaning` |
+| sort  | Sorts the list of tasks by date or lexicographically | `sort date` |
 | storage | Changes the location of the XML file in which tasks are stored |`storage C://Users/Desktop/newfile.xml` |
 |  help | Displays the list of commands available on T-T  |  `help` |
 
 <br>
 <br>
-<!-- @@author A0139422J -->
+
 | Keyboard Shortcuts  | Function  |
 |---|---|
 | `UP`/`DOWN`   |  Toggles history of recent commands  |
