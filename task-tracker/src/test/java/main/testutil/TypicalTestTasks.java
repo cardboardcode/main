@@ -52,6 +52,30 @@ public class TypicalTestTasks {
     public TestTask[] getTypicalTasks() {
         return new TestTask[]{deadline2, deadline1, event1, event2, floating1, floating2};
     }
+    
+    public TestTask[] getHighTasks(){
+    	return new TestTask[]{deadline1, event2, floating2};
+    }
+    
+    public TestTask[] getEventTasks(){
+    	return new TestTask[]{event1, event2};
+    }
+    
+    public TestTask[] getFloatingTasks(){
+    	return new TestTask[]{floating1, floating2};
+    }
+    
+    public TestTask[] getDeadlineTasks(){
+    	return new TestTask[]{deadline2, deadline1};
+    }
+    
+    public TestTask[] getLowTasks(){
+    	return new TestTask[]{floating1};
+    }
+    
+    public TestTask[] getNormalTasks(){
+    	return new TestTask[]{deadline2, event1};
+    }
 
     public TaskTracker getTypicalTaskTracker() {
         TaskTracker ab = new TaskTracker();

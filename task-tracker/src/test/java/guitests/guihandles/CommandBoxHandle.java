@@ -2,7 +2,9 @@
 package guitests.guihandles;
 
 import guitests.GuiRobot;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import main.TestMain;
 
 /**
  * A handle to the Command Box in the GUI.
@@ -32,10 +34,29 @@ public class CommandBoxHandle extends GuiHandle{
         guiRobot.sleep(200); //Give time for the command to take effect
     }
     
+    /**
+     * Enters the given command in the Command Box and does not enter.
+     */
+    public void runStaticCommand(String command) {
+        enterCommand(command);
+        guiRobot.sleep(500); //Give time for the command to take effect
+    }
+    
     public HelpWindowHandle runHelpCommand() {
         enterCommand("help");
         pressEnter();
         return new HelpWindowHandle(guiRobot, primaryStage);
     }
+    
+    public CommandBoxHandle minimizeWindow(){
+    	useEscKey();
+    	return new CommandBoxHandle(guiRobot, primaryStage, TestMain.APP_TITLE);
+    }
+
+	private void useEscKey() {
+		guiRobot.push(KeyCode.ESCAPE);
+		guiRobot.sleep(5000);
+		
+	}
 
 }
