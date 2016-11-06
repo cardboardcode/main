@@ -6,7 +6,7 @@ import main.model.filter.SortCriteria;
 
 public class ChangeSortFilterEvent extends BaseEvent {
 
-    SortCriteria filter;
+    private SortCriteria filter;
     
     public ChangeSortFilterEvent(String param) {
         assert param.equals("date") || param.equals("name");
