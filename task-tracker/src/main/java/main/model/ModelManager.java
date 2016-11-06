@@ -116,6 +116,7 @@ public class ModelManager extends ComponentManager implements Model {
         addToUndoStack(UndoCommand.DONE,(Task)target);
     }
     
+    //@@author A0142686X
     @Override
     public synchronized void editTask(int index, Task newtask) throws TaskNotFoundException, DuplicateTaskException {
         addToUndoStack(UndoCommand.EDIT, getTaskfromIndex(index), newtask);  //NEED TO CHECK ORDER
@@ -127,8 +128,7 @@ public class ModelManager extends ComponentManager implements Model {
         
     }
     
-    
-    
+    //@@author A0144132W
     /** Raises an event to indicate the model has changed */
     private void indicateTaskTrackerChanged() {
         raise(new TaskTrackerChangedEvent(taskTracker));

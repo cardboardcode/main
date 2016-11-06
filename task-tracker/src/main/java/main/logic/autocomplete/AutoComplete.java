@@ -53,18 +53,18 @@ public class AutoComplete {
     public AutoComplete(Model model) {
         this.eventsCenter = EventsCenter.getInstance().registerHandler(this);
         this.model = model;        
-        buildAllLists(model);
+        buildAllLists();
         initSuggestions();
     }
 
-    /*
-     * fills the suggestions list with all commands at start up
+    /**
+     * Fills the suggestions list with all commands at start up.
      */
     private void initSuggestions() {
         suggestions = commandList.getSuggestions("");
     }
     
-    private void buildAllLists(Model model) {
+    private void buildAllLists() {
         buildCommandList();
         buildListList();
         buildSortList();
@@ -90,8 +90,8 @@ public class AutoComplete {
         sortList = build.build();
     }
     
-    /*
-     * updates the taskList by iterating all tasks and storing
+    /**
+     * Updates the taskList by iterating all tasks and storing
      * them into an array of SetTrie.
      */
     private void updateTaskList() {
@@ -109,12 +109,11 @@ public class AutoComplete {
         return input.trim().split(" ");
     }
     
-    //TODO slap this
     public void updateSuggestions(String input) {
         String[] tokens = getTokens(input);
         end_index = input.length();
         
-        // is command
+        // if there is only 1 token, take as command word
         if (tokens.length == 1) {
             suggestions = commandList.getSuggestions(input);
             start_index = 0;
@@ -127,27 +126,34 @@ public class AutoComplete {
             
             if (ReferenceList.commandsDictionary.containsKey(commandInput)) {
                 String commandWord = ReferenceList.commandsDictionary.get(commandInput);
-                
-                if (needTaskSuggestions(tokens, commandWord)) {
-                    start_index = commandInput.length() + 1;
-                    saveIfNeeded();
-                    getTaskSuggestions(tokens, commandInput);
-                }
-                else if (commandWord.equals(ListCommand.COMMAND_WORD)) {
-                    start_index = getListSuggestions(tokens);
-                }
-                else if (commandWord.equals(SortCommand.COMMAND_WORD) && tokens.length == 2) {
-                    getSortSuggestions(tokens[1]);
-                    start_index = commandInput.length() + 1;
-                }
-            }
-            else {
-                suggestions = new ArrayList<String>();
+                deduceSuggestionsToGive(tokens, commandInput, commandWord);
             }
         }
         updateTaskList();
     }
 
+    /**
+     * Deduces the appropriate suggestions to give based on commandWord.
+     */
+    private void deduceSuggestionsToGive(String[] tokens, String commandInput, String commandWord) {
+
+        if (needTaskSuggestions(tokens, commandWord)) {
+            start_index = commandInput.length() + 1;
+            saveIfNeeded();
+            getTaskSuggestions(tokens);
+        }
+        else if (commandWord.equals(ListCommand.COMMAND_WORD)) {
+            start_index = getListSuggestions(tokens);
+        }
+        else if (commandWord.equals(SortCommand.COMMAND_WORD) && tokens.length == 2) {
+            getSortSuggestions(tokens[1]);
+            start_index = commandInput.length() + 1;
+        }
+    }
+
+    /**
+     * Saves the filter just before list starts to give real time suggestions 
+     */
     private void saveIfNeeded() {
         if (save) {
             model.saveFilter();
@@ -156,6 +162,9 @@ public class AutoComplete {
         }
     }
 
+    /**
+     * Reverts to original filter when user cancels search.
+     */
     private void revertIfNeeded() {
         if (revert) {
             model.revertFilter();
@@ -167,8 +176,8 @@ public class AutoComplete {
         suggestions = sortList.getSuggestions(token);
     }
     
-    /*
-     * gets suggestions for last list parameter
+    /**
+     * Gets suggestions for last list parameter
      * 
      * @returns the start index of the command input to be replaced
      */
@@ -183,10 +192,10 @@ public class AutoComplete {
         return index;
     }
 
-    /*
-     * returns suggestions for tasks
+    /**
+     * @returns suggestions for tasks.
      */
-    private void getTaskSuggestions(String[] tokens, String commandInput) {
+    private void getTaskSuggestions(String[] tokens) {
         int size = updateFilteredListWithSuggestions(ArrayUtils.subarray(tokens, 1, tokens.length));
         suggestions = getStringArrayFromIndex(size);
     }
@@ -195,8 +204,8 @@ public class AutoComplete {
         return isFindEditDoneDelete(commandWord) && !dontInterrupt(tokens, commandWord); 
     }
 
-    /*
-     * makes sure suggestions are not given when the user doesn't want it
+    /**
+     * Determines when suggestions are not given.
      */
     private boolean dontInterrupt(String[] tokens, String commandWord) {
         return !commandWord.equals(FindCommand.COMMAND_WORD) && StringUtils.isNumeric(tokens[1]);
@@ -206,10 +215,10 @@ public class AutoComplete {
         return commandWord.equals(EditCommand.COMMAND_WORD) || commandWord.equals(DeleteCommand.COMMAND_WORD) || commandWord.equals(DoneCommand.COMMAND_WORD) || commandWord.equals(FindCommand.COMMAND_WORD) || commandWord.equals(DoneCommand.COMMAND_WORD);
     }
     
-    /*
-     * updates the filtered list in real time to show matching tasks
+    /**
+     * Updates the filtered list in real time to show matching tasks.
      * 
-     * @returns the size of the updated filtered list
+     * @returns the size of the updated filtered list.
      */
     public int updateFilteredListWithSuggestions(String[] tokens) {
         taskList = taskList.stream().filter(pair -> containPrefixInTask(pair.getValue(), tokens)).collect(Collectors.toList());
@@ -217,9 +226,11 @@ public class AutoComplete {
         eventsCenter.post(new UpdateListWithSuggestionsEvent(matchedTasks));
         return matchedTasks.size();
     }
-    
-    private boolean containPrefixInTask(SetTrie task, String[] tokens) {
 
+    /**
+     * Checks if task contains any prefix found in the given token array.
+     */
+    private boolean containPrefixInTask(SetTrie task, String[] tokens) {
         for (String token : tokens) {
             if (task.matchPrefix(token)) {
                 return true;
@@ -228,6 +239,9 @@ public class AutoComplete {
         return false;
     }
     
+    /**
+     * @returns a list of tasks that matches the suggestions.
+     */
     private List<ReadOnlyTask> getListOfMatchedTasks() {
         List<ReadOnlyTask> matchedTasks = new ArrayList<ReadOnlyTask>();
         
@@ -242,6 +256,10 @@ public class AutoComplete {
         return matchedTasks;
     }
     
+    /**
+     * Generates an array of index, starting from 1, corresponding 
+     * to the number of tasks shown.
+     */
     private List<String> getStringArrayFromIndex(int size) {
         List<String> list = new ArrayList<String>();
         for (int i = 0; i < size; i++) {
@@ -250,8 +268,8 @@ public class AutoComplete {
         return list;
     }
     
-    /*
-     * posts an autocomplete event to fill the commandBox
+    /**
+     * Posts an AutoCompleteEvent to fill the commandBox.
      */
     public void fillInSuggestions() {
         if (suggestions.size() == 0) return;
@@ -263,15 +281,15 @@ public class AutoComplete {
         
     }
     
-    /*
-     * @returns suggestions
+    /**
+     * @returns suggestions.
      */
     public List<String> getSuggestions() {
         return suggestions;
     }
     
-    /*
-     * updates suggestions when key press is detected
+    /**
+     * Updates suggestions when key press is detected.
      */
     @Subscribe
     private void handleKeyPressEvent(KeyPressEvent event) {
@@ -279,8 +297,8 @@ public class AutoComplete {
         tabCount = 0;
     }
     
-    /*
-     * toggles the suggestions to fill in commandBox
+    /**
+     * Toggles the suggestions to fill in commandBox.
      */
     @Subscribe
     private void handleTabPressEvent(TabPressEvent event) {
@@ -289,8 +307,8 @@ public class AutoComplete {
         tabCount++;
     }
     
-    /*
-     * updates taskList when tasks are changed
+    /**
+     * Updates taskList when tasks are changed.
      */
     @Subscribe
     private void handleTaskTrackerChangedEvent(TaskTrackerChangedEvent event) {
