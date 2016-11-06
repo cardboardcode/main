@@ -57,39 +57,39 @@ Right click on the project (in Eclipse package explorer), choose Gradle -> Refre
    4. Rename the existing `SampleData1.xml` file in the folder to `SampleData.xml`
    5. Restart the program.
 
-
+<br>
+<br>
+<br>
 ### Testing Commands
-<br>
-<br>
 <br>
 ### 1.**ADD**
 
-**Purpose**: Adding a new task 
-**Action**:
-Execute `add question life`
+**Purpose**: Adding a new task <br>
+**Action**:<br>
+Execute `add question life`<br>
 **Expected**:
-Display Area will show message: `New task added: question life`
+Display Area will show message: `New task added: question life`<br>
 
-**Purpose**: Adding a duplicate floating task 
-**Action**:
-Execute `add clean room -l`
-**Expected**:
-Display Area will show message: `This task is already in the to-do list`
+**Purpose**: Adding a duplicate floating task <br>
+**Action**:<br>
+Execute `add clean room -l`<br>
+**Expected**:<br>
+Display Area will show message: `This task is already in the to-do list`<br>
 
-**Purpose**: Input wrong command 
-**Action**:
-Execute `adds wrongcommandinput`
-**Expected**:
-Display Area will show message: `Invalid command format Unknown command`
+**Purpose**: Input wrong command <br>
+**Action**:<br>
+Execute `adds wrongcommandinput`<br>
+**Expected**:<br>
+Display Area will show message: `Invalid command format Unknown command`<br>
 <br>
 <br>
 <br>
-### 2.**LIST**
+### 2.**LIST**<br>
 
-**Purpose**: Lists all events
-**Action**:
-Execute `list events`
-**Expected**:
+**Purpose**: Lists all events<br>
+**Action**:<br>
+Execute `list events`<br>
+**Expected**:<br>
     -   Display Area will show message: `Listed all pending events`
     -   Image in List Statistics Panel will change.
     -   Task-list panel will display only 4 task cards.
@@ -98,41 +98,41 @@ Execute `list events`
 **Action**:
 Execute `list deadlines`
 **Expected**:
-    -   Display Area will show message: `Listed all pending tasks with deadlines`
-    -   Image in List Statistics Panel will change.
-    -   Task-list panel will display only 34 task cards.
+    -   Display Area will show message: `Listed all pending tasks with deadlines`<br>
+    -   Image in List Statistics Panel will change.<br>
+    -   Task-list panel will display only 34 task cards.<br>
 
-**Purpose**: Lists all floating tasks
-**Action**:
-Execute `list floating`
-**Expected**:
-    -   Display Area will show message: `Listed all pending floating tasks`
-    -   Image in List Statistics Panel will change.
-    -   Task-list panel will display only 13 task cards.
+**Purpose**: Lists all floating tasks<br>
+**Action**:<br>
+Execute `list floating`<br>
+**Expected**:<br>
+    -   Display Area will show message: `Listed all pending floating tasks`<br>
+    -   Image in List Statistics Panel will change.<br>
+    -   Task-list panel will display only 13 task cards.<br>
 
-**Purpose**: Lists all low priority tasks
-**Action**:
-Execute `list low`
-**Expected**:
-    -   Display Area will show message: `Listed all pending low priority tasks`
-    -   Image in List Statistics Panel will change.
-    -   Task-list panel will display only 10 task cards.
+**Purpose**: Lists all low priority tasks<br>
+**Action**:<br>
+Execute `list low`<br>
+**Expected**:<br>
+    -   Display Area will show message: `Listed all pending low priority tasks`<br>
+    -   Image in List Statistics Panel will change.<br>
+    -   Task-list panel will display only 10 task cards.<br>
 
-**Purpose**: Lists all normal priority tasks
-**Action**:
-Execute `list normal`
-**Expected**:
-    -   Display Area will show message: `Listed all pending normal priority tasks`
-    -   Image in List Statistics Panel will change.
-    -   Task-list panel will display only 30 task cards.
+**Purpose**: Lists all normal priority tasks<br>
+**Action**:<br>
+Execute `list normal`<br>
+**Expected**:<br>
+    -   Display Area will show message: `Listed all pending normal priority tasks`<br>
+    -   Image in List Statistics Panel will change.<br>
+    -   Task-list panel will display only 30 task cards.<br>
 
-**Purpose**: Lists all high priority tasks
-**Action**:
-Execute `list high`
-**Expected**:
-    -   Display Area will show message: `Listed all pending low priority tasks`
-    -   Image in List Statistics Panel will change.
-    -   Task-list panel will display only 11 task cards.
+**Purpose**: Lists all high priority tasks<br>
+**Action**:<br>
+Execute `list high`<br>
+**Expected**:<br>
+    -   Display Area will show message: `Listed all pending low priority tasks`<br>
+    -   Image in List Statistics Panel will change.<br>
+    -   Task-list panel will display only 11 task cards.<br>
 <br>
 <br>
 <br>
