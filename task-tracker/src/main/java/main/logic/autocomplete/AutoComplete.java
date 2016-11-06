@@ -299,7 +299,7 @@ public class AutoComplete {
      * Updates suggestions when key press is detected.
      */
     @Subscribe
-    private void handleKeyPressEvent(KeyPressEvent event) {
+    public void handleKeyPressEvent(KeyPressEvent event) {
         updateSuggestions(event.getInput());
         tabCount = 0;
     }
@@ -308,7 +308,7 @@ public class AutoComplete {
      * Toggles the suggestions to fill in commandBox.
      */
     @Subscribe
-    private void handleTabPressEvent(TabPressEvent event) {
+    public void handleTabPressEvent(TabPressEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         fillInSuggestions();
         tabCount++;
@@ -318,7 +318,7 @@ public class AutoComplete {
      * Updates taskList when tasks are changed.
      */
     @Subscribe
-    private void handleTaskTrackerChangedEvent(TaskTrackerChangedEvent event) {
+    public void handleTaskTrackerChangedEvent(TaskTrackerChangedEvent event) {
         updateTaskList();
     }
 
