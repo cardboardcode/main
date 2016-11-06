@@ -15,8 +15,7 @@ public class XmlFileStorage {
     /**
      * Saves the given tasktracker data to the specified file.
      */
-    public static void saveDataToFile(File file, XmlSerializableTaskTracker taskTracker)
-            throws FileNotFoundException {
+    public static void saveDataToFile(File file, XmlSerializableTaskTracker taskTracker) throws FileNotFoundException {
         try {
             XmlUtil.saveDataToFile(file, taskTracker);
         } catch (JAXBException e) {
@@ -35,5 +34,4 @@ public class XmlFileStorage {
             throw new DataConversionException(e);
         }
     }
-
 }

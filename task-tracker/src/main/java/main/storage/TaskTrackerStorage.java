@@ -7,10 +7,8 @@ import main.model.ReadOnlyTaskTracker;
 import java.io.IOException;
 import java.util.Optional;
 
-import com.sun.javafx.runtime.VersionInfo;
-
 /**
- * Represents a storage for TaskTracker.
+ * Represents storage for TaskTracker.
  */
 public interface TaskTrackerStorage {
 
@@ -21,7 +19,6 @@ public interface TaskTrackerStorage {
 
     /**
      * Returns TaskTracker data as a ReadOnlyTaskTracker.
-     *   Returns {@code Optional.empty()} if storage file is not found.
      * @throws DataConversionException if the data in storage is not in the expected format.
      * @throws IOException if there was any problem when reading from the storage.
      */

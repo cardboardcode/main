@@ -6,16 +6,14 @@ import main.commons.events.ui.ShowHelpRequestEvent;
 import main.logic.command.CommandResult;
 
 /**
- * Format full help instructions for every command for display.
- * @author bey
+ * Displays a new window that shows all available command in T-T.
  */
-
 public class HelpCommand extends Command {
     
 	public static final String COMMAND_WORD = "help";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows program usage instructions.\n"
-            + "Example: " + COMMAND_WORD;
+            												+ "Example: " + COMMAND_WORD;
 
     public static final String SHOWING_HELP_MESSAGE = "Opened help window.";
 

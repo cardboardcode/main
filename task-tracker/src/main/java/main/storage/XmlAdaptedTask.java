@@ -2,16 +2,14 @@
 package main.storage;
 
 import main.commons.exceptions.IllegalValueException;
-import main.model.task.*;
+import main.model.task.TaskType;
+import main.model.task.PriorityType;
+import main.model.task.ReadOnlyTask;
+import main.model.task.Task;
 
 import javax.xml.bind.annotation.XmlElement;
 
-import com.joestelmach.natty.generated.DateParser.date_return;
-
 import java.util.Date;
-import java.util.IllegalFormatCodePointException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * JAXB-friendly version of the Task.
@@ -36,17 +34,14 @@ public class XmlAdaptedTask {
     private boolean isDone;
     @XmlElement(required = true)
     private boolean isInferred;
-    
-    
+        
     /**
      * No-arg constructor for JAXB use.
      */ 
     public XmlAdaptedTask() {}
 
-
     /**
-     * Converts a given Person into this class for JAXB use.
-     *
+     * Converts a given Task into this class for JAXB use.
      * @param source future changes to this will not affect the created XmlAdaptedTask
      */
     public XmlAdaptedTask(ReadOnlyTask source) {
@@ -63,14 +58,15 @@ public class XmlAdaptedTask {
 
     /**
      * Converts this jaxb-friendly adapted task object into the model's Task object.
-     *
      * @throws IllegalValueException if there were any data constraints violated in the adapted task
      */
-    public Task toModelType() throws IllegalValueException {
-            
-        if (type == TaskType.FLOATING) return new Task(message, priority).setIsInferred(isInferred).setIsRecurring(isRecurring).setDone(isDone);
-        else if (type == TaskType.EVENT) return new Task(message, startTime, endTime, priority).setIsInferred(isInferred).setIsRecurring(isRecurring).setDone(isDone);
-        else return new Task(message, deadline, priority).setIsInferred(isInferred).setIsRecurring(isRecurring).setDone(isDone);
-        
+    public Task toModelType() throws IllegalValueException {            
+        if (type == TaskType.FLOATING) {
+            return new Task(message, priority).setIsInferred(isInferred).setIsRecurring(isRecurring).setDone(isDone);
+        } else if (type == TaskType.EVENT) {
+            return new Task(message, startTime, endTime, priority).setIsInferred(isInferred).setIsRecurring(isRecurring).setDone(isDone);
+        } else {
+            return new Task(message, deadline, priority).setIsInferred(isInferred).setIsRecurring(isRecurring).setDone(isDone);       
+        }
     }
 }

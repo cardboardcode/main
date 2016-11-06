@@ -4,7 +4,6 @@ package guitests.guihandles;
 import guitests.GuiRobot;
 import javafx.stage.Stage;
 import main.TestMain;
-
 import java.util.Arrays;
 
 /**

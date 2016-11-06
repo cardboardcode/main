@@ -1,8 +1,6 @@
 //@@author A0139422J
 package main.ui;
 
-
-
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -12,13 +10,9 @@ import main.commons.util.FxViewUtil;
 import main.Main;
 import main.commons.core.LogsCenter;
 import java.util.logging.Logger;
-import javafx.fxml.FXML;
 
 /**
  * Controller for a help page
- * "person" keyword check done
- * "addressbook" keyword check done
- * @author bey
  */
 public class HelpWindow extends UiPart {
 
@@ -52,7 +46,7 @@ public class HelpWindow extends UiPart {
         Scene scene = new Scene(mainPane);
         //Null passed as the parent stage to make it non-modal.
         dialogStage = createDialogStage(TITLE, null, scene);
-        dialogStage.setMaximized(true); //TODO: set a more appropriate initial size
+        dialogStage.setMaximized(true); 
         setIcon(dialogStage, ICON);
 
         WebView browser = new WebView();
@@ -65,7 +59,7 @@ public class HelpWindow extends UiPart {
     public void show() {
         dialogStage.show();
     } 
-//  @@author A0139422J   
+    
     public void closeHelpWindow(){
     	dialogStage.close();
     }

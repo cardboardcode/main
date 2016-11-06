@@ -2,8 +2,6 @@
 package main.storage;
 
 import main.commons.exceptions.IllegalValueException;
-//import main.model.tag.Tag;
-//import main.model.tag.UniqueTagList;
 import main.model.ReadOnlyTaskTracker;
 import main.model.task.ReadOnlyTask;
 import main.model.task.UniqueTaskList;
@@ -11,7 +9,6 @@ import main.model.task.UniqueTaskList;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,6 +43,7 @@ public class XmlSerializableTaskTracker implements ReadOnlyTaskTracker {
             try {
                 lists.add(t.toModelType());
             } catch (IllegalValueException e) {
+                e.printStackTrace();
             }
         }
         return lists;
@@ -62,5 +60,4 @@ public class XmlSerializableTaskTracker implements ReadOnlyTaskTracker {
             }
         }).collect(Collectors.toCollection(ArrayList::new));
     }
-
 }

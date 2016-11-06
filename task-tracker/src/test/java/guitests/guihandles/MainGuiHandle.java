@@ -5,7 +5,6 @@ import guitests.GuiRobot;
 import javafx.stage.Stage;
 import main.TestMain;
 
-
 /**
  * Provides a handle for the main GUI.
  */
@@ -15,7 +14,7 @@ public class MainGuiHandle extends GuiHandle {
         super(guiRobot, primaryStage, TestMain.APP_TITLE);
     }
 
-    public TaskListPanelHandle getPersonListPanel() {
+    public TaskListPanelHandle getTaskListPanel() {
         return new TaskListPanelHandle(guiRobot, primaryStage);
     }
 

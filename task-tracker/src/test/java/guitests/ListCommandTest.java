@@ -2,11 +2,13 @@
 package guitests;
 
 import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
-
 import main.testutil.TestTask;
 
+/**
+ * Evaluates the list command when it lists events, deadlines, floating, low
+ * priority, normal priority and high priority tasks
+ */
 public class ListCommandTest extends TaskTrackerGuiTest {
 
 	@Test
@@ -37,7 +39,7 @@ public class ListCommandTest extends TaskTrackerGuiTest {
 		assertTrue(taskListPanel.isListMatching(filteredList));
 		assertResultMessage("Listed all pending low priority tasks");
 
-		// lists all low priority tasks
+		// lists all normal priority tasks
 		filteredList = td.getNormalTasks();
 		commandBox.runCommand("list normal");
 		assertTrue(taskListPanel.isListMatching(filteredList));

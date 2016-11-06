@@ -2,27 +2,17 @@
 package main.ui;
 
 import main.commons.core.Config;
-import java.util.List;
-import java.util.Optional;
-
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import main.commons.core.Config;
 import main.commons.core.GuiSettings;
 import main.commons.events.ui.ExitAppRequestEvent;
 import main.commons.util.FxViewUtil;
@@ -33,21 +23,7 @@ import main.model.task.ReadOnlyTask;
 /**
  * Instantiates all the individual components for the Gui and interacts with
  * UiManager - CommandBox, HelpWindow, StatusBarFooter, TaskCard, TaskListPanel
- * "person" keyword check done "addressbook" keyword check done
- * 
- * @param AnchorPane
- *            commandBoxPlaceholder
- * @param MenuItem
- *            helpMenuItem
- * @param AnchorPane
- *            taskListPanelPlaceholder
- * @param AnchorPane
- *            resultDisplayPlaceholder
- * @param AnchorPane
- *            statusbarPlaceholder
- * @author bey
  */
-
 public class MainWindow extends UiPart {
 
 	private static final String ICON = "/images/pp.png";
@@ -134,13 +110,9 @@ public class MainWindow extends UiPart {
 		scene = new Scene(rootLayout);
 		primaryStage.setScene(scene);
 		
+		//Set the default color theme for the UI
 		setWindowStyle();
-		// setAccelerators();
 	}
-
-	// private void setAccelerators() {
-	// helpMenuItem.setAccelerator(KeyCombination.valueOf("F1"));
-	// }
 
 	void fillInnerParts() {
 		taskListPanel = TaskListPanel.load(primaryStage, getTaskListPlaceholder(), logic.getFilteredTaskList());
@@ -201,9 +173,7 @@ public class MainWindow extends UiPart {
 	}
 
 	private void setWindowMinSize() {
-//		 primaryStage.setMinHeight(MIN_HEIGHT);
 		 primaryStage.setMinWidth(MIN_WIDTH);
-//		 primaryStage.setMaximized(true);
 	}
 
 	/**
@@ -335,7 +305,6 @@ public class MainWindow extends UiPart {
 
 	}
 	
-
 	//@@author A0139422J
 	public void handlePageUp(ListView<ReadOnlyTask> scrollList) {
 

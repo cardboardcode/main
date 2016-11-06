@@ -18,7 +18,7 @@ import java.util.Set;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Provides a handle for the panel containing the person list.
+ * Provides a handle for the panel containing the task list.
  */
 public class TaskListPanelHandle extends GuiHandle {
 
@@ -31,21 +31,16 @@ public class TaskListPanelHandle extends GuiHandle {
 		super(guiRobot, primaryStage, TestMain.APP_TITLE);
 	}
 
-	public List<ReadOnlyTask> getSelectedPersons() {
-		ListView<ReadOnlyTask> personList = getListView();
-		return personList.getSelectionModel().getSelectedItems();
-	}
-
 	public ListView<ReadOnlyTask> getListView() {
 		return (ListView<ReadOnlyTask>) getNode(TASKS_LIST_VIEW_ID);
 	}
 
 	/**
-	 * Returns true if the list is showing the person details correctly and in
+	 * Returns true if the list is showing the task details correctly and in
 	 * correct order.
 	 * 
-	 * @param persons
-	 *            A list of person in the correct order.
+	 * @param tasks
+	 *            A list of tasks in the correct order.
 	 */
 	public boolean isListMatching(ReadOnlyTask... tasks) {
 		return this.isListMatching(0, tasks);
@@ -69,12 +64,14 @@ public class TaskListPanelHandle extends GuiHandle {
 		return (checkIfListIsTooShort(tasksInList, startPosition, tasks)
 				&& checkIfNotMatchingTask(tasksInList, startPosition, tasks) && true);
 	}
-/**
- * Returns false if any of the tasks doesn't match
- * @param tasksInList
- * @param startPosition
- * @param tasks
- */
+
+	/**
+	 * Returns false if any of the tasks doesn't match
+	 * 
+	 * @param tasksInList
+	 * @param startPosition
+	 * @param tasks
+	 */
 	private boolean checkIfNotMatchingTask(List<ReadOnlyTask> tasksInList, int startPosition, ReadOnlyTask[] tasks) {
 		for (int i = 0; i < tasks.length - 1; i++) {
 			if (!tasksInList.get(startPosition + i).getMessage().equals(tasks[i].getMessage())) {
@@ -100,30 +97,33 @@ public class TaskListPanelHandle extends GuiHandle {
 	}
 
 	/**
-	 * Returns true if the list is showing the person details correctly and in
+	 * Returns true if the list is showing the task details correctly and in
 	 * correct order.
 	 * 
 	 * @param startPosition
 	 *            The starting position of the sub list.
 	 * @param tasks
-	 *            A list of person in the correct order.
+	 *            A list of tasks in the correct order.
 	 */
 	public boolean isListMatching(int startPosition, ReadOnlyTask... tasks) throws IllegalArgumentException {
-		
+
 		if (tasks.length + startPosition != getListView().getItems().size()) {
 			throw new IllegalArgumentException(
 					"List size mismatched\n" + "Expected " + (getListView().getItems().size()) + " tasks");
 		}
 		assertTrue(this.containsInOrder(startPosition, tasks));
 		return scrollAndCompareTask(startPosition, tasks);
-		
+
 	}
-/**
- * Engages the guiRobot to scroll to the designated task and compare TaskCard with expected task
- * @param startPosition
- * @param tasks
- * @return
- */
+
+	/**
+	 * Engages the guiRobot to scroll to the designated task and compare
+	 * TaskCard with expected task
+	 * 
+	 * @param startPosition
+	 * @param tasks
+	 * @return
+	 */
 	private boolean scrollAndCompareTask(int startPosition, ReadOnlyTask[] tasks) {
 		for (int i = 0; i < tasks.length; i++) {
 			final int scrollTo = i + startPosition;
@@ -163,8 +163,8 @@ public class TaskListPanelHandle extends GuiHandle {
 	}
 
 	/**
-	 * Returns the position of the person given, {@code NOT_FOUND} if not found
-	 * in the list.
+	 * Returns the position of the task given, {@code NOT_FOUND} if not found in
+	 * the list.
 	 */
 	public int getTaskIndex(ReadOnlyTask targetTask) {
 		List<ReadOnlyTask> tasksInList = getListView().getItems();
@@ -177,7 +177,7 @@ public class TaskListPanelHandle extends GuiHandle {
 	}
 
 	/**
-	 * Gets a person from the list by index
+	 * Gets a task from the list by index
 	 */
 	public ReadOnlyTask getTask(int index) {
 		return getListView().getItems().get(index);

@@ -3,16 +3,14 @@ package main.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
 import edu.emory.mathcs.backport.java.util.Arrays;
 import main.model.task.Task;
 
-public class UndoHistory {
-    /**
-     * Maintains an ArrayList of tasks changed in Tasktracker at every command.
-     * 
-     */
-    
+/**
+ * An ArrayList of tasks changed in Tasktracker at every command.
+ * 
+ */
+public class UndoHistory {        
     private int ID;
     private ArrayList<Task> tasks;
     
@@ -22,13 +20,14 @@ public class UndoHistory {
         this.tasks = new ArrayList<Task>(collection);       
     }
     
-    
+    /**
+     * Returns the command ID of executed command
+     */
     public int getID() {
-        return ID;
+        return this.ID;
     }
     
     public ArrayList<Task> getTasks() {
-        return tasks;
-    }   
-    
+        return this.tasks;
+    }       
 }

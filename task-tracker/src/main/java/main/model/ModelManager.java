@@ -85,7 +85,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void resetData(ReadOnlyTaskTracker newData) {
         if(newData.getTaskList().size()==0){
             List<ReadOnlyTask> prevTasks = taskTracker.getTaskList();
-            addToUndo(UndoCommand.CLR, prevTasks.toArray(new Task [prevTasks.size()]));
+            addToUndoStack(UndoCommand.CLR, prevTasks.toArray(new Task [prevTasks.size()]));
         }
         taskTracker.resetData(newData);
         indicateTaskTrackerChanged();
@@ -105,7 +105,7 @@ public class ModelManager extends ComponentManager implements Model {
         ReadOnlyTask target = getTaskfromIndex(index);
         taskTracker.removeTask(target);
         indicateTaskTrackerChanged();
-        addToUndo(UndoCommand.DEL, (Task)target);
+        addToUndoStack(UndoCommand.DEL, (Task)target);
     }
     
     @Override
@@ -113,15 +113,15 @@ public class ModelManager extends ComponentManager implements Model {
         ReadOnlyTask target = getTaskfromIndex(index);
         taskTracker.doneTask(target);
         indicateTaskTrackerChanged();
-        addToUndo(UndoCommand.DONE,(Task)target);
+        addToUndoStack(UndoCommand.DONE,(Task)target);
     }
     
     @Override
     public synchronized void editTask(int index, Task newtask) throws TaskNotFoundException, DuplicateTaskException {
-        addToUndo(UndoCommand.EDIT, getTaskfromIndex(index), newtask);  //NEED TO CHECK ORDER
+        addToUndoStack(UndoCommand.EDIT, getTaskfromIndex(index), newtask);  //NEED TO CHECK ORDER
         //taskTracker.editTask(index, newtask);
-        deleteTaskUndoRedo(getTaskfromIndex(index));
-        addTaskUndoRedo(newtask);
+        deleteTaskUndo(getTaskfromIndex(index));
+        addTaskUndo(newtask);
         updateFilteredListToShowAllPending();
         indicateTaskTrackerChanged();
         
@@ -139,7 +139,7 @@ public class ModelManager extends ComponentManager implements Model {
         taskTracker.addTask(task);
         updateFilteredListToShowAllPending();
         indicateTaskTrackerChanged();
-        addToUndo(UndoCommand.ADD, task);
+        addToUndoStack(UndoCommand.ADD, task);
     }
 
     //================== Loading from storage =============================================
@@ -469,101 +469,96 @@ public class ModelManager extends ComponentManager implements Model {
         
     }
     
-    //================= Functions for undo and redo ==================================
-//@@author A0142686X
+  //@@author A0142686X
+  //================= Methods for undo ==================================
     
     /**
-     * Adds task or multiple tasks to the undo stack
-     * 
+     * Adds updated tasks to the undo stack
      */
-    private void addToUndo(int ID, Task... tasks) {
+    @Override
+    public void addToUndoStack(int ID, Task... tasks) {
         UndoHistory undoHistory = new UndoHistory(ID, tasks);
         undoStack.push(undoHistory);
     }
     
     /**
-     * Method used by undo and redo to add tasks into tasktracker
+     * Method used by undo to add tasks without pushing to undo stack
      */
     @Override
-    public void addTaskUndoRedo(Task task) throws DuplicateTaskException {
+    public void addTaskUndo(Task task) throws DuplicateTaskException {
+        assert task != null;
         taskTracker.addTask(task);
-        //updateFilteredListToShowAllPending();
-        indicateTaskTrackerChanged();
-        
+        indicateTaskTrackerChanged();        
     }
     
     /**
-     * Method used by undo and redo to delete tasks from tasktracker
+     * Method used by undo to delete tasks without pushing to undo stack
      */
     @Override
-    public void deleteTaskUndoRedo(ReadOnlyTask target) throws TaskNotFoundException {
+    public void deleteTaskUndo(ReadOnlyTask target) throws TaskNotFoundException {
+        assert target != null;
         taskTracker.removeTask(target);
-        indicateTaskTrackerChanged();
-        
+        indicateTaskTrackerChanged();        
     }
 
     /**
-     * Method used by undo and redo to edit tasks in tasktracker
+     * Method used by undo to edit tasks without pushing to undo stack
      */
     @Override
-    public void editTaskUndoRedo(Task originalTask, Task newTask) throws DuplicateTaskException {
-//        List<ReadOnlyTask> temp = new LinkedList<ReadOnlyTask>();
-//        temp=taskTracker.getTaskList();
-//        int Index = temp.lastIndexOf(originalTask);
-//        taskTracker.editTask(Index, newTask);
-        //updateFilteredListToShowAllPending();
+    public void editTaskUndo(Task originalTask, Task newTask) throws DuplicateTaskException, TaskNotFoundException {
+        assert originalTask != null;
+        assert newTask != null;
         try {
-            deleteTaskUndoRedo(originalTask);
+            deleteTaskUndo(originalTask);
         } catch (TaskNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new TaskNotFoundException();
         }
-        addTaskUndoRedo(newTask);
-        indicateTaskTrackerChanged();
-        
+        addTaskUndo(newTask);
+        indicateTaskTrackerChanged();        
     }
     
     /**
-     * Method used by undo and redo to clear tasktracker
+     * Method used by undo to clear tasks without pushing to undo stack
      */
     @Override
-    public void clearTaskUndoRedo(ArrayList<Task> tasks) {
+    public void clearTaskUndo(ArrayList<Task> tasks) {
+        assert tasks != null;
         TaskTracker prevTaskTracker = new TaskTracker();
         prevTaskTracker.setTasks(tasks);
         taskTracker.resetData(prevTaskTracker);
     }
     
+    /**
+     * Method used by undo to mark task as undone without pushing to undo stack
+     */
     @Override
-    public void doneTaskUndoRedo(Task task) throws DuplicateTaskException, TaskNotFoundException {
+    public void doneTaskUndo(Task task) throws DuplicateTaskException, TaskNotFoundException {
+        assert task != null;
         taskTracker.incompleteTask(task);
-        //updateFilteredListToShowAllPending();
         indicateTaskTrackerChanged();
     }
     
     /**
-     * Method to get task from tasktracker at a given index
+     * Method to get task from Observablelist from specified index
      */
     @Override 
     public Task getTaskfromIndex(int index) throws TaskNotFoundException {
-        Task task;
-        
+        Task task;        
         try {
             task = sortedTasks.get(index);
         } catch (IndexOutOfBoundsException e) {
             throw new TaskNotFoundException();
-        }
-        
+        }        
         return task;
     }
     
     /**
-     * Method to get index of a given task in tasktracker 
+     * Method to get index of specified task in ObservableList 
      */
     @Override
     public int getIndexFromTask(ReadOnlyTask task) throws TaskNotFoundException {
+        assert task != null;
         int index;
-//        List<ReadOnlyTask> temp = new LinkedList<ReadOnlyTask>();
-//        temp=taskTracker.getTaskList();
         index=sortedTasks.lastIndexOf(task);
         return index;
     }
