@@ -93,36 +93,31 @@ public class AutoCompleteTest {
     @Test
     public void updateSuggestions_editDoneDelete_lowerCaseMatchFirstToken() {
         autoComplete.updateSuggestions("delete clea");
-        assertEquals(Collections.singletonList("1"), autoComplete.getSuggestions());
-        assertListBehavior(Arrays.asList(new Task(TypicalTestTasks.floating1)));
+        assertListAndSuggestionsBehavior(Arrays.asList("1"), Arrays.asList(new Task(TypicalTestTasks.floating1)));
     }
     
     @Test
     public void updateSuggestions_editDoneDelete_lowerCaseMatchMiddleToken() {
         autoComplete.updateSuggestions("done with");
-        assertEquals(Collections.singletonList("1"), autoComplete.getSuggestions());
-        assertListBehavior(Arrays.asList(new Task(TypicalTestTasks.event1)));
+        assertListAndSuggestionsBehavior(Arrays.asList("1"), Arrays.asList(new Task(TypicalTestTasks.event1)));
     }
     
     @Test
     public void updateSuggestions_editDoneDelete_lowerCaseMatchMultiple() {
         autoComplete.updateSuggestions("delete clea with");
-        assertEquals(Arrays.asList("1", "2"), autoComplete.getSuggestions());
-        assertListBehavior(Arrays.asList(new Task(TypicalTestTasks.event1), new Task(TypicalTestTasks.floating1)));
+        assertListAndSuggestionsBehavior(Arrays.asList("1", "2"), Arrays.asList(new Task(TypicalTestTasks.event1), new Task(TypicalTestTasks.floating1)));
     }
     
     @Test
     public void updateSuggestions_find_lowerCaseMatchOne() {
         autoComplete.updateSuggestions("find clea ");
-        assertEquals(Arrays.asList("1"), autoComplete.getSuggestions());
-        assertListBehavior(Arrays.asList(new Task(TypicalTestTasks.floating1)));
+        assertListAndSuggestionsBehavior(Arrays.asList("1"), Arrays.asList(new Task(TypicalTestTasks.floating1)));
     }
     
     @Test
     public void updateSuggestions_find_upperCaseMatchOne() {
         autoComplete.updateSuggestions("find CLEA ");
-        assertEquals(Arrays.asList("1"), autoComplete.getSuggestions());
-        assertListBehavior(Arrays.asList(new Task(TypicalTestTasks.floating1)));
+        assertListAndSuggestionsBehavior(Arrays.asList("1"), Arrays.asList(new Task(TypicalTestTasks.floating1)));
     }
     
     @Test
@@ -148,8 +143,10 @@ public class AutoCompleteTest {
     }
     
 
-    private void assertListBehavior(List<? extends ReadOnlyTask> shownList) {
+    private void assertListAndSuggestionsBehavior(List<String> expectedSuggestions, List<? extends ReadOnlyTask> shownList) {
         assertEquals(shownList, model.getFilteredTaskList());
+        assertEquals(expectedSuggestions, autoComplete.getSuggestions());
+
     }
 
 }
