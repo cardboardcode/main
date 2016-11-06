@@ -2,12 +2,13 @@
 package guitests;
 
 import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
-
 import main.testutil.TestTask;
 import main.testutil.TestUtil;
 
+/**
+ * Evaluates sort command when it sorts the list by name and then by date
+ */
 public class SortCommandTest extends TaskTrackerGuiTest {
 
 	@Test
