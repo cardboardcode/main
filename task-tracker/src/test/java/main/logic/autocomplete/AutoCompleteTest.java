@@ -14,6 +14,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import main.logic.Logic;
+import main.logic.command.DeleteCommand;
+import main.logic.command.DoneCommand;
+import main.logic.command.EditCommand;
 import main.logic.parser.ReferenceList;
 import main.model.Model;
 import main.model.ModelManager;
@@ -92,20 +95,17 @@ public class AutoCompleteTest {
     
     @Test
     public void updateSuggestions_editDoneDelete_lowerCaseMatchFirstToken() {
-        autoComplete.updateSuggestions("delete clea");
-        assertListAndSuggestionsBehavior(Arrays.asList("1"), Arrays.asList(new Task(TypicalTestTasks.floating1)));
+        assertEditDoneDeleteCommands("clea", Arrays.asList("1"), Arrays.asList(new Task(TypicalTestTasks.floating1)));
     }
     
     @Test
     public void updateSuggestions_editDoneDelete_lowerCaseMatchMiddleToken() {
-        autoComplete.updateSuggestions("done with");
-        assertListAndSuggestionsBehavior(Arrays.asList("1"), Arrays.asList(new Task(TypicalTestTasks.event1)));
+        assertEditDoneDeleteCommands("with", Arrays.asList("1"), Arrays.asList(new Task(TypicalTestTasks.event1)));
     }
     
     @Test
     public void updateSuggestions_editDoneDelete_lowerCaseMatchMultiple() {
-        autoComplete.updateSuggestions("delete clea with");
-        assertListAndSuggestionsBehavior(Arrays.asList("1", "2"), Arrays.asList(new Task(TypicalTestTasks.event1), new Task(TypicalTestTasks.floating1)));
+        assertEditDoneDeleteCommands("clea with", Arrays.asList("1", "2"), Arrays.asList(new Task(TypicalTestTasks.event1), new Task(TypicalTestTasks.floating1)));
     }
     
     @Test
@@ -147,6 +147,17 @@ public class AutoCompleteTest {
         assertEquals(shownList, model.getFilteredTaskList());
         assertEquals(expectedSuggestions, autoComplete.getSuggestions());
 
+    }
+    
+    private void assertEditDoneDeleteCommands(String input, List<String> expectedSuggestions, List<? extends ReadOnlyTask> shownList) {
+        autoComplete.updateSuggestions(EditCommand.COMMAND_WORD + " " + input);
+        assertListAndSuggestionsBehavior(expectedSuggestions, shownList);
+
+        autoComplete.updateSuggestions(DoneCommand.COMMAND_WORD + " " + input);
+        assertListAndSuggestionsBehavior(expectedSuggestions, shownList);
+
+        autoComplete.updateSuggestions(DeleteCommand.COMMAND_WORD + " " + input);
+        assertListAndSuggestionsBehavior(expectedSuggestions, shownList);
     }
 
 }
