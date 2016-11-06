@@ -76,7 +76,7 @@ public class LogicManagerTest {
         model = new ModelManager();
         String tempTaskTrackerFile = saveFolder.getRoot().getPath() + "TempTaskTracker.xml";
         String tempPreferencesFile = saveFolder.getRoot().getPath() + "TempPreferences.json";
-        logic = new LogicManager(model, new StorageManager(tempTaskTrackerFile, tempPreferencesFile));
+        logic = new LogicManager(model);
 
         EventsCenter.getInstance().registerHandler(this);
 
