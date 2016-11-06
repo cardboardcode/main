@@ -200,7 +200,7 @@ public class MainParser {
      * @throws NumberFormatException if input given cannot be parsed as an integer.
      */
     private int extractValidIndex(String input) throws IllegalValueException, NumberFormatException{
-        if (input.trim() == "")  {
+        if (input.trim().equals(""))  {
             throw new IllegalValueException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX); 
         }
         
@@ -309,7 +309,7 @@ public class MainParser {
     public Command prepareSort(String input) {
         String trimmed = input.trim().toLowerCase();
         
-        if (trimmed.equals("date") || trimmed.equals("name")) {
+        if ("date".equals(trimmed) || "name".equals(trimmed)) {
             return new SortCommand(trimmed);
         }
         else {

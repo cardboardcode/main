@@ -12,9 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Stack;
-//import java.util.function.Predicate;
 import java.util.logging.Logger;
-//import java.util.LinkedList;
 
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -42,17 +40,15 @@ import main.model.task.UniqueTaskList.TaskNotFoundException;
 
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
-    EventsCenter eventsCenter;
     
     public static Stack<UndoHistory> undoStack;
     public static Stack<UndoHistory> redoStack;
     
-    TaskTracker taskTracker;
-    UserPrefs userPref;
+    private TaskTracker taskTracker;
     private final FilteredList<Task> filteredTasks;
     private final SortedList<Task> sortedTasks;
-    Expression baseExpression;
-    Expression save;
+    private Expression baseExpression;
+    private Expression save;
     
     public ModelManager(TaskTracker taskTracker, UserPrefs userPref) {
         super();
@@ -60,11 +56,9 @@ public class ModelManager extends ComponentManager implements Model {
         assert userPref != null;
 
         logger.fine("Initializing with task tracker: " + taskTracker + " and user prefs " + userPref);
-        eventsCenter = EventsCenter.getInstance();
-        eventsCenter.registerHandler(this);
+        EventsCenter.getInstance().registerHandler(this);
         
         this.taskTracker = new TaskTracker(taskTracker);
-        this.userPref = userPref;
         filteredTasks = new FilteredList<>(this.taskTracker.getTasks());
         sortedTasks = new SortedList<>(this.filteredTasks);
         sortDefault();

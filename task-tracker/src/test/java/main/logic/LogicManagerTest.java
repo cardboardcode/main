@@ -28,8 +28,6 @@ import main.model.task.ReadOnlyTask;
 import main.model.task.Task;
 import main.model.task.TaskType;
 import main.model.task.UniqueTaskList.DuplicateTaskException;
-import main.storage.StorageManager;
-
 import static main.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static main.commons.core.Messages.MESSAGE_INVALID_INDEX;
 import static org.junit.Assert.assertEquals;
@@ -43,8 +41,6 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Triple;
 import org.junit.*;
-import org.junit.rules.TemporaryFolder;
-
 import com.google.common.eventbus.Subscribe;
 
 
@@ -69,7 +65,7 @@ public class LogicManagerTest {
 
     
     @Before
-    public void setup() {
+    public void setUp() {
         model = new ModelManager();
         logic = new LogicManager(model);
 
@@ -443,7 +439,7 @@ public class LogicManagerTest {
         /**
          * Generates a TaskTracker with auto-generated tasks.
          */
-        TaskTracker generateTaskTracker(int numGenerated) throws Exception {
+        protected TaskTracker generateTaskTracker(int numGenerated) throws Exception {
             TaskTracker taskTracker = new TaskTracker();
             addToTaskTracker(taskTracker, numGenerated);
             return taskTracker;
@@ -453,7 +449,7 @@ public class LogicManagerTest {
          * Generates a TaskTracker with a number auto-generated tasks given by
          * numGenerated and adds the list of tasks provided to it.
          */
-        TaskTracker generateTaskTracker(int numGenerated, List<Task> tasks) throws Exception {
+        protected TaskTracker generateTaskTracker(int numGenerated, List<Task> tasks) throws Exception {
             TaskTracker taskTracker = new TaskTracker();
             addToTaskTracker(taskTracker, numGenerated);
             addToTaskTracker(taskTracker, tasks);
@@ -463,7 +459,7 @@ public class LogicManagerTest {
         /**
          * Generates a TaskTracker based on the list of Tasks given.
          */
-        TaskTracker generateTaskTracker(List<Task> tasks) throws Exception {
+        protected TaskTracker generateTaskTracker(List<Task> tasks) throws Exception {
             TaskTracker taskTracker = new TaskTracker();
             addToTaskTracker(taskTracker, tasks);
             return taskTracker;
@@ -475,20 +471,20 @@ public class LogicManagerTest {
          * @param taskTracker
          *            The TaskTracker to which the Tasks will be added
          */
-        void addToTaskTracker(TaskTracker taskTracker, int numGenerated) throws Exception {
+        protected void addToTaskTracker(TaskTracker taskTracker, int numGenerated) throws Exception {
             addToTaskTracker(taskTracker, generateTaskList(numGenerated));
         }
 
         /**
          * Adds the given list of Tasks to the given TaskTracker
          */
-        void addToTaskTracker(TaskTracker taskTracker, List<Task> tasksToAdd) throws Exception {
+        protected void addToTaskTracker(TaskTracker taskTracker, List<Task> tasksToAdd) throws Exception {
             for (Task p : tasksToAdd) {
                 taskTracker.addTask(p);
             }
         }
 
-        TaskTracker addToTaskTracker(Task toBeAdded) throws DuplicateTaskException {
+        protected TaskTracker addToTaskTracker(Task toBeAdded) throws DuplicateTaskException {
             TaskTracker expectedTT = new TaskTracker();
             expectedTT.addTask(toBeAdded);
             return expectedTT;
@@ -500,14 +496,14 @@ public class LogicManagerTest {
          * @param model
          *            The model to which the Tasks will be added
          */
-        void addToModel(Model model, int numGenerated) throws Exception {
+        protected void addToModel(Model model, int numGenerated) throws Exception {
             addToModel(model, generateTaskList(numGenerated));
         }
 
         /**
          * Adds the given list of Tasks to the given model
          */
-        void addToModel(Model model, List<Task> tasksToAdd) throws Exception {
+        protected void addToModel(Model model, List<Task> tasksToAdd) throws Exception {
             for (Task p : tasksToAdd) {
                 model.addTask(p);
             }
@@ -517,7 +513,7 @@ public class LogicManagerTest {
          * Adds the given number of auto-generated Task objects and 
          * given list of Tasks to the given model
          */
-        void addToModel(Model model, int numGenerated, List<Task> tasksToAdd) throws Exception {
+        protected void addToModel(Model model, int numGenerated, List<Task> tasksToAdd) throws Exception {
             addToModel(model, numGenerated);
             addToModel(model, tasksToAdd);
         }
@@ -526,14 +522,14 @@ public class LogicManagerTest {
          * Replaces a Model Object with the given number of auto-generated
          * Task objects
          */
-        void replaceModel(Model model, int numGenerated) throws Exception {
+        protected void replaceModel(Model model, int numGenerated) throws Exception {
             model.resetData(generateTaskTracker(numGenerated));
         }
         
         /**
          * Replaces a Model Object with the given list of Tasks
          */
-        void replaceModel(Model model, List<Task> tasksToAdd) throws Exception {
+        protected void replaceModel(Model model, List<Task> tasksToAdd) throws Exception {
             model.resetData(generateTaskTracker(tasksToAdd));
         }
         
@@ -560,7 +556,7 @@ public class LogicManagerTest {
         /**
          * Generates a list of Tasks based on the flags.
          */
-        List<Task> generateTaskList(int numGenerated) throws Exception {
+        protected List<Task> generateTaskList(int numGenerated) throws Exception {
             List<Task> tasks = new ArrayList<>();
             for (int i = 1; i <= numGenerated; i++) {
                 tasks.add(generateTask(i));
@@ -568,7 +564,7 @@ public class LogicManagerTest {
             return tasks;
         }
 
-        List<Task> generateTaskList(Task... tasks) {
+        protected List<Task> generateTaskList(Task... tasks) {
             return Arrays.asList(tasks);
         }
     }
