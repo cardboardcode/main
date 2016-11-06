@@ -66,19 +66,19 @@ Right click on the project (in Eclipse package explorer), choose Gradle -> Refre
 
 **Purpose**: Adding a new task <br>
 **Action**:<br>
-- Execute `add question life`<br>
+Execute `add question life`<br>
 **Expected**:<br>
 - Display Area will show message: `New task added: question life`<br>
 
 **Purpose**: Adding a duplicate floating task <br>
 **Action**:<br>
-- Execute `add clean room -l`<br>
+Execute `add clean room -l`<br>
 **Expected**:<br>
 - Display Area will show message: `This task is already in the to-do list`<br>
 
 **Purpose**: Input wrong command <br>
 **Action**:<br>
-- Execute `adds wrongcommandinput`<br>
+Execute `adds wrongcommandinput`<br>
 **Expected**:<br>
 - Display Area will show message: `Invalid command format Unknown command`<br>
 <br>
