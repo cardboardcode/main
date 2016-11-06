@@ -152,7 +152,7 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 * `UnmodifiableObservableList<ReadOnlyTask>` is 'exposed', so list of tasks can be observed, for example by the UI, without being changed.
 
 <!--@@author A0142686X -->
-#### Storage component
+#### Storage
 
 ![Storage](images/A_storage.png)<br>
 
