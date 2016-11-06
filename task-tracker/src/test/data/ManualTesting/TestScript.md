@@ -163,7 +163,8 @@ Execute `edit 1 check out 01 sep 2016 -l`<br>
 **Purpose**: Deletes the last task in the list <br>
 **Action**:<br>
 - Execute `list`<br>
-- Execute `delete 49`<br>
+- Execute `delete 49`<br> 
+
 **Expected**:<br>
 - Display Area will show message: `Delete Task: 49`<br>
 
@@ -171,6 +172,7 @@ Execute `edit 1 check out 01 sep 2016 -l`<br>
 **Action**:<br>
 - Execute `list`<br>
 - Execute `delete 49`<br>
+
 **Expected**:<br>
 - Display Area will show message: `Delete Task: 49`<br>
 
@@ -178,6 +180,7 @@ Execute `edit 1 check out 01 sep 2016 -l`<br>
 **Action**:<br>
 - Execute `list`<br>
 - Execute `delete 23`<br>
+
 **Expected**:<br>
 - Display Area will show message: `Delete Task: 23`<br>
 
@@ -191,6 +194,7 @@ Execute `edit 1 check out 01 sep 2016 -l`<br>
 **Action**:<br>
 - Execute `list`<br>
 - Execute `done 5`<br>
+
 **Expected**:<br>
 - Display Area will show message: `The following task is done: 5`<br>
 
@@ -198,6 +202,7 @@ Execute `edit 1 check out 01 sep 2016 -l`<br>
 **Action**:<br>
 - Execute `list`<br>
 - Execute `done 60`<br>
+
 **Expected**:<br>
 - Display Area will show message: `Task does not exist in task-tracker`<br>
 
@@ -211,6 +216,7 @@ Execute `edit 1 check out 01 sep 2016 -l`<br>
 **Action**:<br>
 - Execute `list`<br>
 - Execute `sort date`<br>
+
 **Expected**:<br>
 - Display Area will show message: `Sorting by date`<br>
 - Task card in Task-List Panel are arranged such that the closest deadlines are displayed at the top of the list.<br>
@@ -219,6 +225,7 @@ Execute `edit 1 check out 01 sep 2016 -l`<br>
 **Action**:<br>
 - Execute `list`<br>
 - Execute `sort name`<br>
+
 **Expected**:<br>
 - Display Area will show message: `Sorting by name`<br>
 - Task card in Task-List Panel are arranged alphebatically.<br>
@@ -233,6 +240,7 @@ Execute `edit 1 check out 01 sep 2016 -l`<br>
 **Action**:<br>
 - Execute `list`<br>
 - Execute `find w`<br>
+
 **Expected**:<br>
 - Task-list panel will display only task cards whose messages starts with the letter 'w'.<br>
 
@@ -257,6 +265,7 @@ Execute `edit 1 check out 01 sep 2016 -l`<br>
 **Action**:<br>
 - Execute `list`<br>
 - Execute `clear`<br>
+
 **Expected**:<br>
 - Display Area will show message: `Task-Tracker has been cleared!`
 - Task-list panel will display 0 task cards.<br>
@@ -327,6 +336,7 @@ Execute `exit`<br>
 - Execute `list`<br>
 - Execute `find`<br>
 - Press `UP` ARROW KEY <br>
+
 **Expected**:<br>
 - The command box should display the recent command input `find`.<br>
 
@@ -337,6 +347,7 @@ Execute `exit`<br>
 - Execute `list high`<br>
 - Press `UP` ARROW KEY 3 times<br>
 - Press `DOWN` ARROW KEY <br>
+
 **Expected**:<br>
 - The command box should display the recent command input `find`.<br>
 
@@ -368,6 +379,7 @@ Press `F2` <br>
 **Action**:<br>
 - Execute `list`<br>
 - Press `PgDn` <br>
+
 **Expected**:<br>
 - The scroll bar in the Task List panel will have moved down by 1 card<br>
 - If the scroll bar is already at the bottom of the list, it will jump back to the top of the list.<br>
@@ -376,6 +388,7 @@ Press `F2` <br>
 **Action**:<br>
 - Execute `list`<br>
 - Press `PgUp` <br>
+
 **Expected**:<br>
 - The scroll bar in the Task List panel will have moved up by 1 card<br>
 - If the scroll bar is already at the top, it will jump down to the bottom of the list.<br>
@@ -390,6 +403,7 @@ Press `F2` <br>
 **Action**:<br>
 - Type `d`<br>
 - Press `Tab` <br>
+
 **Expected**:<br>
 - The command input will have been autocompleted to `delete`<br>
 
@@ -397,6 +411,7 @@ Press `F2` <br>
 **Action**:<br>
 - Clear the command box of any text<br>
 - Press `Tab` <br>
+
 **Expected**:<br>
 - The command input will show a list of commands, starting with `add`.<br>
 
@@ -408,7 +423,7 @@ Press `F2` <br>
 
 **Purpose**: Minimizes the window<br>
 **Action**:<br>
-- Press `Esc` <br>
+Press `Esc` <br>
 **Expected**:<br>
 - The window should be minimized.<br>
 
