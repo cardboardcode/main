@@ -237,17 +237,17 @@ Tests can be found in the ./src/test/java folder.
 
 There are two types of tests:
 
-1.**GUI Tests**<br> - _System tests_ that test the entire application itself by stimulating user actions on the GUI. These tests are in ./src/test/java/guitests package.
+**GUI Tests**<br> - _System tests_ that test the entire application itself by stimulating user actions on the GUI. These tests are in ./src/test/java/guitests package.
 
-2.**Non-GUI Tests** - Tests that does not involve GUI, namely:
+**Non-GUI Tests** - Tests that does not involve GUI, namely:
 
-i. _Unit tests_ - tests that targets low level methods/classes<br>
+* _Unit tests_ - tests that targets low level methods/classes<br>
 		e.g src.test.java.commons.util.StringUtilTest
 		
-ii. _Integration Tests_ - Checks the integration of multiple code units (those code units are 	assumed to be working).<br>
+* _Integration Tests_ - Checks the integration of multiple code units (those code units are assumed to be working).<br>
 		e.g src.test.java.storage.StorageManagerTest
 		
-iii. Hybrids of unit and integration tests - Tests that checks multiple code units as well as how 	they are connected together <br>
+* Hybrids of unit and integration tests - Tests that checks multiple code units as well as how they are connected together <br>
 		e.g  src.test.java.logic.LogicManagerTest.java
 
 **Headless GUI Testing** :
