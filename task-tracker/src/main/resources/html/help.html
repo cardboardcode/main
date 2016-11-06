@@ -59,6 +59,11 @@ code {background-color: #d1d1e0; font-family:Verdana;}
     <td class="tg-031e"><code>search meaning</code></td>
   </tr>
   <tr>
+    <td class="tg-031e">sort</td>
+    <td class="tg-031e">Sorts the list of task by date or lexicographically</td>
+    <td class="tg-031e"><code>sort date</code></td>
+  </tr>
+  <tr>
     <td class="tg-031e">storage</td>
     <td class="tg-031e">Changes the location of the XML file in which tasks are stored</td>
     <td class="tg-031e"><code>storage C://Users/Desktop/newfile.xml</code></td>
@@ -158,28 +163,35 @@ code {background-color: #d1d1e0; font-family:Verdana;}
 <li><code> add call mum tmr</code> will create a task named <code>call mum</code> to be done anytime on <strong>the next day</strong> with <strong>normal</strong> priority.<br>
 <br />
 <br />
-<img src="images/Add_Command2.png" alt="Add Screen" />
+<img src="images/add_command1.png" height="600p" width="750p"><br>
 <br>
-<br />
-<img src="images/Add_Command.png" alt="Add Screen" /></li>
+<img src="images/Add_Command2.png" height="600p" width="750p"><br>
 </ul>
 
-<h3 id="2editatask">2. EDIT a Task</h3>
+<h3 id="4listtasks">2. LIST Tasks</h3>
 
 <p>The format to edit an existing task is : <br>
-&nbsp; &nbsp; <code>edit &lt;task index&gt; &lt;new task&gt; [new date1] [new date2] [-h | -m | -l]</code> <br></p>
+&nbsp; &nbsp; <code>list [date | priority]</code><br></p>
 
-<ul>
-<li><code>&lt;task index&gt;</code> can be obtained from the list panel, or by using the list command (See <strong>List</strong> command).</li>
+<blockquote>
+  <ul>
+  <li>The tasks will be shown based on the parameters specified. If no parameters given, the tasks are organized by date.</li>
+  
+  <li>Both date and priority can be specified at the same time.</li>
+  </ul>
+</blockquote>
+
+<p><br> For example : <br> <ul>
+<li><code>list 9 Oct</code>  will display all tasks due on 9th October. </li>
+<li><code>list high</code> will display all tasks of high priority. </li>
+<li><code>list</code> will display all tasks organised by date. </li>
+<li><code>list high today</code> will display all tasks of high priority due today. </li>
 </ul>
+</p>
 
-<p><br> For example: <br></p>
+<p><br>
+<img src="images/List_Command.png" alt="List Screen" /></p>
 
-<p>Let say task index <strong>1</strong> refers to the task <code>wash dishes monday 4pm</code></p>
-
-<ul>
-<li><code>edit 1 wash dishes tuesday 6pm -h</code> will edit the existing <code>wash dishes</code> task to <code>use dishes</code> and change the date from <strong>monday</strong> to <strong>tuesday</strong> , time from <strong>4pm</strong> to <strong>6pm</strong> and priority from <strong>medium</strong> to <strong>high</strong>.</li>
-</ul>
 
 <h3 id="3deleteatask">3. DELETE a Task</h3>
 
@@ -221,29 +233,28 @@ code {background-color: #d1d1e0; font-family:Verdana;}
 <li><code>done 1</code> will mark the <code>do laundry</code> task as done.</li>
 </ul>
 
-<h3 id="4listtasks">5. LIST Tasks</h3>
+<h3 id="2editatask">5. EDIT a Task</h3>
 
 <p>The format to edit an existing task is : <br>
-&nbsp; &nbsp; <code>list [date | priority]</code><br></p>
+&nbsp; &nbsp; <code>edit &lt;task index&gt; &lt;new task&gt; [new date1] [new date2] [-h | -m | -l]</code> <br></p>
 
-<blockquote>
-  <ul>
-  <li>The tasks will be shown based on the parameters specified. If no parameters given, the tasks are organized by date.</li>
-  
-  <li>Both date and priority can be specified at the same time.</li>
-  </ul>
-</blockquote>
-
-<p><br> For example : <br> <ul>
-<li><code>list 9 Oct</code>  will display all tasks due on 9th October. </li>
-<li><code>list high</code> will display all tasks of high priority. </li>
-<li><code>list</code> will display all tasks organised by date. </li>
-<li><code>list high today</code> will display all tasks of high priority due today. </li>
+<ul>
+<li><code>&lt;task index&gt;</code> can be obtained from the list panel, or by using the list command (See <strong>List</strong> command).</li>
 </ul>
-</p>
 
-<p><br>
-<img src="images/List_Command.png" alt="List Screen" /></p>
+<p><br> For example: <br></p>
+
+<p>Let say task index <strong>1</strong> refers to the task <code>wash dishes monday 4pm</code></p>
+
+<ul>
+<li><code>edit 1 wash dishes tuesday 6pm -h</code> will edit the existing <code>wash dishes</code> task to <code>use dishes</code> and change the date from <strong>monday</strong> to <strong>tuesday</strong> , time from <strong>4pm</strong> to <strong>6pm</strong> and priority from <strong>medium</strong> to <strong>high</strong>.</li>
+</ul>
+
+<br>
+<img src="images/edit_command1.png" height="600p" width="750p"><br>
+
+<img src="images/edit_command2.png" height="600p" width="750p"><br>
+<br>
 
 <h3 id="6undo">6. <strong>UNDO</strong></h3>
 
@@ -274,7 +285,37 @@ Entering <code>undo</code> after executing <code>delete 2</code> will bring back
 <li><code>search dishes</code> will show the existing <code>wash dishes</code> task.</li>
 </ul>
 
-<h3 id="9storage">9. <strong>STORAGE</strong></h3>
+<br>
+<img src="images/search_command1.png" height="600p" width="750p"><br>
+<br>
+<br>
+<img src="images/search_command2.png" height="600p" width="750p"><br>
+<br>
+
+<h3 id="9sorttasks">9. <strong>SORT</strong> Tasks</h3>
+
+<p>The format to sort a list of tasks is : <br>
+&nbsp; &nbsp; <code>sort &lt; date | name &gt;</code><br></p>
+
+<blockquote>
+  <ul>
+  <li>The tasks will be shown based on the parameters specified.</li>
+  </ul>
+</blockquote>
+
+<p>For example:</p>
+
+<blockquote>
+  <ul>
+  <li><code>sort date</code> will sort the list of tasks based on their dates, displaying the closest deadlines at the top.</li>
+  
+  <li><code>sort name</code> will sort the list lexicographically. </li>
+  </ul>
+</blockquote>
+
+<p><br></p>
+
+<h3 id="9storage">10. <strong>STORAGE</strong></h3>
 
 <p>The storage command can be used to change the storage location of tasks. Tasks are stored on the PC in an XML file.</p>
 
@@ -295,9 +336,13 @@ Entering <code>undo</code> after executing <code>delete 2</code> will bring back
   </ul>
 </blockquote>
 
-<h3 id="10help">10. <strong>HELP</strong></h3>
+<h3 id="10help">11. <strong>HELP</strong></h3>
 
 <p>Enter <code>help</code> into the command line to list out all the commands available in T-T.</p>
+
+<br>
+<img src="images/help_command.png" height="600p" width="750p"><br>
+<br>
 
 <h2 id="uniquefeatures"><strong>Unique Features</strong></h2>
 
@@ -322,6 +367,10 @@ Entering <code>undo</code> after executing <code>delete 2</code> will bring back
 
 <p>Apart from the three basic colors shown earlier to indicate different priorities, T-T also indicates to users which tasks have become overdued. If the current time has overshot an event task's endtime or a deadline task's deadline, the corresponding task will be shown with a black tab, as shown below. </p>
 
+<br>
+<img src="images/overdue_detection.png" height="600p" width="750p"><br>
+<br>
+
 <h3 id="3autocompletion">3. Autocompletion</h3>
 
 <p>Users who find typing in the many commands <strong>T-T</strong> provides too tedious may opt to use the autocompletion function the app has as well. Simply press the <code>Tab</code> key and you will be able to cycle through all the different command. </p>
@@ -345,6 +394,10 @@ Entering <code>undo</code> after executing <code>delete 2</code> will bring back
 <p>The user interface is not just limited to just one color. <strong>T-T</strong> offers you a variety of seven color themes to choose from. </p>
 
 <p>By pressing <code>F1</code> and <code>F2</code>, you can toggle between the different themes and choose any which suit your preference. </p>
+
+<br>
+<img src="images/color_toggle.png" height="600p" width="750p"><br>
+<br>
 
 <h3 id="5minimizewindow">5. Minimize Window</h3>
 
