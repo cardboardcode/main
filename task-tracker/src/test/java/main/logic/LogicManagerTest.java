@@ -50,9 +50,6 @@ import com.google.common.eventbus.Subscribe;
 
 public class LogicManagerTest {
     
-    @Rule
-    public TemporaryFolder saveFolder = new TemporaryFolder();
-        
     private Model model;
     private Logic logic;
 
@@ -74,8 +71,6 @@ public class LogicManagerTest {
     @Before
     public void setup() {
         model = new ModelManager();
-        String tempTaskTrackerFile = saveFolder.getRoot().getPath() + "TempTaskTracker.xml";
-        String tempPreferencesFile = saveFolder.getRoot().getPath() + "TempPreferences.json";
         logic = new LogicManager(model);
 
         EventsCenter.getInstance().registerHandler(this);
@@ -87,7 +82,7 @@ public class LogicManagerTest {
     @After
     public void teardown() {
         EventsCenter.clearSubscribers();
-}
+    }
     
     private void assertCommandBehavior(String inputCommand, String expectedMessage) throws Exception {
         assertCommandBehavior(inputCommand, expectedMessage, new TaskTracker(), Collections.emptyList());
