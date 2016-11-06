@@ -24,10 +24,6 @@ public class AddCommand extends Command {
         toAdd = task;
     }
 
-    /**
-     * //Remember to add validator in Model component
-		//Possible to add Traynotification here.
-     */
 	@Override
 	public CommandResult execute() {
 		try {
