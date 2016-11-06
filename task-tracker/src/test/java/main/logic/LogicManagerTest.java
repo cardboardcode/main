@@ -13,6 +13,7 @@ import main.logic.command.DoneCommand;
 import main.logic.command.EditCommand;
 import main.logic.command.HelpCommand;
 import main.logic.command.ListCommand;
+import main.logic.command.SortCommand;
 import main.logic.command.ExitCommand;
 import main.logic.command.ClearCommand;
 import main.model.Model;
@@ -128,9 +129,9 @@ public class LogicManagerTest {
     public void execute_edit_invalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
         assertCommandBehavior("edit wrong", expectedMessage);
-        assertCommandBehavior("edit 16 Oct", expectedMessage);
+        assertCommandBehavior("edit Oct", expectedMessage);
         assertCommandBehavior("edit 0 ", expectedMessage);        
-
+        assertCommandBehavior("edit", expectedMessage);        
     }
 
     @Test
@@ -148,8 +149,30 @@ public class LogicManagerTest {
     
     @Test
     public void execute_delete_InvalidArgsFormat_errorMessageShown() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
+        String expectedMessage = String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
         assertCommandBehavior("delete args", expectedMessage);
+        assertCommandBehavior("delete", expectedMessage);
+    }
+    
+    @Test
+    public void execute_sort_InvalidArgsFormat_errorMessageShown() throws Exception {
+        String expectedMessage = String.format(Messages.MESSAGE_INVALID_PARAMETERS, SortCommand.COMMAND_WORD, SortCommand.MESSAGE_USAGE);
+        assertCommandBehavior("sort", expectedMessage);
+        assertCommandBehavior("sort 143", expectedMessage);
+        assertCommandBehavior("sort nef", expectedMessage);
+    }
+    
+    @Test
+    public void execute_sort_upperCaseValidArgsFormat_successMessageShown() throws Exception {
+        assertCommandBehavior("sort DATE", String.format(SortCommand.MESSAGE_SUCCESS, "date"));
+        assertCommandBehavior("sort NAME", String.format(SortCommand.MESSAGE_SUCCESS, "name"));
+    }
+    
+    @Test
+    public void execute_sort_lowerCaseValidArgsFormat_successMessageShown() throws Exception {
+        String expectedMessage = SortCommand.MESSAGE_SUCCESS;
+        assertCommandBehavior("sort date", String.format(SortCommand.MESSAGE_SUCCESS, "date"));
+        assertCommandBehavior("sort name", String.format(SortCommand.MESSAGE_SUCCESS, "name"));
     }
 
     @Test
