@@ -2,9 +2,11 @@
 package guitests;
 
 import guitests.guihandles.*;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import main.TestMain;
 import main.commons.core.EventsCenter;
+import main.commons.events.BaseEvent;
 import main.model.TaskTracker;
 import main.model.task.ReadOnlyTask;
 import main.testutil.TestUtil;
@@ -123,4 +125,9 @@ public abstract class TaskTrackerGuiTest {
 	protected void assertResultMessage(String expected) {
 		assertEquals(expected, resultDisplay.getText());
 	}
+	
+    public void raise(BaseEvent e) {
+        //JUnit doesn't run its test cases on the UI thread. Platform.runLater is used to post event on the UI thread.
+        Platform.runLater(() -> EventsCenter.getInstance().post(e));
+    }
 }

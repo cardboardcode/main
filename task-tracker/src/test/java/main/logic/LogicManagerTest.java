@@ -13,6 +13,7 @@ import main.logic.command.DoneCommand;
 import main.logic.command.EditCommand;
 import main.logic.command.HelpCommand;
 import main.logic.command.ListCommand;
+import main.logic.command.SortCommand;
 import main.logic.command.ExitCommand;
 import main.logic.command.ClearCommand;
 import main.model.Model;
@@ -23,10 +24,12 @@ import main.model.UserPrefs;
 import main.model.task.PriorityType;
 import main.model.task.ReadOnlyTask;
 import main.model.task.Task;
+import main.model.task.TaskType;
 import main.model.task.UniqueTaskList.DuplicateTaskException;
 import main.storage.StorageManager;
 
 import static main.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static main.commons.core.Messages.MESSAGE_INVALID_INDEX;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -36,6 +39,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Triple;
 import org.junit.*;
 import org.junit.rules.TemporaryFolder;
 
@@ -89,6 +93,35 @@ public class LogicManagerTest {
         assertEquals(expectedMessage,result);
     }
     
+    /**
+     * Executes the command and confirms that the result message is correct and
+     * also confirms that the following three parts of the LogicManager object's state are as expected:<br>
+     *      - the internal task list data are same as those in the {@code expected TaskList} <br>
+     *      - the backing list shown by UI matches the {@code shownList} <br>
+     *      - {@code expectedTaskList} was saved to the storage file. <br>
+     */
+    private void assertCommandBehavior(String inputCommand, String expectedMessage,
+                                       ReadOnlyTaskTracker expectedTaskTracker,
+                                       List<? extends ReadOnlyTask> expectedShownList) throws Exception {
+
+        //Execute the command
+        CommandResult result = logic.execute(inputCommand);     
+
+        //Confirm the ui display elements should contain the right data
+        assertEquals(expectedMessage, result.feedbackToUser);
+        assertEquals(expectedShownList, model.getFilteredTaskList());
+
+        //Confirm the state of data (saved and in-memory) is as expected
+        assertEquals(expectedTaskTracker, model.getTaskTracker());
+        assertEquals(expectedTaskTracker, latestSavedTaskTracker);
+    }
+    
+    private void assertIncorrectIndexFormatBehaviorForCommand(String commandWord, String expectedMessage)
+            throws Exception {
+        assertCommandBehavior(commandWord , String.format(MESSAGE_INVALID_COMMAND_FORMAT, expectedMessage)); //index missing
+        assertCommandBehavior(commandWord + " 0", String.format(MESSAGE_INVALID_INDEX, expectedMessage)); //index cannot be 0
+        assertCommandBehavior(commandWord + " not_a_number", String.format(MESSAGE_INVALID_COMMAND_FORMAT, expectedMessage));
+}
 
     @Test
     public void execute_unknownCommandWord() throws Exception {
@@ -112,7 +145,6 @@ public class LogicManagerTest {
     public void execute_exit() throws Exception {
         assertCommandBehavior("exit", ExitCommand.MESSAGE_EXIT_ACKNOWLEDGEMENT);
     }
-
     
     @Test
     public void execute_clear() throws Exception {
@@ -128,28 +160,46 @@ public class LogicManagerTest {
     public void execute_edit_invalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
         assertCommandBehavior("edit wrong", expectedMessage);
-        assertCommandBehavior("edit 16 Oct", expectedMessage);
-        assertCommandBehavior("edit 0 ", expectedMessage);        
+        assertCommandBehavior("edit Oct", expectedMessage);
+        assertCommandBehavior("edit", expectedMessage);        
+        assertIncorrectIndexFormatBehaviorForCommand(EditCommand.COMMAND_WORD, EditCommand.MESSAGE_USAGE);
 
     }
 
     @Test
     public void execute_done_invalidArgsFormat_errorMessageShown() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DoneCommand.MESSAGE_USAGE);
-        assertCommandBehavior("done wrong", expectedMessage);
-        assertCommandBehavior("done", expectedMessage);
+        assertIncorrectIndexFormatBehaviorForCommand(DoneCommand.COMMAND_WORD, DoneCommand.MESSAGE_USAGE);
+    }
+    
+    @Test
+    public void execute_delete_InvalidArgsFormat_errorMessageShown() throws Exception {
+        assertIncorrectIndexFormatBehaviorForCommand(DeleteCommand.COMMAND_WORD, DeleteCommand.MESSAGE_USAGE);
     }
     
     @Test
     public void execute_list_invalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(Messages.MESSAGE_INVALID_PARAMETERS,"ListCommand", ListCommand.MESSAGE_USAGE);
         assertCommandBehavior("list wrong", expectedMessage);
-    }    
+    }
+        
+    @Test
+    public void execute_sort_InvalidArgsFormat_errorMessageShown() throws Exception {
+        String expectedMessage = String.format(Messages.MESSAGE_INVALID_PARAMETERS, SortCommand.COMMAND_WORD, SortCommand.MESSAGE_USAGE);
+        assertCommandBehavior("sort", expectedMessage);
+        assertCommandBehavior("sort 143", expectedMessage);
+        assertCommandBehavior("sort nef", expectedMessage);
+    }
     
     @Test
-    public void execute_delete_InvalidArgsFormat_errorMessageShown() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
-        assertCommandBehavior("delete args", expectedMessage);
+    public void execute_sort_upperCaseValidArgsFormat_successMessageShown() throws Exception {
+        assertCommandBehavior("sort DATE", String.format(SortCommand.MESSAGE_SUCCESS, "date"));
+        assertCommandBehavior("sort NAME", String.format(SortCommand.MESSAGE_SUCCESS, "name"));
+    }
+    
+    @Test
+    public void execute_sort_lowerCaseValidArgsFormat_successMessageShown() throws Exception {
+        assertCommandBehavior("sort date", String.format(SortCommand.MESSAGE_SUCCESS, "date"));
+        assertCommandBehavior("sort name", String.format(SortCommand.MESSAGE_SUCCESS, "name"));
     }
 
     @Test
@@ -158,188 +208,218 @@ public class LogicManagerTest {
         assertCommandBehavior("add ", expectedMessage);
     }
     
-    
-//    /**
-//     * Executes the command and confirms that the result message is correct and
-//     * also confirms that the following three parts of the LogicManager object's state are as expected:<br>
-//     *      - the internal task list data are same as those in the {@code expected TaskList} <br>
-//     *      - the backing list shown by UI matches the {@code shownList} <br>
-//     *      - {@code expectedTaskList} was saved to the storage file. <br>
-//     */
-    private void assertCommandBehavior(String inputCommand, String expectedMessage,
-                                       ReadOnlyTaskTracker expectedTaskTracker,
-                                       List<? extends ReadOnlyTask> expectedShownList) throws Exception {
-
-        //Execute the command
-        CommandResult result = logic.execute(inputCommand);     
-
-        //Confirm the ui display elements should contain the right data
-        assertEquals(expectedMessage, result.feedbackToUser);
-        assertEquals(expectedShownList, model.getFilteredTaskList());
-
-        //Confirm the state of data (saved and in-memory) is as expected
-        assertEquals(expectedTaskTracker, model.getTaskTracker());
-        assertEquals(expectedTaskTracker, latestSavedTaskTracker);
-    }
-    
-      @Test
-      public void execute_add_floating_successful() throws Exception {
+    @Test
+    public void execute_add_floating_successful() throws Exception {
           
-          TestDataHelper helper = new TestDataHelper();
-          Task toBeAdded = helper.floating1();
-          TaskTracker expectedTT = helper.addToTaskTracker(toBeAdded);
+        TestDataHelper helper = new TestDataHelper();
+        Task toBeAdded = helper.floating1();
+        TaskTracker expectedTT = helper.addToTaskTracker(toBeAdded);
                     
-          assertCommandBehavior(helper.generateAddCommand(toBeAdded),
-                  String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
-                  expectedTT,
-                  expectedTT.getTaskList());
-      }
-
-      @Test
-      public void execute_add_duplicate_notAllowed() throws Exception {
-          // setup expectations
-          TestDataHelper helper = new TestDataHelper();
-          Task toBeAdded = helper.floating1();
-          TaskTracker expectedTT = helper.addToTaskTracker(toBeAdded);
-          model.addTask(toBeAdded); // duplicate
-
-          // execute command and verify result
-          assertCommandBehavior(
-                  helper.generateAddCommand(toBeAdded),
-                  AddCommand.MESSAGE_DUPLICATE_TASK,
-                  expectedTT,
-                  expectedTT.getTaskList());
-
-      }      
+        assertCommandBehavior(helper.generateAddCommand(toBeAdded),
+                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
+                expectedTT,
+                expectedTT.getTaskList());
+    }   
+    @Test
+    public void execute_add_duplicate_notAllowed() throws Exception {
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task toBeAdded = helper.floating1();
+        TaskTracker expectedTT = helper.addToTaskTracker(toBeAdded);
+        model.addTask(toBeAdded); // duplicate
+    
+        // execute command and verify result
+        assertCommandBehavior(
+                helper.generateAddCommand(toBeAdded),
+                AddCommand.MESSAGE_DUPLICATE_TASK,
+                expectedTT,
+                expectedTT.getTaskList());
+    
+    }         
       
       
-      @Test
-      public void execute_add_deadline_natural_date_successful() throws Exception {
-          TestDataHelper helper = new TestDataHelper();
-          Task toBeAdded = helper.deadline_natural_tmr_inferred();
-          TaskTracker expectedTT = helper.addToTaskTracker(toBeAdded);
+    @Test
+    public void execute_add_deadline_natural_date_successful() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task toBeAdded = helper.deadline_natural_tmr_inferred();
+        TaskTracker expectedTT = helper.addToTaskTracker(toBeAdded);
           
-          assertCommandBehavior(("add " + toBeAdded.getMessage() + " tmr"),
-                  String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
-                  expectedTT,
-                  expectedTT.getTaskList());          
-      }
+        assertCommandBehavior(("add " + toBeAdded.getMessage() + " tmr"),
+                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
+                expectedTT,
+                expectedTT.getTaskList());          
+    }
       
      
-      @Test
-      public void execute_add_deadline_successful() throws Exception {
+    @Test
+    public void execute_add_deadline_successful() throws Exception {
           
-          TestDataHelper helper = new TestDataHelper();
-          Task toBeAdded = helper.deadline1();
-          TaskTracker expectedTT = helper.addToTaskTracker(toBeAdded);
-          
-          assertCommandBehavior(helper.generateAddCommand(toBeAdded),
-                  String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
-                  expectedTT,
-                  expectedTT.getTaskList());
-      }
+        TestDataHelper helper = new TestDataHelper();
+        Task toBeAdded = helper.deadline1();
+        TaskTracker expectedTT = helper.addToTaskTracker(toBeAdded);
+        
+        assertCommandBehavior(helper.generateAddCommand(toBeAdded),
+                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
+                expectedTT,
+                expectedTT.getTaskList());
+    }
       
-      @Test
-      public void execute_add_event_successful() throws Exception {
+    @Test
+    public void execute_add_event_successful() throws Exception {
           
-          TestDataHelper helper = new TestDataHelper();
-          Task toBeAdded = helper.event1();
-          TaskTracker expectedTT = helper.addToTaskTracker(toBeAdded);
-                    
-          assertCommandBehavior(helper.generateAddCommand(toBeAdded),
-                  String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
-                  expectedTT,
-                  expectedTT.getTaskList());
-      }
+        TestDataHelper helper = new TestDataHelper();
+        Task toBeAdded = helper.event1();
+        TaskTracker expectedTT = helper.addToTaskTracker(toBeAdded);
+        
+        assertCommandBehavior(helper.generateAddCommand(toBeAdded),
+                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
+                expectedTT,
+                expectedTT.getTaskList());
+    } 
       
-      @Test
-      public void execute_list_showsAllPendingTasks() throws Exception{
-          TestDataHelper helper = new TestDataHelper();
-          TaskTracker expectedTT = helper.generateTaskTracker(2);
-          Model expectedModel = new ModelManager(expectedTT, new UserPrefs());
-          expectedModel.updateFilteredListToShowAllPending();
-          List<? extends ReadOnlyTask> expectedList = model.getFilteredTaskList();
-
-          // prepare address book state
-          helper.addToModel(model, 2);
+    @Test
+    public void execute_list_showsAllPendingTasks() throws Exception{
+        TestDataHelper helper = new TestDataHelper();
+        TaskTracker expectedTT = helper.generateTaskTracker(2);
+        
+        Model expectedModel = new ModelManager(expectedTT, new UserPrefs());
+        expectedModel.updateFilteredListToShowAllPending();
+        
+        // prepare task tracker state
+        helper.addToModel(model, 2);
           
-          assertCommandBehavior("list",
-                  String.format(ListCommand.MESSAGE_SUCCESS, "pending tasks"),
-                  expectedTT,
-                  expectedList);
-      }
+        assertCommandBehavior("list",
+                String.format(ListCommand.MESSAGE_SUCCESS, "pending tasks"),
+                expectedTT,
+                expectedModel.getFilteredTaskList());
+    }
 
-      @Test
-      public void execute_list_showsAllDoneTasks() throws Exception{
-          TestDataHelper helper = new TestDataHelper();
-          TaskTracker expectedTT = helper.generateTaskTracker(2);
-          Model expectedModel = new ModelManager(expectedTT, new UserPrefs());
-          expectedModel.updateFilteredListToShowAllDone();
-          List<? extends ReadOnlyTask> expectedList = model.getFilteredTaskList();
+    @Test
+    public void execute_list_showsAllDoneTasks() throws Exception{
+        TestDataHelper helper = new TestDataHelper();
+        TaskTracker expectedTT = helper.generateTaskTracker(2, Collections.singletonList(helper.done_task()));
+        
+        Model expectedModel = new ModelManager(expectedTT, new UserPrefs());
+        expectedModel.updateFilteredListToShowAllDone();
 
-          // prepare address book state
-          helper.addToModel(model, 2);
-          
-          assertCommandBehavior("list done",
-                  String.format(ListCommand.MESSAGE_SUCCESS, "completed tasks"),
-                  expectedTT,
-                  expectedList);
-      }
-      
+        // prepare task tracker state
+        helper.addToModel(model, 2, Collections.singletonList(helper.done_task()));
+        
+        assertCommandBehavior("list done", 
+                String.format(ListCommand.MESSAGE_SUCCESS, "completed tasks"), 
+                expectedTT,
+                expectedModel.getFilteredTaskList());
+    }
     
+    @Test
+    public void execute_list_showsChoosenPriorityTasks() throws Exception{
+        TestDataHelper helper = new TestDataHelper();
+        TaskTracker expectedTT = helper.generateTaskTracker(2, Collections.singletonList(helper.floating_high_priority()));
+        Model expectedModel = new ModelManager(expectedTT, new UserPrefs());
+        expectedModel.updateFilteredTaskList(Triple.of(PriorityType.HIGH, null, null), false, false);
+
+        // prepare task tracker state
+        helper.addToModel(model, 2, Collections.singletonList(helper.floating_high_priority()));
+
+        assertCommandBehavior("list high", 
+                String.format(ListCommand.MESSAGE_SUCCESS, "pending high priority tasks"), 
+                expectedTT,
+                expectedModel.getFilteredTaskList());
+    }
+    
+    @Test
+    public void execute_list_showsMultipleParams() throws Exception{
+        TestDataHelper helper = new TestDataHelper();
+        TaskTracker expectedTT = helper.generateTaskTracker(2, Collections.singletonList(helper.deadline_low_priority()));
+        Model expectedModel = new ModelManager(expectedTT, new UserPrefs());
+        expectedModel.updateFilteredTaskList(Triple.of(PriorityType.LOW, null, TaskType.DEADLINE), false, false);
+
+        // prepare task tracker state
+        helper.addToModel(model, 2, Collections.singletonList(helper.deadline_low_priority()));
+
+        assertCommandBehavior("list low deadline", 
+                String.format(ListCommand.MESSAGE_SUCCESS, "pending low priority tasks with deadlines"), 
+                expectedTT,
+                expectedModel.getFilteredTaskList());
+    }
+
     /**
      * A utility class to generate test data.
      */
-    class TestDataHelper{
-        
+    class TestDataHelper {
+
         protected Task floating1() {
-            return new Task("floating1", PriorityType.NORMAL);
+            return new Task("go cycling", PriorityType.NORMAL);
+        }
+
+        protected Task floating_high_priority() {
+            return new Task("wash dishes", PriorityType.HIGH);
         }
         
         protected Task deadline_natural_tmr_inferred() {
-            return new Task("deadline_natural", DateUtil.getTmr(), PriorityType.NORMAL).setIsInferred(true);
+            return new Task("clean room", DateUtil.getTmr(), PriorityType.NORMAL).setIsInferred(true);
         }
         
+        protected Task deadline_low_priority() {
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
+            return new Task("collect welfare pack", DateUtil.defaultTime(cal.getTime()), PriorityType.LOW);
+        }
+
         protected Task deadline1() {
             Calendar cal = Calendar.getInstance();
             cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-            return new Task("deadline1", DateUtil.defaultTime(cal.getTime()), PriorityType.NORMAL);
+            return new Task("finish book", DateUtil.defaultTime(cal.getTime()), PriorityType.NORMAL);
         }
-        
+
         protected Task event1() {
             Calendar cal1 = Calendar.getInstance();
             cal1.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
             Calendar cal2 = Calendar.getInstance();
             cal2.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
-            return new Task("event1", DateUtil.defaultTime(cal1.getTime()), DateUtil.defaultTime(cal2.getTime()), PriorityType.NORMAL).setIsInferred(true);
+            return new Task("Jim's birthday", DateUtil.defaultTime(cal1.getTime()), DateUtil.defaultTime(cal2.getTime()),
+                    PriorityType.NORMAL).setIsInferred(true);
         }
-               
+        
+        protected Task done_task() {
+            return new Task("sleep 12 hours", PriorityType.NORMAL).setDone(true);
+        }
+
         protected String generateAddCommand(Task toAdd) {
             if (toAdd.getIsFloating()) {
                 return "add " + toAdd.getMessage();
-            }
-            else if (toAdd.getIsEvent()) {
-                return "add " + toAdd.getMessage() + " " + toAdd.getStartTimeString() + " to " + toAdd.getEndTimeString();
-            }
-            else {
-                return "add " + toAdd.getMessage() + " " + toAdd.getDeadlineString(); 
+            } else if (toAdd.getIsEvent()) {
+                return "add " + toAdd.getMessage() + " " + toAdd.getStartTimeString() + " to "
+                        + toAdd.getEndTimeString();
+            } else {
+                return "add " + toAdd.getMessage() + " " + toAdd.getDeadlineString();
             }
         }
-        
 
         /**
-         * Generates an TaskTracker with auto-generated tasks.
+         * Generates a TaskTracker with auto-generated tasks.
          */
-        TaskTracker generateTaskTracker(int numGenerated) throws Exception{
+        TaskTracker generateTaskTracker(int numGenerated) throws Exception {
             TaskTracker taskTracker = new TaskTracker();
             addToTaskTracker(taskTracker, numGenerated);
             return taskTracker;
         }
+        
+        /**
+         * Generates a TaskTracker with a number auto-generated tasks given by
+         * numGenerated and adds the list of tasks provided to it.
+         */
+        TaskTracker generateTaskTracker(int numGenerated, List<Task> tasks) throws Exception {
+            TaskTracker taskTracker = new TaskTracker();
+            addToTaskTracker(taskTracker, numGenerated);
+            addToTaskTracker(taskTracker, tasks);
+            return taskTracker;
+        }
 
         /**
-         * Generates an TaskTracker based on the list of Tasks given.
+         * Generates a TaskTracker based on the list of Tasks given.
          */
-        TaskTracker generateTaskTracker(List<Task> tasks) throws Exception{
+        TaskTracker generateTaskTracker(List<Task> tasks) throws Exception {
             TaskTracker taskTracker = new TaskTracker();
             addToTaskTracker(taskTracker, tasks);
             return taskTracker;
@@ -347,7 +427,9 @@ public class LogicManagerTest {
 
         /**
          * Adds auto-generated Task objects to the given TaskTracker
-         * @param taskTracker The TaskTracker to which the Tasks will be added
+         * 
+         * @param taskTracker
+         *            The TaskTracker to which the Tasks will be added
          */
         void addToTaskTracker(TaskTracker taskTracker, int numGenerated) throws Exception {
             addToTaskTracker(taskTracker, generateTaskList(numGenerated));
@@ -357,62 +439,71 @@ public class LogicManagerTest {
          * Adds the given list of Tasks to the given TaskTracker
          */
         void addToTaskTracker(TaskTracker taskTracker, List<Task> tasksToAdd) throws Exception {
-            for (Task p: tasksToAdd) {
+            for (Task p : tasksToAdd) {
                 taskTracker.addTask(p);
             }
         }
-        
 
         TaskTracker addToTaskTracker(Task toBeAdded) throws DuplicateTaskException {
-             TaskTracker expectedTT = new TaskTracker();
-             expectedTT.addTask(toBeAdded);
-             return expectedTT;
+            TaskTracker expectedTT = new TaskTracker();
+            expectedTT.addTask(toBeAdded);
+            return expectedTT;
         }
 
         /**
          * Adds auto-generated Task objects to the given model
-         * @param model The model to which the Tasks will be added
+         * 
+         * @param model
+         *            The model to which the Tasks will be added
          */
-        void addToModel(Model model, int numGenerated) throws Exception{
+        void addToModel(Model model, int numGenerated) throws Exception {
             addToModel(model, generateTaskList(numGenerated));
         }
 
         /**
          * Adds the given list of Tasks to the given model
          */
-        void addToModel(Model model, List<Task> tasksToAdd) throws Exception{
-            for (Task p: tasksToAdd) {
+        void addToModel(Model model, List<Task> tasksToAdd) throws Exception {
+            for (Task p : tasksToAdd) {
                 model.addTask(p);
             }
         }
-       
-       /**
-        * Generates a valid task using the given seed.
-        * Running this function with the same parameter values guarantees the returned task will have the same state.
-        * Each unique seed will generate a unique Task object.
-        *
-        * @param seed used to generate the task data field values
-        */
-       Task generateTask(int seed) throws Exception {
-           return new Task("Task " + seed, PriorityType.NORMAL);
-       }       
-       
-       /**
-        * Generates a list of Tasks based on the flags.
-        */
-       List<Task> generateTaskList(int numGenerated) throws Exception{
-           List<Task> tasks = new ArrayList<>();
-           for (int i = 1; i <= numGenerated; i++) {
-               tasks.add(generateTask(i));
-           }
-           return tasks;
-       }
 
-       List<Task> generateTaskList(Task... tasks) {
-           return Arrays.asList(tasks);
-       }
+        /**
+         * Adds the given number of auto-generated Task objects and 
+         * given list of Tasks to the given model
+         */
+        void addToModel(Model model, int numGenerated, List<Task> tasksToAdd) throws Exception {
+            addToModel(model, numGenerated);
+            addToModel(model, tasksToAdd);
+        }
+        
+        /**
+         * Generates a valid task using the given seed. Running this function
+         * with the same parameter values guarantees the returned task will have
+         * the same state. Each unique seed will generate a unique Task object.
+         *
+         * @param seed
+         *            used to generate the task data field values
+         */
+        Task generateTask(int seed) throws Exception {
+            return new Task("Task " + seed, PriorityType.NORMAL);
+        }
 
-                    
+        /**
+         * Generates a list of Tasks based on the flags.
+         */
+        List<Task> generateTaskList(int numGenerated) throws Exception {
+            List<Task> tasks = new ArrayList<>();
+            for (int i = 1; i <= numGenerated; i++) {
+                tasks.add(generateTask(i));
+            }
+            return tasks;
+        }
+
+        List<Task> generateTaskList(Task... tasks) {
+            return Arrays.asList(tasks);
+        }
     }
 
 }

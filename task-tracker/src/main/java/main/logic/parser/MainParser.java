@@ -129,7 +129,15 @@ public class MainParser {
             return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
         
-        int index = Integer.valueOf(edit_matcher.group("index")) - 1;
+        int index;
+        
+        try {
+            index = extractValidIndex(edit_matcher.group("index"));
+        } catch (NumberFormatException e) {
+            return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        } catch (IllegalValueException e) {
+            return new IncorrectCommand(String.format(e.getMessage(), EditCommand.MESSAGE_USAGE));
+        } 
                 
         String task = edit_matcher.group("task");
       
@@ -149,7 +157,7 @@ public class MainParser {
         } catch (NumberFormatException e) {
             return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
         } catch (IllegalValueException e) {
-            return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, e.getMessage()));
+            return new IncorrectCommand(String.format(e.getMessage(), DeleteCommand.MESSAGE_USAGE));
         } 
    
         return new DeleteCommand(index);
@@ -164,18 +172,22 @@ public class MainParser {
         } catch (NumberFormatException e) {
             return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DoneCommand.MESSAGE_USAGE));
         } catch (IllegalValueException e) {
-            return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, e.getMessage()));
+            return new IncorrectCommand(String.format(e.getMessage(), DoneCommand.MESSAGE_USAGE));
         } 
    
         return new DoneCommand(index);
     }
 
     private int extractValidIndex(String input) throws IllegalValueException, NumberFormatException{
-        if (input.trim() == "") throw new IllegalValueException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX); 
+        if (input.trim() == "")  {
+            throw new IllegalValueException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX); 
+        }
         
-        int index;
+        int index = Integer.valueOf(input.trim()) - 1;
         
-        index = Integer.valueOf(input.trim()) - 1;
+        if (index < 0) {
+            throw new IllegalValueException(Messages.MESSAGE_INVALID_INDEX); 
+        }
 
         return index;
     }
