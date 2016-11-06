@@ -7,14 +7,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import main.Main;
 
-
 /**
  * A utility class to load UiParts from FXML files.
- * "person" keyword check done
- * "addressbook" keyword check done
- * @author bey
  */
-
 public class UiPartLoader {
     private final static String FXML_FILE_FOLDER = "/view/";
 
