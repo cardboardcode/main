@@ -138,7 +138,7 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 * UI responds to events raised from various parts of the App and updates itself accordingly.
 
 ####Model
-![Model](images/Model.jpg)<br>
+![Model](images/Model.png)<br>
 
 **API** : [`Model.java`]()
 
@@ -237,17 +237,17 @@ Tests can be found in the ./src/test/java folder.
 
 There are two types of tests:
 
-1.**GUI Tests** - System tests that test the entire application itself by stimulating user actions on the GUI. These tests are in ./src/test/java/guitests package.
+1.**GUI Tests**<br> - _System tests_ that test the entire application itself by stimulating user actions on the GUI. These tests are in ./src/test/java/guitests package.
 
 2.**Non-GUI Tests** - Tests that does not involve GUI, namely:
 
-i. Unit tests - tests that targets low level methods/classes
+i. _Unit tests_ - tests that targets low level methods/classes<br>
 		e.g src.test.java.commons.util.StringUtilTest
 		
-ii. Integration Tests - Checks the integration of multiple code units (those code units are 	assumed to be working).
+ii. _Integration Tests_ - Checks the integration of multiple code units (those code units are 	assumed to be working).<br>
 		e.g src.test.java.storage.StorageManagerTest
 		
-iii. Hybrids of unit and integration tests - Tests that checks multiple code units as well as how 	they are connected together 
+iii. Hybrids of unit and integration tests - Tests that checks multiple code units as well as how 	they are connected together <br>
 		e.g  src.test.java.logic.LogicManagerTest.java
 
 **Headless GUI Testing** :
@@ -306,7 +306,7 @@ Priority | As a ... | I want to ... | So that I
 (For all use cases below, the **System** is the `TaskTracker` and the **Actor** is the `user`, unless specified otherwise)
 
 
-#### Use case: Add Floating Task
+##Use case: Add Floating Task
 
 **MSS**
 
@@ -326,7 +326,7 @@ Use case ends
 > Use case ends
 
 
-#### Use case: Add Deadline Task
+##Use case: Add Deadline Task
 
 **MSS**
 
@@ -345,7 +345,7 @@ Use case ends
 > Use case ends
 
 
-#### Use case: Add Event Task
+##Use case: Add Event Task
 
 **MSS**
 
@@ -363,7 +363,7 @@ Use case ends
 > 2b1. TaskTracker creates a floating task with the given priority<br>
 > Use case ends
 
-#### Use case: Edit Command
+##Use case: Edit Command
 
 **MSS**
 
@@ -378,7 +378,7 @@ Use case ends
 2a. The list is empty
 > Use case ends
 
-#### Use case: Undo Command
+##Use case: Undo Command
 
 **MSS**
 
@@ -386,7 +386,7 @@ Use case ends
 2. TaskTracker undo the previous actions
 Use case ends
 
-#### Use case: Redo Command
+##Use case: Redo Command
 
 **MSS**
 
@@ -394,7 +394,7 @@ Use case ends
 2. TaskTracker redo the previous undos
 Use case ends
 
-#### Use case: Delete Command
+##Use case: Delete Command
 
 **MSS**
 
@@ -402,13 +402,13 @@ Use case ends
 2. TaskTracker deletes the specific task off the task list
 Use case ends
 
-** Extensions **
+**Extensions**
 
 2a. The task does not exist
 > 2a1. TaskTracker shows an error message<br>
 > Use case ends 
 
-#### Use case: Done Command
+##Use case: Done Command
 
 **MSS**
 
@@ -417,7 +417,7 @@ Use case ends
 3. Task gets transferred to a separate list of completed tasks
 Use case ends
 
-#### Use case: Find Command
+##Use case: Find Command
 
 **MSS**
 
@@ -432,7 +432,7 @@ Use case ends
 2a. The list is empty
 > Use case ends
 
-#### Use case: List Command
+##Use case: List Command
 
 **MSS**
 
@@ -447,7 +447,7 @@ Use case ends
 > Use case ends
 
 
-#### Use case: Clear Command
+##Use case: Clear Command
 
 **MSS**
 
@@ -462,7 +462,7 @@ Use case ends
 > Use case ends
 
 
-#### Use case: Help Command
+##Use case: Help Command
 
 **MSS**
 
@@ -470,7 +470,7 @@ Use case ends
 2. TaskTracker opens a help window to task all available commands
 Use case ends 
 
-#### Use case: Sort Command
+##Use case: Sort Command
 
 **MSS**
 
@@ -492,7 +492,7 @@ Use case ends
 > Sorted list will displayed on the list panel<br>
 > Use case ends
 
-###Use case: Search Command
+##Use case: Search Command
 
 **MSS**
 
@@ -507,7 +507,7 @@ Use case ends
 > TaskTracker will display a blank list on the list panel<br>
 > Use case ends
 
-###Use case: Storage Command
+##Use case: Storage Command
 
 **MSS**
 
