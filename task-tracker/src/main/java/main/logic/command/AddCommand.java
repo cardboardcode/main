@@ -1,13 +1,11 @@
+//@@author A0139422J
 package main.logic.command;
 
-//@@author A0139422J
 import main.model.task.Task;
 import main.model.task.UniqueTaskList;
-import main.ui.ListStatistics;
 
 /**
- * Adds a task to the task-tracker storage.
- * @author bey
+ * Adds a task to the task-tracker storage and list.
  */
 public class AddCommand extends Command {
     
