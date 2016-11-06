@@ -1,18 +1,15 @@
 //@@author A0142686X
 package main.logic.command;
 
-import java.io.IOException;
-
-import main.commons.core.Config;
 import main.commons.core.EventsCenter;
 import main.commons.events.storage.FilePathChangedEvent;
-import main.commons.exceptions.DataConversionException;
-import main.commons.util.ConfigUtil;
 import main.commons.util.FileUtil;
-import main.model.ReadOnlyTaskTracker;
-import main.model.TaskTracker;
-import main.storage.StorageManager;
 
+/**
+ * 
+ * Allows the user to set storage location.
+ * creates a filepathchanged event.
+ */
 public class StorageCommand extends Command {
     public static final String COMMAND_WORD = "storage";
 
@@ -26,12 +23,13 @@ public class StorageCommand extends Command {
     public String newStoragePath;
     
     public StorageCommand(String newStoragePath) {
+        assert newStoragePath != null;
         this.newStoragePath = newStoragePath;
     }
     
     @Override
     public CommandResult execute() {
-
+        assert model != null;
         if ((newStoragePath.substring((newStoragePath.length() - 4))).equals(".xml") == false) {
             return new CommandResult(MESSAGE_NO_XML); 
         }
