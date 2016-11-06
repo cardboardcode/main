@@ -1,52 +1,52 @@
-//@@author A0139422J
+//@@author A0144132W
 package guitests;
+
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import javafx.scene.input.KeyCode;
-import main.commons.core.EventsCenter;
 import main.commons.events.ui.KeyPressEvent;
 import main.logic.command.FindCommand;
+import main.testutil.TestTask;
+import main.testutil.TypicalTestTasks;
 
-/**
- * Evaluates the find command when it searches for any tasks regarding a certain
- * keyword "friends"
- */
 public class FindCommandTest extends TaskTrackerGuiTest {
+    
+    private void assertFindBehavior(String input, int expectedListLength, TestTask[] expectedList) {
+        commandBox.enterCommand(input);
+        raise(new KeyPressEvent(KeyCode.E, input));
+        commandBox.pressEnter();
+        
+        assertResultMessage(String.format(FindCommand.MESSAGE_SUCCESS, expectedListLength));
+  
+        // confirms if the list view matches the expected list given.
+        assertTrue(taskListPanel.isListMatching(expectedList));
+    }
 
 	@Test
-	public void find_oneKeyword_success() {
-        // finds any tasks starting with the "frie"
-	    String input = "find" + " frie";
-	    
-		commandBox.enterCommand(input);
-		EventsCenter.getInstance().post(new KeyPressEvent(KeyCode.E, input));
-		commandBox.pressEnter();
-		
-		assertResultMessage(String.format(FindCommand.MESSAGE_SUCCESS, 1));
+	public void find_oneKeyword_success() {	    
+		assertFindBehavior("find" + " frie", 1, new TestTask[] {TypicalTestTasks.event1});
 	}
 	
     @Test
-    public void find_twoKeyword_success() {
-        // finds any tasks starting with the "frie" or "b" 
-        String input = "find" + " frie" + " b";
-        
-        commandBox.enterCommand(input);
-        EventsCenter.getInstance().post(new KeyPressEvent(KeyCode.O, input));
-        commandBox.pressEnter();
-        
-        assertResultMessage(String.format(FindCommand.MESSAGE_SUCCESS, 3));
+    public void find_twoKeyword_success() {  
+        assertFindBehavior("find" + " frie" + " b", 3, new TestTask[] {TypicalTestTasks.deadline2, TypicalTestTasks.deadline1, TypicalTestTasks.event1});
     }
     
     @Test
     public void find_middleParam_success() {
-        // finds any tasks starting with the "frie" or "b" 
-        String input = "find" + " with";
-        
-        commandBox.enterCommand(input);
-        EventsCenter.getInstance().post(new KeyPressEvent(KeyCode.H, input));
-        commandBox.pressEnter();
-        
-        assertResultMessage(String.format(FindCommand.MESSAGE_SUCCESS, 1));
+        assertFindBehavior("find" + " with", 1, new TestTask[] {TypicalTestTasks.event1});
     }
+    
+    @Test
+    public void find_upperCase_success() {     
+        assertFindBehavior("find" + " FRIE", 1, new TestTask[] {TypicalTestTasks.event1});
+    }
+    
+    @Test
+    public void find_nonexistentTask_empty() {     
+        assertFindBehavior("find" + " wdsc", 0, new TestTask[] {});
+    }   
+
 }
