@@ -3,7 +3,6 @@ package main.logic.command;
 
 import java.util.Date;
 import org.apache.commons.lang3.tuple.Triple;
-
 import main.commons.util.DateUtil;
 import main.model.task.PriorityType;
 import main.model.task.TaskType;
@@ -11,14 +10,12 @@ import main.model.task.TaskType;
 /**
  * Lists certain tasks in the task tracker to the user.
  */
-
 public class ListCommand extends Command {
     
     public static final String COMMAND_WORD = "list";
-    public static final String MESSAGE_USAGE = COMMAND_WORD 
-            + "Parameters: [priority] [date] [type] \n"
-            + "All parameters optional and interchangeable \n"
-            + "Eg: " + COMMAND_WORD + " high today";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + "Parameters: [priority] [date] [type] \n"
+            												+ "All parameters optional and interchangeable \n"
+            												+ "Eg: " + COMMAND_WORD + " high today";
     public static final String MESSAGE_SUCCESS = "Listed all %1$s";
     
     private PriorityType priority;

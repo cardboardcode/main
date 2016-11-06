@@ -1,9 +1,7 @@
 //@@author A0139422J
 package main.ui;
 
-
 import main.commons.core.EventsCenter;
-
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -15,9 +13,6 @@ import main.commons.util.AppUtil;
 /**
  * Base class for UI parts. 2 abstract functions: getNode(), getFxmlPath().
  * A 'UI part' represents a distinct part of the UI. e.g. Windows, dialogs, panels, status bars, etc.
- * "person" keyword check done
- * "addressbook" keyword check done
- *@author bey
  */
 public abstract class UiPart {
 

@@ -3,7 +3,6 @@ package main.logic.command;
 
 /**
  * Represents the result of a command execution.
- * @author bey
  */
 public class CommandResult {
 
@@ -11,7 +10,7 @@ public class CommandResult {
     
     public CommandResult(String feedbackToUser) {
         assert feedbackToUser != null;
-        this.feedbackToUser = feedbackToUser;
-    }
+		this.feedbackToUser = feedbackToUser;
+	}
 
 }

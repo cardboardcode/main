@@ -2,11 +2,13 @@
 package guitests;
 
 import org.junit.Test;
-
 import main.logic.command.StorageCommand;
 
-public class StorageCommandTest extends TaskTrackerGuiTest {
-    
+/**
+ * Evaluates storage command by saving it to a valid file path and an invalid
+ * file path
+ */
+public class StorageCommandTest extends TaskTrackerGuiTest {    
     String FILEPATH_VALID = "src/test/data/sandbox/newfile.xml";
     String FILEPATH_INVALID = "src/test/data/sandbox/textfile.txt"; 
     

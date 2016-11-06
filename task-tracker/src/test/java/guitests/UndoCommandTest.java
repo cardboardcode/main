@@ -2,13 +2,15 @@
 package guitests;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
-
 import main.logic.command.UndoCommand;
 import main.testutil.TestTask;
 import main.testutil.TypicalTestTasks;
 
+/**
+ * Evaluates the undo command when it undoes an add, delete, clear, done,
+ * multiple undo and edit commands
+ */
 public class UndoCommandTest extends TaskTrackerGuiTest {   
     
     @Test
@@ -40,8 +42,7 @@ public class UndoCommandTest extends TaskTrackerGuiTest {
         
         //test to undo edit
         commandBox.runCommand("edit " + taskIndex + " buy clothes");
-        assertUndoSuccess(currentList);       
-               
+        assertUndoSuccess(currentList);                      
     }
 
     //Checks if listpanel matches the task list

@@ -1,19 +1,14 @@
 //@@author A0139422J
 package main.logic.command;
 
-import java.util.Date;
-
-import main.commons.exceptions.IllegalValueException;
 import main.model.task.Task;
 import main.model.task.UniqueTaskList.DuplicateTaskException;
 import main.model.task.UniqueTaskList.TaskNotFoundException;
 
 /**
  * Edits an existing task in task-tracker
- * @author 
  *
  */
-//@@author A0139422J
 public class EditCommand extends Command {
 public static final String COMMAND_WORD = "edit";
 	
@@ -24,8 +19,7 @@ public static final String COMMAND_WORD = "edit";
 	
 	public static final String MESSAGE_SUCCESS = "Task changed to: %1$s";
 	public static final String MESSAGE_NO_SUCH_TASK = "This task does not exist in the Task-Tracker";
-	
-	private Task toEdit;
+
 	private final int editNum;
 	private Task newTask;
 	
@@ -38,8 +32,6 @@ public static final String COMMAND_WORD = "edit";
 	@Override
 	public CommandResult execute() {
 		try {
-		    //model.deleteTask(editNum);
-			//model.addTask(newTask);
 			model.editTask(editNum, newTask);
 			return new CommandResult(String.format(MESSAGE_SUCCESS, newTask));
 		}catch (TaskNotFoundException e){

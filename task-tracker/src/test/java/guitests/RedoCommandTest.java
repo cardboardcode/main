@@ -2,7 +2,6 @@
 package guitests;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 import main.logic.command.RedoCommand;
@@ -11,6 +10,9 @@ import main.testutil.TestTask;
 import main.testutil.TestUtil;
 import main.testutil.TypicalTestTasks;
 
+/**
+ * Tests Redo command for add, delete, done, edit and clear
+ */
 public class RedoCommandTest extends TaskTrackerGuiTest {    
     
     @Test

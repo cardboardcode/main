@@ -2,12 +2,14 @@
 package guitests;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 import main.model.task.ReadOnlyTask;
 import main.testutil.TestTask;
 
+/**
+ * Evaluates the done command when it marks an invalid and valid task as done
+ */
 public class DoneCommandTest extends TaskTrackerGuiTest {
     
     TestTask[] currentList = td.getTypicalTasks();

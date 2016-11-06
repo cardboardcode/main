@@ -10,10 +10,6 @@ import javafx.stage.Stage;
 import main.commons.util.AppUtil;
 import main.commons.util.FxViewUtil;
 import main.logic.Logic;
-import main.model.Model;
-
-import java.util.ArrayList;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
@@ -25,7 +21,7 @@ public class ListStatistics extends UiPart {
 
 	@FXML
 	private Label listdata;
-	
+
 	@FXML
 	private ImageView image;
 
@@ -36,8 +32,6 @@ public class ListStatistics extends UiPart {
 	private static final String FLOATING_TASK_MESSAGE = " <-: Floating ";
 	private static final String OVERDUE_TASK_MESSAGE = " <-: Overdue ";
 	private static final String ALL_TASK_MESSAGE = " <-: Total ";
-	
-	private Model model;
 
 	private static Logic logic;
 
@@ -48,7 +42,7 @@ public class ListStatistics extends UiPart {
 	private static ListStatistics listDisplay;
 
 	private StringProperty taskDataNo = new SimpleStringProperty("");
-	
+
 	public static ListStatistics load(Stage primaryStage, AnchorPane placeHolder, Logic logic) {
 		listDisplay = UiPartLoader.loadUiPart(primaryStage, placeHolder, new ListStatistics());
 		ListStatistics.logic = logic;
@@ -59,7 +53,7 @@ public class ListStatistics extends UiPart {
 	public ListStatistics() {
 		listdata = new Label();
 	}
-	
+
 	public void configure() {
 		mainPane = new VBox();
 		bindingAllStringProperty();
@@ -73,6 +67,7 @@ public class ListStatistics extends UiPart {
 		placeHolder.setMaxWidth(235);
 		placeHolder.setMinWidth(235);
 	}
+
 	private void bindingAllStringProperty() {
 		listdata.textProperty().bind(taskDataNo);
 	}
@@ -84,7 +79,7 @@ public class ListStatistics extends UiPart {
 	private void initializeStringProperty() {
 		taskDataNo.setValue(buildListDataString());
 	}
-	
+
 	public static void updateStatistics() {
 		listDisplay.getTodayTaskNo().setValue(buildListDataString());
 	}
@@ -115,14 +110,14 @@ public class ListStatistics extends UiPart {
 	public String getFxmlPath() {
 		return FXML;
 	}
-	// todo: Remember to add the image filepath to the updateListStatisticsPictureEvent.java HashMap
-	private static String buildListDataString(){
-		return logic.getNumToday() + TODAY_TASK_MESSAGE +"\n\n" + 
-				logic.getNumTmr() + TOMORROW_TASK_MESSAGE + "\n\n" +
-				logic.getNumEvent() + EVENT_TASK_MESSAGE + "\n\n" +
-				logic.getNumDeadline() + DEADLINE_TASK_MESSAGE + "\n\n" +
-				logic.getNumFloating() + FLOATING_TASK_MESSAGE + "\n\n" +
-				logic.getNumOverdue() + OVERDUE_TASK_MESSAGE + "\n\n" +
-				logic.getTotalNum() + ALL_TASK_MESSAGE;
+
+	private static String buildListDataString() {
+		return logic.getNumToday() + TODAY_TASK_MESSAGE + "\n\n" 
+			+ logic.getNumTmr() + TOMORROW_TASK_MESSAGE + "\n\n"
+			+ logic.getNumEvent() + EVENT_TASK_MESSAGE + "\n\n" 
+			+ logic.getNumDeadline() + DEADLINE_TASK_MESSAGE + "\n\n" 
+			+ logic.getNumFloating() + FLOATING_TASK_MESSAGE + "\n\n" 
+			+ logic.getNumOverdue() + OVERDUE_TASK_MESSAGE + "\n\n" 
+			+ logic.getTotalNum() + ALL_TASK_MESSAGE;
 	}
 }
