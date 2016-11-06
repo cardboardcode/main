@@ -52,12 +52,18 @@ public class AutoComplete {
     
     public AutoComplete(Model model) {
         this.eventsCenter = EventsCenter.getInstance().registerHandler(this);
-        this.suggestions = new ArrayList<String>();
-        this.model = model;
-        
+        this.model = model;        
         buildAllLists(model);
+        initSuggestions();
     }
 
+    /*
+     * fills the suggestions list with all commands at start up
+     */
+    private void initSuggestions() {
+        suggestions = commandList.getSuggestions("");
+    }
+    
     private void buildAllLists(Model model) {
         buildCommandList();
         buildListList();
