@@ -21,36 +21,34 @@ public class XmlTaskTrackerStorage implements TaskTrackerStorage {
 
     private String filePath;
 
-    public XmlTaskTrackerStorage(String filePath){
+    public XmlTaskTrackerStorage(String filePath) {
         this.filePath = filePath;
     }
 
-    public String getTaskTrackerFilePath(){
+    public String getTaskTrackerFilePath() {
         return filePath;
     }
 
     /**
-     * Similar to readTaskTracker
+     * Reads tasktracker data from file
      * @param filePath location of the data. Cannot be null
      * @throws DataConversionException if the file is not in the correct format.
      */
     public Optional<ReadOnlyTaskTracker> readTaskTracker(String filePath) throws DataConversionException, FileNotFoundException {
         assert filePath != null;
-
         File taskTrackerFile = new File(filePath);
-
+        
         if (!taskTrackerFile.exists()) {
             logger.info("TaskTracker file "  + taskTrackerFile + " not found");
             return Optional.empty();
         }
-
-        ReadOnlyTaskTracker taskTrackerOptional = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
-
+        
+        ReadOnlyTaskTracker taskTrackerOptional = XmlFileStorage.loadDataFromSaveFile(new File(filePath));        
         return Optional.of(taskTrackerOptional);
     }
 
     /**
-     * Similar to saveTaskTracker(ReadOnlyTaskTracker)
+     * Saves TaskTracker to specified filepath
      * @param filePath location of the data. Cannot be null
      */
     public void saveTaskTracker(ReadOnlyTaskTracker taskTracker, String filePath) throws IOException {
@@ -72,7 +70,6 @@ public class XmlTaskTrackerStorage implements TaskTrackerStorage {
         saveTaskTracker(taskTracker, filePath);
     }
     
-    //@@author A0142686X
     @Override
     public void setTaskTrackerFilePath(String filepath) {
         this.filePath = filepath;

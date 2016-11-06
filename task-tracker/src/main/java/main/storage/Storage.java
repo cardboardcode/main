@@ -2,13 +2,11 @@
 package main.storage;
 
 import main.commons.events.model.TaskTrackerChangedEvent;
-import main.commons.events.storage.DataSavingExceptionEvent;
 import main.commons.events.storage.FilePathChangedEvent;
 import main.commons.exceptions.DataConversionException;
 import main.model.ReadOnlyTaskTracker;
 import main.model.UserPrefs;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -35,7 +33,7 @@ public interface Storage extends TaskTrackerStorage, UserPrefsStorage {
     /**
      * Saves the current version of the TaskTracker to the hard disk.
      *   Creates the data file if it is missing.
-     * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
+     * Raises DataSavingExceptionEvent if there was an error during saving.
      */
     void handleTaskTrackerChangedEvent(TaskTrackerChangedEvent abce);
 
