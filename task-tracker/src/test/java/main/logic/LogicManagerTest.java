@@ -163,9 +163,7 @@ public class LogicManagerTest {
     @Test
     public void execute_clear() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        model.addTask(helper.generateTask(1));
-        model.addTask(helper.generateTask(2));
-        model.addTask(helper.generateTask(3));
+        helper.replaceModel(model, 3);
 
         assertCommandBehavior("clear", ClearCommand.MESSAGE_SUCCESS, new TaskTracker(), Collections.emptyList());
     }
@@ -229,7 +227,7 @@ public class LogicManagerTest {
     }
     
     @Test
-    public void execute_add_floating_successful() throws Exception {
+    public void execute_addFloating_successful() throws Exception {
           
         TestDataHelper helper = new TestDataHelper();
         Task toBeAdded = helper.floating1();
@@ -239,9 +237,10 @@ public class LogicManagerTest {
                 String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
                 expectedTT,
                 expectedTT.getTaskList());
-    }   
+    }
+    
     @Test
-    public void execute_add_duplicate_notAllowed() throws Exception {
+    public void execute_addDuplicate_notAllowed() throws Exception {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
         Task toBeAdded = helper.floating1();
@@ -257,22 +256,8 @@ public class LogicManagerTest {
     
     }         
       
-      
     @Test
-    public void execute_add_deadline_natural_date_successful() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        Task toBeAdded = helper.deadline_natural_tmr_inferred();
-        TaskTracker expectedTT = helper.addToTaskTracker(toBeAdded);
-          
-        assertCommandBehavior(("add " + toBeAdded.getMessage() + " tmr"),
-                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
-                expectedTT,
-                expectedTT.getTaskList());          
-    }
-      
-     
-    @Test
-    public void execute_add_deadline_successful() throws Exception {
+    public void execute_addDeadline_successful() throws Exception {
           
         TestDataHelper helper = new TestDataHelper();
         Task toBeAdded = helper.deadline1();
@@ -285,7 +270,7 @@ public class LogicManagerTest {
     }
       
     @Test
-    public void execute_add_event_successful() throws Exception {
+    public void execute_addEvent_successful() throws Exception {
           
         TestDataHelper helper = new TestDataHelper();
         Task toBeAdded = helper.event1();
@@ -424,10 +409,6 @@ public class LogicManagerTest {
             return new Task("wash dishes", PriorityType.HIGH);
         }
         
-        protected Task deadline_natural_tmr_inferred() {
-            return new Task("clean room", DateUtil.getTmr(), PriorityType.NORMAL).setIsInferred(true);
-        }
-        
         protected Task deadline_low_priority() {
             Calendar cal = Calendar.getInstance();
             cal.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
@@ -544,17 +525,6 @@ public class LogicManagerTest {
         void addToModel(Model model, int numGenerated, List<Task> tasksToAdd) throws Exception {
             addToModel(model, numGenerated);
             addToModel(model, tasksToAdd);
-        }
-        
-        /**
-         * Generates a Model Object with the given number of auto-generated
-         * Task objects and given list of Tasks
-         */
-        Model generateModel(int numGenerated, List<Task> tasksToAdd) throws Exception {
-            Model model = new ModelManager(new TaskTracker(), new UserPrefs());
-            addToModel(model, numGenerated);
-            addToModel(model, tasksToAdd);
-            return model;
         }
         
         /**
