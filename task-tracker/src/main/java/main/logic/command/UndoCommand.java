@@ -63,7 +63,7 @@ public class UndoCommand extends Command {
     private CommandResult undoAdd(Task task) {
         assert task != null;
         try {
-            model.deleteTaskUndoRedo(task);
+            model.deleteTaskUndo(task);
         } catch (TaskNotFoundException e) {
             return new CommandResult(MESSAGE_FAILIURE);
         }
@@ -73,7 +73,7 @@ public class UndoCommand extends Command {
     private CommandResult undoDelete(Task task) {
         assert task != null;
         try {
-            model.addTaskUndoRedo(task);
+            model.addTaskUndo(task);
         } catch (DuplicateTaskException e) {
             return new CommandResult(MESSAGE_FAILIURE);
         }
@@ -84,8 +84,8 @@ public class UndoCommand extends Command {
         assert newTask != null;
         assert originalTask != null;
         try {
-            model.editTaskUndoRedo(originalTask, newTask);
-        } catch (DuplicateTaskException e) {
+            model.editTaskUndo(originalTask, newTask);
+        } catch (DuplicateTaskException | TaskNotFoundException e) {
             return new CommandResult(MESSAGE_FAILIURE);
         }
         return new CommandResult(MESSAGE_SUCCESS);
@@ -93,14 +93,14 @@ public class UndoCommand extends Command {
     
     private CommandResult undoClear(ArrayList<Task> tasks) {
         assert tasks != null;
-        model.clearTaskUndoRedo(tasks);
+        model.clearTaskUndo(tasks);
         return new CommandResult(MESSAGE_SUCCESS);
     }
     
     private CommandResult undoDone(Task task) {
         assert task != null;
         try {
-            model.doneTaskUndoRedo(task);
+            model.doneTaskUndo(task);
         } catch (DuplicateTaskException | TaskNotFoundException e) {
             return new CommandResult(MESSAGE_FAILIURE);
         }
