@@ -10,7 +10,6 @@ import main.commons.core.UnmodifiableObservableList;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 //import java.util.function.Predicate;
@@ -22,7 +21,6 @@ import org.apache.commons.lang3.tuple.Triple;
 import com.google.common.collect.Lists;
 import com.google.common.eventbus.Subscribe;
 
-import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import main.commons.events.model.ChangeSortFilterEvent;
@@ -32,8 +30,6 @@ import main.commons.events.model.UpdateListWithSuggestionsEvent;
 import main.commons.util.DateUtil;
 
 import main.logic.command.UndoCommand;
-import main.model.ModelManager.Qualifier;
-
 import main.model.TaskTracker;
 import main.model.filter.SortCriteria;
 import main.model.filter.SortFilter;
