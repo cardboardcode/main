@@ -22,7 +22,7 @@ public class StorageCommandTest extends TaskTrackerGuiTest {
     @Test
     public void save_valid_path() {
         commandBox.runCommand("storage " + validPath);
-        assertResultMessage(StorageCommand.MESSAGE_SUCCESS);
+        assertResultMessage(String.format(StorageCommand.MESSAGE_SUCCESS, validPath));
     }
     
     @Test
