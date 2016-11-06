@@ -29,6 +29,7 @@ import main.model.task.UniqueTaskList.DuplicateTaskException;
 import main.storage.StorageManager;
 
 import static main.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static main.commons.core.Messages.MESSAGE_INVALID_INDEX;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -117,11 +118,9 @@ public class LogicManagerTest {
     
     private void assertIncorrectIndexFormatBehaviorForCommand(String commandWord, String expectedMessage)
             throws Exception {
-        assertCommandBehavior(commandWord , expectedMessage); //index missing
-        assertCommandBehavior(commandWord + " +1", expectedMessage); //index should be unsigned
-        assertCommandBehavior(commandWord + " -1", expectedMessage); //index should be unsigned
-        assertCommandBehavior(commandWord + " 0", expectedMessage); //index cannot be 0
-        assertCommandBehavior(commandWord + " not_a_number", expectedMessage);
+        assertCommandBehavior(commandWord , String.format(MESSAGE_INVALID_COMMAND_FORMAT, expectedMessage)); //index missing
+        assertCommandBehavior(commandWord + " 0", String.format(MESSAGE_INVALID_INDEX, expectedMessage)); //index cannot be 0
+        assertCommandBehavior(commandWord + " not_a_number", String.format(MESSAGE_INVALID_COMMAND_FORMAT, expectedMessage));
 }
 
     @Test
@@ -162,20 +161,19 @@ public class LogicManagerTest {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
         assertCommandBehavior("edit wrong", expectedMessage);
         assertCommandBehavior("edit Oct", expectedMessage);
-        assertCommandBehavior("edit 0 ", expectedMessage);        
         assertCommandBehavior("edit", expectedMessage);        
+        assertIncorrectIndexFormatBehaviorForCommand(EditCommand.COMMAND_WORD, EditCommand.MESSAGE_USAGE);
+
     }
 
     @Test
     public void execute_done_invalidArgsFormat_errorMessageShown() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DoneCommand.MESSAGE_USAGE);
-        assertIncorrectIndexFormatBehaviorForCommand(DoneCommand.COMMAND_WORD, expectedMessage);
+        assertIncorrectIndexFormatBehaviorForCommand(DoneCommand.COMMAND_WORD, DoneCommand.MESSAGE_USAGE);
     }
     
     @Test
     public void execute_delete_InvalidArgsFormat_errorMessageShown() throws Exception {
-        String expectedMessage = String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
-        assertIncorrectIndexFormatBehaviorForCommand(DeleteCommand.COMMAND_WORD, expectedMessage);
+        assertIncorrectIndexFormatBehaviorForCommand(DeleteCommand.COMMAND_WORD, DeleteCommand.MESSAGE_USAGE);
     }
     
     @Test
