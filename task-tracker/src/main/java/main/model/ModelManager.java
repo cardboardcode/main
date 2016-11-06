@@ -370,7 +370,7 @@ public class ModelManager extends ComponentManager implements Model {
 //                    .findAny()
 //                    .isPresent();
 //            return ((compareDate(date, task.getDeadline())) || (compareDate(date, task.getEndTime())) || (compareDate(date, task.getStartTime())));
-            if (task.getIsEvent()) return DateUtil.dateWithin(task.getStartTime(), task.getEndTime(), date);
+            if (task.getIsEvent()) return DateUtil.dateOverlap(task.getStartTime(), task.getEndTime(), date);
             else if (!task.getIsFloating() && !task.getIsEvent()) return DateUtil.areSameDay(date, task.getDeadline()); 
             else return false;
         }
