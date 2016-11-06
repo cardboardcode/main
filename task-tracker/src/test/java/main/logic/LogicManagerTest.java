@@ -537,7 +537,7 @@ public class LogicManagerTest {
          * Replaces the Model data with the given number of auto-generated
          * Task objects and given list of Tasks
          */
-        void replaceModel(Model model, int numGenerated, List<Task> tasksToAdd) throws Exception {
+        protected void replaceModel(Model model, int numGenerated, List<Task> tasksToAdd) throws Exception {
             model.resetData(generateTaskTracker(numGenerated, tasksToAdd));
         }
         
@@ -549,7 +549,7 @@ public class LogicManagerTest {
          * @param seed
          *            used to generate the task data field values
          */
-        Task generateTask(int seed) throws Exception {
+        protected Task generateTask(int seed) throws Exception {
             return new Task("Task " + seed, PriorityType.NORMAL);
         }
 

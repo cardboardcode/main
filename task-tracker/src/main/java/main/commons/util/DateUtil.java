@@ -52,15 +52,10 @@ public class DateUtil {
         if (start == null || end == null || date == null) {
             return false;
         }
-        if (start.before(date) && end.after(date)) {
-            return true;
-        }
-        else if (areSameDay(start, date) && areSameDay(end, date)) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        
+        return ((start.before(date) && end.after(date)) 
+                || (areSameDay(start, date) && areSameDay(end, date)));
+
     }
     
     /**

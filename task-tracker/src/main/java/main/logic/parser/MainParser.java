@@ -201,7 +201,7 @@ public class MainParser {
      */
     private int extractValidIndex(String input) throws IllegalValueException, NumberFormatException{
         if (input.trim().equals(""))  {
-            throw new IllegalValueException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX); 
+            throw new IllegalValueException(Messages.MESSAGE_INVALID_COMMAND_FORMAT); 
         }
         
         int index = Integer.valueOf(input.trim()) - 1;
