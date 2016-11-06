@@ -142,8 +142,13 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 
 **API** : [`Model.java`]()
 
+* The `Model` component uses various classes to construct and model the data of TaskTracker in memory.
 * `UserPref` object represents the user's preferences.
+* The `ModelManager` implements `Model` interface, providing access to the model data as well as encapsulating the complexity of its in-built classes. All external components can only interact with the model data via the ModelManager class.
 * Task data is stored in `TaskTracker` class.
+* The TaskTracker class stores the lists of tasks, only the `ReadOnlyTaskTracker` or `Model` interface grants access to its data.
+* The task class models three different types of classes - floating, deadline and event tasks
+* Each of these tasks contains certain fields specific to their own types
 * `UnmodifiableObservableList<ReadOnlyTask>` is 'exposed', so list of tasks can be observed, for example by the UI, without being changed.
 
 <!--@@author A0142686X -->
@@ -158,6 +163,13 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 #### Common classes
 
 The classes used by multiple components are in the `tasktracker.main.commons` package.
+
+These classes are furthered separated into packages - `core`, `events`, `exceptions` and `utils`
+
+* `core` - Essential classes used for implementation in different components of TaskTracker
+* `events` - Classes that address and assist in event changes, mainly used by EventBus and EventManager
+* `exceptions` - Consists of classes that handle exceptions that may occur in TaskTracker.
+* `util` - Classes that provides additional utilities to assist in different components
 
 ## Implementation
 
