@@ -47,7 +47,7 @@ public class MainParser {
 
     public MainParser() {}
     
-    /*
+    /***
      * parses the given input
      * 
      * @returns a Command object to be executed.
@@ -69,7 +69,7 @@ public class MainParser {
         return getCommand(input, commandWord, task);
     }
 
-    /*
+    /***
      * Calls the appropriate prepare function according to the commandWord given.
      * 
      * @returns a Command object
@@ -107,14 +107,14 @@ public class MainParser {
         }
     }
 
-    /*
+    /**
      * @returns an IncorrectCommand object with help message
      */
     private Command commandIncorrectPlusHelp(String message) {
         return new IncorrectCommand(String.format(message, HelpCommand.MESSAGE_USAGE));
     }
     
-    /*
+    /**
      * Extracts task to be added from the given input 
      */    
     public Command prepareAdd(String task) {
@@ -128,7 +128,7 @@ public class MainParser {
         }                      
     }     
     
-    /*
+    /**
      * Extracts relevant parameters for the EditCommamd, consisting of the index to be
      * replaced and Task to take its place. Appropriate IncorrectCommand when input
      * is invalid.
@@ -160,7 +160,7 @@ public class MainParser {
         }  
     }
     
-    /*
+    /**
      * Extracts relevant parameters for the DeleteCommamd, and returns appropriate
      * IncorrectCommand when input is invalid
      */
@@ -178,7 +178,7 @@ public class MainParser {
         return new DeleteCommand(index);
     }
 
-    /*
+    /**
      * Extracts relevant parameters for the DoneCommamd, and returns appropriate
      * IncorrectCommand when input is invalid
      */
@@ -196,7 +196,7 @@ public class MainParser {
         return new DoneCommand(index);
     }
 
-    /*
+    /**
      * Extracts a valid index from the given input. 
      *
      * @throws IllegalValueException when input is empty, or index derived is less than 0
@@ -238,7 +238,7 @@ public class MainParser {
     }
     
     //@@author A0144132W
-    /*
+    /**
      * Extracts list parameters from the given input.
      * 
      * @returns appropriate ListCommand or IncorrectCommand if input is invalid.
@@ -283,7 +283,7 @@ public class MainParser {
         return new ListCommand(Triple.of(priority, date, type), isDone, onlyOverdue);
     }
 
-    /*
+    /**
      * Gets the first date if there are more than 1. If there are none, null is returned.
      * 
      * for prepareList function
@@ -303,7 +303,7 @@ public class MainParser {
         return date;
     }
     
-    /*
+    /**
      * Checks whether the input given matches the 2 sort parameter.
      * 
      * @returns SortCommand if input matches
@@ -320,7 +320,7 @@ public class MainParser {
         }
     }
 
-    /*
+    /**
      * Checks whether task has a deadline, is an event, or is floating,
      * and uses the appropriate constructors accordingly.
      * 
@@ -359,7 +359,7 @@ public class MainParser {
         }
     }
     
-    /*
+    /**
      * Extracts the priority from the given input. Priority is indicated by the 
      * PriorityType enum class.
      * 
@@ -393,14 +393,14 @@ public class MainParser {
         return Pair.of(priority,input);
     }
     
-    /*
+    /**
      * @returns the last index at which arg given appears in str given
      */
     private int argumentIndexInString(String str, String arg) {
         return (str.toLowerCase().lastIndexOf(arg.toLowerCase()));
     }
     
-    /*
+    /**
      * Processes the list parameters and chooses one to be shown in the list statistics
      * by posting an event
      */
@@ -425,8 +425,8 @@ public class MainParser {
         EventsCenter.getInstance().post(new updateListStatisticsPictureEvent(paramToShow));
     }
     
-    /*
-     * changes the ListStatistics picture to the default one
+    /**
+     * Changes the ListStatistics picture to the default one
      */
     private void defaultListPicture() {
         indicateListParamsChanged(null, null, null, false);
