@@ -1,3 +1,4 @@
+//@@author A0142686X
 package guitests;
 
 import org.junit.Test;
@@ -7,22 +8,19 @@ import main.logic.command.StorageCommand;
  * Evaluates storage command by saving it to a valid file path and an invalid
  * file path
  */
-public class StorageCommandTest extends TaskTrackerGuiTest {
-
-	String validPath = "src/test/data/sandbox/newfile.xml";
-	String invalidPath = "src/test/data/sandbox/textfile.txt";
-	String defaultPath = "src/test/data/sandbox/sampleData.xml";
-
-	@Test
-	public void save_valid_path() {
-		commandBox.runCommand("storage " + validPath);
-		assertResultMessage(StorageCommand.MESSAGE_SUCCESS);
-	}
-
-	@Test
-	public void save_invalid_path() {
-		commandBox.runCommand("storage " + invalidPath);
-		assertResultMessage(StorageCommand.MESSAGE_NO_XML);
-	}
-
+public class StorageCommandTest extends TaskTrackerGuiTest {    
+    String FILEPATH_VALID = "src/test/data/sandbox/newfile.xml";
+    String FILEPATH_INVALID = "src/test/data/sandbox/textfile.txt"; 
+    
+    @Test
+    public void save_validpath() {
+        commandBox.runCommand("storage " + FILEPATH_VALID);
+        assertResultMessage(String.format(StorageCommand.MESSAGE_SUCCESS, FILEPATH_VALID));
+    }
+    
+    @Test
+    public void save_invalidpath() {
+        commandBox.runCommand("storage " + FILEPATH_INVALID);
+        assertResultMessage(StorageCommand.MESSAGE_NO_XML);
+    }    
 }
