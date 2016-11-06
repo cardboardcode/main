@@ -1,7 +1,6 @@
 //@@author A0139422J
 package main.logic.command;
 
-import main.model.task.Task;
 import main.model.task.UniqueTaskList.TaskNotFoundException;
 
 public class DoneCommand extends Command{
@@ -27,15 +26,10 @@ public class DoneCommand extends Command{
     @Override
     public CommandResult execute() {
         try {
-        	//Remove comment after Model component adds a setIsDone() method which changes the value of 
-        	//it isDone attribute.
-
             model.doneTask(taskIndex);
-
             return new CommandResult(String.format(MESSAGE_SUCCESS, taskIndex+1));
-
-
-        } catch (IndexOutOfBoundsException ie) {
+        } 
+        catch (IndexOutOfBoundsException ie) {
             return new CommandResult("The task index provided is invalid");
         } 
         catch (TaskNotFoundException pnfe) {
