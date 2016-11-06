@@ -48,32 +48,66 @@ public interface Model {
    // void overdueTask(int index) throws TaskNotFoundException, UniqueTaskList.DuplicateTaskException;
     
     //@@author A0142686X
-    /** Returns the Task at a specific index number inside TaskTracker **/
+    
+    /** 
+     * Returns the Task at a specific index number in the sorted ObservableList
+     * @param index
+     * @throws UniqueTaskList.TaskNotFoundException
+     * @throws IndexOutOfBoundsException
+     */
     Task getTaskfromIndex(int index) throws  UniqueTaskList.TaskNotFoundException, IndexOutOfBoundsException;
     
-    /** Returns index number of specific task inside TaskTracker **/
+    /**
+     * Returns index number of specific task in the sorted ObservableList
+     * @param task
+     * @throws UniqueTaskList.TaskNotFoundException
+     * @throws IndexOutOfBoundsException
+     */
     int getIndexFromTask(ReadOnlyTask task) throws UniqueTaskList.TaskNotFoundException, IndexOutOfBoundsException;
     
-    /** Adds task upon undo **/
-    void addTaskUndoRedo(Task task) throws DuplicateTaskException;
+    /**
+     * Adds the updated tasks to the undo stack
+     * @param ID
+     * @param tasks
+     */
+    void addToUndoStack(int ID, Task... tasks);
     
-    /** Deletes task upon undo **/
-    void deleteTaskUndoRedo(ReadOnlyTask target) throws TaskNotFoundException;
+    /**
+     * Adds task upon execution of undo
+     * @param task
+     * @throws DuplicateTaskException
+     */
+    void addTaskUndo(Task task) throws DuplicateTaskException;
     
-    /** Edits task upon undo **/
-    void editTaskUndoRedo(Task originalTask, Task newTask) throws DuplicateTaskException;
+    /**
+     * Deletes task upon execution of undo
+     * @param target
+     * @throws TaskNotFoundException
+     */
+    void deleteTaskUndo(ReadOnlyTask target) throws TaskNotFoundException;
     
-    /** Clears Tasks upon undo **/
-    void clearTaskUndoRedo(ArrayList<Task> tasks);
+    /**
+     * Edits task upon execution of undo
+     * @param originalTask
+     * @param newTask
+     * @throws DuplicateTaskException
+     * @throws TaskNotFoundException 
+     */
+    void editTaskUndo(Task originalTask, Task newTask) throws DuplicateTaskException, TaskNotFoundException;
     
-    /** re-adds a done task upon undo 
-     * @throws DuplicateTaskException 
-     * @throws TaskNotFoundException **/
-    void doneTaskUndoRedo(Task Task) throws DuplicateTaskException, TaskNotFoundException;
-//    
-//    void emptyUndoStack();
-//    
-//    void emptyRedoStack();
+    /**
+     * Clears Tasks upon execution of undo
+     * @param tasks
+     */
+    void clearTaskUndo(ArrayList<Task> tasks);
+    
+    /**
+     * re-adds a done task upon execution of undo
+     * @param Task
+     * @throws DuplicateTaskException
+     * @throws TaskNotFoundException
+     */
+    void doneTaskUndo(Task Task) throws DuplicateTaskException, TaskNotFoundException;
     
     //@@author A0144132W
     /** Returns the filtered task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
