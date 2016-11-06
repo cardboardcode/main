@@ -67,20 +67,20 @@ Right click on the project (in Eclipse package explorer), choose Gradle -> Refre
 **Purpose**: Adding a new task <br>
 **Action**:<br>
 Execute `add question life`<br>
-**Expected**:
-Display Area will show message: `New task added: question life`<br>
+**Expected**:<br>
+- Display Area will show message: `New task added: question life`<br>
 
 **Purpose**: Adding a duplicate floating task <br>
 **Action**:<br>
 Execute `add clean room -l`<br>
 **Expected**:<br>
-Display Area will show message: `This task is already in the to-do list`<br>
+- Display Area will show message: `This task is already in the to-do list`<br>
 
 **Purpose**: Input wrong command <br>
 **Action**:<br>
 Execute `adds wrongcommandinput`<br>
 **Expected**:<br>
-Display Area will show message: `Invalid command format Unknown command`<br>
+- Display Area will show message: `Invalid command format Unknown command`<br>
 <br>
 <br>
 <br>
@@ -90,49 +90,49 @@ Display Area will show message: `Invalid command format Unknown command`<br>
 **Action**:<br>
 Execute `list events`<br>
 **Expected**:<br>
-    -   Display Area will show message: `Listed all pending events`<br>
-    -   Image in List Statistics Panel will change.<br>
-    -   Task-list panel will display only 4 task cards.<br>
+- Display Area will show message: `Listed all pending events`<br>
+- Image in List Statistics Panel will change.<br>
+- Task-list panel will display only 4 task cards.<br>
 
 **Purpose**: Lists all deadlines<br>
 **Action**:<br>
 Execute `list deadlines`<br>
 **Expected**:<br>
-    -   Display Area will show message: `Listed all pending tasks with deadlines`<br>
-    -   Image in List Statistics Panel will change.<br>
-    -   Task-list panel will display only 34 task cards.<br>
+- Display Area will show message: `Listed all pending tasks with deadlines`<br>
+- Image in List Statistics Panel will change.<br>
+- Task-list panel will display only 34 task cards.<br>
 
 **Purpose**: Lists all floating tasks<br>
 **Action**:<br>
 Execute `list floating`<br>
 **Expected**:<br>
-    -   Display Area will show message: `Listed all pending floating tasks`<br>
-    -   Image in List Statistics Panel will change.<br>
-    -   Task-list panel will display only 13 task cards.<br>
+- Display Area will show message: `Listed all pending floating tasks`<br>
+- Image in List Statistics Panel will change.<br>
+- Task-list panel will display only 13 task cards.<br>
 
 **Purpose**: Lists all low priority tasks<br>
 **Action**:<br>
 Execute `list low`<br>
 **Expected**:<br>
     -   Display Area will show message: `Listed all pending low priority tasks`<br>
-    -   Image in List Statistics Panel will change.<br>
-    -   Task-list panel will display only 10 task cards.<br>
+- Image in List Statistics Panel will change.<br>
+- Task-list panel will display only 10 task cards.<br>
 
 **Purpose**: Lists all normal priority tasks<br>
 **Action**:<br>
 Execute `list normal`<br>
 **Expected**:<br>
-    -   Display Area will show message: `Listed all pending normal priority tasks`<br>
-    -   Image in List Statistics Panel will change.<br>
-    -   Task-list panel will display only 30 task cards.<br>
+- Display Area will show message: `Listed all pending normal priority tasks`<br>
+- Image in List Statistics Panel will change.<br>
+- Task-list panel will display only 30 task cards.<br>
 
 **Purpose**: Lists all high priority tasks<br>
 **Action**:<br>
 Execute `list high`<br>
 **Expected**:<br>
-    -   Display Area will show message: `Listed all pending low priority tasks`<br>
-    -   Image in List Statistics Panel will change.<br>
-    -   Task-list panel will display only 11 task cards.<br>
+- Display Area will show message: `Listed all pending low priority tasks`<br>
+- Image in List Statistics Panel will change.<br>
+- Task-list panel will display only 11 task cards.<br>
 <br>
 <br>
 <br>
@@ -143,7 +143,7 @@ Execute `list high`<br>
 **Action**:<br>
 Execute `edit 1 check out 01 sep 2016 -l`<br>
 **Expected**:<br>
-Display Area will show message: `Task changed to:check out due 01 Sep`<br>
+- Display Area will show message: `Task changed to:check out due 01 Sep`<br>
 
 <br>
 <br>
@@ -153,31 +153,31 @@ Display Area will show message: `Task changed to:check out due 01 Sep`<br>
 
 **Purpose**: Deletes the first task in the list <br>
 **Action**:<br>
-Execute `list`<br>
-Execute `delete 1`<br>
+- Execute `list`<br>
+- Execute `delete 1`<br>
 **Expected**:<br>
-Display Area will show message: `Delete Task: 1`<br>
+- Display Area will show message: `Delete Task: 1`<br>
 
 **Purpose**: Deletes the last task in the list <br>
 **Action**:<br>
-Execute `list`<br>
-Execute `delete 49`<br>
+- Execute `list`<br>
+- Execute `delete 49`<br>
 **Expected**:<br>
-Display Area will show message: `Delete Task: 49`<br>
+- Display Area will show message: `Delete Task: 49`<br>
 
 **Purpose**: Deletes the last task in the list <br>
 **Action**:<br>
-Execute `list`<br>
-Execute `delete 49`<br>
+- Execute `list`<br>
+- Execute `delete 49`<br>
 **Expected**:<br>
-Display Area will show message: `Delete Task: 49`<br>
+- Display Area will show message: `Delete Task: 49`<br>
 
 **Purpose**: Deletes the task in the middle of the list <br>
 **Action**:<br>
-Execute `list`<br>
-Execute `delete 23`<br>
+- Execute `list`<br>
+- Execute `delete 23`<br>
 **Expected**:<br>
-Display Area will show message: `Delete Task: 23`<br>
+- Display Area will show message: `Delete Task: 23`<br>
 
 <br>
 <br>
@@ -187,17 +187,17 @@ Display Area will show message: `Delete Task: 23`<br>
 
 **Purpose**: Mark a task as done<br>
 **Action**:<br>
-Execute `list`<br>
-Execute `done 5`<br>
+- Execute `list`<br>
+- Execute `done 5`<br>
 **Expected**:<br>
-Display Area will show message: `The following task is done: 5`<br>
+- Display Area will show message: `The following task is done: 5`<br>
 
 **Purpose**: Mark an invalid task as done<br>
 **Action**:<br>
-Execute `list`<br>
-Execute `done 60`<br>
+- Execute `list`<br>
+- Execute `done 60`<br>
 **Expected**:<br>
-Display Area will show message: `Task does not exist in task-tracker`<br>
+- Display Area will show message: `Task does not exist in task-tracker`<br>
 
 <br>
 <br>
@@ -207,19 +207,19 @@ Display Area will show message: `Task does not exist in task-tracker`<br>
 
 **Purpose**: Sort the list of tasks by date<br>
 **Action**:<br>
-Execute `list`<br>
-Execute `sort date`<br>
+- Execute `list`<br>
+- Execute `sort date`<br>
 **Expected**:<br>
-Display Area will show message: `Sorting by date`<br>
-Task card in Task-List Panel are arranged such that the closest deadlines are displayed at the top of the list.<br>
+- Display Area will show message: `Sorting by date`<br>
+- Task card in Task-List Panel are arranged such that the closest deadlines are displayed at the top of the list.<br>
 
 **Purpose**: Sort the list of tasks lexicographically<br>
 **Action**:<br>
-Execute `list`<br>
-Execute `sort name`<br>
+- Execute `list`<br>
+- Execute `sort name`<br>
 **Expected**:<br>
-Display Area will show message: `Sorting by name`<br>
-Task card in Task-List Panel are arranged alphebatically.<br>
+- Display Area will show message: `Sorting by name`<br>
+- Task card in Task-List Panel are arranged alphebatically.<br>
 
 <br>
 <br>
@@ -229,10 +229,10 @@ Task card in Task-List Panel are arranged alphebatically.<br>
 
 **Purpose**: Find any tasks whose messages start with the letter "w"<br>
 **Action**:<br>
-Execute `list`<br>
-Execute `find w`<br>
+- Execute `list`<br>
+- Execute `find w`<br>
 **Expected**:<br>
-Task-list panel will display only task cards whose messages starts with the letter 'w'.<br>
+- Task-list panel will display only task cards whose messages starts with the letter 'w'.<br>
 
 <br>
 <br>
@@ -242,9 +242,9 @@ Task-list panel will display only task cards whose messages starts with the lett
 
 **Purpose**: Search any tasks whose messages start with the word "buy"<br>
 **Action**:<br>
-Execute `search buy`<br>
+- Execute `search buy`<br>
 **Expected**:<br>
-Task-list panel will display only task cards whose messages starts with the word `buy`.<br>
+- Task-list panel will display only task cards whose messages starts with the word `buy`.<br>
 
 <br>
 <br>
@@ -253,8 +253,8 @@ Task-list panel will display only task cards whose messages starts with the word
 
 **Purpose**: Clears T-T of all tasks<br>
 **Action**:<br>
-Execute `list`<br>
-Execute `clear`<br>
+- Execute `list`<br>
+- Execute `clear`<br>
 **Expected**:<br>
 - Display Area will show message: `Task-Tracker has been cleared!`
 - Task-list panel will display 0 task cards.<br>
@@ -267,7 +267,7 @@ Execute `clear`<br>
 
 **Purpose**: Reverts previous command<br>
 **Action**:<br>
-Execute `undo`<br>
+- Execute `undo`<br>
 **Expected**:<br>
 - Display Area will show message: `Reverted last command`<br>
 - Task cards in the Task List panel will be restored to its previous state. <br>
@@ -322,19 +322,19 @@ Execute `exit`<br>
 
 **Purpose**: Navigating up the command history to the oldest command input<br>
 **Action**:
-Execute `list`<br>
-Execute `find`<br>
-Press `UP` ARROW KEY <br>
+- Execute `list`<br>
+- Execute `find`<br>
+- Press `UP` ARROW KEY <br>
 **Expected**:<br>
 - The command box should display the recent command input `find`.<br>
 
 **Purpose**: Navigating down command history to the most recent command input<br>
 **Action**:<br>
-Execute `list`<br>
-Execute `find`<br>
-Execute `list high`<br>
-Press `UP` ARROW KEY 3 times<br>
-Press `DOWN` ARROW KEY <br>
+- Execute `list`<br>
+- Execute `find`<br>
+- Execute `list high`<br>
+- Press `UP` ARROW KEY 3 times<br>
+- Press `DOWN` ARROW KEY <br>
 **Expected**:<br>
 - The command box should display the recent command input `find`.<br>
 
@@ -364,16 +364,16 @@ Press `F2` <br>
 
 **Purpose**: Scroll down the task list panel<br>
 **Action**:<br>
-Execute `list`<br>
-Press `PgDn` <br>
+- Execute `list`<br>
+- Press `PgDn` <br>
 **Expected**:<br>
 - The scroll bar in the Task List panel will have moved down by 1 card<br>
 - If the scroll bar is already at the bottom of the list, it will jump back to the top of the list.<br>
 
 **Purpose**: Scroll up the task list panel<br>
 **Action**:<br>
-Execute `list`<br>
-Press `PgUp` <br>
+- Execute `list`<br>
+- Press `PgUp` <br>
 **Expected**:<br>
 - The scroll bar in the Task List panel will have moved up by 1 card<br>
 - If the scroll bar is already at the top, it will jump down to the bottom of the list.<br>
@@ -386,15 +386,15 @@ Press `PgUp` <br>
 
 **Purpose**: Autocompletes user command input<br>
 **Action**:<br>
-Type `d`<br>
-Press `Tab` <br>
+- Type `d`<br>
+- Press `Tab` <br>
 **Expected**:<br>
 - The command input will have been autocompleted to `delete`<br>
 
 **Purpose**: Shows list of available commands<br>
 **Action**:<br>
-Clear the command box of any text<br>
-Press `Tab` <br>
+- Clear the command box of any text<br>
+- Press `Tab` <br>
 **Expected**:<br>
 - The command input will show a list of commands, starting with `add`.<br>
 
@@ -406,7 +406,7 @@ Press `Tab` <br>
 
 **Purpose**: Minimizes the window<br>
 **Action**:<br>
-Press `Esc` <br>
+- Press `Esc` <br>
 **Expected**:<br>
 - The window should be minimized.<br>
 
