@@ -53,7 +53,7 @@ public class AutoComplete {
     public AutoComplete(Model model) {
         this.eventsCenter = EventsCenter.getInstance().registerHandler(this);
         this.model = model;        
-        buildAllLists(model);
+        buildAllLists();
         initSuggestions();
     }
 
@@ -64,7 +64,7 @@ public class AutoComplete {
         suggestions = commandList.getSuggestions("");
     }
     
-    private void buildAllLists(Model model) {
+    private void buildAllLists() {
         buildCommandList();
         buildListList();
         buildSortList();
@@ -131,7 +131,7 @@ public class AutoComplete {
                 if (needTaskSuggestions(tokens, commandWord)) {
                     start_index = commandInput.length() + 1;
                     saveIfNeeded();
-                    getTaskSuggestions(tokens, commandInput);
+                    getTaskSuggestions(tokens);
                 }
                 else if (commandWord.equals(ListCommand.COMMAND_WORD)) {
                     start_index = getListSuggestions(tokens);
@@ -148,6 +148,9 @@ public class AutoComplete {
         updateTaskList();
     }
 
+    /*
+     * saves the filter just before list starts to give real time suggestions 
+     */
     private void saveIfNeeded() {
         if (save) {
             model.saveFilter();
@@ -156,6 +159,9 @@ public class AutoComplete {
         }
     }
 
+    /*
+     * reverts to original filter when user cancels search.
+     */
     private void revertIfNeeded() {
         if (revert) {
             model.revertFilter();
@@ -186,7 +192,7 @@ public class AutoComplete {
     /*
      * returns suggestions for tasks
      */
-    private void getTaskSuggestions(String[] tokens, String commandInput) {
+    private void getTaskSuggestions(String[] tokens) {
         int size = updateFilteredListWithSuggestions(ArrayUtils.subarray(tokens, 1, tokens.length));
         suggestions = getStringArrayFromIndex(size);
     }
@@ -217,9 +223,11 @@ public class AutoComplete {
         eventsCenter.post(new UpdateListWithSuggestionsEvent(matchedTasks));
         return matchedTasks.size();
     }
-    
-    private boolean containPrefixInTask(SetTrie task, String[] tokens) {
 
+    /*
+     * checks if task contains any prefix found in the given token array
+     */
+    private boolean containPrefixInTask(SetTrie task, String[] tokens) {
         for (String token : tokens) {
             if (task.matchPrefix(token)) {
                 return true;
@@ -228,6 +236,9 @@ public class AutoComplete {
         return false;
     }
     
+    /*
+     * @returns a list of tasks that matches the suggestions
+     */
     private List<ReadOnlyTask> getListOfMatchedTasks() {
         List<ReadOnlyTask> matchedTasks = new ArrayList<ReadOnlyTask>();
         
@@ -242,6 +253,10 @@ public class AutoComplete {
         return matchedTasks;
     }
     
+    /*
+     * generates an array of index, starting from 1, corresponding 
+     * to the number of tasks shown
+     */
     private List<String> getStringArrayFromIndex(int size) {
         List<String> list = new ArrayList<String>();
         for (int i = 0; i < size; i++) {
