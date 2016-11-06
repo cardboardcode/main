@@ -280,7 +280,7 @@ public class MainParser {
         date = getDate(dates);
 
         indicateListParamsChanged(priority, date, type, onlyOverdue);
-        return new ListCommand(Triple.of(priority, date, type), isDone, onlyOverdue);
+        return new ListCommand(priority, date, type, isDone, onlyOverdue);
     }
 
     /**
