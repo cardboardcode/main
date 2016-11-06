@@ -20,9 +20,6 @@ public class StorageCommand extends Command {
             + "storage main/docs/NewXmlDoc.xml";
 
     public static final String MESSAGE_SUCCESS = "Successfully changed storage path to %1$s";
-    public static final String MESSAGE_DUPLICATE_PATH = "Storage path is already set to specified location!";
-    public static final String MESSAGE_CONVERT_FAILIURE = "Could not read from config file.";
-    public static final String MESSAGE_SAVE_FAILIURE = "Could not save tasks to the specified location.";
     public static final String MESSAGE_NO_XML = "XML file not found at the specified location.";
     public static final String MESSAGE_INVALID_PATH = "File path given cannot be resolved";
     

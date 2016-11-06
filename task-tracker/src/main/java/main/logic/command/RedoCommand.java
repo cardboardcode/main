@@ -35,6 +35,7 @@ public class RedoCommand extends Command {
     
     @Override
     public CommandResult execute() {
+        assert model != null;
         if(ModelManager.redoStack.size() == 0) {
             return new CommandResult(MESSAGE_EMPTY_HISTORY);
         }
@@ -59,6 +60,7 @@ public class RedoCommand extends Command {
     }
     
     private CommandResult redoAdd(Task task) {
+        assert task != null;
         try {
             model.addTask(task);
         } catch (DuplicateTaskException e) {
@@ -68,6 +70,7 @@ public class RedoCommand extends Command {
     }
     
     private CommandResult redoDelete(Task task) {
+        assert task != null;
         try {
             model.deleteTask(model.getIndexFromTask(task));
         } catch (TaskNotFoundException e) {
@@ -77,6 +80,8 @@ public class RedoCommand extends Command {
     }
     
     private CommandResult redoEdit(Task newTask, Task originalTask) {
+        assert newTask != null;
+        assert originalTask != null;
         try {
             model.editTask(model.getIndexFromTask(originalTask), newTask);
         } catch (DuplicateTaskException | IndexOutOfBoundsException | TaskNotFoundException e) {
@@ -91,6 +96,7 @@ public class RedoCommand extends Command {
     }
     
     private CommandResult redoDone(Task task)  {
+        assert task != null;
         try {
             model.doneTask(model.getIndexFromTask(task));
         } catch (IndexOutOfBoundsException | TaskNotFoundException e) {
