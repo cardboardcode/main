@@ -115,7 +115,7 @@ Execute `list floating`<br>
 **Action**:<br>
 Execute `list low`<br>
 **Expected**:<br>
-    -   Display Area will show message: `Listed all pending low priority tasks`<br>
+-   Display Area will show message: `Listed all pending low priority tasks`<br>
 - Image in List Statistics Panel will change.<br>
 - Task-list panel will display only 10 task cards.<br>
 
@@ -156,6 +156,7 @@ Execute `edit 1 check out 01 sep 2016 -l`<br>
 **Action**:<br>
 - Execute `list`<br>
 - Execute `delete 1`<br>
+
 **Expected**:<br>
 - Display Area will show message: `Delete Task: 1`<br>
 
