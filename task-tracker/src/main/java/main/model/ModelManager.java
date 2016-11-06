@@ -312,7 +312,6 @@ public class ModelManager extends ComponentManager implements Model {
 
         Expression filter = new PredicateExpression();
         filter.and(new MatchQualifier(suggestions));
-        filter.and(new DoneQualifier(false));
         updateFilteredTaskList(filter);
     }
     
