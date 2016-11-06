@@ -13,7 +13,7 @@ public class UndoCommandTest extends TaskTrackerGuiTest {
     @Test
     public void undoTest() {
         TestTask[] currentList = td.getTypicalTasks();
-        int taskIndex=1;
+        int taskIndex=2;
         
         
 //        //when no previous undo
@@ -55,6 +55,7 @@ public class UndoCommandTest extends TaskTrackerGuiTest {
         //test to undo edit
         commandBox.runCommand("edit " + taskIndex + " buy clothes");
         commandBox.runCommand("undo");
+        assertTrue(taskListPanel.isListMatching(currentList));
         assertResultMessage(UndoCommand.MESSAGE_SUCCESS);       
                
     }
