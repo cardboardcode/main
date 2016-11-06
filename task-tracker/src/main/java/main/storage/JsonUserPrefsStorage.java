@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 /**
- * A class to access UserPrefs stored in the hard disk as a json file
+ *  accesses UserPrefs stored in the hard disk as a json file
  */
 public class JsonUserPrefsStorage implements UserPrefsStorage{
 
@@ -35,7 +35,7 @@ public class JsonUserPrefsStorage implements UserPrefsStorage{
     }
 
     /**
-     * Similar to {@link #readUserPrefs()}
+     * accesses user prefs from a given filepath
      * @param prefsFilePath location of the data. Cannot be null.
      * @throws DataConversionException if the file format is not as expected.
      */
@@ -62,7 +62,7 @@ public class JsonUserPrefsStorage implements UserPrefsStorage{
     }
 
     /**
-     * Similar to {@link #saveUserPrefs(UserPrefs)}
+     * Saves user prefs at a give filepath
      * @param prefsFilePath location of the data. Cannot be null.
      */
     public void saveUserPrefs(UserPrefs userPrefs, String prefsFilePath) throws IOException {
