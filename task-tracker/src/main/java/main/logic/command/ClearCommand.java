@@ -4,7 +4,6 @@ package main.logic.command;
 import main.model.ReadOnlyTaskTracker;
 import main.model.TaskTracker;
 import main.model.task.UniqueTaskList;
-import main.ui.ListStatistics;
 
 public class ClearCommand extends Command {
     
