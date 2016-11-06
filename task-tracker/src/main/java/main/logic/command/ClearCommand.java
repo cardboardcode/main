@@ -4,8 +4,11 @@ package main.logic.command;
 import main.model.ReadOnlyTaskTracker;
 import main.model.TaskTracker;
 import main.model.task.UniqueTaskList;
-import main.ui.ListStatistics;
 
+/**
+ * Clears the entire list of tasks from T-T storage
+ *
+ */
 public class ClearCommand extends Command {
     
     public static final String COMMAND_WORD = "clear";

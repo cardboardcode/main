@@ -2,16 +2,17 @@
 package main.logic.command;
 
 import main.commons.core.EventsCenter;
-import main.commons.core.Messages;
 import main.commons.events.model.ChangeSortFilterEvent;
 
+/**
+ * Sorts and displays the list of tasks lexicographically or by their deadlines
+ */
 public class SortCommand extends Command {
     
     public static final String COMMAND_WORD = "sort";
-    public static final String MESSAGE_USAGE = COMMAND_WORD 
-            + "Parameters: <date | name> \n"
-            + "Parameter can only be 'date' or 'name' \n"
-            + "Eg: " + COMMAND_WORD + " date";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + "Parameters: <date | name> \n"
+    														+ "Parameter can only be 'date' or 'name' \n"
+    														+ "Eg: " + COMMAND_WORD + " date";
     public static final String MESSAGE_SUCCESS = "Sorting by %1$s";
     
     private String param;

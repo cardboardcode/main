@@ -6,7 +6,6 @@ import javafx.stage.Stage;
 /**
  * API of Ui component
  * All Ui classes which implements this interface must have a start and stop function
- * @author bey
  */
 public interface Ui {
 

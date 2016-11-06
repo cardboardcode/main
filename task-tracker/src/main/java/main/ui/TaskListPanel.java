@@ -14,23 +14,16 @@ import javafx.stage.Stage;
 import main.commons.core.LogsCenter;
 import main.commons.events.ui.TaskPanelSelectionChangedEvent;
 import main.model.task.ReadOnlyTask;
-
 import java.util.logging.Logger;
 
 /**
- * Panel containing the list of tasks. "person" keyword check done "addressbook"
- * keyword check done
- * 
- * @param ListView<ReadOnlyTask>
- *            taskListView
- * @author bey
+ * Panel containing the list of tasks.
  */
 public class TaskListPanel extends UiPart {
 	private final Logger logger = LogsCenter.getLogger(TaskListPanel.class);
 	private static final String FXML = "TaskListPanel.fxml";
 	private VBox panel;
 	private AnchorPane placeHolderPane;
-	private static int currentMaxListSize;
 
 	@FXML
 	private ListView<ReadOnlyTask> taskListView;
@@ -95,7 +88,8 @@ public class TaskListPanel extends UiPart {
 
 	class TaskListViewCell extends ListCell<ReadOnlyTask> {
 
-		public TaskListViewCell() {}
+		public TaskListViewCell() {
+		}
 
 		@Override
 		protected void updateItem(ReadOnlyTask task, boolean empty) {
