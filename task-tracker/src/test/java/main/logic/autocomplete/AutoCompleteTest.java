@@ -108,7 +108,7 @@ public class AutoCompleteTest {
     public void updateSuggestions_editDoneDelete_lowerCaseMatchMultiple() {
         autoComplete.updateSuggestions("delete clea with");
         assertEquals(Arrays.asList("1", "2"), autoComplete.getSuggestions());
-        assertListBehavior((Arrays.asList(new Task(TypicalTestTasks.floating1), new Task(TypicalTestTasks.event1))));
+        assertListBehavior(Arrays.asList(new Task(TypicalTestTasks.event1), new Task(TypicalTestTasks.floating1)));
     }
     
     @Test
