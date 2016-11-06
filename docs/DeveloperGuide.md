@@ -231,13 +231,13 @@ can be automated using Gradle. For example, Gradle can download the dependencies
     >   * Include those libraries in the repo (this bloats the repo size)<br>
     >   * Require developers to download those libraries manually (this creates extra work for developers)<br>
 
-### Testing 
+## Testing 
 
 Tests can be found in the ./src/test/java folder.
 
 There are two types of tests:
 
-**GUI Tests**<br> - _System tests_ that test the entire application itself by stimulating user actions on the GUI. These tests are in ./src/test/java/guitests package.
+**GUI Tests** - _System tests_ that test the entire application itself by stimulating user actions on the GUI. These tests are in ./src/test/java/guitests package.
 
 **Non-GUI Tests** - Tests that does not involve GUI, namely:
 
