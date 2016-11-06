@@ -244,7 +244,10 @@ public class MainParser {
      * @returns appropriate ListCommand or IncorrectCommand if input is invalid.
      */
     public Command prepareList(String input) {
-        if (input.trim().equals("")) return new ListCommand();
+        if (input.trim().equals("")) {
+            defaultListPicture();
+            return new ListCommand();
+        }
         
         Triple<String, List<Date>, List<Boolean>> info = TimeParser.extractTime(input.trim());
 
@@ -276,7 +279,7 @@ public class MainParser {
         Date date;
         date = getDate(dates);
 
-        indicateListParamsChanged(Triple.of(priority, date, type));
+        indicateListParamsChanged(priority, date, type, onlyOverdue);
         return new ListCommand(Triple.of(priority, date, type), isDone, onlyOverdue);
     }
 
@@ -284,8 +287,12 @@ public class MainParser {
      * Gets the first date if there are more than 1. If there are none, null is returned.
      * 
      * for prepareList function
+     * 
+     * @params list of dates given cannot be null
      */
     private Date getDate(List<Date> dates) {
+        assert dates != null;
+        
         Date date;
         if (dates.size() > 0) {
             date = dates.get(0);
@@ -386,24 +393,30 @@ public class MainParser {
         return Pair.of(priority,input);
     }
     
+    /*
+     * @returns the last index at which arg given appears in str given
+     */
     private int argumentIndexInString(String str, String arg) {
         return (str.toLowerCase().lastIndexOf(arg.toLowerCase()));
     }
     
     /*
-     * processes the list parameters and chooses one to be shown in the list statistics
+     * Processes the list parameters and chooses one to be shown in the list statistics
      * by posting an event
      */
-    private void indicateListParamsChanged(Triple<PriorityType, Date, TaskType> params) {
+    private void indicateListParamsChanged(PriorityType priority, Date date, TaskType type, boolean onlyOverdue) {
         String paramToShow = "";
-        if (params.getLeft() != null) {
-            paramToShow = params.getLeft().name();
+        if (onlyOverdue) {
+            paramToShow = "overdue";
         }
-        else if (params.getMiddle() != null) {
+        else if (priority != null) {
+            paramToShow = priority.name();
+        }
+        else if (date != null) {
             paramToShow = "date";
         }
-        else if (params.getRight() != null) {
-            paramToShow = params.getRight().name();
+        else if (type != null) {
+            paramToShow = type.name();
         }
         else {
             paramToShow = "list";
@@ -411,5 +424,13 @@ public class MainParser {
             
         EventsCenter.getInstance().post(new updateListStatisticsPictureEvent(paramToShow));
     }
+    
+    /*
+     * changes the ListStatistics picture to the default one
+     */
+    private void defaultListPicture() {
+        indicateListParamsChanged(null, null, null, false);
+    }
+
     
 }
