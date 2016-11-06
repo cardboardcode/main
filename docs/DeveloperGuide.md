@@ -117,7 +117,7 @@ The sections below give more details of each component.
 * `MainParser` returns a `Command` object which is executed by the `LogicManager`.
 * Execution of `Command` object can affect the `Model` (e.g. adding a task) and/or raise events.
 * The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `UI`.
-* `AutoComplete` class is initialised by `Logic`, and reacts to certain events like when <kbd>tab</kbd> is pressed.
+* `AutoComplete` class is initialized by `Logic`, and reacts to certain events like when <kbd>tab</kbd> is pressed.
 * `AutoComplete` uses `SetTrie` class to provide suggestions quickly.
 
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")`
@@ -130,15 +130,15 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 **API** : [`Ui.java`]()
 
 * `MainWindow` class is made up of parts e.g.`CommandBox`, `ResultDisplay`, `TaskListPanel`, `StatusBarFooter`, `ListStatistics` etc.
-* All individal UI sub components, including the `MainWindow`, inherit from the abstract `UiPart` class and they can be loaded using the `UiPartLoader`.
+* All individual UI sub components, including the `MainWindow`, inherit from the abstract `UiPart` class and they can be loaded using the `UiPartLoader`.
 * JavaFx UI framework is used. 
 * The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder.<br> For example, the layout of the [`MainWindow`]() is specified in[`MainWindow.fxml`]()
-* User commands are exceuted using the `Logic` component.
+* User commands are executed using the `Logic` component.
 * UI auto-updates when data in the `Model` change.
 * UI responds to events raised from various parts of the App and updates itself accordingly.
 
 ####Model
-![Model](images/A_Model.png)<br>
+![Model](images/Model.jpg)<br>
 
 **API** : [`Model.java`]()
 
@@ -159,6 +159,7 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 **API** : [`Storage.java`](../src/main/java/main/storage/Storage.java)
 
 * UserPref` objects and TaskTracker data are saved in json format and can be read back.
+* Task data are saved in XML format and can be read back
 
 #### Common classes
 
@@ -217,18 +218,52 @@ We use [Codacy](https://www.codacy.com/) to perform testing and evaluation on th
 Here are the steps to create a new release.
  
  1. Generate a JAR file [using Gradle](https://github.com/se-edu/addressbook-level4/blob/master/docs/UsingGradle.md#creating-the-jar-file).
- 2. Tag the repo with the version number. e.g. `v0.1`
- 2. [Crete a new release using GitHub](https://help.github.com/articles/creating-releases/) 
+ 2. Tag the repository with the version number. e.g. `v0.1`
+ 2. [Create a new release using GitHub](https://help.github.com/articles/creating-releases/) 
     and upload the JAR file your created.
-   
+
+<!-- @@author A0139750B -->  
 ### Managing Dependencies
 
 A project often depends on third-party libraries. For example, Task-Tracker Book depends on the
 [Jackson library](http://wiki.fasterxml.com/JacksonHome) for XML parsing. Managing these _dependencies_
-can be automated using Gradle. For example, Gradle can download the dependencies automatically, which
-is better than these alternatives.<br>
+can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives.<br>
     >   * Include those libraries in the repo (this bloats the repo size)<br>
     >   * Require developers to download those libraries manually (this creates extra work for developers)<br>
+
+### Testing 
+
+Tests can be found in the ./src/test/java folder.
+
+There are two types of tests:
+
+1.**GUI Tests** - System tests that test the entire application itself by stimulating user actions on the GUI. These tests are in ./src/test/java/guitests package.
+
+2.**Non-GUI Tests** - Tests that does not involve GUI, namely:
+
+i. Unit tests - tests that targets low level methods/classes
+		e.g src.test.java.commons.util.StringUtilTest
+		
+ii. Integration Tests - Checks the integration of multiple code units (those code units are 	assumed to be working).
+		e.g src.test.java.storage.StorageManagerTest
+		
+iii. Hybrids of unit and integration tests - Tests that checks multiple code units as well as how 	they are connected together 
+		e.g  src.test.java.logic.LogicManagerTest.java
+
+**Headless GUI Testing** :
+Thanks to the [TestFX](https://github.com/TestFX/TestFX) library that we are using, our GUI tests can be run in _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on his computer while the tests are running.<br>
+
+See [UsingGradle.md](UsingGradle.md#running-tests) to learn how to run tests in headless mode
+		
+### Testing with Eclipse
+
+* To run all tests, right-click on src/test/java folder and click `Run as` > `JUnit Test`
+
+* You can also run tests individually or specific tests at one time, right-click on a test package, test class, or a test and choose to run as a JUnit test.
+
+### Testing with Gradle
+
+* See [UsingGradle.md](UsingGradle.md) for how to run tests using Gradle.
     
 <!-- @@author A0144132W -->
 ## Appendix A : User Stories
@@ -328,7 +363,7 @@ Use case ends
 > 2b1. TaskTracker creates a floating task with the given priority<br>
 > Use case ends
 
-#### Use case: Edit
+#### Use case: Edit Command
 
 **MSS**
 
@@ -343,23 +378,23 @@ Use case ends
 2a. The list is empty
 > Use case ends
 
-#### Use case: Undo Task
+#### Use case: Undo Command
 
 **MSS**
 
-1. User requests to undo the previous actions
+1. User requests to undo the previous actions(e.g task)
 2. TaskTracker undo the previous actions
 Use case ends
 
-#### Use case: Redo Task
+#### Use case: Redo Command
 
 **MSS**
 
-1. User requests to redo the previous undo commands
+1. User requests to redo the previous undo commands(e.g task)
 2. TaskTracker redo the previous undos
 Use case ends
 
-#### Use case: Delete Task
+#### Use case: Delete Command
 
 **MSS**
 
@@ -373,7 +408,7 @@ Use case ends
 > 2a1. TaskTracker shows an error message<br>
 > Use case ends 
 
-#### Use case: Done Task
+#### Use case: Done Command
 
 **MSS**
 
@@ -382,7 +417,7 @@ Use case ends
 3. Task gets transferred to a separate list of completed tasks
 Use case ends
 
-#### Use case: Find Task
+#### Use case: Find Command
 
 **MSS**
 
@@ -397,7 +432,7 @@ Use case ends
 2a. The list is empty
 > Use case ends
 
-#### Use case: List 
+#### Use case: List Command
 
 **MSS**
 
@@ -412,7 +447,7 @@ Use case ends
 > Use case ends
 
 
-#### Use case: Clear Task List
+#### Use case: Clear Command
 
 **MSS**
 
@@ -434,6 +469,59 @@ Use case ends
 1. User uses help command
 2. TaskTracker opens a help window to task all available commands
 Use case ends 
+
+#### Use case: Sort Command
+
+**MSS**
+
+1. User requests to sort list based on the input parameters
+2. The list panel displays the sorted list
+Use case ends
+
+**Extensions**
+
+1a. Sort by date
+> User input: Sort < Date ><br>
+> TaskTracker sorts the tasks based on date, from top to bottom<br>
+> Sorted list will displayed on the list panel<br>
+> Use case ends
+
+1b. Sort by task name
+> User input: Sort < name ><br>
+> TaskTracker sorts the tasks based on task name alphabetically, from top to bottom<br>
+> Sorted list will displayed on the list panel<br>
+> Use case ends
+
+###Use case: Search Command
+
+**MSS**
+
+1. User requests to search for certain tasks 
+2. TaskTracker searches for any letters executed with the search command
+3. TaskTracker displays the tasks that contain those words within the tasks' messages
+Use case ends
+
+**Extensions**
+
+1a. Searched letters do not exist
+> TaskTracker will display a blank list on the list panel<br>
+> Use case ends
+
+###Use case: Storage Command
+
+**MSS**
+
+1. User requests to change storage file location
+2. TaskTracker receives a valid file location
+3. TaskTracker changes storage file location to the user-requested file location
+Use case ends
+
+**Extensions** 
+
+1a. XML file does not exist
+> TaskTracker creates a new XML file at the specified file location<br>
+> Pre-existing data will be copied to the new XML file<br>
+> Use case ends
 
 ## Appendix C : Non-Functional Requirements
 
