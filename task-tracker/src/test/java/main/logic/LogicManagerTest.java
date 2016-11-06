@@ -13,7 +13,9 @@ import main.logic.command.DoneCommand;
 import main.logic.command.EditCommand;
 import main.logic.command.HelpCommand;
 import main.logic.command.ListCommand;
+import main.logic.command.RedoCommand;
 import main.logic.command.SortCommand;
+import main.logic.command.UndoCommand;
 import main.logic.command.ExitCommand;
 import main.logic.command.ClearCommand;
 import main.model.Model;
@@ -107,6 +109,10 @@ public class LogicManagerTest {
         //Execute the command
         CommandResult result = logic.execute(inputCommand);     
 
+        if (inputCommand.equals("redo") || inputCommand.equals("undo")) {
+            model.updateFilteredListToShowAllPending();
+        }
+
         //Confirm the ui display elements should contain the right data
         assertEquals(expectedMessage, result.feedbackToUser);
         assertEquals(expectedShownList, model.getFilteredTaskList());
@@ -121,8 +127,16 @@ public class LogicManagerTest {
         assertCommandBehavior(commandWord , String.format(MESSAGE_INVALID_COMMAND_FORMAT, expectedMessage)); //index missing
         assertCommandBehavior(commandWord + " 0", String.format(MESSAGE_INVALID_INDEX, expectedMessage)); //index cannot be 0
         assertCommandBehavior(commandWord + " not_a_number", String.format(MESSAGE_INVALID_COMMAND_FORMAT, expectedMessage));
-}
-
+    }
+    
+    private void assertUndoRedoBehavior(TaskTracker expectedTaskTrackerUndo,
+                                        TaskTracker expectedTaskTrackerRedo,
+                                        List<? extends ReadOnlyTask> expectedShownListUndo,
+                                        List<? extends ReadOnlyTask> expectedShownListRedo) throws Exception {
+        assertCommandBehavior("undo", UndoCommand.MESSAGE_SUCCESS, expectedTaskTrackerUndo, expectedShownListUndo);
+        assertCommandBehavior("redo", RedoCommand.MESSAGE_SUCCESS, expectedTaskTrackerRedo, expectedShownListRedo);
+    }
+    
     @Test
     public void execute_unknownCommandWord() throws Exception {
         String unknownCommand = "uicfhmowqewca";
@@ -292,7 +306,7 @@ public class LogicManagerTest {
         expectedModel.updateFilteredListToShowAllPending();
         
         // prepare task tracker state
-        helper.addToModel(model, 2);
+        helper.replaceModel(model, 2);
           
         assertCommandBehavior("list",
                 String.format(ListCommand.MESSAGE_SUCCESS, "pending tasks"),
@@ -309,7 +323,7 @@ public class LogicManagerTest {
         expectedModel.updateFilteredListToShowAllDone();
 
         // prepare task tracker state
-        helper.addToModel(model, 2, Collections.singletonList(helper.done_task()));
+        helper.replaceModel(model, 2, Collections.singletonList(helper.done_task()));
         
         assertCommandBehavior("list done", 
                 String.format(ListCommand.MESSAGE_SUCCESS, "completed tasks"), 
@@ -325,7 +339,7 @@ public class LogicManagerTest {
         expectedModel.updateFilteredTaskList(Triple.of(PriorityType.HIGH, null, null), false, false);
 
         // prepare task tracker state
-        helper.addToModel(model, 2, Collections.singletonList(helper.floating_high_priority()));
+        helper.replaceModel(model, 2, Collections.singletonList(helper.floating_high_priority()));
 
         assertCommandBehavior("list high", 
                 String.format(ListCommand.MESSAGE_SUCCESS, "pending high priority tasks"), 
@@ -341,12 +355,60 @@ public class LogicManagerTest {
         expectedModel.updateFilteredTaskList(Triple.of(PriorityType.LOW, null, TaskType.DEADLINE), false, false);
 
         // prepare task tracker state
-        helper.addToModel(model, 2, Collections.singletonList(helper.deadline_low_priority()));
+        helper.replaceModel(model, 2, Collections.singletonList(helper.deadline_low_priority()));
 
         assertCommandBehavior("list low deadline", 
                 String.format(ListCommand.MESSAGE_SUCCESS, "pending low priority tasks with deadlines"), 
                 expectedTT,
                 expectedModel.getFilteredTaskList());
+    }
+    
+    @Test
+    public void execute_undoRedoAdd_success() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        TaskTracker expectedTT_undo = helper.generateTaskTracker(1);
+        TaskTracker expectedTT_redo = helper.generateTaskTracker(2);
+
+        helper.replaceModel(model, Arrays.asList());
+        helper.addToModel(model, 2);
+        
+        assertUndoRedoBehavior(expectedTT_undo, expectedTT_redo, expectedTT_undo.getTaskList(), expectedTT_redo.getTaskList());
+    }
+    
+    @Test
+    public void execute_undoRedoDelete_success() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        TaskTracker expectedTT_undo = helper.generateTaskTracker(3);
+        TaskTracker expectedTT_redo = helper.generateTaskTracker(2);
+        helper.replaceModel(model, 3);
+        model.deleteTask(2);
+        
+        assertUndoRedoBehavior(expectedTT_undo, expectedTT_redo, expectedTT_undo.getTaskList(), expectedTT_redo.getTaskList());
+    }
+    
+    @Test
+    public void execute_undoRedoDone_success() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        TaskTracker expectedTT = helper.generateTaskTracker(3);
+        Model expectedModelRedo = new ModelManager(expectedTT, new UserPrefs());
+        expectedModelRedo.doneTask(2);
+        expectedModelRedo.updateFilteredListToShowAllPending();
+        
+        helper.replaceModel(model, 3);
+        model.doneTask(2);
+        assertUndoRedoBehavior(expectedTT, new TaskTracker(expectedModelRedo.getTaskTracker()), expectedTT.getTaskList(), expectedModelRedo.getFilteredTaskList());
+    }
+    
+    @Test
+    public void execute_undoRedoEdit_success() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        TaskTracker expectedTT = helper.generateTaskTracker(3);
+        Model expectedModelRedo = new ModelManager(expectedTT, new UserPrefs());
+        expectedModelRedo.editTask(2, helper.deadline1());
+        
+        helper.replaceModel(model, 3);
+        model.editTask(2, helper.deadline1());
+        assertUndoRedoBehavior(expectedTT, new TaskTracker(expectedModelRedo.getTaskTracker()), expectedTT.getTaskList(), expectedModelRedo.getFilteredTaskList());
     }
 
     /**
@@ -482,6 +544,40 @@ public class LogicManagerTest {
         void addToModel(Model model, int numGenerated, List<Task> tasksToAdd) throws Exception {
             addToModel(model, numGenerated);
             addToModel(model, tasksToAdd);
+        }
+        
+        /**
+         * Generates a Model Object with the given number of auto-generated
+         * Task objects and given list of Tasks
+         */
+        Model generateModel(int numGenerated, List<Task> tasksToAdd) throws Exception {
+            Model model = new ModelManager(new TaskTracker(), new UserPrefs());
+            addToModel(model, numGenerated);
+            addToModel(model, tasksToAdd);
+            return model;
+        }
+        
+        /**
+         * Replaces a Model Object with the given number of auto-generated
+         * Task objects
+         */
+        void replaceModel(Model model, int numGenerated) throws Exception {
+            model.resetData(generateTaskTracker(numGenerated));
+        }
+        
+        /**
+         * Replaces a Model Object with the given list of Tasks
+         */
+        void replaceModel(Model model, List<Task> tasksToAdd) throws Exception {
+            model.resetData(generateTaskTracker(tasksToAdd));
+        }
+        
+        /**
+         * Replaces the Model data with the given number of auto-generated
+         * Task objects and given list of Tasks
+         */
+        void replaceModel(Model model, int numGenerated, List<Task> tasksToAdd) throws Exception {
+            model.resetData(generateTaskTracker(numGenerated, tasksToAdd));
         }
         
         /**
