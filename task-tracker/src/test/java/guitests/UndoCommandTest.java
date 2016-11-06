@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import main.logic.command.UndoCommand;
 import main.testutil.TestTask;
+import main.testutil.TypicalTestTasks;
 
 public class UndoCommandTest extends TaskTrackerGuiTest {   
     
@@ -15,49 +16,38 @@ public class UndoCommandTest extends TaskTrackerGuiTest {
         TestTask[] currentList = td.getTypicalTasks();
         int taskIndex=2;
         
-        
-//        //when no previous undo
-//        commandBox.runCommand("undo");
-//        assertResultMessage(UndoCommand.MESSAGE_EMPTY_HISTORY);
-        
         //test to undo add
-        commandBox.runCommand(td.deadline3.getAddCommand());
-        commandBox.runCommand("undo");
-        assertTrue(taskListPanel.isListMatching(currentList));
-        assertResultMessage(UndoCommand.MESSAGE_SUCCESS); 
+        commandBox.runCommand(TypicalTestTasks.deadline3.getAddCommand());
+        assertUndoSuccess(currentList); 
         
         //test to undo delete
         commandBox.runCommand("delete " + taskIndex);
-        commandBox.runCommand("undo");
-        assertTrue(taskListPanel.isListMatching(currentList));
-        assertResultMessage(UndoCommand.MESSAGE_SUCCESS); 
+        assertUndoSuccess(currentList); 
         
         //test to undo clear
         commandBox.runCommand("clear");
-        commandBox.runCommand("undo");
-        assertTrue(taskListPanel.isListMatching(currentList));
-        assertResultMessage(UndoCommand.MESSAGE_SUCCESS); 
+        assertUndoSuccess(currentList); 
         
         //test to undo done
         commandBox.runCommand("done " + taskIndex);
-        commandBox.runCommand("undo");
-        assertTrue(taskListPanel.isListMatching(currentList));
-        assertResultMessage(UndoCommand.MESSAGE_SUCCESS); 
+        assertUndoSuccess(currentList); 
       
         //test multiple undo
-        commandBox.runCommand(td.deadline2.getAddCommand());
-        commandBox.runCommand(td.event1.getAddCommand());
+        commandBox.runCommand(TypicalTestTasks.deadline2.getAddCommand());
+        commandBox.runCommand(TypicalTestTasks.event1.getAddCommand());
         commandBox.runCommand("undo");
-        commandBox.runCommand("undo");
-        assertTrue(taskListPanel.isListMatching(currentList));
-        assertResultMessage(UndoCommand.MESSAGE_SUCCESS); 
+        assertUndoSuccess(currentList); 
         
         //test to undo edit
         commandBox.runCommand("edit " + taskIndex + " buy clothes");
-        commandBox.runCommand("undo");
-        assertTrue(taskListPanel.isListMatching(currentList));
-        assertResultMessage(UndoCommand.MESSAGE_SUCCESS);       
+        assertUndoSuccess(currentList);       
                
     }
-    
+
+    //Checks if listpanel matches the task list
+    private void assertUndoSuccess(TestTask[] currentList) {
+        commandBox.runCommand("undo");
+        assertTrue(taskListPanel.isListMatching(currentList));
+        assertResultMessage(UndoCommand.MESSAGE_SUCCESS);
+    }    
 }

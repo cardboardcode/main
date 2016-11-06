@@ -41,8 +41,8 @@ public class StorageManagerTest {
 
     /*
      * Note: This is an integration test that verifies the StorageManager is properly wired to the
-     * {@link JsonUserPrefsStorage} class.
-     * More extensive testing of UserPref saving/reading is done in {@link JsonUserPrefsStorageTest} class.
+     * JsonUserPrefsStorage class.
+     * More extensive testing of UserPref saving/reading is done in JsonUserPrefsStorageTest class.
      */
 
     @Test

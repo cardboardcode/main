@@ -1,34 +1,24 @@
+//@@author A0142686X
 package guitests;
-
-import static org.junit.Assert.*;
 
 import org.junit.Test;
 
 import main.logic.command.StorageCommand;
-import main.storage.Storage;
 
 public class StorageCommandTest extends TaskTrackerGuiTest {
     
-    String validPath = "src/test/data/sandbox/newfile.xml";
-    String invalidPath = "src/test/data/sandbox/textfile.txt";
-    String defaultPath = "src/test/data/sandbox/sampleData.xml";
-    
-//    @Test
-//    public void duplicate_filepath() {
-//        commandBox.runCommand("storage " + defaultPath);
-//        assertResultMessage(StorageCommand.MESSAGE_DUPLICATE_PATH);
-//    }
+    String FILEPATH_VALID = "src/test/data/sandbox/newfile.xml";
+    String FILEPATH_INVALID = "src/test/data/sandbox/textfile.txt"; 
     
     @Test
-    public void save_valid_path() {
-        commandBox.runCommand("storage " + validPath);
-        assertResultMessage(String.format(StorageCommand.MESSAGE_SUCCESS, validPath));
+    public void save_validpath() {
+        commandBox.runCommand("storage " + FILEPATH_VALID);
+        assertResultMessage(String.format(StorageCommand.MESSAGE_SUCCESS, FILEPATH_VALID));
     }
     
     @Test
-    public void save_invalid_path() {
-        commandBox.runCommand("storage " + invalidPath);
+    public void save_invalidpath() {
+        commandBox.runCommand("storage " + FILEPATH_INVALID);
         assertResultMessage(StorageCommand.MESSAGE_NO_XML);
-    }
-    
+    }    
 }
