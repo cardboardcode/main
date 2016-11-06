@@ -239,7 +239,7 @@ public class TestTask implements ReadOnlyTask {
     public boolean equals(Object other) {
         if (this == other) return true;
         
-        else if (other instanceof Task) {
+        else if (other instanceof ReadOnlyTask) {
         	if(this.type.equals(TaskType.FLOATING)){ 
         		return (this.message.equals(((TestTask) other).message)) 
         		&& this.priority.equals(((TestTask) other).priority);
