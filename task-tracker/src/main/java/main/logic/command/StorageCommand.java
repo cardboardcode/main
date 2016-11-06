@@ -19,7 +19,7 @@ public class StorageCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Changes TaskTracker storage location to the specified path. The path must be of an xml file.\n" + "eg. "
             + "storage main/docs/NewXmlDoc.xml";
 
-    public static final String MESSAGE_SUCCESS = "Successfully changed storage path";
+    public static final String MESSAGE_SUCCESS = "Successfully changed storage path to %1$s";
     public static final String MESSAGE_DUPLICATE_PATH = "Storage path is already set to specified location!";
     public static final String MESSAGE_CONVERT_FAILIURE = "Could not read from config file.";
     public static final String MESSAGE_SAVE_FAILIURE = "Could not save tasks to the specified location.";
@@ -43,7 +43,7 @@ public class StorageCommand extends Command {
         }
         else {
             EventsCenter.getInstance().post(new FilePathChangedEvent(newStoragePath, model.getTaskTracker()));            
-            return new CommandResult(MESSAGE_SUCCESS);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, newStoragePath));
         }                               
     }
 }
