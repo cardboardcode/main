@@ -2,15 +2,12 @@
 package main.logic.command;
 
 import main.commons.core.EventsCenter;
-import main.commons.core.Messages;
-
 import main.commons.events.ui.IncorrectCommandAttemptedEvent;
 import main.model.Model;
 import main.storage.Storage;
 
 /**
  * Represents a command with hidden internal logic and the ability to be executed.
- * @author bey
  */
 public abstract class Command {
 	protected Model model;
@@ -28,16 +25,6 @@ public abstract class Command {
 	public void setTargetIndex(int targetIndex) {
         this.targetIndex = targetIndex;
     }
-    /**
-     * Constructs a feedback message to summarise an operation that displayed a listing of persons.
-     *
-     * @param displaySize used to generate summary
-     * @return summary message for persons displayed
-     */
-    public static String getMessageForPersonListShownSummary(int displaySize) {
-        return String.format(Messages.MESSAGE_TASK_LISTED_OVERVIEW, displaySize);
-    }
-
     /**
      * Executes the command and returns the result message.
      *
