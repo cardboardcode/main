@@ -10,7 +10,7 @@ public class CommandResult {
     
     public CommandResult(String feedbackToUser) {
         assert feedbackToUser != null;
-        this.feedbackToUser = feedbackToUser;
-    }
+		this.feedbackToUser = feedbackToUser;
+	}
 
 }
