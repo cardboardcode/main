@@ -170,7 +170,6 @@ public class LogicManagerTest {
     
     @Test
     public void execute_sort_lowerCaseValidArgsFormat_successMessageShown() throws Exception {
-        String expectedMessage = SortCommand.MESSAGE_SUCCESS;
         assertCommandBehavior("sort date", String.format(SortCommand.MESSAGE_SUCCESS, "date"));
         assertCommandBehavior("sort name", String.format(SortCommand.MESSAGE_SUCCESS, "name"));
     }
