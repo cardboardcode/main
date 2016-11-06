@@ -203,9 +203,15 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_add_empty_description_invalidArgsFormat_errorMessageShown() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, Messages.MESSAGE_EMPTY_DESCRIPTION);
+    public void execute_add_emptyDescription_invalidArgsFormat_errorMessageShown() throws Exception {
+        String expectedMessage = String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, Messages.MESSAGE_EMPTY_DESCRIPTION);
         assertCommandBehavior("add ", expectedMessage);
+    }
+    
+    @Test
+    public void execute_add_multiplePriority_invalidArgsFormat_errorMessageShown() throws Exception {
+        String expectedMessage = String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, Messages.MESSAGE_MULTIPLE_PRIORITY);
+        assertCommandBehavior("add something -h -l", expectedMessage);
     }
     
     @Test
