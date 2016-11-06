@@ -9,6 +9,10 @@ import main.testutil.TypicalTestTasks;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * Evaluates the add command when it add one task, add another task, add a duplicate floating task, 
+ * add to an empty list, add an invalid command
+ */
 public class AddCommandTest extends TaskTrackerGuiTest {
 
 	@Test
