@@ -114,13 +114,7 @@ public class StorageManager extends ComponentManager implements Storage {
         
         setTaskTrackerFilePath(filePath);
 
-        ReadOnlyTaskTracker originalData = originalData(filePath);
-        if (originalData != null) {
-            taskTracker = originalData;
-        }
-        else {
-            saveTaskTracker(filePath, taskTracker);
-        }      
+        saveTaskTracker(filePath, taskTracker);  
         
         logger.info(taskTracker.getTaskList().size() + "");
         saveConfig(filePath);
