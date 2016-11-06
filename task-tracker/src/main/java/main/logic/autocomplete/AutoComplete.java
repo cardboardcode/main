@@ -288,7 +288,6 @@ public class AutoComplete {
      */
     @Subscribe
     private void handleTaskTrackerChangedEvent(TaskTrackerChangedEvent event) {
-//       updateModel(event.data);
         updateTaskList();
     }
 
