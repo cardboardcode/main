@@ -93,7 +93,7 @@ Execute `list events`<br>
 **Expected**:<br>
 - Display Area will show message: `Listed all pending events`<br>
 - Image in List Statistics Panel will change.<br>
-- Task-list panel will display only 4 task cards.<br>
+- Task-list panel will display only task cards with two dates specified.<br>
 
 **Purpose**: Lists all deadlines<br>
 **Action**:<br>
@@ -101,7 +101,7 @@ Execute `list deadlines`<br>
 **Expected**:<br>
 - Display Area will show message: `Listed all pending tasks with deadlines`<br>
 - Image in List Statistics Panel will change.<br>
-- Task-list panel will display only 34 task cards.<br>
+- Task-list panel will display only task cards with one date specified.<br>
 
 **Purpose**: Lists all floating tasks<br>
 **Action**:<br>
@@ -109,7 +109,7 @@ Execute `list floating`<br>
 **Expected**:<br>
 - Display Area will show message: `Listed all pending floating tasks`<br>
 - Image in List Statistics Panel will change.<br>
-- Task-list panel will display only 13 task cards.<br>
+- Task-list panel will display only task cards with no date specified.<br>
 
 **Purpose**: Lists all low priority tasks<br>
 **Action**:<br>
@@ -117,7 +117,7 @@ Execute `list low`<br>
 **Expected**:<br>
 -   Display Area will show message: `Listed all pending low priority tasks`<br>
 - Image in List Statistics Panel will change.<br>
-- Task-list panel will display only 10 task cards.<br>
+- Task-list panel will display only green task cards.<br>
 
 **Purpose**: Lists all normal priority tasks<br>
 **Action**:<br>
@@ -125,7 +125,7 @@ Execute `list normal`<br>
 **Expected**:<br>
 - Display Area will show message: `Listed all pending normal priority tasks`<br>
 - Image in List Statistics Panel will change.<br>
-- Task-list panel will display only 30 task cards.<br>
+- Task-list panel will display only orange task cards.<br>
 
 **Purpose**: Lists all high priority tasks<br>
 **Action**:<br>
@@ -133,7 +133,7 @@ Execute `list high`<br>
 **Expected**:<br>
 - Display Area will show message: `Listed all pending low priority tasks`<br>
 - Image in List Statistics Panel will change.<br>
-- Task-list panel will display only 11 task cards.<br>
+- Task-list panel will display only red task cards.<br>
 <br>
 <br>
 <br>
@@ -159,14 +159,6 @@ Execute `edit 1 check out 01 sep 2016 -l`<br>
 
 **Expected**:<br>
 - Display Area will show message: `Delete Task: 1`<br>
-
-**Purpose**: Deletes the last task in the list <br>
-**Action**:<br>
-- Execute `list`<br>
-- Execute `delete 49`<br> 
-
-**Expected**:<br>
-- Display Area will show message: `Delete Task: 49`<br>
 
 **Purpose**: Deletes the last task in the list <br>
 **Action**:<br>
@@ -239,10 +231,10 @@ Execute `edit 1 check out 01 sep 2016 -l`<br>
 **Purpose**: Find any tasks whose messages start with the letter "w"<br>
 **Action**:<br>
 - Execute `list`<br>
-- Execute `find w`<br>
+- Type `find w`<br>
 
 **Expected**:<br>
-- Task-list panel will display only task cards whose messages starts with the letter 'w'.<br>
+- Task-list panel will display only task cards whose messages contains the letter 'w'.<br>
 
 <br>
 <br>
@@ -252,9 +244,9 @@ Execute `edit 1 check out 01 sep 2016 -l`<br>
 
 **Purpose**: Search any tasks whose messages start with the word "buy"<br>
 **Action**:<br>
-- Execute `search buy`<br>
+Type `search buy`<br>
 **Expected**:<br>
-- Task-list panel will display only task cards whose messages starts with the word `buy`.<br>
+- Task-list panel will display only task cards whose messages contains the word `buy`.<br>
 
 <br>
 <br>
@@ -278,7 +270,7 @@ Execute `edit 1 check out 01 sep 2016 -l`<br>
 
 **Purpose**: Reverts previous command<br>
 **Action**:<br>
-- Execute `undo`<br>
+Execute `undo`<br>
 **Expected**:<br>
 - Display Area will show message: `Reverted last command`<br>
 - Task cards in the Task List panel will be restored to its previous state. <br>
