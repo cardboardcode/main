@@ -186,12 +186,16 @@ public class CommandBox extends UiPart {
     
 	@FXML
 	public void handleKeyReleased(KeyEvent event) {
-		if (!event.getCode().isDigitKey() && !event.getCode().isLetterKey() && event.getCode() != KeyCode.BACK_SPACE
-				&& event.getCode() != KeyCode.DELETE)
+		if (!keysThatChangeCommandInput(event))
 			return;
 		String input = commandTextField.getText();
-		EventsCenter.getInstance().post(new KeyPressEvent(event.getCode(), input));
+		EventsCenter.getInstance().post(new KeyPressEvent(input));
 	}
+
+    private boolean keysThatChangeCommandInput(KeyEvent event) {
+        return event.getCode().isDigitKey() || event.getCode().isLetterKey() || event.getCode() == KeyCode.BACK_SPACE
+				|| event.getCode() == KeyCode.DELETE;
+    }
 
 	public void handleTabEvent() {
 		commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {

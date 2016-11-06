@@ -139,7 +139,7 @@ public class AutoComplete {
 
         if (needTaskSuggestions(tokens, commandWord)) {
             start_index = commandInput.length() + 1;
-            saveIfNeeded();
+            saveIfNeeded(commandWord);
             getTaskSuggestions(tokens);
         }
         else if (commandWord.equals(ListCommand.COMMAND_WORD)) {
@@ -154,11 +154,14 @@ public class AutoComplete {
     /**
      * Saves the filter just before list starts to give real time suggestions 
      */
-    private void saveIfNeeded() {
+    private void saveIfNeeded(String commandWord) {
         if (save) {
-            model.saveFilter();
             save = false;
-            revert = true;
+            
+            if (!commandWord.equals(FindCommand.COMMAND_WORD)) {
+                model.saveFilter();
+                revert = true;
+            }
         }
     }
 
@@ -200,19 +203,23 @@ public class AutoComplete {
         suggestions = getStringArrayFromIndex(size);
     }
     
+    /**
+     * Determines when tasks suggestions are given. 
+     */
     private boolean needTaskSuggestions(String[] tokens, String commandWord) {
-        return isFindEditDoneDelete(commandWord) && !dontInterrupt(tokens, commandWord); 
+        return (isEditDoneDelete(commandWord) || (commandWord.equals(FindCommand.COMMAND_WORD))) && !dontInterrupt(tokens, commandWord); 
     }
 
     /**
-     * Determines when suggestions are not given.
+     * @returns true when user are using edit, done or delete command to execute instructions
+     * (when inputs are numeric) rather than find tasks
      */
     private boolean dontInterrupt(String[] tokens, String commandWord) {
         return !commandWord.equals(FindCommand.COMMAND_WORD) && StringUtils.isNumeric(tokens[1]);
     }
 
-    private boolean isFindEditDoneDelete(String commandWord) {
-        return commandWord.equals(EditCommand.COMMAND_WORD) || commandWord.equals(DeleteCommand.COMMAND_WORD) || commandWord.equals(DoneCommand.COMMAND_WORD) || commandWord.equals(FindCommand.COMMAND_WORD) || commandWord.equals(DoneCommand.COMMAND_WORD);
+    private boolean isEditDoneDelete(String commandWord) {
+        return commandWord.equals(EditCommand.COMMAND_WORD) || commandWord.equals(DeleteCommand.COMMAND_WORD) || commandWord.equals(DoneCommand.COMMAND_WORD);
     }
     
     /**
@@ -262,8 +269,8 @@ public class AutoComplete {
      */
     private List<String> getStringArrayFromIndex(int size) {
         List<String> list = new ArrayList<String>();
-        for (int i = 0; i < size; i++) {
-            list.add(String.valueOf(i + 1));
+        for (int i = 1; i <= size; i++) {
+            list.add(String.valueOf(i));
         }
         return list;
     }
@@ -292,7 +299,7 @@ public class AutoComplete {
      * Updates suggestions when key press is detected.
      */
     @Subscribe
-    private void handleKeyPressEvent(KeyPressEvent event) {
+    public void handleKeyPressEvent(KeyPressEvent event) {
         updateSuggestions(event.getInput());
         tabCount = 0;
     }
@@ -301,7 +308,7 @@ public class AutoComplete {
      * Toggles the suggestions to fill in commandBox.
      */
     @Subscribe
-    private void handleTabPressEvent(TabPressEvent event) {
+    public void handleTabPressEvent(TabPressEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         fillInSuggestions();
         tabCount++;
@@ -311,7 +318,7 @@ public class AutoComplete {
      * Updates taskList when tasks are changed.
      */
     @Subscribe
-    private void handleTaskTrackerChangedEvent(TaskTrackerChangedEvent event) {
+    public void handleTaskTrackerChangedEvent(TaskTrackerChangedEvent event) {
         updateTaskList();
     }
 

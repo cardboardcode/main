@@ -17,9 +17,6 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableList.Builder;
-
 import main.model.task.PriorityType;
 import main.model.task.Task;
 import main.model.task.TaskType;
@@ -203,8 +200,8 @@ public class MainParser {
      * @throws NumberFormatException if input given cannot be parsed as an integer.
      */
     private int extractValidIndex(String input) throws IllegalValueException, NumberFormatException{
-        if (input.trim() == "")  {
-            throw new IllegalValueException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX); 
+        if (input.trim().equals(""))  {
+            throw new IllegalValueException(Messages.MESSAGE_INVALID_COMMAND_FORMAT); 
         }
         
         int index = Integer.valueOf(input.trim()) - 1;
@@ -280,7 +277,7 @@ public class MainParser {
         date = getDate(dates);
 
         indicateListParamsChanged(priority, date, type, onlyOverdue);
-        return new ListCommand(Triple.of(priority, date, type), isDone, onlyOverdue);
+        return new ListCommand(priority, date, type, isDone, onlyOverdue);
     }
 
     /**
@@ -310,10 +307,10 @@ public class MainParser {
      * @returns IncorrectCommand if input does not match
      */
     public Command prepareSort(String input) {
-        input = input.trim().toLowerCase();
+        String trimmed = input.trim().toLowerCase();
         
-        if (input.equals("date") || input.equals("name")) {
-            return new SortCommand(input);
+        if ("date".equals(trimmed) || "name".equals(trimmed)) {
+            return new SortCommand(trimmed);
         }
         else {
             return new IncorrectCommand(String.format(Messages.MESSAGE_INVALID_PARAMETERS, "sort", SortCommand.MESSAGE_USAGE));
@@ -388,9 +385,9 @@ public class MainParser {
             priority = PriorityType.NORMAL;
         }
         
-        input = input.substring(0, index);
+        String truncate = input.substring(0, index);
         
-        return Pair.of(priority,input);
+        return Pair.of(priority, truncate);
     }
     
     /**
