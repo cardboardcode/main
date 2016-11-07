@@ -28,7 +28,7 @@ We are a team based in the [School of Computing, National University of Singapor
     -   [Undo command](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#5-undo-a-task)
     -   [Redo command](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md#6-redo-a-task)
     -   [Storage command]()
-*   Code written: [[functional code](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/main/A0142686X.md)][[test code](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/test/A0142686X.md)][[docs]()]
+*   Code written: [[functional code](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/main/A0142686X.md)][[test code](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/test/A0142686X.md)][[docs](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/collated/docs/A0142686X.md)]
 * Other major contributions: 
     * Converted User Guide and Developer Guide to markdown format.
     * Implemented storage for colour wheel preference.
