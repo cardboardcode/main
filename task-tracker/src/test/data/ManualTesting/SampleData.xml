@@ -71,16 +71,6 @@
         <isInferred>true</isInferred>
     </tasks>
     <tasks>
-        <message>watch f1</message>
-        <startTime>2016-11-06T17:00:00+08:00</startTime>
-        <endTime>2016-11-06T20:00:00+08:00</endTime>
-        <isRecurring>false</isRecurring>
-        <priority>NORMAL</priority>
-        <type>EVENT</type>
-        <isDone>false</isDone>
-        <isInferred>false</isInferred>
-    </tasks>
-    <tasks>
         <message>complete arduino project</message>
         <deadline>2016-11-05T08:00:00+08:00</deadline>
         <isRecurring>false</isRecurring>
@@ -424,8 +414,8 @@
     </tasks>
     <tasks>
         <message>study ubuntu</message>
-        <startTime>0900-12-20T10:00:00+08:00</startTime>
-        <endTime>0900-12-20T10:00:00+08:00</endTime>
+        <startTime>0900-12-15T10:00:00+08:00</startTime>
+        <endTime>0900-12-15T10:00:00+08:00</endTime>
         <isRecurring>false</isRecurring>
         <priority>NORMAL</priority>
         <type>EVENT</type>
@@ -511,5 +501,23 @@
         <type>FLOATING</type>
         <isDone>false</isDone>
         <isInferred>true</isInferred>
+    </tasks>
+    <tasks>
+        <message>question life</message>
+        <isRecurring>false</isRecurring>
+        <priority>NORMAL</priority>
+        <type>FLOATING</type>
+        <isDone>false</isDone>
+        <isInferred>true</isInferred>
+    </tasks>
+    <tasks>
+        <message>watch f1</message>
+        <startTime>2016-11-06T17:00:00+08:00</startTime>
+        <endTime>2016-11-06T20:00:00+08:00</endTime>
+        <isRecurring>false</isRecurring>
+        <priority>HIGH</priority>
+        <type>EVENT</type>
+        <isDone>false</isDone>
+        <isInferred>false</isInferred>
     </tasks>
 </tasktracker>
