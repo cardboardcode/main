@@ -1,7 +1,5 @@
-<!--@@author A0139422J -->
-# **Manual Testing**
+## **Manual Testing**
 
-## Setting up
 ### Prerequisites
 
 1. **JDK `1.8.0_60`**  or later<br>
@@ -9,92 +7,108 @@
     > Having any Java 8 version is not enough. <br>
     This app will not work with earlier versions of Java 8.
     
-2. **Eclipse** IDE
-3. **e(fx)clipse** plugin for Eclipse (Do the steps 2 onwards given in
-   [this page](http://www.eclipse.org/efxclipse/install.html#for-the-ambitious))
-4. **Buildship Gradle Integration** plugin from the Eclipse Marketplace
-
-
-### Importing the project into Eclipse
-
-1. Fork this repo, and clone the fork to your computer
-2. Open Eclipse (Note: Ensure you have installed the **e(fx)clipse** and **buildship** plugins as given in the prerequisites above)
-3. Click `File` > `Import`
-4. Click `Gradle` > `Gradle Project` > `Next` > `Next`
-5. Click `Browse`, then locate the project's directory
-6. Click `Finish`
-
-  > * If you are asked whether to 'keep' or 'overwrite' config files, choose to 'keep'.
-  > * Depending on your connection speed and server load, it can even take up to 30 minutes for the set up to finish 
-      (This is because Gradle downloads library files from servers during the project set up process)
-  > * If Eclipse auto-changed any settings files during the import process, you can discard those changes.
-  
-### Troubleshooting project setup
-
-**Problem: Eclipse reports compile errors after new commits are pulled from Git**<br>
-
->Reason: Eclipse fails to recognize new files that appeared due to the Git pull.
-
-**Solution**: Refresh the project in Eclipse:
-Right click on the project (in Eclipse package explorer), choose Gradle -> Refresh Gradle Project.
-
-**Problem: Eclipse reports some required libraries missing**
->Reason: Required libraries may not have been downloaded during the project import.
-
-**Solution**: Run tests using Gradle once (to refresh the libraries).
- 
- 
-
+### Opening **T-T**
+   1. Navigate to our [release page](https://github.com/CS2103AUG2016-T09-C3/main/releases)
+   2. Download the jar file from the lastest release.
+   3. Run the jar file to start up **T-T**
 
 ### Loading Sample Data
 
-1. Start up **T-T** in Eclipse.
-2. Ensure that the current file path is src/test/data/ManualTesting/SampleData.xml. The file path is displayed below the Command Box in the Status Footer Bar. 
-   If the file path is incorrect, please do the following:
-   1. Type in 'storage src/test/data/ManualTesting/SampleData.xml'
-   2. Close the program.
-   3. Navigate the aforementioned file directory within the project and delete SampleData.xml.
-   4. Rename the existing `SampleData1.xml` file in the folder to `SampleData.xml`
-   5. Restart the program.
+1. With **T-T** opened, you should see something like this <br>
+<img src="docs/images/empty.png" <br>
+2. To load the data, type `storage src/test/data/ManualTesting/SampleData.xml`
 
-<br>
-<br>
-<br>
 ### Testing Commands
 <br>
 ### 1.**ADD**
 
-**Purpose**: Adding a new task <br>
-**Action**:<br>
-Execute `add question life`<br>
+**Purpose**: Adding a new floating task <br>
+**Action**: type `add question life`<br>
 **Expected**:<br>
-- Display Area will show message: `New task added: question life`<br>
+- Display Area will show message: `New task added: question life`.
+- TaskCard corresponding to this task is orange as no priority was indicated.
+- TaskCard will have no date shown.
+- Task will be inserted near the end of the list, as it is a floating task.
+<br>
 
-**Purpose**: Adding a duplicate floating task <br>
-**Action**:<br>
-Execute `add clean room -l`<br>
+<br>
+**Purpose**: Adding a new deadline task <br>
+**Action**: type `add fix my laptop by 20 nov`<br>
+**Expected**:<br>
+- Display Area will show message: `add fix my laptop due 20 nov`
+- TaskCard corresponding to this task is orange as no priority was indicated.
+- TaskCard will have the date shown at the side
+<br>
+
+<br>
+**Purpose**: Adding a new event task <br>
+**Action**: type `add jim's birthday 1 dec 6pm to 11pm`<br>
+**Expected**:<br>
+- Display Area will show message: `New task added: jim's birthday from 01 Dec 6:00 PM to 01 Dec 11:00 PM`
+- TaskCard corresponding to this task is orange as no priority was indicated.
+- TaskCard will have both dates shown at the side
+<br>
+
+<br>
+**Purpose**: Adding a new high priority task <br>
+**Action**: type `add brush teeth today -h`<br>
+**Expected**:<br>
+- Display Area will show message: `New task added: brush teeth due 07 Nov`.
+- TaskCard corresponding to this task is red as high priority was indicated.
+- TaskCard will show today's date at the side.
+<br>
+
+<br>
+**Purpose**: Adding a new low priority task <br>
+**Action**: type `add be nice -l`<br>
+**Expected**:<br>
+- Display Area will show message: `New task added: be nice`.
+- TaskCard corresponding to this task is greenish white as low priority was indicated.
+<br>
+
+<br>
+**Purpose**: Adding a overdue task <br>
+**Action**: type `add halloween party 31 oct`<br>
+**Expected**:<br>
+- Display Area will show message: `New task added: halloween party due 31 Oct`.
+- Rectangle at the side of TaskCard will be black to indicate overdue task.
+<br>
+
+<br>
+**Purpose**: Adding a recurring task <br>
+**Action**: type `add teach tution every wed`<br>
+**Expected**:<br>
+- Display Area will show message: `New task added: teach tution due 14 Nov`.
+- The side of TaskCard will display `Weekly` to indicate a recurring task.
+<br>
+
+<br>
+**Purpose**: Adding a duplicate task <br>
+**Action**: type `add clean room -l`<br>
 **Expected**:<br>
 - Display Area will show message: `This task is already in the to-do list`<br>
 
-**Purpose**: Input wrong command <br>
-**Action**:<br>
-Execute `adds wrongcommandinput`<br>
-**Expected**:<br>
-- Display Area will show message: `Invalid command format Unknown command`<br>
 <br>
 <br>
-<br>
-
 ### 2.**LIST** <br>
 
+**Purpose**: Lists all pending tasks<br>
+**Action**: type `list`<br>
+**Expected**:<br>
+- Display Area will show message: `Listed all pending tasks`<br>
+- Image in List Statistics Panel will change.<br>
+- Task-list panel will display only task cards with two dates specified.<br>
+
+<br>
+
 **Purpose**: Lists all events<br>
-**Action**:<br>
-Execute `list events`<br>
+**Action**: type `list event`<br>
 **Expected**:<br>
 - Display Area will show message: `Listed all pending events`<br>
 - Image in List Statistics Panel will change.<br>
 - Task-list panel will display only task cards with two dates specified.<br>
 
+<br>
 **Purpose**: Lists all deadlines<br>
 **Action**:<br>
 Execute `list deadlines`<br>
@@ -118,7 +132,9 @@ Execute `list low`<br>
 -   Display Area will show message: `Listed all pending low priority tasks`<br>
 - Image in List Statistics Panel will change.<br>
 - Task-list panel will display only green task cards.<br>
+<br>
 
+<br>
 **Purpose**: Lists all normal priority tasks<br>
 **Action**:<br>
 Execute `list normal`<br>
@@ -126,18 +142,88 @@ Execute `list normal`<br>
 - Display Area will show message: `Listed all pending normal priority tasks`<br>
 - Image in List Statistics Panel will change.<br>
 - Task-list panel will display only orange task cards.<br>
+<br>
 
+<br>
 **Purpose**: Lists all high priority tasks<br>
-**Action**:<br>
-Execute `list high`<br>
+**Action**: type `list high`<br>
 **Expected**:<br>
 - Display Area will show message: `Listed all pending low priority tasks`<br>
 - Image in List Statistics Panel will change.<br>
 - Task-list panel will display only red task cards.<br>
 <br>
+
 <br>
+**Purpose**: Lists all done tasks<br>
+**Action**: type `list done`<br>
+**Expected**:<br>
+- Display Area will show message: `Listed all completed tasks`<br>
+- Image in List Statistics Panel will change.<br>
+- Task-list panel will display only completed tasks.<br>
 <br>
 
+<br>
+**Purpose**: Lists all overdue tasks<br>
+**Action**: type `list overdue`<br>
+**Expected**:<br>
+- Display Area will show message: `Listed all overdue tasks`<br>
+- Image in List Statistics Panel will change.<br>
+- Task-list panel will display only tasks with a black bar at the side.<br>
+<br>
+
+<br>
+**Purpose**: Lists all tasks on a specific date<br>
+**Action**: type `list 31 oct`<br>
+**Expected**:<br>
+- Display Area will show message: `Listed all pending tasks due 31 Oct`<br>
+- Image in List Statistics Panel will change.<br>
+- Task-list panel will display only tasks on 31 oct.<br>
+<br>
+
+<br>
+**Purpose**: Lists all low priority floating tasks<br>
+**Action**: type `list low floating`<br>
+**Expected**:<br>
+- Display Area will show message: `Listed all pending low priority floating tasks` <br>
+- Image in List Statistics Panel will change.<br>
+- Task-list panel will display only floating tasks which have low priority.<br>
+<br>
+
+<br>
+**Purpose**: Lists all events on a specific date<br>
+**Action**: type `list 31 oct event`<br>
+**Expected**:<br>
+- Display Area will show message: `Listed all pending events due 31 Oct` <br>
+- Image in List Statistics Panel will change.<br>
+- Task-list panel will display only events on that specific date.<br>
+<br>
+
+<br>
+**Purpose**: Lists all high priority events on a specific date<br>
+**Action**: type `list high 31 oct event`<br>
+**Expected**:<br>
+- Display Area will show message: `Listed all pending high priority events due 31 Oct` <br>
+- Image in List Statistics Panel will change.<br>
+- Task-list panel will display only high priority events on that specific date.<br>
+<br>
+
+<br>
+**Purpose**: Autocomplete list parameters<br>
+**Action**: type `list hi`, press <kbd>tab</kbd><br>
+**Expected**:<br>
+- Command Box will become `list high `<br>
+<br>
+
+<br>
+**Purpose**: More autocomplete list parameters<br>
+**Action**: type `list high e`, press <kbd>tab</kbd><br>
+**Expected**:<br>
+- Command Box will become `list high event `<br>
+<br>
+
+<br>
+<br>
+<br>
 ### 3. **EDIT**
 
 **Purpose**: Edit an existing task<br> 
@@ -152,48 +238,37 @@ Execute `edit 1 check out 01 sep 2016 -l`<br>
 
 ### 4. **DELETE**
 
-**Purpose**: Deletes the first task in the list <br>
-**Action**:<br>
-- Execute `list`<br>
-- Execute `delete 1`<br>
-
+**Purpose**: Delete the task in the list <br>
+**Action**: type `list`, followed by `delete 2`<br>
 **Expected**:<br>
-- Display Area will show message: `Delete Task: 1`<br>
+- Display Area will show message: `Delete Task: 2`<br>
 
-**Purpose**: Deletes the last task in the list <br>
-**Action**:<br>
-- Execute `list`<br>
-- Execute `delete 49`<br>
-
+**Purpose**: Delete the non existent task in the list <br>
+**Action**: type `delete 100`<br>
 **Expected**:<br>
-- Display Area will show message: `Delete Task: 49`<br>
+- Display Area will show message: `Task does not exist in Task-Tracker`<br>
+<br>
 
-**Purpose**: Deletes the task in the middle of the list <br>
-**Action**:<br>
-- Execute `list`<br>
-- Execute `delete 23`<br>
-
+<br>
+**Purpose**: Delete the task in specificied list <br>
+**Action**: type `list floating', followed by `delete 1`<br>
 **Expected**:<br>
-- Display Area will show message: `Delete Task: 23`<br>
+- Display Area will show message: `Deleted Task: 1`<br>
+- Current list view stays the same, except the deleted task is gone. <br>
+<br>
 
 <br>
 <br>
-<br>
-
 ### 5. **DONE**
 
 **Purpose**: Mark a task as done<br>
-**Action**:<br>
-- Execute `list`<br>
-- Execute `done 5`<br>
+**Action**: type `list`, followed by `done 5`<br>
 
 **Expected**:<br>
 - Display Area will show message: `The following task is done: 5`<br>
 
 **Purpose**: Mark an invalid task as done<br>
-**Action**:<br>
-- Execute `list`<br>
-- Execute `done 60`<br>
+**Action**: type `list`, followed by `done 70`<br>
 
 **Expected**:<br>
 - Display Area will show message: `Task does not exist in task-tracker`<br>
@@ -205,53 +280,58 @@ Execute `edit 1 check out 01 sep 2016 -l`<br>
 ### 6. **SORT**
 
 **Purpose**: Sort the list of tasks by date<br>
-**Action**:<br>
-- Execute `list`<br>
-- Execute `sort date`<br>
-
+**Action**: type `list`, followed by `sort date`<br>
 **Expected**:<br>
 - Display Area will show message: `Sorting by date`<br>
 - Task card in Task-List Panel are arranged such that the closest deadlines are displayed at the top of the list.<br>
 
 **Purpose**: Sort the list of tasks lexicographically<br>
-**Action**:<br>
-- Execute `list`<br>
-- Execute `sort name`<br>
-
+**Action**: type `list`, followed by `sort name`<br>
 **Expected**:<br>
 - Display Area will show message: `Sorting by name`<br>
 - Task card in Task-List Panel are arranged alphebatically.<br>
-
 <br>
+
+**Purpose**: Sort the specificied list of tasks by date<br>
+**Action**: type `list deadline`, followed by `sort date`<br>
+**Expected**:<br>
+- Display Area will show message: `Sorting by date`<br>
+- Currenly displayed Task cards in Task-List Panel are arranged such that the closest deadlines are displayed at the top of the list.<br>
+<br>
+
+**Purpose**: Autocomplete sort parameteres<br>
+**Action**: type `sort na`, then press <kbd>tab</kbd><br>
+**Expected**:<br>
+- Command Box becomes `sort name`<br>
+<br>
+
 <br>
 <br>
 
 ### 7. **FIND**
 
 **Purpose**: Find any tasks whose messages start with the letter "w"<br>
-**Action**:<br>
-- Execute `list`<br>
-- Type `find w`<br>
-
+**Action**: type `find w` (without pressing <kbd>enter</kbd>)<br> 
 **Expected**:<br>
-- Task-list panel will display only task cards whose messages contains the letter 'w'.<br>
+- Task-list panel will displays in real time only task cards whose messages contains the letter 'w'.<br>
 
-<br>
-<br>
-<br>
-
-### 8. **SEARCH**
-
-**Purpose**: Search any tasks whose messages start with the word "buy"<br>
-**Action**:<br>
-Type `search buy`<br>
+**Purpose**: Find tasks matching either of the 2 tokens<br>
+**Action**: type `find w bu` (without pressing <kbd>enter</kbd>)<br> 
 **Expected**:<br>
-- Task-list panel will display only task cards whose messages contains the word `buy`.<br>
+- Task-list panel will displays in real time only task cards whose messages contains the letter 'w', and task cards whose message starts with "w" or "bu".<br>
+
+**Purpose**: Manipulate the list of found tasks<br>
+**Action**: type `find bu`, press <kbd>enter</kbd>, then type `done 1`<br>
+**Expected**:<br>
+- Task-list panel will display task cards whose message starts with "bu".<br>
+- The first task in the list will be gone when it is marked as done. <br>
+- The rest of the task remains. <br>
+<br>
 
 <br>
 <br>
-<br>
-### 9. **CLEAR**
+
+### 8. **CLEAR**
 
 **Purpose**: Clears T-T of all tasks<br>
 **Action**:<br>
@@ -266,7 +346,7 @@ Type `search buy`<br>
 <br>
 <br>
 
-### 10. **UNDO**
+### 9. **UNDO**
 
 **Purpose**: Reverts previous command<br>
 **Action**:<br>
@@ -279,7 +359,7 @@ Execute `undo`<br>
 <br>
 <br>
 
-### 11. **STORAGE**
+### 10. **STORAGE**
 
 **Purpose**: Change the current storage file path.<br>
 **Action**:<br>
@@ -294,6 +374,14 @@ Execute `storage src/test/data/sandbox/newfile.xml`<br>
 
 ### 11. **HELP**
 
+**Purpose**: Input wrong command <br>
+**Action**: type `bleh wrongcommandinput`<br>
+**Expected**:<br>
+- Display Area will show message: `Invalid command format Unknown command`<br>
+<br>
+
+<br>
+
 **Purpose**: Open up the help window<br>
 **Action**:<br>
 Execute `help`<br>
@@ -305,7 +393,7 @@ Execute `help`<br>
 <br>
 <br>
 
-### 11. **EXIT**
+### 12. **EXIT**
 
 **Purpose**: Exits the program<br>
 **Action**:<br>
