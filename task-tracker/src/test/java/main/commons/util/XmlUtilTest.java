@@ -5,7 +5,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import main.model.ReadOnlyTaskTracker;
 import main.model.TaskTracker;
 import main.storage.XmlSerializableTaskTracker;
 import main.testutil.TaskTrackerBuilder;
