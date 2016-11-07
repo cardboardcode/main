@@ -168,6 +168,7 @@ Let’s say task index “**1**” refers to the task `wash dishes monday 4pm`
 <br>
 <img src="images/edit_command2.png" height="600p" width="750p"><br>
 <br>
+
 ### 6. **UNDO**
 
 You can use the UNDO command to revert the previous commands you have entered in the session.
