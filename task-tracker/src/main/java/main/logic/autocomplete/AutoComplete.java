@@ -31,6 +31,8 @@ import main.logic.parser.ReferenceList;
 import main.model.Model;
 import main.model.task.ReadOnlyTask;
 
+// took reference from a pass year project https://github.com/cs2103aug2015-w15-3j/main
+
 public class AutoComplete {
         
     private static final Logger logger = LogsCenter.getLogger(AutoComplete.class);
@@ -43,8 +45,8 @@ public class AutoComplete {
     private int start_index;
     private int end_index;
     private int tabCount = 0;
-    EventsCenter eventsCenter;
-    Model model;
+    private EventsCenter eventsCenter;
+    private Model model;
     
     // to return to original list (when showing matching tasks in real time)
     private boolean save = false;

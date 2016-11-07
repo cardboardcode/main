@@ -76,7 +76,7 @@ public class LogicManagerTest {
     }
     
     @After
-    public void teardown() {
+    public void tearDown() {
         EventsCenter.clearSubscribers();
     }
     

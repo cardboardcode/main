@@ -16,7 +16,8 @@
 
 1. With **T-T** opened, you should see something like this <br>
 <img src="images/empty.jpg" <br>
-2. To load the data, type `storage src/test/data/ManualTesting/SampleData.xml`
+2. Download our [sample data](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/task-tracker/src/test/data/ManualTesting/SampleData.xml) to your desired file location, e.g /home/user/Documents/SampleData.xml
+2. To load the data, type `storage <filepath>`, e.g. `storage /home/user/Documents/SampleData.xml`. Remember to include the xml file.
 
 ### Testing Commands
 <br>
@@ -169,7 +170,7 @@
 
 <br>
 **Purpose**: Lists all tasks on a specific date<br>
-**Action**: type `list 31 oct`<br>
+**Action**: type `list 6 nov`<br>
 **Expected**:<br>
 - Display Area will show message: `Listed all pending tasks due 31 Oct`<br>
 - Image in List Statistics Panel will change.<br>
@@ -187,7 +188,7 @@
 
 <br>
 **Purpose**: Lists all events on a specific date<br>
-**Action**: type `list 31 oct event`<br>
+**Action**: type `list 6 nov event`<br>
 **Expected**:<br>
 - Display Area will show message: `Listed all pending events due 31 Oct` <br>
 - Image in List Statistics Panel will change.<br>
@@ -253,6 +254,16 @@
 <br>
 
 <br>
+**Purpose**: Autocomplete for delete <br>
+**Action**: type `delete no` (without pressing <kbd>enter</kbd>, then press <kbd>tab</kbd> a few times, then press <kbd>enter</kbd>`<br>
+**Expected**:<br>
+- Current list view changes to tasks which contains tokens starting with "no" in real time<br>
+- When <kbd>tab</kbd> is pressed, command box becomes "delete 1", "delete 2", etc, toggling between the list indexes.
+- When <kbd>enter</kbd> is pressed, the corresponding task is deleted, and the list view looks the same except for the deleted task <br>
+
+ > repeat with `done`
+<br>
+
 <br>
 ### 5. **DONE**
 
@@ -305,15 +316,15 @@
 
 ### 7. **FIND**
 
-**Purpose**: Find any tasks whose messages start with the letter "w"<br>
-**Action**: type `find w` (without pressing <kbd>enter</kbd>)<br> 
+**Purpose**: Find any tasks whose messages start with the letters "wa"<br>
+**Action**: type `find wa` (without pressing <kbd>enter</kbd>)<br> 
 **Expected**:<br>
-- Task-list panel will displays in real time only task cards whose messages contains the letter 'w'.<br>
+- Task-list panel will displays in real time only task cards whose messages contains tokens that starts with the letter 'wa'.<br>
 
 **Purpose**: Find tasks matching either of the 2 tokens<br>
-**Action**: type `find w bu` (without pressing <kbd>enter</kbd>)<br> 
+**Action**: type `find wa rea` (without pressing <kbd>enter</kbd>)<br> 
 **Expected**:<br>
-- Task-list panel will displays in real time only task cards whose messages contains the letter 'w', and task cards whose message starts with "w" or "bu".<br>
+- Task-list panel will displays in real time only task cards whose messages contains the letter 'wa', and task cards whose message starts with "wa" or "rea".<br>
 
 **Purpose**: Manipulate the list of found tasks<br>
 **Action**: type `find bu`, press <kbd>enter</kbd>, then type `done 1`<br>
@@ -358,11 +369,9 @@
 **Expected**:<br>
 - Display Area will show message: `Successfully changed storaged path`<br>
 - A new xml file named `newfile` will appear under the specified project directory.<br>
-
-<br>
-<br>
 <br>
 
+<br>
 ### 11. **HELP**
 
 **Purpose**: Input wrong command <br>
