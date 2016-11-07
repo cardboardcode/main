@@ -2,14 +2,15 @@
 # Developer Guide 
 
 ##Table of Contents <br>
+* [About](#about)
 * [Setting Up](#setting-up)
 * [Design](#design)
       * [Main](#main)
-      * [Common](#commons)
       * [Logic](#logic)
       * [UI](#ui)
       * [Model](#model)
       * [Storage](#storage)
+      * [Commons](#commons)
 * [Implementation](#implementation)
 * [Testing](#testing)
 * [Dev Ops](#dev-ops)
@@ -19,6 +20,21 @@
 * [Appendix D: Glossary](#appendix-d--glossary)
 * [Appendix E : Product Survey](#appendix-e--product-survey)
 
+
+## About
+
+### Overview
+**Task Tracker (T-T)** is a java application which helps users to manage their tasks better. T-T is targeted at users who prefer typing over using a mouse. It provides an easy to use interface for these users; one which does not require any form of clicking.
+
+### Purpose
+This developer guide provides a general introduction and summary of the classes and components that are used within this application. The design of the software, together with its core functionalities will all be covered.  We invite prospective developers, especially students and amateur programmers, to read through this guide and help further develop this application.
+
+### Level of Difficulty
+The entire application employs a range of APIs and requires a deft understanding of: <br>
+ * Java programming language<br>
+     Since the core of code is written in Java, you have to be adept with the Java programming language.
+ * JavaFX<br>
+    Our user interface uses JavaFX, so being familiar with this platform will allow you to understand and edit it easily.
 
 ## Setting up
 
@@ -51,66 +67,40 @@
   
 ### Troubleshooting project setup
 
-**Problem: Eclipse reports compile errors after new commits are pulled from Git**<br>
+**Why does Eclipse reports compile errors after new commits are pulled from Git?**
+ > Eclipse failed to recognize the new files that appeared after Git pull. Refreshing the project in Eclipse may resolve this problem. Right click on the project (in Eclipse package explorer), choose `Gradle` -> `Refresh Gradle Project`.
 
->Reason: Eclipse fails to recognize new files that appeared due to the Git pull.
-
-**Solution**: Refresh the project in Eclipse:
-Right click on the project (in Eclipse package explorer), choose Gradle -> Refresh Gradle Project.
-
-**Problem: Eclipse reports some required libraries missing**
->Reason: Required libraries may not have been downloaded during the project import.
-
-**Solution**: Run tests using Gradle once (to refresh the libraries).
-
- 
+**Why does Eclipse reports some required libraries are missing?**
+ > Required libraries may not have been downloaded during the project import.  Run tests using Gradle once (to refresh the libraries). 
 
 ## Design
 
 The **_Architecture Diagram_** given below explains the high-level design of the App, showing which components interact with which other components.<br>
 ![Architecture](images/A_overall.png)<br>
+
+T-T consists of six components:
+ * `Main`
+ * `UI`
+ * `Logic` 
+ * `Model`
+ * `Storage`
+ * `Commons`
+For `UI`, `Logic`, `Model` and `Storage` components, its APIs are defined in an interface with the same name, and its functionality are exposed using a `{Component Name}Manager` class, such as `UIManager`.
+
 Given below is a quick overview of each component.
 <br>
-####Main
-`Main` has only one class called [`Main`](). It is responsible for:
+
+#### Main
+`Main` has only one class called [`Main`](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/task-tracker/src/main/java/main/Main.java). It is responsible for:
 * Launching app: Initializes the components in the correct sequence, and connect them up with each other.
 * Shutting down: Shuts down the components and invoke cleanup method where necessary.
 
-####Commons
-[`Commons`]() represents a collection of classes used by multiple other components.
-Two of those classes play important roles at the architecture level:
-* `EventsCentre` : This class (written using [Google's Event Bus library](https://github.com/google/guava/wiki/EventBusExplained))
-  is used for interaction between componenets.(a form of _Event Driven_ design)
-* `LogsCenter` : This class is used by many classes to write log messages to the App's log file.
-<br><br>
-The rest of the App consists four components.
-* [**`UI`**](#ui-component) : The UI of the App.
-* [**`Logic`**](#logic-component) : The command executor.
-* [**`Model`**](#model-component) : Holds the data of the App in-memory.
-* [**`Storage`**](#storage-component) : Reads data from, and writes data to, the hard disk.
-
-Each of the four components
-  - Defines its _API_ in an `interface` with the same name as the Component.
-  - Exposes its functionality using a `{Component Name}Manager` class.
-
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the
-command `delete 1`.
-![Sequence Diagram](images/delete_command.png)
->Note how the `Model` simply raises a `TaskTrackerChangedEvent` when the T-T data are changed,instead of asking the `Storage` to save the updates to the hard disk.
-
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates
-being saved to the hard disk and the status bar of the UI being updated to reflect the '**Last Updated**' time. <br>
-![Sequence Diagram](images/events_center.png)
-> Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having
-  to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct 
-  coupling between components.
-
-The sections below give more details of each component.
 
 <!-- @@author A0144132W -->
-####Logic
+#### Logic
+[`Logic`](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/task-tracker/src/main/java/main/logic/Logic.java) is exposed through [`LogicManager`](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/task-tracker/src/main/java/main/logic/LogicManager.java), and consists of 3 main packages headed by the following classes, [`MainParser`](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/task-tracker/src/main/java/main/logic/parser/MainParser.java), [`Command`](https://github.com/CS2103AUG2016-T09-C3/main/tree/master/task-tracker/src/main/java/main/logic/command) and [`AutoComplete`](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/task-tracker/src/main/java/main/logic/autocomplete/AutoComplete.java). The Logic class diagram is shown below.
 ![Logic](images/Logic.png)<br>
-**API** : [`Logic.java`]()
+**API** : [`Logic.java`](https://github.com/CS2103AUG2016-T09-C3/main/tree/master/task-tracker/src/main/java/main/logic)
 
 * `Logic` uses the `MainParser` class to parse the user command.
 * `MainParser` class uses `TimeParser` to parse part of the input.
@@ -123,54 +113,68 @@ The sections below give more details of each component.
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")`
  API call.<br>
 <img src="images/LogicComponentSequenceDiagram.png" width="800"><br>
+`LogicManager` passes `MainParser` to input to parse, and gets back a `DeleteCommand` object which it executes to get a `CommandResult` object. `Model` is also edited in the process.
 
-####UI
+#### UI
+[`UI`](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/task-tracker/src/main/java/main/ui/Ui.java) is exposed through [`UIManager`](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/task-tracker/src/main/java/main/ui/UiManager.java), and consists of a MainWindow, which is made up of [`CommandBox`](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/task-tracker/src/main/java/main/ui/CommandBox.java), [`ResultDisplay`](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/task-tracker/src/main/java/main/ui/ResultDisplay.java), [`TaskListPanel`](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/task-tracker/src/main/java/main/ui/TaskListPanel.java), [`StatusBarFooter`](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/task-tracker/src/main/java/main/ui/StatusBarFooter.java), [`ListStatistics`](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/task-tracker/src/main/java/main/ui/ListStatistics.java) and [`HelpWindow`](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/task-tracker/src/main/java/main/ui/HelpWindow.java). The UI class diagram is shown below. 
 ![UI](images/A_UI.png)<br>
 
 **API** : [`Ui.java`]()
 
-* `MainWindow` class is made up of parts e.g.`CommandBox`, `ResultDisplay`, `TaskListPanel`, `StatusBarFooter`, `ListStatistics` etc.
 * All individual UI sub components, including the `MainWindow`, inherit from the abstract `UiPart` class and they can be loaded using the `UiPartLoader`.
 * JavaFx UI framework is used. 
 * The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder.<br> For example, the layout of the [`MainWindow`]() is specified in[`MainWindow.fxml`]()
 * User commands are executed using the `Logic` component.
 * UI auto-updates when data in the `Model` change.
-* UI responds to events raised from various parts of the App and updates itself accordingly.
+* UI responds to events raised from various parts of the App, such as `Model` and updates itself accordingly.
 
-####Model
+#### Model
+The `Model` component uses various classes to construct and model the data of TaskTracker in memory. [`ModelManager`](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/task-tracker/src/main/java/main/model/ModelManager.java) implements [`Model`](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/task-tracker/src/main/java/main/model/Model.java) interface, providing access to the model data as well as encapsulating the complexity of its in-built classes. All external components can only interact with the model data via the [`ModelManager`](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/task-tracker/src/main/java/main/model/ModelManager.java) class.
 ![Model](images/Model.png)<br>
 
-**API** : [`Model.java`]()
+**API** : [`Model.java`](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/task-tracker/src/main/java/main/model/Model.java)
 
-* The `Model` component uses various classes to construct and model the data of TaskTracker in memory.
 * `UserPref` object represents the user's preferences.
-* The `ModelManager` implements `Model` interface, providing access to the model data as well as encapsulating the complexity of its in-built classes. All external components can only interact with the model data via the ModelManager class.
 * Task data is stored in `TaskTracker` class.
-* The TaskTracker class stores the lists of tasks, only the `ReadOnlyTaskTracker` or `Model` interface grants access to its data.
 * The task class models three different types of classes - floating, deadline and event tasks
 * Each of these tasks contains certain fields specific to their own types
-* `UnmodifiableObservableList<ReadOnlyTask>` is 'exposed', so list of tasks can be observed, for example by the UI, without being changed.
+* `UnmodifiableObservableList<ReadOnlyTask>` is 'exposed', so list of tasks can be observed, for example by the `UI`, without being changed.
 
 <!--@@author A0142686X -->
 #### Storage
-
+[`Storage`](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/task-tracker/src/main/java/main/storage/Storage.java) is exposed through [`StorageManager`](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/task-tracker/src/main/java/main/storage/StorageManager.java), and interacts with [`UserPrefsStorage`](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/task-tracker/src/main/java/main/storage/UserPrefsStorage.java) and [`TaskTrackerStorage`](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/task-tracker/src/main/java/main/storage/TaskTrackerStorage.java) interfaces. The functionalities of these 2 interfaces are exposed by the [`JsonUserPrefsStorage`](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/task-tracker/src/main/java/main/storage/JsonUserPrefsStorage.java) and [`XmlTaskTrackerStorage`](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/task-tracker/src/main/java/main/storage/XmlTaskTrackerStorage.java) respectively.
 ![Storage](images/A_storage.png)<br>
 
 **API** : [`Storage.java`](../src/main/java/main/storage/Storage.java)
 
-* UserPref` objects and TaskTracker data are saved in json format and can be read back.
+* `UserPref` objects and TaskTracker data are saved in json format and can be read back.
 * Task data are saved in XML format and can be read back
 
-#### Common classes
-
-The classes used by multiple components are in the `tasktracker.main.commons` package.
-
-These classes are furthered separated into packages - `core`, `events`, `exceptions` and `utils`
+#### Commons
+[`Commons`](https://github.com/CS2103AUG2016-T09-C3/main/tree/master/task-tracker/src/main/java/main/commons) represents a collection of classes used by multiple other components. These classes are furthered separated into packages - `core`, `events`, `exceptions` and `utils`
 
 * `core` - Essential classes used for implementation in different components of TaskTracker
 * `events` - Classes that address and assist in event changes, mainly used by EventBus and EventManager
 * `exceptions` - Consists of classes that handle exceptions that may occur in TaskTracker.
 * `util` - Classes that provides additional utilities to assist in different components
+  
+Two of those classes play important roles at the architecture level:
+* `EventsCentre` : This class (written using [Google's Event Bus library](https://github.com/google/guava/wiki/EventBusExplained))
+  is used for interaction between componenets.(a form of _Event Driven_ design)
+* `LogsCenter` : This class is used by many classes to write log messages to the App's log file.
+<br><br>
+
+The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the
+command `delete 1`. <br>
+![Sequence Diagram](images/delete_command.png) <br>
+>Note how the `Model` simply raises a `TaskTrackerChangedEvent` when the T-T data are changed,instead of asking the `Storage` to save the updates to the hard disk.
+
+The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates
+being saved to the hard disk and the status bar of the UI being updated to reflect the '**Last Updated**' time. <br>
+![Sequence Diagram](images/events_center.png) <br>
+> Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having
+  to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct 
+  coupling between components.
 
 ## Implementation
 
