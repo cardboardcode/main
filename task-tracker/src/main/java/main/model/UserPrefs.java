@@ -29,12 +29,15 @@ public class UserPrefs {
     }
     
     //@@author A0142686X
+    /**
+     * Updates the colour pointer index to the selected colour theme
+     */
     public void updateColourPointer(int value) {
         this.colourPointer = value;
     }
     
     public int getColourPointer() {
-        return colourPointer;
+        return this.colourPointer;
     }
     
   //@@author A0139750B

@@ -140,9 +140,9 @@ public class UniqueTaskList implements Iterable<Task> {
      * method to mark a task not-done in tasktracker
      * @throws TaskNotFoundException 
      */
-    public boolean incomplete(ReadOnlyTask toIncomplete) throws TaskNotFoundException {
+    public boolean setIncomplete(ReadOnlyTask toIncomplete) throws TaskNotFoundException {
         assert toIncomplete != null;
-        if (!internalList.contains(toIncomplete)) {
+        if(!internalList.contains(toIncomplete)) {
             throw new TaskNotFoundException();
         }
         Task taskFoundAndCompleted = internalList.get(internalList.indexOf(toIncomplete));

@@ -320,10 +320,11 @@ public class MainWindow extends UiPart {
 		});
 	}
 	
-	//@@author A0142686X   
+	//@@author A0142686X
+	/**
+	 * Returns colour pointer index of the main window
+	 */
 	public int getColourPointer() {
 	    return colorPointer;
 	}
-
-
 }
