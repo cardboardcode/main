@@ -61,3 +61,4 @@ We are a team based in the [School of Computing, National University of Singapor
 * Code written: [[functional code](https://github.com/CS2103AUG2016-T09-C3/main/blob/v0.4/collated/main/A0139750B.md)] [[test code](https://github.com/CS2103AUG2016-T09-C3/main/blob/v0.4/collated/test/A0139750Bunused.md)][[docs](https://github.com/CS2103AUG2016-T09-C3/main/blob/v0.4/collated/docs/A0139750B.md)]
 * Other major contributions: 
     * Set up Codacy
+    * Format User Guide and Developer Guide
