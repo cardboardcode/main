@@ -5,8 +5,8 @@ import main.commons.events.BaseEvent;
 import main.model.ReadOnlyTaskTracker;
 
 public class FilePathChangedEvent extends BaseEvent{
-    String filePath;
-    ReadOnlyTaskTracker taskTracker;
+    private String filePath;
+    private ReadOnlyTaskTracker taskTracker;
 
     public FilePathChangedEvent(String filePath, ReadOnlyTaskTracker taskTracker) {
         this.filePath = filePath;

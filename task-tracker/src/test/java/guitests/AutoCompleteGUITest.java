@@ -3,7 +3,6 @@ package guitests;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import com.google.common.eventbus.Subscribe;
@@ -11,17 +10,14 @@ import com.google.common.eventbus.Subscribe;
 import main.commons.events.ui.AutoCompleteEvent;
 import main.commons.events.ui.KeyPressEvent;
 import main.commons.events.ui.TabPressEvent;
-import main.logic.Logic;
 import main.logic.autocomplete.AutoComplete;
 import main.model.Model;
 import main.model.ModelManager;
-import main.model.TaskTracker;
 import main.model.UserPrefs;
-import main.testutil.TypicalTestTasks;
 
 public class AutoCompleteGUITest extends TaskTrackerGuiTest{
-    Model model = new ModelManager(td.getTypicalTaskTracker(), new UserPrefs());
-    AutoComplete autoComplete = new AutoComplete(model);
+    private Model model = new ModelManager(td.getTypicalTaskTracker(), new UserPrefs());
+    private AutoComplete autoComplete = new AutoComplete(model);
 
     
     //These are for checking the correctness of the events raised

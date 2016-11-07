@@ -43,8 +43,8 @@ public class AutoComplete {
     private int start_index;
     private int end_index;
     private int tabCount = 0;
-    EventsCenter eventsCenter;
-    Model model;
+    private EventsCenter eventsCenter;
+    private Model model;
     
     // to return to original list (when showing matching tasks in real time)
     private boolean save = false;

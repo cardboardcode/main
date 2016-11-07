@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 import org.junit.Before;
 import org.junit.Test;
 
-import main.logic.Logic;
 import main.logic.command.DeleteCommand;
 import main.logic.command.DoneCommand;
 import main.logic.command.EditCommand;
@@ -27,13 +26,11 @@ import main.model.task.Task;
 import main.testutil.TypicalTestTasks;
 
 public class AutoCompleteTest {
-    AutoComplete autoComplete;
-    TaskTracker taskTracker;
-    Model model;
-    Logic logic;
+    private AutoComplete autoComplete;
+    private Model model;
     
     @Before
-    public void setup() {
+    public void setUp() {
         TypicalTestTasks typical = new TypicalTestTasks();
         TaskTracker taskTracker = typical.getTypicalTaskTracker();
         model = new ModelManager(taskTracker, new UserPrefs());

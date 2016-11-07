@@ -16,15 +16,10 @@ import com.joestelmach.natty.*;
 import main.commons.core.LogsCenter;
 import main.commons.util.DateUtil;
 
-
 public class TimeParser {
     private static final Logger logger = LogsCenter.getLogger(TimeParser.class);
-    
-    Parser parser;
-    
-    public TimeParser() {
-        parser = new Parser();
-    }
+        
+    public TimeParser() {}
     
     /*
      * extracts the relevant time information

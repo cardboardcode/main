@@ -17,7 +17,7 @@ import main.model.task.Task;
 
 public class MainParserTest {
     
-    MainParser mainParser;
+    private MainParser mainParser;
     
     @Before
     public void setup() {
