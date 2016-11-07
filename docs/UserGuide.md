@@ -65,7 +65,7 @@ The format for adding a new task is: <br>
 &nbsp; &nbsp;   `add <task> [date1] [date2] [-h | -m | -l]` <br>
 
 <!-- @@author A0144132W -->
->>*  T-T can accept flexible date formats. Examples are:
+>*  T-T can accept flexible date formats. Examples are:
     *  `today`
     *  `monday`(to set the date as next monday)
     *  `31 Oct`
@@ -175,7 +175,7 @@ You can use the UNDO command to revert the previous commands you have entered in
 The format to undo the previous command is simply : 
 &nbsp; &nbsp; `undo` <br>
 
->>      Undo can be used to revert back add, delete, done, edit and clear commands.
+>      Undo can be used to revert back add, delete, done, edit and clear commands.
 
 <br> For example : <br>
 Entering `undo` after executing the delete command will bring back the deleted task.
@@ -187,7 +187,7 @@ You can use the REDO command to redo the previous undo you have executed in the 
 The format to undo the previous command is simply : 
 &nbsp; &nbsp; `redo` <br>
 
->>Redo can be used to revert back undos pertaining to add, delete, done, edit and  clear commands.
+>Redo can be used to revert back undos pertaining to add, delete, done, edit and  clear commands.
 
 <br> For example : <br>
 Entering `redo` after executing an undo for delete will delete the specific task again.
@@ -199,7 +199,7 @@ You can use the SEARCH command to filter out specific tasks from the entire list
 The format to search for certain tasks is :  
     `search <keyword>`  
 
->>•   The tasks you are looking for can be obtained by typing in any word that is contained within the tasks' messages.
+>•   The tasks you are looking for can be obtained by typing in any word that is contained within the tasks' messages.
 •   If multiple tasks contain the entered keyword, all matching tasks will be displayed.
 
 
