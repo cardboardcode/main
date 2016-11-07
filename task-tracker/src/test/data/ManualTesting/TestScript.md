@@ -254,6 +254,16 @@
 <br>
 
 <br>
+**Purpose**: Autocomplete for delete <br>
+**Action**: type `delete no` (without pressing <kbd>enter</kbd>, then press <kbd>tab</kbd> a few times, then press <kbd>enter</kbd>`<br>
+**Expected**:<br>
+- Current list view changes to tasks which contains tokens starting with "no" in real time<br>
+- When <kbd>tab</kbd> is pressed, command box becomes "delete 1", "delete 2", etc, toggling between the list indexes.
+- When <kbd>enter</kbd> is pressed, the corresponding task is deleted, and the list view looks the same except for the deleted task <br>
+
+ > repeat with `done`
+<br>
+
 <br>
 ### 5. **DONE**
 
