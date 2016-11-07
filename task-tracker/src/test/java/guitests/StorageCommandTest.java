@@ -18,6 +18,7 @@ public class StorageCommandTest extends TaskTrackerGuiTest {
         assertResultMessage(String.format(StorageCommand.MESSAGE_SUCCESS, FILEPATH_VALID));
     }
     
+    
     @Test
     public void save_invalidpath() {
         commandBox.runCommand("storage " + FILEPATH_INVALID);

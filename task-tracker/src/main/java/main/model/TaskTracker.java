@@ -105,7 +105,7 @@ public class TaskTracker implements ReadOnlyTaskTracker{
     
     public void incompleteTask(ReadOnlyTask task) throws TaskNotFoundException {
         if(tasks.contains(task)){
-            tasks.incomplete(task);
+            tasks.setIncomplete(task);
             return;
         }
         else{

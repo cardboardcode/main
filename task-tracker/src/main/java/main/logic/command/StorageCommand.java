@@ -32,11 +32,9 @@ public class StorageCommand extends Command {
         assert model != null;
         if ((newStoragePath.substring((newStoragePath.length() - 4))).equals(".xml") == false) {
             return new CommandResult(MESSAGE_NO_XML); 
-        }
-        else if (!FileUtil.isValidPath(newStoragePath)) {
+        } else if (!FileUtil.isValidPath(newStoragePath)) {
             return new CommandResult(MESSAGE_INVALID_PATH);
-        }
-        else {
+        } else {
             EventsCenter.getInstance().post(new FilePathChangedEvent(newStoragePath, model.getTaskTracker()));            
             return new CommandResult(String.format(MESSAGE_SUCCESS, newStoragePath));
         }                               
