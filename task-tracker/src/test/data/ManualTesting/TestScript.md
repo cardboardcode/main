@@ -359,11 +359,9 @@
 **Expected**:<br>
 - Display Area will show message: `Successfully changed storaged path`<br>
 - A new xml file named `newfile` will appear under the specified project directory.<br>
-
-<br>
-<br>
 <br>
 
+<br>
 ### 11. **HELP**
 
 **Purpose**: Input wrong command <br>
