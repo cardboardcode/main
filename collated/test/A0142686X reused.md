@@ -1,5 +1,5 @@
 # A0142686X reused
-###### \java\main\commons\core\ConfigTest.java
+###### /java/main/commons/core/ConfigTest.java
 ``` java
 package main.commons.core;
 
@@ -36,7 +36,7 @@ public class ConfigTest {
 
 }
 ```
-###### \java\main\commons\core\VersionTest.java
+###### /java/main/commons/core/VersionTest.java
 ``` java
 package main.commons.core;
 
@@ -176,35 +176,123 @@ public class VersionTest {
     }
 }
 ```
-###### \java\main\commons\util\AppUtilTest.java
+###### /java/main/commons/util/FileUtilTest.java
 ``` java
 package main.commons.util;
+
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import main.testutil.SerializableTestClass;
+import main.testutil.TestUtil;
 
-import static org.junit.Assert.assertNotNull;
+import java.io.File;
+import java.io.IOException;
 
-public class AppUtilTest {
+import static org.junit.Assert.assertEquals;
+
+public class FileUtilTest {
+    private static final File SERIALIZATION_FILE = new File(TestUtil.getFilePathInSandboxFolder("serialize.json"));
+
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void getImage_exitingImage(){
-        assertNotNull(AppUtil.getImage("/images/pp.png"));
+    public void getPath(){
+
+        // valid case
+        assertEquals("folder" + File.separator + "sub-folder", FileUtil.getPath("folder/sub-folder"));
+
+        // null parameter -> assertion failure
+        thrown.expect(AssertionError.class);
+        FileUtil.getPath(null);
+
+        // no forwards slash -> assertion failure
+        thrown.expect(AssertionError.class);
+        FileUtil.getPath("folder");
     }
 
     @Test
-    public void getImage_nullGiven_assertionError(){
-        thrown.expect(AssertionError.class);
-        AppUtil.getImage(null);
+    public void serializeObjectToJsonFile_noExceptionThrown() throws IOException {
+        SerializableTestClass serializableTestClass = new SerializableTestClass();
+        serializableTestClass.setTestValues();
+
+        FileUtil.serializeObjectToJsonFile(SERIALIZATION_FILE, serializableTestClass);
+
+        assertEquals(FileUtil.readFromFile(SERIALIZATION_FILE), SerializableTestClass.JSON_STRING_REPRESENTATION);
     }
 
+    @Test
+    public void deserializeObjectFromJsonFile_noExceptionThrown() throws IOException {
+        FileUtil.writeToFile(SERIALIZATION_FILE, SerializableTestClass.JSON_STRING_REPRESENTATION);
+
+        SerializableTestClass serializableTestClass = FileUtil
+                .deserializeObjectFromJsonFile(SERIALIZATION_FILE, SerializableTestClass.class);
+
+        assertEquals(serializableTestClass.getName(), SerializableTestClass.getNameTestValue());
+        assertEquals(serializableTestClass.getListOfLocalDateTimes(), SerializableTestClass.getListTestValues());
+        assertEquals(serializableTestClass.getMapOfIntegerToString(), SerializableTestClass.getHashMapTestValues());
+    }
 }
 ```
-###### \java\main\commons\util\ConfigUtilTest.java
+###### /java/main/commons/util/UrlUtilTest.java
+``` java
+package main.commons.util;
+
+import org.junit.Test;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+/**
+ * Tests the UrlUtil methods.
+ */
+public class UrlUtilTest {
+
+    @Test
+    public void compareBaseUrls_differentCapital_success() throws MalformedURLException {
+        URL url1 = new URL("https://www.Google.com/a");
+        URL url2 = new URL("https://www.google.com/A");
+        assertTrue(UrlUtil.compareBaseUrls(url1, url2));
+    }
+
+    @Test
+    public void compareBaseUrls_testWithAndWithoutWww_success() throws MalformedURLException {
+        URL url1 = new URL("https://google.com/a");
+        URL url2 = new URL("https://www.google.com/a");
+        assertTrue(UrlUtil.compareBaseUrls(url1, url2));
+    }
+
+    @Test
+    public void compareBaseUrls_differentSlashes_success() throws MalformedURLException {
+        URL url1 = new URL("https://www.Google.com/a/acb/");
+        URL url2 = new URL("https://www.google.com/A/acb");
+        assertTrue(UrlUtil.compareBaseUrls(url1, url2));
+    }
+
+    @Test
+    public void compareBaseUrls_differentUrl_fail() throws MalformedURLException {
+        URL url1 = new URL("https://www.Google.com/a/ac_b/");
+        URL url2 = new URL("https://www.google.com/A/acb");
+        assertFalse(UrlUtil.compareBaseUrls(url1, url2));
+    }
+
+    @Test
+    public void compareBaseUrls_null_false() throws MalformedURLException {
+        URL url1 = new URL("https://www.Google.com/a/ac_b/");
+        URL url2 = new URL("https://www.google.com/A/acb");
+        assertFalse(UrlUtil.compareBaseUrls(url1, null));
+        assertFalse(UrlUtil.compareBaseUrls(null, url2));
+        assertFalse(UrlUtil.compareBaseUrls(null, null));
+    }
+}
+```
+###### /java/main/commons/util/ConfigUtilTest.java
 ``` java
 package main.commons.util;
 
@@ -336,68 +424,7 @@ public class ConfigUtilTest {
 
 }
 ```
-###### \java\main\commons\util\FileUtilTest.java
-``` java
-package main.commons.util;
-
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import main.testutil.SerializableTestClass;
-import main.testutil.TestUtil;
-
-import java.io.File;
-import java.io.IOException;
-
-import static org.junit.Assert.assertEquals;
-
-public class FileUtilTest {
-    private static final File SERIALIZATION_FILE = new File(TestUtil.getFilePathInSandboxFolder("serialize.json"));
-
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    @Test
-    public void getPath(){
-
-        // valid case
-        assertEquals("folder" + File.separator + "sub-folder", FileUtil.getPath("folder/sub-folder"));
-
-        // null parameter -> assertion failure
-        thrown.expect(AssertionError.class);
-        FileUtil.getPath(null);
-
-        // no forwards slash -> assertion failure
-        thrown.expect(AssertionError.class);
-        FileUtil.getPath("folder");
-    }
-
-    @Test
-    public void serializeObjectToJsonFile_noExceptionThrown() throws IOException {
-        SerializableTestClass serializableTestClass = new SerializableTestClass();
-        serializableTestClass.setTestValues();
-
-        FileUtil.serializeObjectToJsonFile(SERIALIZATION_FILE, serializableTestClass);
-
-        assertEquals(FileUtil.readFromFile(SERIALIZATION_FILE), SerializableTestClass.JSON_STRING_REPRESENTATION);
-    }
-
-    @Test
-    public void deserializeObjectFromJsonFile_noExceptionThrown() throws IOException {
-        FileUtil.writeToFile(SERIALIZATION_FILE, SerializableTestClass.JSON_STRING_REPRESENTATION);
-
-        SerializableTestClass serializableTestClass = FileUtil
-                .deserializeObjectFromJsonFile(SERIALIZATION_FILE, SerializableTestClass.class);
-
-        assertEquals(serializableTestClass.getName(), SerializableTestClass.getNameTestValue());
-        assertEquals(serializableTestClass.getListOfLocalDateTimes(), SerializableTestClass.getListTestValues());
-        assertEquals(serializableTestClass.getMapOfIntegerToString(), SerializableTestClass.getHashMapTestValues());
-    }
-}
-```
-###### \java\main\commons\util\StringUtilTest.java
+###### /java/main/commons/util/StringUtilTest.java
 ``` java
 package main.commons.util;
 
@@ -452,62 +479,7 @@ public class StringUtilTest {
 
 }
 ```
-###### \java\main\commons\util\UrlUtilTest.java
-``` java
-package main.commons.util;
-
-import org.junit.Test;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-/**
- * Tests the UrlUtil methods.
- */
-public class UrlUtilTest {
-
-    @Test
-    public void compareBaseUrls_differentCapital_success() throws MalformedURLException {
-        URL url1 = new URL("https://www.Google.com/a");
-        URL url2 = new URL("https://www.google.com/A");
-        assertTrue(UrlUtil.compareBaseUrls(url1, url2));
-    }
-
-    @Test
-    public void compareBaseUrls_testWithAndWithoutWww_success() throws MalformedURLException {
-        URL url1 = new URL("https://google.com/a");
-        URL url2 = new URL("https://www.google.com/a");
-        assertTrue(UrlUtil.compareBaseUrls(url1, url2));
-    }
-
-    @Test
-    public void compareBaseUrls_differentSlashes_success() throws MalformedURLException {
-        URL url1 = new URL("https://www.Google.com/a/acb/");
-        URL url2 = new URL("https://www.google.com/A/acb");
-        assertTrue(UrlUtil.compareBaseUrls(url1, url2));
-    }
-
-    @Test
-    public void compareBaseUrls_differentUrl_fail() throws MalformedURLException {
-        URL url1 = new URL("https://www.Google.com/a/ac_b/");
-        URL url2 = new URL("https://www.google.com/A/acb");
-        assertFalse(UrlUtil.compareBaseUrls(url1, url2));
-    }
-
-    @Test
-    public void compareBaseUrls_null_false() throws MalformedURLException {
-        URL url1 = new URL("https://www.Google.com/a/ac_b/");
-        URL url2 = new URL("https://www.google.com/A/acb");
-        assertFalse(UrlUtil.compareBaseUrls(url1, null));
-        assertFalse(UrlUtil.compareBaseUrls(null, url2));
-        assertFalse(UrlUtil.compareBaseUrls(null, null));
-    }
-}
-```
-###### \java\main\commons\util\XmlUtilTest.java
+###### /java/main/commons/util/AppUtilTest.java
 ``` java
 package main.commons.util;
 
@@ -515,7 +487,34 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import main.model.ReadOnlyTaskTracker;
+import static org.junit.Assert.assertNotNull;
+
+public class AppUtilTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void getImage_exitingImage(){
+        assertNotNull(AppUtil.getImage("/images/pp.png"));
+    }
+
+    @Test
+    public void getImage_nullGiven_assertionError(){
+        thrown.expect(AssertionError.class);
+        AppUtil.getImage(null);
+    }
+
+}
+```
+###### /java/main/commons/util/XmlUtilTest.java
+``` java
+package main.commons.util;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
 import main.model.TaskTracker;
 import main.storage.XmlSerializableTaskTracker;
 import main.testutil.TaskTrackerBuilder;

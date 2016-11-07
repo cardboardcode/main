@@ -1,143 +1,220 @@
 # A0142686X reused
-###### \java\main\commons\core\ComponentManager.java
+###### /java/main/commons/events/ui/JumpToListRequestEvent.java
 ``` java
-package main.commons.core;
+package main.commons.events.ui;
 
-import javafx.collections.ObservableList;
+import main.commons.events.BaseEvent;
+
+/**
+ * Indicates a request to jump to the list of tasks
+ */
+public class JumpToListRequestEvent extends BaseEvent {
+
+    public final int targetIndex;
+
+    public JumpToListRequestEvent(int targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+}
+```
+###### /java/main/commons/events/ui/ShowHelpRequestEvent.java
+``` java
+package main.commons.events.ui;
+
+import main.commons.events.BaseEvent;
+
+/**
+ * An event requesting to view the help page.
+ */
+public class ShowHelpRequestEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+}
+```
+###### /java/main/commons/events/ui/ExitAppRequestEvent.java
+``` java
+package main.commons.events.ui;
+
+import main.commons.events.BaseEvent;
+
+/**
+ * Indicates a request for App termination
+ */
+public class ExitAppRequestEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### /java/main/commons/events/ui/TaskPanelSelectionChangedEvent.java
+``` java
+package main.commons.events.ui;
+
 import main.commons.events.BaseEvent;
 import main.model.task.ReadOnlyTask;
 
 /**
- * Base class for *Manager classes
- *
- * Registers the class' event handlers in eventsCenter
+ * Represents a selection change in the Task List Panel
  */
-public abstract class ComponentManager {
-    protected EventsCenter eventsCenter;
+public class TaskPanelSelectionChangedEvent extends BaseEvent {
 
-    /**
-     * Uses default {@link EventsCenter}
-     */
-    public ComponentManager(){
-        this(EventsCenter.getInstance());
+
+    private final ReadOnlyTask newSelection;
+
+    public TaskPanelSelectionChangedEvent(ReadOnlyTask newSelection){
+        this.newSelection = newSelection;
     }
 
-    public ComponentManager(EventsCenter eventsCenter) {
-        this.eventsCenter = eventsCenter;
-        eventsCenter.registerHandler(this);
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
     }
 
-    protected void raise(BaseEvent event){
-        eventsCenter.post(event);
-    }
-    public ObservableList<ReadOnlyTask> getFilteredTaskList(){
-        return null;
+    public ReadOnlyTask getNewSelection() {
+        return newSelection;
     }
 }
 ```
-###### \java\main\commons\core\Config.java
+###### /java/main/commons/events/ui/IncorrectCommandAttemptedEvent.java
 ``` java
-package main.commons.core;
+package main.commons.events.ui;
 
-import java.util.Objects;
-import java.util.logging.Level;
+import main.commons.events.BaseEvent;
+import main.logic.command.Command;
 
 /**
- * Config values used by the app
+ * Indicates an attempt to execute an incorrect command
  */
-public class Config {
+public class IncorrectCommandAttemptedEvent extends BaseEvent {
 
-    public static final String DEFAULT_CONFIG_FILE = "config.json";
-
-    // Config values customizable through config file
-    private String appTitle = "TaskTracker";
-    private Level logLevel = Level.INFO;
-    private String userPrefsFilePath = "preferences.json";
-    private String taskTrackerFilePath = "data/tasktracker.xml";
-    private String taskTrackerName = "T-T";
-
-    public Config() {}
-    
-```
-###### \java\main\commons\core\Config.java
-``` java
-    public String getAppTitle() {
-        return appTitle;
-    }
-
-    public void setAppTitle(String appTitle) {
-        this.appTitle = appTitle;
-    }
-
-    public Level getLogLevel() {
-        return logLevel;
-    }
-
-    public void setLogLevel(Level logLevel) {
-        this.logLevel = logLevel;
-    }
-
-    public String getUserPrefsFilePath() {
-        return userPrefsFilePath;
-    }
-
-    public void setUserPrefsFilePath(String userPrefsFilePath) {
-        this.userPrefsFilePath = userPrefsFilePath;
-    }
-
-    public String getTaskTrackerFilePath() {
-        return taskTrackerFilePath;
-    }
-    
-```
-###### \java\main\commons\core\Config.java
-``` java
-    
-    public String getTaskTrackerName() {
-        return taskTrackerName;
-    }
-
-    public void setTaskTrackerName(String taskTrackerName) {
-        this.taskTrackerName = taskTrackerName;
-    }
-
+    public IncorrectCommandAttemptedEvent(Command command) {}
 
     @Override
-    public boolean equals(Object other) {
-        if (other == this){
-            return true;
-        }
-        if (!(other instanceof Config)){ //this handles null as well.
-            return false;
-        }
-
-        Config o = (Config)other;
-
-        return Objects.equals(appTitle, o.appTitle)
-                && Objects.equals(logLevel, o.logLevel)
-                && Objects.equals(userPrefsFilePath, o.userPrefsFilePath)
-                && Objects.equals(taskTrackerFilePath, o.taskTrackerFilePath)
-                && Objects.equals(taskTrackerName, o.taskTrackerName);
+    public String toString() {
+        return this.getClass().getSimpleName();
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(appTitle, logLevel, userPrefsFilePath, taskTrackerFilePath, taskTrackerName);
+}
+```
+###### /java/main/commons/events/BaseEvent.java
+``` java
+package main.commons.events;
+
+public abstract class BaseEvent {
+
+    /**
+     * All Events should have a clear unambiguous custom toString message so that feedback message creation
+     * stays consistent and reusable.
+     *
+     * For example the event manager post method will call any posted event's toString and print it in the console.
+     */
+    public abstract String toString();
+
+}
+```
+###### /java/main/commons/events/storage/DataSavingExceptionEvent.java
+``` java
+package main.commons.events.storage;
+
+import main.commons.events.BaseEvent;
+
+/**
+ * Indicates an exception during a file saving
+ */
+public class DataSavingExceptionEvent extends BaseEvent {
+
+    public Exception exception;
+
+    public DataSavingExceptionEvent(Exception exception) {
+        this.exception = exception;
     }
 
     @Override
     public String toString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("App title : " + appTitle);
-        sb.append("\nCurrent log level : " + logLevel);
-        sb.append("\nPreference file Location : " + userPrefsFilePath);
-        sb.append("\nLocal data file location : " + taskTrackerFilePath);
-        sb.append("\nTaskTracker name : " + taskTrackerName);
-        return sb.toString();
+        return exception.toString();
+    }
+
+}
+```
+###### /java/main/commons/events/model/TaskTrackerChangedEvent.java
+``` java
+package main.commons.events.model;
+
+import main.commons.events.BaseEvent;
+//import main.model.model.ReadOnlyTaskTracker;
+import main.model.ReadOnlyTaskTracker;
+
+/** Indicates the TaskTracker in the model has changed*/
+public class TaskTrackerChangedEvent extends BaseEvent {
+
+    public final ReadOnlyTaskTracker data;
+
+    public TaskTrackerChangedEvent(ReadOnlyTaskTracker data){
+        this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "number of tasks " + data.getTaskList().size();
     }
 }
 ```
-###### \java\main\commons\core\EventsCenter.java
+###### /java/main/commons/exceptions/DuplicateDataException.java
+``` java
+package main.commons.exceptions;
+
+/**
+ * Signals an error caused by duplicate data where there should be none.
+ */
+public abstract class DuplicateDataException extends IllegalValueException {
+    public DuplicateDataException(String message) {
+        super(message);
+    }
+}
+```
+###### /java/main/commons/exceptions/DataConversionException.java
+``` java
+package main.commons.exceptions;
+
+/**
+ * Represents an error during conversion of data from one format to another
+ */
+public class DataConversionException extends Exception {
+    public DataConversionException(Exception cause) {
+        super(cause);
+    }
+
+}
+```
+###### /java/main/commons/exceptions/IllegalValueException.java
+``` java
+package main.commons.exceptions;
+
+/**
+ * Signals that some given data does not fulfill some constraints.
+ */
+public class IllegalValueException extends Exception {
+    /**
+     * @param message should contain relevant information on the failed constraint(s)
+     */
+    public IllegalValueException(String message) {
+        super(message);
+    }
+}
+```
+###### /java/main/commons/core/EventsCenter.java
 ``` java
 package main.commons.core;
 
@@ -189,7 +266,7 @@ public class EventsCenter {
 
 }
 ```
-###### \java\main\commons\core\GuiSettings.java
+###### /java/main/commons/core/GuiSettings.java
 ``` java
 package main.commons.core;
 
@@ -265,114 +342,145 @@ public class GuiSettings implements Serializable {
     }
 }
 ```
-###### \java\main\commons\core\LogsCenter.java
+###### /java/main/commons/core/ComponentManager.java
 ``` java
 package main.commons.core;
 
-import java.io.IOException;
-import java.util.logging.*;
-
+import javafx.collections.ObservableList;
 import main.commons.events.BaseEvent;
+import main.model.task.ReadOnlyTask;
 
 /**
- * Configures and manages loggers and handlers, including their logging level
- * Named {@link Logger}s can be obtained from this class<br>
- * These loggers have been configured to output messages to the console and a {@code .log} file by default,
- *   at the {@code INFO} level. A new {@code .log} file with a new numbering will be created after the log
- *   file reaches 5MB big, up to a maximum of 5 files.<br>
+ * Base class for *Manager classes
+ *
+ * Registers the class' event handlers in eventsCenter
  */
-public class LogsCenter {
-    private static final int MAX_FILE_COUNT = 5;
-    private static final int MAX_FILE_SIZE_IN_BYTES = (int) (Math.pow(2, 20) * 5); // 5MB
-    private static final String LOG_FILE = "tasktracker.log";
-    private static Level currentLogLevel = Level.INFO;
-    private static final Logger logger = LogsCenter.getLogger(LogsCenter.class);
-    private static FileHandler fileHandler;
-    private static ConsoleHandler consoleHandler;
+public abstract class ComponentManager {
+    protected EventsCenter eventsCenter;
 
     /**
-     * Initializes with a custom log level (specified in the {@code config} object)
-     * Loggers obtained *AFTER* this initialization will have their logging level changed<br>
-     * Logging levels for existing loggers will only be updated if the logger with the same name is requested again
-     * from the LogsCenter.
+     * Uses default {@link EventsCenter}
      */
-    public static void init(Config config) {
-        currentLogLevel = config.getLogLevel();
-        logger.info("currentLogLevel: " + currentLogLevel);
+    public ComponentManager(){
+        this(EventsCenter.getInstance());
     }
 
-    /**
-     * Creates a logger with the given name the given name.
-     */
-    public static Logger getLogger(String name) {
-        Logger logger = Logger.getLogger(name);
-        logger.setUseParentHandlers(false);
-
-        removeHandlers(logger);
-        addConsoleHandler(logger);
-        addFileHandler(logger);
-
-        return Logger.getLogger(name);
+    public ComponentManager(EventsCenter eventsCenter) {
+        this.eventsCenter = eventsCenter;
+        eventsCenter.registerHandler(this);
     }
 
-    private static void addConsoleHandler(Logger logger) {
-        if (consoleHandler == null) consoleHandler = createConsoleHandler();
-        logger.addHandler(consoleHandler);
+    protected void raise(BaseEvent event){
+        eventsCenter.post(event);
     }
-
-    private static void removeHandlers(Logger logger) {
-        Handler[] handlers = logger.getHandlers();
-        for (Handler handler : handlers) {
-            logger.removeHandler(handler);
-        }
-    }
-
-    private static void addFileHandler(Logger logger) {
-        try {
-            if (fileHandler == null) fileHandler = createFileHandler();
-            logger.addHandler(fileHandler);
-        } catch (IOException e) {
-            logger.warning("Error adding file handler for logger.");
-        }
-    }
-
-    private static FileHandler createFileHandler() throws IOException {
-        FileHandler fileHandler = new FileHandler(LOG_FILE, MAX_FILE_SIZE_IN_BYTES, MAX_FILE_COUNT, true);
-        fileHandler.setFormatter(new SimpleFormatter());
-        fileHandler.setLevel(currentLogLevel);
-        return fileHandler;
-    }
-
-    private static ConsoleHandler createConsoleHandler() {
-        ConsoleHandler consoleHandler = new ConsoleHandler();
-        consoleHandler.setLevel(currentLogLevel);
-        return consoleHandler;
-    }
-
-    /**
-     * Creates a Logger for the given class name.
-     */
-    public static <T> Logger getLogger(Class<T> clazz) {
-        if (clazz == null) return Logger.getLogger("");
-        return getLogger(clazz.getSimpleName());
-    }
-
-    /**
-     * Decorates the given string to create a log message suitable for logging event handling methods.
-     */
-    public static String getEventHandlingLogMessage(BaseEvent e, String message) {
-        return "---[Event handled][" + e + "]" + message;
-    }
-
-    /**
-     * @see #getEventHandlingLogMessage(BaseEvent, String)
-     */
-    public static String getEventHandlingLogMessage(BaseEvent e) {
-        return getEventHandlingLogMessage(e,"");
+    public ObservableList<ReadOnlyTask> getFilteredTaskList(){
+        return null;
     }
 }
 ```
-###### \java\main\commons\core\Messages.java
+###### /java/main/commons/core/Config.java
+``` java
+package main.commons.core;
+
+import java.util.Objects;
+import java.util.logging.Level;
+
+/**
+ * Config values used by the app
+ */
+public class Config {
+
+    public static final String DEFAULT_CONFIG_FILE = "config.json";
+
+    // Config values customizable through config file
+    private String appTitle = "TaskTracker";
+    private Level logLevel = Level.INFO;
+    private String userPrefsFilePath = "preferences.json";
+    private String taskTrackerFilePath = "data/tasktracker.xml";
+    private String taskTrackerName = "T-T";
+
+    public Config() {}
+    
+```
+###### /java/main/commons/core/Config.java
+``` java
+    public String getAppTitle() {
+        return appTitle;
+    }
+
+    public void setAppTitle(String appTitle) {
+        this.appTitle = appTitle;
+    }
+
+    public Level getLogLevel() {
+        return logLevel;
+    }
+
+    public void setLogLevel(Level logLevel) {
+        this.logLevel = logLevel;
+    }
+
+    public String getUserPrefsFilePath() {
+        return userPrefsFilePath;
+    }
+
+    public void setUserPrefsFilePath(String userPrefsFilePath) {
+        this.userPrefsFilePath = userPrefsFilePath;
+    }
+
+    public String getTaskTrackerFilePath() {
+        return taskTrackerFilePath;
+    }
+    
+```
+###### /java/main/commons/core/Config.java
+``` java
+    
+    public String getTaskTrackerName() {
+        return taskTrackerName;
+    }
+
+    public void setTaskTrackerName(String taskTrackerName) {
+        this.taskTrackerName = taskTrackerName;
+    }
+
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this){
+            return true;
+        }
+        if (!(other instanceof Config)){ //this handles null as well.
+            return false;
+        }
+
+        Config o = (Config)other;
+
+        return Objects.equals(appTitle, o.appTitle)
+                && Objects.equals(logLevel, o.logLevel)
+                && Objects.equals(userPrefsFilePath, o.userPrefsFilePath)
+                && Objects.equals(taskTrackerFilePath, o.taskTrackerFilePath)
+                && Objects.equals(taskTrackerName, o.taskTrackerName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(appTitle, logLevel, userPrefsFilePath, taskTrackerFilePath, taskTrackerName);
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("App title : " + appTitle);
+        sb.append("\nCurrent log level : " + logLevel);
+        sb.append("\nPreference file Location : " + userPrefsFilePath);
+        sb.append("\nLocal data file location : " + taskTrackerFilePath);
+        sb.append("\nTaskTracker name : " + taskTrackerName);
+        return sb.toString();
+    }
+}
+```
+###### /java/main/commons/core/Messages.java
 ``` java
 package main.commons.core;
 
@@ -387,7 +495,7 @@ public class Messages {
     public static final String MESSAGE_TASK_LISTED_OVERVIEW = "%1$d tasks listed!";
 
 ```
-###### \java\main\commons\core\UnmodifiableObservableList.java
+###### /java/main/commons/core/UnmodifiableObservableList.java
 ``` java
 package main.commons.core;
 
@@ -701,7 +809,114 @@ public class UnmodifiableObservableList<E> implements ObservableList<E> {
 
 }
 ```
-###### \java\main\commons\core\Version.java
+###### /java/main/commons/core/LogsCenter.java
+``` java
+package main.commons.core;
+
+import java.io.IOException;
+import java.util.logging.*;
+
+import main.commons.events.BaseEvent;
+
+/**
+ * Configures and manages loggers and handlers, including their logging level
+ * Named {@link Logger}s can be obtained from this class<br>
+ * These loggers have been configured to output messages to the console and a {@code .log} file by default,
+ *   at the {@code INFO} level. A new {@code .log} file with a new numbering will be created after the log
+ *   file reaches 5MB big, up to a maximum of 5 files.<br>
+ */
+public class LogsCenter {
+    private static final int MAX_FILE_COUNT = 5;
+    private static final int MAX_FILE_SIZE_IN_BYTES = (int) (Math.pow(2, 20) * 5); // 5MB
+    private static final String LOG_FILE = "tasktracker.log";
+    private static Level currentLogLevel = Level.INFO;
+    private static final Logger logger = LogsCenter.getLogger(LogsCenter.class);
+    private static FileHandler fileHandler;
+    private static ConsoleHandler consoleHandler;
+
+    /**
+     * Initializes with a custom log level (specified in the {@code config} object)
+     * Loggers obtained *AFTER* this initialization will have their logging level changed<br>
+     * Logging levels for existing loggers will only be updated if the logger with the same name is requested again
+     * from the LogsCenter.
+     */
+    public static void init(Config config) {
+        currentLogLevel = config.getLogLevel();
+        logger.info("currentLogLevel: " + currentLogLevel);
+    }
+
+    /**
+     * Creates a logger with the given name the given name.
+     */
+    public static Logger getLogger(String name) {
+        Logger logger = Logger.getLogger(name);
+        logger.setUseParentHandlers(false);
+
+        removeHandlers(logger);
+        addConsoleHandler(logger);
+        addFileHandler(logger);
+
+        return Logger.getLogger(name);
+    }
+
+    private static void addConsoleHandler(Logger logger) {
+        if (consoleHandler == null) consoleHandler = createConsoleHandler();
+        logger.addHandler(consoleHandler);
+    }
+
+    private static void removeHandlers(Logger logger) {
+        Handler[] handlers = logger.getHandlers();
+        for (Handler handler : handlers) {
+            logger.removeHandler(handler);
+        }
+    }
+
+    private static void addFileHandler(Logger logger) {
+        try {
+            if (fileHandler == null) fileHandler = createFileHandler();
+            logger.addHandler(fileHandler);
+        } catch (IOException e) {
+            logger.warning("Error adding file handler for logger.");
+        }
+    }
+
+    private static FileHandler createFileHandler() throws IOException {
+        FileHandler fileHandler = new FileHandler(LOG_FILE, MAX_FILE_SIZE_IN_BYTES, MAX_FILE_COUNT, true);
+        fileHandler.setFormatter(new SimpleFormatter());
+        fileHandler.setLevel(currentLogLevel);
+        return fileHandler;
+    }
+
+    private static ConsoleHandler createConsoleHandler() {
+        ConsoleHandler consoleHandler = new ConsoleHandler();
+        consoleHandler.setLevel(currentLogLevel);
+        return consoleHandler;
+    }
+
+    /**
+     * Creates a Logger for the given class name.
+     */
+    public static <T> Logger getLogger(Class<T> clazz) {
+        if (clazz == null) return Logger.getLogger("");
+        return getLogger(clazz.getSimpleName());
+    }
+
+    /**
+     * Decorates the given string to create a log message suitable for logging event handling methods.
+     */
+    public static String getEventHandlingLogMessage(BaseEvent e, String message) {
+        return "---[Event handled][" + e + "]" + message;
+    }
+
+    /**
+     * @see #getEventHandlingLogMessage(BaseEvent, String)
+     */
+    public static String getEventHandlingLogMessage(BaseEvent e) {
+        return getEventHandlingLogMessage(e,"");
+    }
+}
+```
+###### /java/main/commons/core/Version.java
 ``` java
 package main.commons.core;
 
@@ -806,356 +1021,77 @@ public class Version implements Comparable<Version> {
     }
 }
 ```
-###### \java\main\commons\events\BaseEvent.java
-``` java
-package main.commons.events;
-
-public abstract class BaseEvent {
-
-    /**
-     * All Events should have a clear unambiguous custom toString message so that feedback message creation
-     * stays consistent and reusable.
-     *
-     * For example the event manager post method will call any posted event's toString and print it in the console.
-     */
-    public abstract String toString();
-
-}
-```
-###### \java\main\commons\events\model\TaskTrackerChangedEvent.java
-``` java
-package main.commons.events.model;
-
-import main.commons.events.BaseEvent;
-//import main.model.model.ReadOnlyTaskTracker;
-import main.model.ReadOnlyTaskTracker;
-
-/** Indicates the TaskTracker in the model has changed*/
-public class TaskTrackerChangedEvent extends BaseEvent {
-
-    public final ReadOnlyTaskTracker data;
-
-    public TaskTrackerChangedEvent(ReadOnlyTaskTracker data){
-        this.data = data;
-    }
-
-    @Override
-    public String toString() {
-        return "number of tasks " + data.getTaskList().size();
-    }
-}
-```
-###### \java\main\commons\events\storage\DataSavingExceptionEvent.java
-``` java
-package main.commons.events.storage;
-
-import main.commons.events.BaseEvent;
-
-/**
- * Indicates an exception during a file saving
- */
-public class DataSavingExceptionEvent extends BaseEvent {
-
-    public Exception exception;
-
-    public DataSavingExceptionEvent(Exception exception) {
-        this.exception = exception;
-    }
-
-    @Override
-    public String toString(){
-        return exception.toString();
-    }
-
-}
-```
-###### \java\main\commons\events\ui\ExitAppRequestEvent.java
-``` java
-package main.commons.events.ui;
-
-import main.commons.events.BaseEvent;
-
-/**
- * Indicates a request for App termination
- */
-public class ExitAppRequestEvent extends BaseEvent {
-
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-}
-```
-###### \java\main\commons\events\ui\IncorrectCommandAttemptedEvent.java
-``` java
-package main.commons.events.ui;
-
-import main.commons.events.BaseEvent;
-import main.logic.command.Command;
-
-/**
- * Indicates an attempt to execute an incorrect command
- */
-public class IncorrectCommandAttemptedEvent extends BaseEvent {
-
-    public IncorrectCommandAttemptedEvent(Command command) {}
-
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-
-}
-```
-###### \java\main\commons\events\ui\JumpToListRequestEvent.java
-``` java
-package main.commons.events.ui;
-
-import main.commons.events.BaseEvent;
-
-/**
- * Indicates a request to jump to the list of tasks
- */
-public class JumpToListRequestEvent extends BaseEvent {
-
-    public final int targetIndex;
-
-    public JumpToListRequestEvent(int targetIndex) {
-        this.targetIndex = targetIndex;
-    }
-
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-
-}
-```
-###### \java\main\commons\events\ui\ShowHelpRequestEvent.java
-``` java
-package main.commons.events.ui;
-
-import main.commons.events.BaseEvent;
-
-/**
- * An event requesting to view the help page.
- */
-public class ShowHelpRequestEvent extends BaseEvent {
-
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-
-}
-```
-###### \java\main\commons\events\ui\TaskPanelSelectionChangedEvent.java
-``` java
-package main.commons.events.ui;
-
-import main.commons.events.BaseEvent;
-import main.model.task.ReadOnlyTask;
-
-/**
- * Represents a selection change in the Task List Panel
- */
-public class TaskPanelSelectionChangedEvent extends BaseEvent {
-
-
-    private final ReadOnlyTask newSelection;
-
-    public TaskPanelSelectionChangedEvent(ReadOnlyTask newSelection){
-        this.newSelection = newSelection;
-    }
-
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-
-    public ReadOnlyTask getNewSelection() {
-        return newSelection;
-    }
-}
-```
-###### \java\main\commons\exceptions\DataConversionException.java
-``` java
-package main.commons.exceptions;
-
-/**
- * Represents an error during conversion of data from one format to another
- */
-public class DataConversionException extends Exception {
-    public DataConversionException(Exception cause) {
-        super(cause);
-    }
-
-}
-```
-###### \java\main\commons\exceptions\DuplicateDataException.java
-``` java
-package main.commons.exceptions;
-
-/**
- * Signals an error caused by duplicate data where there should be none.
- */
-public abstract class DuplicateDataException extends IllegalValueException {
-    public DuplicateDataException(String message) {
-        super(message);
-    }
-}
-```
-###### \java\main\commons\exceptions\IllegalValueException.java
-``` java
-package main.commons.exceptions;
-
-/**
- * Signals that some given data does not fulfill some constraints.
- */
-public class IllegalValueException extends Exception {
-    /**
-     * @param message should contain relevant information on the failed constraint(s)
-     */
-    public IllegalValueException(String message) {
-        super(message);
-    }
-}
-```
-###### \java\main\commons\util\AppUtil.java
+###### /java/main/commons/util/XmlUtil.java
 ``` java
 package main.commons.util;
 
-import javafx.scene.image.Image;
-import main.Main;
-
-/**
- * A container for App specific utility functions
- */
-public class AppUtil {
-
-    public static Image getImage(String imagePath) {
-        assert imagePath != null;
-        return new Image(Main.class.getResourceAsStream(imagePath));
-    }
-
-}
-```
-###### \java\main\commons\util\CollectionUtil.java
-``` java
-package main.commons.util;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
-/**
- * Utility methods related to Collections
- */
-public class CollectionUtil {
-
-    /**
-     * Returns true if any of the given items are null.
-     */
-    public static boolean isAnyNull(Object... items) {
-        for (Object item : items) {
-            if (item == null) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-
-    /**
-     * Throws an assertion error if the collection or any item in it is null.
-     */
-    public static void assertNoNullElements(Collection<?> items) {
-        assert items != null;
-        assert !isAnyNull(items);
-    }
-
-    /**
-     * Returns true if every element in a collection are unique by {@link Object#equals(Object)}.
-     */
-    public static boolean elementsAreUnique(Collection<?> items) {
-        final Set<Object> testSet = new HashSet<>();
-        for (Object item : items) {
-            final boolean itemAlreadyExists = !testSet.add(item); // see Set documentation
-            if (itemAlreadyExists) {
-                return false;
-            }
-        }
-        return true;
-    }
-}
-```
-###### \java\main\commons\util\ConfigUtil.java
-``` java
-package main.commons.util;
-
-import main.commons.exceptions.DataConversionException;
-
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import java.io.File;
-import java.io.IOException;
-import main.commons.core.Config;
-import main.commons.core.LogsCenter;
-import java.util.Optional;
-import java.util.logging.Logger;
+import java.io.FileNotFoundException;
 
 /**
- * A class for accessing the Config File.
+ * Helps with reading from and writing to XML files.
  */
-public class ConfigUtil {
-
-    private static final Logger logger = LogsCenter.getLogger(ConfigUtil.class);
+public class XmlUtil {
 
     /**
-     * Returns the Config object from the given file or {@code Optional.empty()} object if the file is not found.
-     *   If any values are missing from the file, default values will be used, as long as the file is a valid json file.
-     * @param configFilePath cannot be null.
-     * @throws DataConversionException if the file format is not as expected.
+     * Returns the xml data in the file as an object of the specified type.
+     *
+     * @param file           Points to a valid xml file containing data that match the {@code classToConvert}.
+     *                       Cannot be null.
+     * @param classToConvert The class corresponding to the xml data.
+     *                       Cannot be null.
+     * @throws FileNotFoundException Thrown if the file is missing.
+     * @throws JAXBException         Thrown if the file is empty or does not have the correct format.
      */
-    public static Optional<Config> readConfig(String configFilePath) throws DataConversionException {
+    @SuppressWarnings("unchecked")
+    public static <T> T getDataFromFile(File file, Class<T> classToConvert)
+            throws FileNotFoundException, JAXBException {
 
-        assert configFilePath != null;
+        assert file != null;
+        assert classToConvert != null;
 
-        File configFile = new File(configFilePath);
-
-        if (!configFile.exists()) {
-            logger.info("Config file "  + configFile + " not found");
-            return Optional.empty();
+        if (!FileUtil.isFileExists(file)) {
+            throw new FileNotFoundException("File not found : " + file.getAbsolutePath());
         }
 
-        Config config;
+        JAXBContext context = JAXBContext.newInstance(classToConvert);
+        Unmarshaller um = context.createUnmarshaller();
 
-        try {
-            config = FileUtil.deserializeObjectFromJsonFile(configFile, Config.class);
-        } catch (IOException e) {
-            logger.warning("Error reading from config file " + configFile + ": " + e);
-            throw new DataConversionException(e);
-        }
-
-        return Optional.of(config);
+        return ((T) um.unmarshal(file));
     }
 
     /**
-     * Saves the Config object to the specified file.
-     *   Overwrites existing file if it exists, creates a new file if it doesn't.
-     * @param config cannot be null
-     * @param configFilePath cannot be null
-     * @throws IOException if there was an error during writing to the file
+     * Saves the data in the file in xml format.
+     *
+     * @param file Points to a valid xml file containing data that match the {@code classToConvert}.
+     *             Cannot be null.
+     * @throws FileNotFoundException Thrown if the file is missing.
+     * @throws JAXBException         Thrown if there is an error during converting the data
+     *                               into xml and writing to the file.
      */
-    public static void saveConfig(Config config, String configFilePath) throws IOException {
-        assert config != null;
-        assert configFilePath != null;
+    public static <T> void saveDataToFile(File file, T data) throws FileNotFoundException, JAXBException {
 
-        FileUtil.serializeObjectToJsonFile(new File(configFilePath), config);
+        assert file != null;
+        assert data != null;
+
+        if (!file.exists()) {
+            throw new FileNotFoundException("File not found : " + file.getAbsolutePath());
+        }
+
+        JAXBContext context = JAXBContext.newInstance(data.getClass());
+        Marshaller m = context.createMarshaller();
+        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+        m.marshal(data, file);
     }
 
 }
 ```
-###### \java\main\commons\util\FileUtil.java
+###### /java/main/commons/util/FileUtil.java
 ``` java
 package main.commons.util;
 
@@ -1253,7 +1189,188 @@ public class FileUtil {
     }
     
 ```
-###### \java\main\commons\util\FxViewUtil.java
+###### /java/main/commons/util/CollectionUtil.java
+``` java
+package main.commons.util;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * Utility methods related to Collections
+ */
+public class CollectionUtil {
+
+    /**
+     * Returns true if any of the given items are null.
+     */
+    public static boolean isAnyNull(Object... items) {
+        for (Object item : items) {
+            if (item == null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+    /**
+     * Throws an assertion error if the collection or any item in it is null.
+     */
+    public static void assertNoNullElements(Collection<?> items) {
+        assert items != null;
+        assert !isAnyNull(items);
+    }
+
+    /**
+     * Returns true if every element in a collection are unique by {@link Object#equals(Object)}.
+     */
+    public static boolean elementsAreUnique(Collection<?> items) {
+        final Set<Object> testSet = new HashSet<>();
+        for (Object item : items) {
+            final boolean itemAlreadyExists = !testSet.add(item); // see Set documentation
+            if (itemAlreadyExists) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+```
+###### /java/main/commons/util/StringUtil.java
+``` java
+package main.commons.util;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * Helper functions for handling strings.
+ */
+public class StringUtil {
+    public static boolean containsIgnoreCase(String source, String query) {
+        String[] split = source.toLowerCase().split("\\s+");
+        List<String> strings = Arrays.asList(split);
+        return strings.stream().filter(s -> s.equals(query.toLowerCase())).count() > 0;
+    }
+
+    /**
+     * Returns a detailed message of the t, including the stack trace.
+     */
+    public static String getDetails(Throwable t){
+        assert t != null;
+        StringWriter sw = new StringWriter();
+        t.printStackTrace(new PrintWriter(sw));
+        return t.getMessage() + "\n" + sw.toString();
+    }
+
+    /**
+     * Returns true if s represents an unsigned integer e.g. 1, 2, 3, ... <br>
+     *   Will return false for null, empty string, "-1", "0", "+1", and " 2 " (untrimmed) "3 0" (contains whitespace).
+     * @param s Should be trimmed.
+     */
+    public static boolean isUnsignedInteger(String s){
+        return s != null && s.matches("^0*[1-9]\\d*$");
+    }
+}
+```
+###### /java/main/commons/util/ConfigUtil.java
+``` java
+package main.commons.util;
+
+import main.commons.exceptions.DataConversionException;
+
+import java.io.File;
+import java.io.IOException;
+import main.commons.core.Config;
+import main.commons.core.LogsCenter;
+import java.util.Optional;
+import java.util.logging.Logger;
+
+/**
+ * A class for accessing the Config File.
+ */
+public class ConfigUtil {
+
+    private static final Logger logger = LogsCenter.getLogger(ConfigUtil.class);
+
+    /**
+     * Returns the Config object from the given file or {@code Optional.empty()} object if the file is not found.
+     *   If any values are missing from the file, default values will be used, as long as the file is a valid json file.
+     * @param configFilePath cannot be null.
+     * @throws DataConversionException if the file format is not as expected.
+     */
+    public static Optional<Config> readConfig(String configFilePath) throws DataConversionException {
+
+        assert configFilePath != null;
+
+        File configFile = new File(configFilePath);
+
+        if (!configFile.exists()) {
+            logger.info("Config file "  + configFile + " not found");
+            return Optional.empty();
+        }
+
+        Config config;
+
+        try {
+            config = FileUtil.deserializeObjectFromJsonFile(configFile, Config.class);
+        } catch (IOException e) {
+            logger.warning("Error reading from config file " + configFile + ": " + e);
+            throw new DataConversionException(e);
+        }
+
+        return Optional.of(config);
+    }
+
+    /**
+     * Saves the Config object to the specified file.
+     *   Overwrites existing file if it exists, creates a new file if it doesn't.
+     * @param config cannot be null
+     * @param configFilePath cannot be null
+     * @throws IOException if there was an error during writing to the file
+     */
+    public static void saveConfig(Config config, String configFilePath) throws IOException {
+        assert config != null;
+        assert configFilePath != null;
+
+        FileUtil.serializeObjectToJsonFile(new File(configFilePath), config);
+    }
+
+}
+```
+###### /java/main/commons/util/UrlUtil.java
+``` java
+package main.commons.util;
+
+import java.net.URL;
+
+/**
+ * A utility class for URL
+ */
+public class UrlUtil {
+
+    /**
+     * Returns true if both URLs have the same base URL
+     */
+    public static boolean compareBaseUrls(URL url1, URL url2) {
+
+        if (url1 == null || url2 == null) {
+            return false;
+        }
+        return url1.getHost().toLowerCase().replaceFirst("www.", "")
+                .equals(url2.getHost().replaceFirst("www.", "").toLowerCase())
+                && url1.getPath().replaceAll("/", "").toLowerCase()
+                .equals(url2.getPath().replaceAll("/", "").toLowerCase());
+    }
+
+}
+```
+###### /java/main/commons/util/FxViewUtil.java
 ``` java
 package main.commons.util;
 
@@ -1273,7 +1390,26 @@ public class FxViewUtil {
     }
 }
 ```
-###### \java\main\commons\util\JsonUtil.java
+###### /java/main/commons/util/AppUtil.java
+``` java
+package main.commons.util;
+
+import javafx.scene.image.Image;
+import main.Main;
+
+/**
+ * A container for App specific utility functions
+ */
+public class AppUtil {
+
+    public static Image getImage(String imagePath) {
+        assert imagePath != null;
+        return new Image(Main.class.getResourceAsStream(imagePath));
+    }
+
+}
+```
+###### /java/main/commons/util/JsonUtil.java
 ``` java
 package main.commons.util;
 
@@ -1350,142 +1486,6 @@ public class JsonUtil {
      */
     public static <T> String toJsonString(T instance) throws JsonProcessingException {
         return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(instance);
-    }
-
-}
-```
-###### \java\main\commons\util\StringUtil.java
-``` java
-package main.commons.util;
-
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.Arrays;
-import java.util.List;
-
-/**
- * Helper functions for handling strings.
- */
-public class StringUtil {
-    public static boolean containsIgnoreCase(String source, String query) {
-        String[] split = source.toLowerCase().split("\\s+");
-        List<String> strings = Arrays.asList(split);
-        return strings.stream().filter(s -> s.equals(query.toLowerCase())).count() > 0;
-    }
-
-    /**
-     * Returns a detailed message of the t, including the stack trace.
-     */
-    public static String getDetails(Throwable t){
-        assert t != null;
-        StringWriter sw = new StringWriter();
-        t.printStackTrace(new PrintWriter(sw));
-        return t.getMessage() + "\n" + sw.toString();
-    }
-
-    /**
-     * Returns true if s represents an unsigned integer e.g. 1, 2, 3, ... <br>
-     *   Will return false for null, empty string, "-1", "0", "+1", and " 2 " (untrimmed) "3 0" (contains whitespace).
-     * @param s Should be trimmed.
-     */
-    public static boolean isUnsignedInteger(String s){
-        return s != null && s.matches("^0*[1-9]\\d*$");
-    }
-}
-```
-###### \java\main\commons\util\UrlUtil.java
-``` java
-package main.commons.util;
-
-import java.net.URL;
-
-/**
- * A utility class for URL
- */
-public class UrlUtil {
-
-    /**
-     * Returns true if both URLs have the same base URL
-     */
-    public static boolean compareBaseUrls(URL url1, URL url2) {
-
-        if (url1 == null || url2 == null) {
-            return false;
-        }
-        return url1.getHost().toLowerCase().replaceFirst("www.", "")
-                .equals(url2.getHost().replaceFirst("www.", "").toLowerCase())
-                && url1.getPath().replaceAll("/", "").toLowerCase()
-                .equals(url2.getPath().replaceAll("/", "").toLowerCase());
-    }
-
-}
-```
-###### \java\main\commons\util\XmlUtil.java
-``` java
-package main.commons.util;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import java.io.File;
-import java.io.FileNotFoundException;
-
-/**
- * Helps with reading from and writing to XML files.
- */
-public class XmlUtil {
-
-    /**
-     * Returns the xml data in the file as an object of the specified type.
-     *
-     * @param file           Points to a valid xml file containing data that match the {@code classToConvert}.
-     *                       Cannot be null.
-     * @param classToConvert The class corresponding to the xml data.
-     *                       Cannot be null.
-     * @throws FileNotFoundException Thrown if the file is missing.
-     * @throws JAXBException         Thrown if the file is empty or does not have the correct format.
-     */
-    @SuppressWarnings("unchecked")
-    public static <T> T getDataFromFile(File file, Class<T> classToConvert)
-            throws FileNotFoundException, JAXBException {
-
-        assert file != null;
-        assert classToConvert != null;
-
-        if (!FileUtil.isFileExists(file)) {
-            throw new FileNotFoundException("File not found : " + file.getAbsolutePath());
-        }
-
-        JAXBContext context = JAXBContext.newInstance(classToConvert);
-        Unmarshaller um = context.createUnmarshaller();
-
-        return ((T) um.unmarshal(file));
-    }
-
-    /**
-     * Saves the data in the file in xml format.
-     *
-     * @param file Points to a valid xml file containing data that match the {@code classToConvert}.
-     *             Cannot be null.
-     * @throws FileNotFoundException Thrown if the file is missing.
-     * @throws JAXBException         Thrown if there is an error during converting the data
-     *                               into xml and writing to the file.
-     */
-    public static <T> void saveDataToFile(File file, T data) throws FileNotFoundException, JAXBException {
-
-        assert file != null;
-        assert data != null;
-
-        if (!file.exists()) {
-            throw new FileNotFoundException("File not found : " + file.getAbsolutePath());
-        }
-
-        JAXBContext context = JAXBContext.newInstance(data.getClass());
-        Marshaller m = context.createMarshaller();
-        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-        m.marshal(data, file);
     }
 
 }
