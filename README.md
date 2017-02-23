@@ -15,6 +15,7 @@ Now in development:
 - Seperate panel for command line.
 
 
+
 * [About Us](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/AboutUs.md)
 * [User Guide](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md)
 * [Developer Guide](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/DeveloperGuide.md)
