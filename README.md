@@ -10,11 +10,12 @@
 Task Tracker (T-T) is an easy-to-use software which helps you manage your daily tasks. <br>It is a simple and fun product which uses a creative Graphical User Interface to make the operations quick, easy and intuitive. Currently only maintained by cardboardcode. 
 
 Now in development:
-- Pixel animated UI
-- Enhanced computational performance.
-- Seperate panel for command line.
+* Pixel-animated UI
+* Enhanced computational performance.
+* Seperate panel for command line.
 
 
+Summary:
 
 * [About Us](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/AboutUs.md)
 * [User Guide](https://github.com/CS2103AUG2016-T09-C3/main/blob/master/docs/UserGuide.md)
